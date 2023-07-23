@@ -1,0 +1,575 @@
+/* @import url('https://fonts.googleapiss.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap'); */
+
+/* body{
+    margin: 0;
+    padding:0;
+    font-family: "Open Sans", sans-serif;
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-bold;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  h4 {
+    @apply text-lg;
+  }
+  h5 {
+    @apply text-sm;
+  }
+
+  a {
+    @apply text-ungu;
+    @apply text-sm;
+  }
+
+  a:hover {
+    @apply text-pink;
+    cursor: pointer;
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 16px;
+  }
+
+  .main-wrapper {
+    border: 0px none;
+    height: 850px;
+    position: relative;
+    width: 1090px;
+  }
+
+  .main {
+    background-color: #ffffff;
+    border-radius: 8px;
+    height: 850px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 1090px;
+  }
+
+  .div {
+    align-items: flex-start;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: #808080;
+    display: flex;
+    left: 40px;
+    padding: 0px 0px 21px;
+    position: absolute;
+    top: 40px;
+    width: 1010px;
+  }
+
+  .div-hd-bf {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    width: 1010px;
+  }
+
+  .nav-ordered-list {
+    height: 24px;
+    min-width: 1010px;
+    position: relative;
+  }
+
+  .item {
+    align-items: flex-start;
+    display: flex;
+    padding: 0px 0px 0.5px;
+    position: relative;
+    top: 1px;
+    width: fit-content;
+  }
+
+  .text-wrapper {
+    color: #808080;
+    font-family: "Roboto", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.13px;
+    line-height: 21px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .h-1 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 36px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .element {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    left: 40px;
+    position: absolute;
+    top: 529px;
+    width: fit-content;
+  }
+
+  .text-wrapper-2 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.13px;
+    line-height: 21px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .frame {
+    height: 220px;
+    min-width: 471px;
+    position: relative;
+  }
+
+  .overlap-group {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #bdbcbc;
+    border-radius: 8px;
+    height: 222px;
+    left: -1px;
+    position: relative;
+    top: -1px;
+    width: 473px;
+  }
+
+  .div-wrapper {
+    background-color: #8f0d1e;
+    border: 1px solid;
+    border-color: #bdbcbc;
+    border-radius: 8px 8px 0px 0px;
+    height: 52px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 473px;
+  }
+
+  .text-wrapper-3 {
+    color: #ffffff;
+    font-family: "Roboto", Helvetica;
+    font-size: 18px;
+    font-weight: 700;
+    height: 20px;
+    left: 30px;
+    letter-spacing: 0;
+    line-height: 20px;
+    position: absolute;
+    top: 14px;
+    white-space: nowrap;
+  }
+
+  .frame-2 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    left: 30px;
+    position: absolute;
+    top: 84px;
+    width: fit-content;
+  }
+
+  .text-wrapper-4 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .text-wrapper-5 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 20px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .tambah {
+    align-items: center;
+    background-color: #8f0d1e;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 7px 16px;
+    position: relative;
+    width: 100px;
+  }
+
+  .text-wrapper-6 {
+    color: #ffffff;
+    font-family: "Roboto", Helvetica;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 0.1px;
+    position: relative;
+    width: fit-content;
+  }
+
+  .frame-3 {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    left: 292px;
+    position: absolute;
+    top: 64px;
+    width: fit-content;
+  }
+
+  .group {
+    height: 110px;
+    min-width: 95px;
+    position: relative;
+  }
+
+  .text-wrapper-7 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 20px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .element-2 {
+    height: 256px;
+    left: 40px;
+    position: absolute;
+    top: 223px;
+    width: 1010px;
+  }
+
+  .overlap-group-wrapper {
+    height: 220px;
+    left: 539px;
+    position: absolute;
+    top: 36px;
+    width: 471px;
+  }
+
+  .overlap-wrapper {
+    height: 220px;
+    left: 0;
+    position: absolute;
+    top: 36px;
+    width: 471px;
+  }
+
+  .text-wrapper-8 {
+    color: #000000;
+    font-family: "Roboto", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    height: 21px;
+    left: 0;
+    letter-spacing: 0.13px;
+    line-height: 21px;
+    position: absolute;
+    top: -1px;
+    white-space: nowrap;
+  }
+
+  .tambah-2 {
+    align-items: center;
+    background-color: #8f0d1e;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    justify-content: center;
+    left: 950px;
+    overflow: hidden;
+    padding: 7px 16px;
+    position: absolute;
+    top: 173px;
+    width: 100px;
+  }
+
+  .custom-date-picker {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #333333;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .custom-date-picker-calendar {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #333333;
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .react-datepicker__input-container input {
+    width: 100%;
+    height: 32px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #333333;
+  }
+
+  .react-datepicker__triangle {
+    display: none;
+  }
+  .btn-disabled {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-abu;
+    @apply px-7;
+  }
+
+  .btn-merah {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+    @apply px-7;
+  }
+  .btn-merah:hover {
+    @apply bg-putih;
+    @apply text-merah;
+    border: 1px solid #8f0d1e;
+  }
+
+  .btn-putih {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-merah;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-putih;
+    @apply px-7;
+    border: 1px solid #8f0d1e;
+  }
+  .btn-putih:hover {
+    @apply bg-merah;
+    @apply text-putih;
+  }
+  .btn-mrh {
+    /* @apply flex; */
+    @apply justify-center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+  }
+  .btn-mrh:hover {
+    @apply bg-putih;
+    @apply text-merah;
+  }
+
+  .btn-action-merah {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-merah:hover {
+    @apply bg-putih;
+    @apply text-merah;
+  }
+
+  .btn-action-ungu {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-ungu;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-ungu:hover {
+    @apply bg-putih;
+  }
+
+  .btn-action-biru {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-biru;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-biru:hover {
+    @apply bg-gelap;
+  }
+
+  .btn-action-pink {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-pink;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-pink:hover {
+    @apply bg-gelap;
+  }
+  .pmb-belum-mulai {
+    @apply bg-gray-100;
+    @apply text-gray-700;
+  }
+  /* .pmb-belum-mulai:hover{
+        @apply bg-gray-200;
+    } */
+  .pmb-belum-mulai .step {
+    @apply bg-gray-700;
+  }
+  .pmb-dalam-proses {
+    @apply bg-yellow-100;
+    @apply text-yellow-700;
+  }
+  /* .pmb-dalam-proses:hover{
+        @apply bg-yellow-200;
+    } */
+  .pmb-dalam-proses .step {
+    @apply bg-yellow-700;
+  }
+  .pmb-berhasil {
+    @apply bg-green-100;
+    @apply text-green-700;
+  }
+  /* .pmb-berhasil:hover{
+        @apply bg-green-200;
+    } */
+  .pmb-berhasil .step {
+    @apply bg-green-700;
+  }
+  .pmb-gagal {
+    @apply bg-red-100;
+    @apply text-red-700;
+  }
+  /* .pmb-gagal:hover{
+        @apply bg-red-200;
+    } */
+  .pmb-proses .step {
+    @apply bg-red-700;
+  }
+
+  .e-grid .e-icons:not(.e-btn-icon) {
+    color: #ffffff !important;
+  }
+
+  /* focus:bg-gelap focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg */
+}
