@@ -48,7 +48,7 @@ const BerkasPembayaran = () => {
     dropContainerEle = element;
   };
   asyncSettings = {
-    saveUrl: domain + `/api/v1/admission/registration/${regNumber}/invoice`,
+    saveUrl: domain + `/admission/registration/${regNumber}/invoice`,
     removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
   };
   function onRemoveFile(args) {
@@ -57,7 +57,7 @@ const BerkasPembayaran = () => {
   function onFileUpload(args) {
     console.log("UPLOADING..");
     // args.customFormData = [{ id: documents[indexMurid].id }];
-    args.currentRequest.setRequestHeader("Authorization", `Bearer ${token}`);
+    args.currentRequest.setRequestHeader("Authorization", token);
   }
   function onSuccess(args) {
     getDocumentsData();
@@ -101,11 +101,10 @@ const BerkasPembayaran = () => {
     setIsLoading(true);
 
     axios
-      .post(`/api/v1/admission/registration/${regNumber}/invoice`, null, {
+      .post(`/admission/registration/${regNumber}/invoice`, null, {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          authorization: localStorage.getItem("TOKEN"),
         },
       })
       .then(() => {
@@ -146,7 +145,7 @@ const BerkasPembayaran = () => {
       <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
         {/* COL 1 */}
         <section>
-          <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
+          <label htmlFor="invoice" className="block mt-4 mb-1">
             Upload Bukti Pembayaran{" "}
           </label>
           {/* <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
@@ -164,7 +163,7 @@ const BerkasPembayaran = () => {
               THUMBNAIL
             </div> */}
           <UploaderComponent
-            id="akte_kelahiran"
+            id="invoice"
             type="file"
             ref={(scope) => {
               uploadObj = scope;
@@ -174,7 +173,7 @@ const BerkasPembayaran = () => {
             uploading={onFileUpload.bind(this)}
             success={onSuccess.bind(this)}
             locale="id-BAHASA"
-            allowedExtensions=".pdf"
+            allowedExtensions=".png"
             minFileSize={minFileSize}
             maxFileSize={maxFileSize}
             multiple={false}

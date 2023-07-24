@@ -28,6 +28,7 @@ import {
 
 const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");
+  const regNumber = localStorage.getItem("REG_NUMBER");
   const {
     documents,
     setDocuments,
@@ -91,7 +92,6 @@ const BerkasPendaftaran = () => {
   let maxFileSize = 1000000;
 
   const handleSubmit = async (e) => {
-    const regNumber = localStorage.getItem("REG_NUMBER");
     let params = {
       rapor: fileRapor,
       kartu_keluarga: fileKk,
@@ -102,22 +102,20 @@ const BerkasPendaftaran = () => {
     setIsLoading(true);
     // console.log("file untuk upload", "=> ", params);
 
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      authorization: token,
-    };
+    // const headers = {
+    //   "Content-Type": "multipart/form-data",
+    //   authorization: token,
+    // };
 
     axios
       .post(
         process.env.REACT_APP_BASE_URL +
           `/admission/registration/${regNumber}/additionalFile`,
-        {
-          params,
-        },
+        params,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            authorization: localStorage.getItem("TOKEN"),
+            authorization: token,
           },
         }
       )
