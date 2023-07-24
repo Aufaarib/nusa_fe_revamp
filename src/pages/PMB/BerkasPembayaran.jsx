@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   TabComponent,
   TabItemDirective,
@@ -24,8 +24,9 @@ import {
 const BerkasPembayaran = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
+  const SUBMIT_URL = `/admission/registration/${regNumber}/invoice`;
   const domain = process.env.REACT_APP_BASE_URL;
-
+  const [isLoading, setIsLoading] = useState(false);
   const {
     documents,
     setDocuments,
@@ -36,102 +37,75 @@ const BerkasPembayaran = () => {
     formCheck,
     getFormCheck,
   } = useStateContext();
-  const [isLoading, setIsLoading] = useState(false);
 
-  // Uploader component
-  let uploadObj;
-  let asyncSettings;
-  let dropContainerRef;
-  let dropContainerEle;
-  dropContainerEle = null;
-  dropContainerRef = (element) => {
-    dropContainerEle = element;
+  const [fileInvoice, setFileInvoice] = useState(null);
+  const uploaderRef = useRef(null);
+  const [filesData, setFilesData] = useState(null);
+
+  // Define your asyncSettings for the UploaderComponent (modify this as needed)
+  const asyncSettings = {
+    saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
+    removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
   };
-  asyncSettings = {
-    saveUrl: domain + `/admission/registration/${regNumber}/invoice`,
-    removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
+
+  // Define your minFileSize and maxFileSize (modify these as needed)
+  const minFileSize = 0;
+  const maxFileSize = 5000000; // 5 MB (you can modify this value)
+
+  // Function to handle removing a file
+  const onRemoveFile = (args) => {
+    setFileInvoice(null);
   };
-  function onRemoveFile(args) {
-    args.postRawFile = false;
-  }
-  function onFileUpload(args) {
-    console.log("UPLOADING..");
-    // args.customFormData = [{ id: documents[indexMurid].id }];
-    args.currentRequest.setRequestHeader("Authorization", token);
-  }
-  function onSuccess(args) {
-    getDocumentsData();
-    console.log("SUCCESS");
-  }
 
-  let minFileSize = 1000;
-  let maxFileSize = 1000000;
+  // Function to handle uploading a file
+  const onFileUpload = (args) => {
+    // You can perform any custom actions before the file upload starts if needed
+  };
 
-  // useEffect(() => {
-  //   L10n.load({
-  //     "id-BAHASA": {
-  //       uploader: {
-  //         Browse: "Cari Berkas",
-  //         Clear: "Bersihkan",
-  //         Upload: "Unggah",
-  //         cancel: "Batal",
-  //         delete: "Hapus Berkas",
-  //         dropFilesHint: "atau taruh Berkas disini",
-  //         inProgress: "Mengunduh",
-  //         invalidFileType: "Tipe berkas tidak diperbolehkan",
-  //         invalidMaxFileSize: `Ukuran berkas melebihi ${
-  //           maxFileSize * 0.000001
-  //         } MB`,
-  //         invalidMinFileSize: `Ukuran file terlalu kecil! Harap unggah file dengan ukuran minimal ${
-  //           maxFileSize * 0.000001
-  //         } KB`,
-  //         readyToUploadMessage: "Siap mengunggah",
-  //         remove: "Hapus",
-  //         removedFailedMessage: "Berkas tidak dapat dihapus",
-  //         removedSuccessMessage: "Berkas berhasil dihapus",
-  //         uploadFailedMessage: "Gagal mengunggah berkas",
-  //         uploadSuccessMessage: "Berkas berhasil diunggah",
-  //       },
-  //     },
-  //   });
-  // }, []);
+  // Function to handle upload success
+  const onSuccess = (args) => {
+    // You can perform any custom actions after a successful upload if needed
+    console.log("File uploaded successfully!", args);
+    setFilesData(args);
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  // Function to handle file upload to the API using Axios
+  const handleFileUpload = () => {
+    // Replace 'your_api_base_url' with the base URL of your API
+    // const formData = new FormData();
+    // formData.append("file", filesData.file.rawFile);
+    const invoice = filesData.file.rawFile;
+
+    console.log("FilesData:", invoice);
+
+    // const formData = new FormData();
+    // formData.append("invoice", file);
+    // console.log("GG === ", formData);
 
     axios
-      .post(`/admission/registration/${regNumber}/invoice`, null, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: localStorage.getItem("TOKEN"),
+      .post(
+        SUBMIT_URL,
+        {
+          invoice,
         },
-      })
-      .then(() => {
-        setIsLoading(false);
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle success response if needed
+        console.log("File uploaded successfully!", response);
         AlertStatusUpdateSuccess();
       })
-      .catch(() => {
-        setIsLoading(false);
+      .catch((error) => {
+        // Handle error response if needed
+        console.error("Error uploading file:", error);
         AlertStatusUpdateFailed();
       });
   };
-
-  // function getExtension(filename) {
-  //   return filename.split(".").pop();
-  // }
-
-  // let akte_kelahiran = documents[indexMurid].akte_kelahiran;
-  // let kartu_keluarga = documents[indexMurid].kartu_keluarga;
-  // let rapor = documents[indexMurid].rapor;
-  // let foto = documents[indexMurid].foto;
-
-  // let name_akte_kelahiran = akte_kelahiran.replace(/\.[^/.]+$/, "");
-  // let name_kartu_keluarga = kartu_keluarga.replace(/\.[^/.]+$/, "");
-  // let name_rapor = rapor.replace(/\.[^/.]+$/, "");
-  // let name_foto = foto.replace(/\.[^/.]+$/, "");
-
-  // let foto_extension = getExtension(documents[indexMurid].foto);
 
   return (
     <article>
@@ -148,41 +122,24 @@ const BerkasPembayaran = () => {
           <label htmlFor="invoice" className="block mt-4 mb-1">
             Upload Bukti Pembayaran{" "}
           </label>
-          {/* <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-            Akte Kelahiran{" "}
-            {!akte_kelahiran ? (
-              <span className="ml-1 text-merah">*</span>
-            ) : (
-              <span>
-                <MdVerified className="inline-block text-md text-green-600 ml-0.5 mb-1" />{" "}
-                <strong className="text-green-600 text">Sudah Diunggah</strong>
-              </span>
-            )}
-          </label> */}
-          {/* <div className="flex items-center justify-center e-upload e-control-wrapper e-lib e-keyboard h-14">
-              THUMBNAIL
-            </div> */}
           <UploaderComponent
             id="invoice"
             type="file"
-            ref={(scope) => {
-              uploadObj = scope;
-            }}
+            ref={uploaderRef}
             asyncSettings={asyncSettings}
-            removing={onRemoveFile.bind(this)}
-            uploading={onFileUpload.bind(this)}
+            removing={onRemoveFile}
+            uploading={onFileUpload}
             success={onSuccess.bind(this)}
             locale="id-BAHASA"
             allowedExtensions=".png"
+            accept=".png"
             minFileSize={minFileSize}
             maxFileSize={maxFileSize}
             multiple={false}
-            buttons="Unggah Berkas"
-          >
-            {/* <FilesDirective>
-								<UploadedFilesDirective name={akte_kelahiran} size={25000} type=".pdf"></UploadedFilesDirective>
-							</FilesDirective> */}
-          </UploaderComponent>
+            buttons={{
+              browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+            }}
+          />
           <small className=" text-gray-400">
             <i>Jenis berkas: .pdf</i>
           </small>
@@ -193,7 +150,7 @@ const BerkasPembayaran = () => {
         <button
           type="button"
           className="w-auto btn-merah"
-          onClick={handleSubmit}
+          onClick={handleFileUpload}
         >
           {isLoading ? (
             <CgSpinner className="mr-2 text-xl animate-spin" />

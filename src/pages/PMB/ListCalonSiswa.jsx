@@ -91,18 +91,21 @@ const ListCalonSiswa = () => {
             key={year}
             style={{
               display: "flex",
-              marginBottom: "55px",
-              gap: "40px",
-              maxWidth: "100px",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "16px",
             }}
           >
             {candidates.map(({ childName, regNumber, status }) => (
-              <div className="frame">
-                <div className="overlap-group">
+              <div className="frame" style={{ flex: "0 0 30%", gap: "16px" }}>
+                <div
+                  className="overlap-group"
+                  style={{ display: "flex", gap: "16px" }}
+                >
                   <div className="div-wrapper">
                     <div className="text-wrapper-3">PMB</div>
                   </div>
-                  <div className="frame-2">
+                  <div className="frame-2" style={{ flex: 1 }}>
                     <div className="text-wrapper-4">{childName}</div>
                     <div className="text-wrapper-5">{regNumber}</div>
                     <div className="tambah">
