@@ -27,7 +27,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
           ? "pmb-dalam-proses"
           : status == "Berhasil"
           ? "pmb-berhasil"
-          : status == "gagal"
+          : status == "Gagal"
           ? "pmb-gagal"
           : ""
       }`}

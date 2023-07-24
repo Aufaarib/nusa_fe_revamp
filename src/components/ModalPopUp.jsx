@@ -360,6 +360,28 @@ export const AlertDelete = (desc, id, onDelete) => {
     });
 };
 
+export const AlertUploadInvoiceSuccess = () => {
+  styledSweetAlert
+    .fire({
+      title: "Upload Bukti Pembayaran Berhasil",
+      showConfirmButton: true,
+      confirmButtonText: "Kembali Ke Halaman Tahapan PMB",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/pmb/tahapan-pmb";
+      }
+    });
+};
+
+export const AlertUploadInvoiceFailed = () => {
+  styledSweetAlert.fire({
+    title: "Upload Bukti Pembayaran Gagal, Mohon Coba Kembali",
+    showConfirmButton: true,
+    confirmButtonText: "Coba Lagi",
+  });
+};
+
 export const AlertValidateRegistration = (
   // desc,
   code,

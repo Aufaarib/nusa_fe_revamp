@@ -19,6 +19,8 @@ import { BsChevronLeft } from "react-icons/bs";
 import {
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
+  AlertUploadInvoiceFailed,
+  AlertUploadInvoiceSuccess,
 } from "../../components/ModalPopUp";
 
 const BerkasPembayaran = () => {
@@ -98,12 +100,12 @@ const BerkasPembayaran = () => {
       .then((response) => {
         // Handle success response if needed
         console.log("File uploaded successfully!", response);
-        AlertStatusUpdateSuccess();
+        AlertUploadInvoiceSuccess();
       })
       .catch((error) => {
         // Handle error response if needed
         console.error("Error uploading file:", error);
-        AlertStatusUpdateFailed();
+        AlertUploadInvoiceFailed();
       });
   };
 
@@ -113,8 +115,8 @@ const BerkasPembayaran = () => {
         home="PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Berkas Pembayaran"
-        title="Form Berkas Pembayaran"
+        at="Bukti Pembayaran"
+        title="Form Bukti Pembayaran"
       />
       <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
         {/* COL 1 */}
@@ -141,7 +143,7 @@ const BerkasPembayaran = () => {
             }}
           />
           <small className=" text-gray-400">
-            <i>Jenis berkas: .pdf</i>
+            <i>Jenis berkas: .png</i>
           </small>
         </section>
       </div>
@@ -165,7 +167,8 @@ const BerkasPembayaran = () => {
             to={"/pmb/tahapan-pmb"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali Ke
+            Halaman Tahapan PMB
           </Link>
 
           {/* <Link to={"/berkas-pendaftaran"} className="w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap">

@@ -557,7 +557,7 @@
     @apply bg-green-700;
   }
   .pmb-gagal {
-    @apply bg-red-100;
+    @apply bg-red-200;
     @apply text-red-700;
   }
   /* .pmb-gagal:hover{

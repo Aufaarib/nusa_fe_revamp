@@ -38,6 +38,7 @@ const ModalTahapanPMB = ({
   const { auth } = useAuth();
   const verified = "verified";
   const {
+    admissionSteps1,
     daftarUlangAgreement,
     resendEmailVerification,
     paymentAgreement,
@@ -52,6 +53,8 @@ const ModalTahapanPMB = ({
   const navigateFormulir = () => {
     navigate(path);
   };
+
+  console.log("ADMISSION STEP 1 === ", admissionSteps1.status);
 
   return (
     <>
@@ -80,7 +83,7 @@ const ModalTahapanPMB = ({
                 ? "pmb-dalam-proses"
                 : status == "Berhasil"
                 ? "pmb-berhasil"
-                : status == "gagal"
+                : status == "Gagal"
                 ? "pmb-gagal"
                 : ""
             }`}
@@ -185,7 +188,7 @@ const ModalTahapanPMB = ({
                     <p>{details.message}</p>
                   )}
 
-                  {status === "Belum Mulai" && (
+                  {/* {status === "Belum Mulai" && (
                     <>
                       <div>
                         <p>Tahap ini belum dapat dilakukan.</p>
@@ -195,53 +198,70 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
+                  {status === "Gagal" && (
+                    <>
+                      <div>
+                        <p>Tahap ini Gagal.</p>
+                      </div>
+                    </>
+                  )} */}
+
                   {step == 1 && status !== "Belum Mulai" && (
                     <>
                       {status == "Dalam Proses" && (
                         <>
-                          <p>
-                            Bagi para Ayah/Bunda yang sudah melakukan
-                            registrasi, maka tahapan selanjutnya adalah
-                            Ayah/Bunda bisa melakukan pembayaran pendaftaran
-                            dengan ketentuan sebagai berikut.
-                          </p>
-                          <br />
-                          <p>
-                            <strong>Informasi Akun:</strong>
-                          </p>
-                          <br />
-                          <p>
-                            Nama Lengkap :{" "}
-                            <strong className="capitalize">{Nama}</strong>
-                            <br />
-                            <span className="text-red-600 uppercase">
-                              Menunggu Pembayaran
-                            </span>
-                            <br />
-                            <hr />
-                            Batas Akhir Pembayaran :
-                            <hr />
-                            <strong>Total Tagihan : </strong>
-                            <hr />
-                            <br />
-                            Silahkan lakukan transfer sebesar{" "}
-                            <strong>Rp. 2.000.000</strong> ke rekening berikut :
-                            <br />
-                            Bank DKI Syariah cabang Pondok Indah
-                            <br />
-                            Nomor Rekening :<strong> 71021590003</strong>
-                            <br />
-                            <br />
-                            Untuk informasi lebih lanjut dan konfirmasi setelah
-                            melakukan transfer, silahkan hubungi No Whatsapp
-                            <strong> 08129801108 </strong> (Ibu Hanny).
-                            <Link
-                              to={"/pmb/berkas-pembayaran"}
-                              className="mt-7 btn-merah"
-                            >
-                              Upload Bukti Pembayaran Registrasi
-                            </Link>
-                          </p>
+                          {admissionSteps1.status !== "inreview" ? (
+                            <>
+                              <p>
+                                Bagi para Ayah/Bunda yang sudah melakukan
+                                registrasi, maka tahapan selanjutnya adalah
+                                Ayah/Bunda bisa melakukan pembayaran pendaftaran
+                                dengan ketentuan sebagai berikut.
+                              </p>
+                              <br />
+                              <p>
+                                <strong>Informasi Akun:</strong>
+                              </p>
+                              <br />
+                              <p>
+                                Nama Lengkap : {""}
+                                <strong className="capitalize">{Nama}</strong>
+                                <br />
+                                <hr />
+                                Batas Akhir Pembayaran :
+                                <hr />
+                                <strong>Total Tagihan : </strong>
+                                <hr />
+                                <br />
+                              </p>
+                              Silahkan lakukan transfer sebesar{" "}
+                              <strong>Rp. 2.000.000</strong> ke rekening berikut
+                              :
+                              <br />
+                              Bank DKI Syariah cabang Pondok Indah
+                              <br />
+                              Nomor Rekening :<strong> 71021590003</strong>
+                              <br />
+                              <br />
+                              Untuk informasi lebih lanjut dan konfirmasi
+                              setelah melakukan transfer, silahkan hubungi No
+                              Whatsapp
+                              <strong> 08129801108 </strong> (Ibu Hanny).
+                              <Link
+                                to={"/pmb/berkas-pembayaran"}
+                                className="mt-7 btn-merah"
+                              >
+                                Upload Bukti Pembayaran Registrasi
+                              </Link>
+                            </>
+                          ) : (
+                            <>
+                              <p>
+                                Bukti Pembayaran Telah Berhasil Terkirim, dan
+                                sedang proses pengecekan oleh admin
+                              </p>
+                            </>
+                          )}
                         </>
                       )}
                       {status == "Berhasil" && (
@@ -331,7 +351,7 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
-                  {step == 4 && status == "Berhasil" && (
+                  {step == 4 && status !== "Belum Mulai" && (
                     <div>
                       <p>
                         Alhamdulillah, Ananda telah lulus test penerimaan calon
@@ -341,46 +361,14 @@ const ModalTahapanPMB = ({
                       <p>
                         Untuk proses selanjutnya, klik link persetujuan berikut:
                       </p>
-                      {/* ERROR MSG */}
-                      <div
-                        className={
-                          errMsgSendVerify
-                            ? "px-4 py-3 mt-3 rounded-md text-merah text-sm bg-red-100 relative"
-                            : "hidden"
-                        }
-                        aria-live="assertive"
-                        role="alert"
-                      >
-                        {Object.entries(errMsgSendVerify).map(
-                          ([, fieldErrors]) =>
-                            fieldErrors.map((fieldError, index) => (
-                              <p key={index} className="flex gap-2">
-                                <FaTimesCircle className="my-1" /> {fieldError}
-                              </p>
-                            ))
-                        )}
-                      </div>
-                      {/* SUCCESS MSG */}
-                      <div
-                        className={
-                          successMsgSendVerify
-                            ? "px-4 py-3 mt-3 rounded-md text-green-700 text-sm bg-green-100 relative"
-                            : "hidden"
-                        }
-                        aria-live="assertive"
-                        role="alert"
-                      >
-                        <p className="flex gap-2">
-                          <FaRegCheckCircle className="my-1" />
-                          {successMsgSendVerify}
-                        </p>
-                      </div>
-                      <Link
-                        onClick={daftarUlangAgreement}
-                        className="mt-3 btn-merah"
-                      >
-                        Persetujuan Daftar Ulang
-                      </Link>
+                      {status !== "Berhasil" && (
+                        <Link
+                          onClick={daftarUlangAgreement}
+                          className="mt-3 btn-merah"
+                        >
+                          Persetujuan Daftar Ulang
+                        </Link>
+                      )}
                     </div>
                   )}
 

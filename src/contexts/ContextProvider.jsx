@@ -13,17 +13,17 @@ import {
 } from "../api/Registrasi";
 import { useCallback } from "react";
 
-const RESEND_URL = "/api/email/verification-notification";
-const PAYMENT_AGREEMENT_URL = "/api/pmb/parent-agreement-education-fee";
-const DAFTAR_ULANG_AGREEMENT_URL = "/api/pmb/parent-agreement-re-registration";
-const STEPS_PMB_URL = "/api/pmb/info";
-const STUDENTS_URL = "/api/pmb/students";
-const PARENTS_URL = "/api/pmb/parents";
-const DOCUMENTS_URL = "/api/pmb/documents";
-const FORM_CHECK_URL = "/api/pmb/form-check";
-const NOTIFICATIONS = "/api/notifications";
-const BROADCAST_AUTH = "/api/broadcasting/auth";
-const GET_USER = "/api/user";
+// const RESEND_URL = "/api/email/verification-notification";
+// const PAYMENT_AGREEMENT_URL = "/api/pmb/parent-agreement-education-fee";
+// const DAFTAR_ULANG_AGREEMENT_URL = "/api/pmb/parent-agreement-re-registration";
+// const STEPS_PMB_URL = "/api/pmb/info";
+// const STUDENTS_URL = "/api/pmb/students";
+// const PARENTS_URL = "/api/pmb/parents";
+// const DOCUMENTS_URL = "/api/pmb/documents";
+// const FORM_CHECK_URL = "/api/pmb/form-check";
+// const NOTIFICATIONS = "/api/notifications";
+// const BROADCAST_AUTH = "/api/broadcasting/auth";
+// const GET_USER = "/api/user";
 
 const StateContext = createContext();
 
@@ -33,11 +33,6 @@ const initialState = {
 };
 
 export const ContextProvider = ({ children }) => {
-  const token = localStorage.getItem("TOKEN");
-  const location = useLocation();
-
-  const { auth, setAuth } = useAuth();
-
   const [screenSize, setScreenSize] = useState(undefined);
   const [currentColor, setCurrentColor] = useState("#8F0D1E");
   const [currentMode, setCurrentMode] = useState("Light");
@@ -122,7 +117,7 @@ export const ContextProvider = ({ children }) => {
   const [admissionSteps5, setDataStep5] = useState([]);
   const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
 
-  console.log("STEPPS === ", admissionSteps2);
+  console.log("STEPPS === ", admissionSteps4);
   console.log("REG_NUMBER === ", localStorage.getItem("REG_NUMBER"));
 
   // To update the status value later:
@@ -136,37 +131,30 @@ export const ContextProvider = ({ children }) => {
     ) => {
       setStepsPMB((prevState) => {
         const statusStep1 =
-          admissionSteps1.length === 0
-            ? "Dalam Proses"
-            : admissionSteps1.status === "inreview"
-            ? "Dalam Proses"
-            : "Berhasil";
+          (admissionSteps1.length == 0 && "Dalam Proses") ||
+          (admissionSteps1.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps1.status == "valid" && "Berhasil") ||
+          (admissionSteps1.status == "invalid" && "Gagal");
         const statusStep2 =
-          admissionSteps1.length === 0 ||
-          admissionSteps1.status === "inreview" ||
-          admissionSteps2.length === 0
-            ? "Belum Mulai"
-            : admissionSteps2.status === "inreview"
-            ? "Dalam Proses"
-            : "Berhasil";
+          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps2.status == "valid" && "Berhasil") ||
+          (admissionSteps2.status == "invalid" && "Gagal");
         const statusStep3 =
-          admissionSteps3.length === 0
-            ? "Belum Mulai"
-            : admissionSteps3.status === "inreview"
-            ? "Dalam Proses"
-            : "Berhasil";
+          (admissionSteps3.length == 0 && "Belum Mulai") ||
+          (admissionSteps3.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps3.status == "valid" && "Berhasil") ||
+          (admissionSteps3.status == "invalid" && "Gagal");
         const statusStep4 =
-          admissionSteps4.length === 0
-            ? "Belum Mulai"
-            : admissionSteps4.status === "inreview"
-            ? "Dalam Proses"
-            : "Berhasil";
+          (admissionSteps4.length == 0 && "Belum Mulai") ||
+          (admissionSteps4.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps4.status == "valid" && "Berhasil") ||
+          (admissionSteps4.status == "invalid" && "Gagal");
         const statusStep5 =
-          admissionSteps5.length === 0
-            ? "Belum Mulai"
-            : admissionSteps5.status === "inreview"
-            ? "Dalam Proses"
-            : "Berhasil";
+          (admissionSteps5.length == 0 && "Belum Mulai") ||
+          (admissionSteps5.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps5.status == "valid" && "Berhasil") ||
+          (admissionSteps5.status == "invalid" && "Gagal");
         return {
           ...prevState,
           register_payment: {
@@ -584,6 +572,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
+        admissionSteps1,
         dataIbu,
         setDataIbu,
         dataAyah,
