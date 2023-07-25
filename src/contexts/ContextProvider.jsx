@@ -6,12 +6,17 @@ import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import {
   getAdmissionRegistrationApplicant,
+  getAdmissionRegistrationByRegNumber,
   getAdmissionRegistrationParentsAyah,
   getAdmissionRegistrationParentsIbu,
   getAdmissionRegistrationParentsWali,
   getAdmissionSteps,
 } from "../api/Registrasi";
 import { useCallback } from "react";
+import {
+  AlertStatusUpdateFailed,
+  AlertStatusUpdateSuccess,
+} from "../components/ModalPopUp";
 
 // const RESEND_URL = "/api/email/verification-notification";
 // const PAYMENT_AGREEMENT_URL = "/api/pmb/parent-agreement-education-fee";
@@ -116,6 +121,8 @@ export const ContextProvider = ({ children }) => {
   const [admissionSteps4, setDataStep4] = useState([]);
   const [admissionSteps5, setDataStep5] = useState([]);
   const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
+  const [dataAdmissionRegistration, setDataAdmissionRegistration] =
+    useState("");
 
   console.log("STEPPS === ", admissionSteps4);
   console.log("REG_NUMBER === ", localStorage.getItem("REG_NUMBER"));
@@ -142,16 +149,19 @@ export const ContextProvider = ({ children }) => {
           (admissionSteps2.status == "invalid" && "Gagal");
         const statusStep3 =
           (admissionSteps2.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps3.length == 0 && "Dalam Proses") ||
           (admissionSteps3.status == "inreview" && "Dalam Proses") ||
           (admissionSteps3.status == "valid" && "Berhasil") ||
           (admissionSteps3.status == "invalid" && "Gagal");
         const statusStep4 =
           (admissionSteps3.status !== "valid" && "Belum Mulai") ||
           (admissionSteps4.length == 0 && "Dalam Proses") ||
+          (admissionSteps4.status == "inreview" && "Dalam Proses") ||
           (admissionSteps4.status == "valid" && "Berhasil") ||
           (admissionSteps4.status == "invalid" && "Gagal");
         const statusStep5 =
-          (admissionSteps5.length == 0 && "Belum Mulai") ||
+          (admissionSteps4.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps4.status == "valid" && "Dalam Proses") ||
           (admissionSteps5.status == "inreview" && "Dalam Proses") ||
           (admissionSteps5.status == "valid" && "Berhasil") ||
           (admissionSteps5.status == "invalid" && "Gagal");
@@ -190,6 +200,10 @@ export const ContextProvider = ({ children }) => {
       setDataStep3,
       setDataStep4,
       setDataStep5,
+      setStsAdmissionSteps
+    );
+    getAdmissionRegistrationByRegNumber(
+      setDataAdmissionRegistration,
       setStsAdmissionSteps
     );
   }, []);
@@ -417,29 +431,6 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  // DAFTAR ULANG
-  const daftarUlangAgreement = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      // const response = await axios.post(DAFTAR_ULANG_AGREEMENT_URL, null, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   withCredentials: true,
-      // });
-      // // console.log("RES ==== " + JSON.stringify(response?.data));
-      // setSuccessMsgSendVerify("Persetujuan berhasil dikirim.");
-      setIsLoading(false);
-      // getStepsPMBData();
-    } catch (err) {
-      // console.error("ERROR === ", err?.response?.data.errors);
-      // const errMsg = err?.response?.data.errors;
-      // setErrMsgSendVerify(errMsg);
-      setIsLoading(false);
-    }
-  };
-
   // PAYMENT AGREEMENT
   const paymentAgreement = async (e) => {
     e.preventDefault();
@@ -572,6 +563,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
+        dataAdmissionRegistration,
         admissionSteps1,
         dataIbu,
         setDataIbu,
@@ -579,7 +571,6 @@ export const ContextProvider = ({ children }) => {
         setDataAyah,
         dataWali,
         setDataWali,
-        daftarUlangAgreement,
         openForm,
         setOpenForm,
         formCheck,

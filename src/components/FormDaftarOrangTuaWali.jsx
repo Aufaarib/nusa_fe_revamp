@@ -20,6 +20,8 @@ import {
 import Header from "./Header";
 import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
 import {
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
@@ -54,9 +56,6 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
 
   useEffect(() => {
     fetchAdmissonParents();
-    if (parent.id == "" && parents[indexOrtu].id !== "") {
-      setParent(parents[indexOrtu]);
-    }
   }, []);
 
   const updateParents = (e) => {
@@ -159,11 +158,11 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusUpdateSuccess();
+        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ibu");
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusUpdateFailed();
+        AlertStatusTambahFailed();
       });
   };
 

@@ -21,6 +21,7 @@ import {
   getAdmissionRegistrationParentsAyah,
 } from "../api/Registrasi";
 import {
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
@@ -54,11 +55,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
 
   useEffect(() => {
     fetchAdmissonParents();
-
-    if (parent.id == "" && parents[indexOrtu].id !== "") {
-      setParent(parents[indexOrtu]);
-    }
-  }, [parent]);
+  }, []);
 
   const updateParents = (e) => {
     const fieldName = e.target.id;
@@ -148,13 +145,21 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusUpdateSuccess();
+        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ayah");
       })
       .catch(() => {
         setIsLoading(false);
         AlertStatusUpdateFailed();
       });
   };
+
+  const [validPhone, setValidPhone] = useState(false);
+
+  const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
+
+  useEffect(() => {
+    setValidPhone(PHONE_REGEX.test(parent.phoneNumber1));
+  }, [parent.phoneNumber1]);
 
   return (
     <article>

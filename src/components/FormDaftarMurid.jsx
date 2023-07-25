@@ -17,6 +17,8 @@ import { getAdmissionRegistrationApplicant } from "../api/Registrasi";
 import { dropdownData } from "../data/initData";
 import Header from "./Header";
 import {
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
   AlertUpdateStatusAktif,
@@ -36,28 +38,27 @@ const FormDaftarMurid = ({ indexMurid }) => {
   } = useStateContext();
   const [admissionApplicantData, setAdmissionApplicant] = useState({});
   const [sts, setSts] = useState(false);
-  const [student, setStudent] = useState({});
-  // const [firstName, setFirstName] = useState("");
-  // const [middleName, setMiddleName] = useState("");
-  // const [religion, setReligion] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [childStatus, setChildStatus] = useState("");
-  // const [childNumber, setChildNumber] = useState("");
-  // const [height, setHeight] = useState("");
-  // const [birthPlace, setBirthPlace] = useState("");
-  // const [gender, setGender] = useState("");
-  // const [bloodType, setBloodType] = useState("");
-  // const [hobby, setHobby] = useState("");
-  // const [weight, setweight] = useState("");
-  // const [familyIdentityNumber, setFamilyIdentityNumber] = useState("");
-  // const [distanceFromHome, setDistanceFromHome] = useState("");
-  // const distanceFromHome = parseInt(student.distanceFromHome);
-  // const transportation = student.transportation;
-  // const schoolOriginClass = student.schoolOriginClass;
-  // const schoolOriginName = student.schoolOriginName;
-  // const characteristic = student.characteristic;
-  // const healthRecord = student.healthRecord;
-  // const identityNumber = student.identityNumber;
+  const [namaDepan, setFirstName] = useState("");
+  const [namaTengah, setMiddleName] = useState("");
+  const [agama, setReligion] = useState("");
+  const [namaAkhir, setLastName] = useState("");
+  const [statusAnak, setChildStatus] = useState("");
+  const [anakKe, setChildNumber] = useState("");
+  const [tinggi, setHeight] = useState("");
+  const [tempatLahir, setBirthPlace] = useState("");
+  const [tanggalLahir, setBirthDate] = useState("");
+  const [jenisKelamin, setGender] = useState("");
+  const [golonganDarah, setBloodType] = useState("");
+  const [hobi, setHobby] = useState("");
+  const [berat, setWeight] = useState("");
+  const [noKK, setFamilyIdentityNumber] = useState("");
+  const [jarak, setDistanceFromHome] = useState("");
+  const [transportasi, setTransportation] = useState("");
+  const [kelasSaatMendaftar, setSchoolOriginClass] = useState("");
+  const [asalSekolah, setSchoolOriginName] = useState("");
+  const [karakter, setCharacteristic] = useState("");
+  const [kesehatan, setHealthRecord] = useState("");
+  const [noAktaLahir, setIdentityNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const path = "/pmb/tahapan-pmb";
   const regNumber = localStorage.getItem("REG_NUMBER");
@@ -68,79 +69,33 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
   useEffect(() => {
     fetchAdmissonApplicant();
-    if (Object.keys(student).length == 0) {
-      setStudent(students[indexMurid]);
-    }
-  }, [student]);
-
-  const updateStudents = (e) => {
-    const fieldName = e.target.id;
-    setStudent((existingValues) => ({
-      // Retain the existing values
-      ...existingValues,
-      // update the current field
-      [fieldName]: e.target.value,
-    }));
-    console.log("STUDENT DATA === ", student);
-  };
-
-  const updateStudentCal = (e) => {
-    const fieldName = e.element.id;
-    // console.log("fieldName ===> ", e)
-    setStudent((existingValues) => ({
-      // Retain the existing values
-      ...existingValues,
-      // update the current field
-      [fieldName]: e.element.value,
-    }));
-  };
-
-  const updateStudentDropDownCal = (e) => {
-    const fieldName = e.element.id;
-    // console.log("fieldName ===> ", e)
-    setStudent((existingValues) => ({
-      // Retain the existing values
-      ...existingValues,
-      // update the current field
-      [fieldName]: e.value,
-    }));
-  };
-
-  const updateStudentRadio = (e) => {
-    const fieldName = e.target.name;
-    setStudent((existingValues) => ({
-      // Retain the existing values
-      ...existingValues,
-      // update the current field
-      [fieldName]: e.target.value,
-    }));
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
-    const firstName = student.firstName;
-    const middleName = student.middleName;
-    const religion = student.religion;
-    const lastName = student.lastName;
-    const childStatus = student.childStatus;
-    const childNumber = parseInt(student.childNumber);
-    const height = parseInt(student.height);
-    const birthPlace = student.birthPlace;
-    const birthDate = student.birthDate;
-    const gender = student.gender;
-    const bloodType = student.bloodType;
-    const hobby = student.hobby;
-    const weight = parseInt(student.weight);
-    const familyIdentityNumber = student.familyIdentityNumber;
-    const distanceFromHome = parseInt(student.distanceFromHome);
-    const transportation = student.transportation;
-    const schoolOriginClass = student.schoolOriginClass;
-    const schoolOriginName = student.schoolOriginName;
-    const characteristic = student.characteristic;
-    const healthRecord = student.healthRecord;
-    const identityNumber = student.identityNumber;
+    const firstName = namaDepan;
+    const middleName = namaTengah;
+    const religion = agama;
+    const lastName = namaAkhir;
+    const childStatus = statusAnak;
+    const childNumber = parseInt(anakKe);
+    const height = parseInt(tinggi);
+    const birthPlace = tempatLahir;
+    const birthDate = tanggalLahir;
+    const gender = jenisKelamin;
+    const bloodType = golonganDarah;
+    const hobby = hobi;
+    const weight = parseInt(berat);
+    const familyIdentityNumber = noAktaLahir;
+    const distanceFromHome = parseInt(jarak);
+    const transportation = transportasi;
+    const schoolOriginClass = kelasSaatMendaftar;
+    const schoolOriginName = asalSekolah;
+    const characteristic = karakter;
+    const healthRecord = kesehatan;
+    const identityNumber = noAktaLahir;
 
     axios
       .post(
@@ -175,11 +130,11 @@ const FormDaftarMurid = ({ indexMurid }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusUpdateSuccess();
+        AlertStatusTambahSuccess("/pmb/form-data-murid");
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusUpdateFailed();
+        AlertStatusTambahFailed();
       });
   };
 
@@ -210,8 +165,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Depan"
                 type="text"
                 id="firstName"
-                // onChange={updateStudents}
-                // value={student.firstName}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={firstName}
                 placeholder={admissionApplicantData.firstName}
                 disable={true}
                 required={true}
@@ -220,8 +175,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Agama"
                 type="text"
                 id="religion"
-                // onChange={updateStudents}
-                // value={student.religion}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={religion}
                 placeholder={admissionApplicantData.religion}
                 disable={true}
                 required={true}
@@ -230,8 +185,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Tengah"
                 type="text"
                 id="middleName"
-                // onChange={updateStudents}
-                // value={student.middleName}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={middleName}
                 placeholder={admissionApplicantData.middleName}
                 disable={true}
                 required={false}
@@ -240,8 +195,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Belakang"
                 type="text"
                 id="lastName"
-                // onChange={updateStudents}
-                // value={student.lastName}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={lastName}
                 placeholder={admissionApplicantData.lastName}
                 disable={true}
                 required={true}
@@ -250,8 +205,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Status Anak"
                 type="text"
                 id="childStatus"
-                // onChange={updateStudents}
-                // value={student.childStatus}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={childStatus}
                 placeholder={admissionApplicantData.childStatus}
                 disable={true}
                 required={true}
@@ -260,8 +215,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Anak ke"
                 type="number"
                 id="childNumber"
-                // onChange={updateStudents}
-                // value={student.childNumber}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={childNumber}
                 placeholder={admissionApplicantData.childNumber}
                 disable={true}
                 required={true}
@@ -271,8 +226,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tinggi Badan Anak (cm)"
                 type="number"
                 id="height"
-                // onChange={updateStudents}
-                // value={student.height}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={height}
                 placeholder={admissionApplicantData.height + " cm"}
                 disable={true}
                 required={true}
@@ -282,8 +237,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tempat Lahir"
                 type="text"
                 id="birthPlace"
-                // onChange={updateStudents}
-                // value={student.birthPlace}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={birthPlace}
                 placeholder={admissionApplicantData.birthPlace}
                 disable={true}
                 required={true}
@@ -292,8 +247,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tanggal Lahir"
                 type="text"
                 id="birthDate"
-                // onChange={updateStudents}
-                // value={student.birthDate}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={birthDate}
                 placeholder={moment(admissionApplicantData.birthDate).format(
                   "DD-MM-YYYY"
                 )}
@@ -305,8 +260,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                   label="Jenis Kelamin"
                   type="text"
                   id="gender"
-                  // onChange={updateStudents}
-                  // value={student.gender}
+                  // onChange={(e) => setFirstName(e.value)}
+                  // value={gender}
                   placeholder="Laki-Laki"
                   disable={true}
                   required={true}
@@ -316,8 +271,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                   label="Jenis Kelamin"
                   type="text"
                   id="gender"
-                  // onChange={updateStudents}
-                  // value={student.gender}
+                  // onChange={(e) => setFirstName(e.value)}
+                  // value={gender}
                   placeholder="Perempuan"
                   disable={true}
                   required={true}
@@ -327,8 +282,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Golongan Darah"
                 type="text"
                 id="bloodType"
-                // onChange={updateStudents}
-                // value={student.bloodType}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={bloodType}
                 placeholder={admissionApplicantData.bloodType}
                 disable={true}
                 required={true}
@@ -337,8 +292,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Hobi Anak"
                 type="text"
                 id="hobby"
-                // onChange={updateStudents}
-                // value={student.hobby}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={hobby}
                 placeholder={admissionApplicantData.hobby}
                 disable={true}
                 required={true}
@@ -347,8 +302,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Berat Badan Anak (Kg)"
                 type="number"
                 id="weight"
-                // onChange={updateStudents}
-                // value={student.weight}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={weight}
                 placeholder={admissionApplicantData.weight}
                 disable={true}
                 required={true}
@@ -358,8 +313,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nomor Kartu Keluarga"
                 type="text"
                 id="familyIdentityNumber"
-                // onChange={updateStudents}
-                // value={student.familyIdentityNumber}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={familyIdentityNumber}
                 placeholder={admissionApplicantData.familyIdentityNumber}
                 disable={true}
                 required={true}
@@ -368,8 +323,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Jarak Rumah ke Sekolah (Km)"
                 type="number"
                 id="distanceFromHome"
-                // onChange={updateStudents}
-                // value={student.distanceFromHome}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={distanceFromHome}
                 placeholder={admissionApplicantData.distanceFromHome + " Km"}
                 disable={true}
                 required={false}
@@ -379,8 +334,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Transportasi ke Sekolah"
                 type="text"
                 id="transportation"
-                // onChange={updateStudents}
-                // value={student.transportation}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={transportation}
                 placeholder={admissionApplicantData.transportation}
                 disable={true}
                 required={true}
@@ -389,8 +344,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Kelas Pada Saat Mendaftar"
                 type="number"
                 id="schoolOriginClass"
-                // onChange={updateStudents}
-                // value={student.schoolOriginClass}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={schoolOriginClass}
                 placeholder={admissionApplicantData.schoolOriginClass}
                 disable={true}
                 required={true}
@@ -401,8 +356,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Asal Sekolah"
                 type="text"
                 id="schoolOriginName"
-                // onChange={updateStudents}
-                // value={student.schoolOriginName}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={schoolOriginName}
                 placeholder={admissionApplicantData.schoolOriginName}
                 disable={true}
                 required={true}
@@ -411,8 +366,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Sifat Dominan Anak"
                 type="text"
                 id="characteristic"
-                // onChange={updateStudents}
-                // value={student.characteristic}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={characteristic}
                 placeholder={admissionApplicantData.characteristic}
                 disable={true}
                 required={true}
@@ -421,8 +376,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Penyakit Berat yang Pernah Diderita"
                 type="text"
                 id="healthRecord"
-                // onChange={updateStudents}
-                // value={student.healthRecord}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={healthRecord}
                 placeholder={admissionApplicantData.healthRecord}
                 disable={true}
                 required={true}
@@ -431,8 +386,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nomor Akta Lahir Anak"
                 type="text"
                 id="identityNumber"
-                // onChange={updateStudents}
-                // value={student.identityNumber}
+                // onChange={(e) => setFirstName(e.value)}
+                // value={identityNumber}
                 placeholder={admissionApplicantData.identityNumber}
                 disable={true}
                 required={true}
@@ -444,8 +399,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Depan"
                 type="text"
                 id="firstName"
-                onChange={updateStudents}
-                value={student.firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                value={namaDepan}
                 // placeholder={admissionApplicantData.firstName}
                 disable={false}
                 required={true}
@@ -454,8 +409,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Agama"
                 type="text"
                 id="religion"
-                onChange={updateStudents}
-                value={student.religion}
+                onChange={(e) => setReligion(e.target.value)}
+                value={agama}
                 // placeholder={admissionApplicantData.religion}
                 disable={false}
                 required={true}
@@ -464,8 +419,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Tengah"
                 type="text"
                 id="middleName"
-                onChange={updateStudents}
-                value={student.middleName}
+                onChange={(e) => setMiddleName(e.target.value)}
+                value={namaTengah}
                 // placeholder={admissionApplicantData.middleName}
                 disable={false}
                 required={false}
@@ -474,8 +429,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Belakang"
                 type="text"
                 id="lastName"
-                onChange={updateStudents}
-                value={student.lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                value={namaAkhir}
                 // placeholder={admissionApplicantData.lastName}
                 disable={false}
                 required={true}
@@ -484,8 +439,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Status Anak"
                 type="text"
                 id="childStatus"
-                onChange={updateStudents}
-                value={student.childStatus}
+                onChange={(e) => setChildStatus(e.target.value)}
+                value={statusAnak}
                 // placeholder={admissionApplicantData.childStatus}
                 disable={false}
                 required={true}
@@ -494,8 +449,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Anak ke"
                 type="number"
                 id="childNumber"
-                onChange={updateStudents}
-                value={student.childNumber}
+                onChange={(e) => setChildNumber(e.target.value)}
+                value={anakKe}
                 // placeholder={admissionApplicantData.childNumber}
                 disable={false}
                 required={true}
@@ -505,8 +460,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tinggi Badan Anak (cm)"
                 type="number"
                 id="height"
-                onChange={updateStudents}
-                value={student.height}
+                onChange={(e) => setHeight(e.target.value)}
+                value={tinggi}
                 // placeholder={admissionApplicantData.height + " cm"}
                 disable={false}
                 required={true}
@@ -516,8 +471,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tempat Lahir"
                 type="text"
                 id="birthPlace"
-                onChange={updateStudents}
-                value={student.birthPlace}
+                onChange={(e) => setBirthPlace(e.target.value)}
+                value={tempatLahir}
                 // placeholder={admissionApplicantData.birthPlace}
                 disable={false}
                 required={true}
@@ -525,8 +480,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
               <DropdownDatePickers
                 label="Tanggal Lahir"
                 id="birthDate"
-                value={student.birthDate}
-                change={updateStudentCal.bind(this)}
+                value={tanggalLahir}
+                change={(e) => setBirthDate(e.element.value)}
               />
               <DropdownRadioInputGender
                 required={true}
@@ -535,23 +490,23 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 value2="male"
                 label2="Perempuan"
                 label3="Laki-Laki"
-                onChange={updateStudentRadio}
+                onChange={(e) => setGender(e.target.value)}
                 // placeholder={admissionApplicantData.gender}
-                checked={student.gender}
+                checked={jenisKelamin}
               />
               <DropdownRadioInputBloodType
                 required={true}
                 label="Golongan Darah"
-                onChange={updateStudentRadio}
+                onChange={(e) => setBloodType(e.target.value)}
                 // placeholder={admissionApplicantData.bloodType}
-                checked={student.bloodType}
+                checked={golonganDarah}
               />
               <TextInput
                 label="Hobi Anak"
                 type="text"
                 id="hobby"
-                onChange={updateStudents}
-                value={student.hobby}
+                onChange={(e) => setHobby(e.target.value)}
+                value={hobi}
                 // placeholder={admissionApplicantData.hobby}
                 disable={false}
                 required={true}
@@ -560,8 +515,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Berat Badan Anak (Kg)"
                 type="number"
                 id="weight"
-                onChange={updateStudents}
-                value={student.weight}
+                onChange={(e) => setWeight(e.target.value)}
+                value={berat}
                 // placeholder={admissionApplicantData.weight}
                 disable={false}
                 required={true}
@@ -571,8 +526,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nomor Kartu Keluarga"
                 type="text"
                 id="familyIdentityNumber"
-                onChange={updateStudents}
-                value={student.familyIdentityNumber}
+                onChange={(e) => setFamilyIdentityNumber(e.target.value)}
+                value={noKK}
                 // placeholder={admissionApplicantData.familyIdentityNumber}
                 disable={false}
                 required={true}
@@ -581,8 +536,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Jarak Rumah ke Sekolah (Km)"
                 type="number"
                 id="distanceFromHome"
-                onChange={updateStudents}
-                value={student.distanceFromHome}
+                onChange={(e) => setDistanceFromHome(e.target.value)}
+                value={jarak}
                 // placeholder={admissionApplicantData.distanceFromHome + " Km"}
                 disable={false}
                 required={false}
@@ -595,9 +550,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 disable={false}
                 id="transportation"
                 dataSource={dropdownData.transportasiSekolah}
-                // fields={{ value: "text", text: "text" }}
-                value={student.transportation}
-                change={updateStudentDropDownCal.bind(this)}
+                value={transportasi}
+                change={(e) => setTransportation(e.value)}
                 popupHeight="auto"
               />
 
@@ -605,8 +559,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Kelas Pada Saat Mendaftar"
                 type="number"
                 id="schoolOriginClass"
-                onChange={updateStudents}
-                value={student.schoolOriginClass}
+                onChange={(e) => setSchoolOriginClass(e.target.value)}
+                value={kelasSaatMendaftar}
                 // placeholder={admissionApplicantData.schoolOriginClass}
                 disable={false}
                 required={true}
@@ -617,8 +571,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Asal Sekolah"
                 type="text"
                 id="schoolOriginName"
-                onChange={updateStudents}
-                value={student.schoolOriginName}
+                onChange={(e) => setSchoolOriginName(e.target.value)}
+                value={asalSekolah}
                 // placeholder={admissionApplicantData.schoolOriginName}
                 disable={false}
                 required={true}
@@ -627,8 +581,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Sifat Dominan Anak"
                 type="text"
                 id="characteristic"
-                onChange={updateStudents}
-                value={student.characteristic}
+                onChange={(e) => setCharacteristic(e.target.value)}
+                value={karakter}
                 // placeholder={admissionApplicantData.characteristic}
                 disable={false}
                 required={true}
@@ -637,8 +591,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Penyakit Berat yang Pernah Diderita"
                 type="text"
                 id="healthRecord"
-                onChange={updateStudents}
-                value={student.healthRecord}
+                onChange={(e) => setHealthRecord(e.target.value)}
+                value={kesehatan}
                 // placeholder={admissionApplicantData.healthRecord}
                 disable={false}
                 required={true}
@@ -647,8 +601,8 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nomor Akta Lahir Anak"
                 type="text"
                 id="identityNumber"
-                onChange={updateStudents}
-                value={student.identityNumber}
+                onChange={(e) => setIdentityNumber(e.target.value)}
+                value={noAktaLahir}
                 // placeholder={admissionApplicantData.identityNumber}
                 disable={false}
                 required={true}

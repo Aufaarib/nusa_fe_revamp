@@ -56,7 +56,7 @@ const BerkasPembayaran = () => {
 
   // Function to handle removing a file
   const onRemoveFile = (args) => {
-    setFileInvoice(null);
+    // setFileInvoice(null);
   };
 
   // Function to handle uploading a file

@@ -33,6 +33,26 @@ export function validateEmail(setSts, otp, navigateLogin) {
     });
 }
 
+// DAFTAR ULANG
+export function daftarUlangAgreement() {
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  axios
+    .post(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${regNumber}/reregistraton`,
+      null,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      AlertStatusUpdateSuccess();
+    })
+    .catch((error) => {
+      AlertStatusUpdateFailed();
+    });
+}
+
 export function revalidateEmail(setSts, otp) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/user/verification", {
@@ -79,7 +99,7 @@ export function getAdmissionAnswer(setData, setSts) {
     .then((res) => {
       console.log("ADMISSION STATEMENT ANSWER === ", res.data.body);
       setData(res.data.body.statements);
-      setSts(res.data.code);
+      // setSts(res.data.code);
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -95,6 +115,28 @@ export function getAdmissionRegistration(setData, setSts) {
       console.log(
         "ADMISSION REGISTRATION === ",
         res.data.body[0].user.fullname
+      );
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
+export function getAdmissionRegistrationByRegNumber(setData, setSts) {
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      console.log(
+        "ADMISSION REGISTRATION === ",
+        res.data.body.admissionPhase.amount
       );
       setData(res.data.body);
       setSts({ type: "success" });
@@ -223,12 +265,12 @@ export function getAdmissionRegistrationParentsAyah(setData, setSts) {
         switch (i.relationship) {
           case "ayah":
             setData(i);
-            setSts(res.data.code);
+          // setSts(res.data.code);
         }
       }
     })
     .catch((error) => {
-      setSts(error.data.code);
+      // setSts(error.data.code);
     });
 }
 export function getAdmissionRegistrationParentsIbu(setData, setSts) {

@@ -21,60 +21,60 @@ import {
 import Countdown from "react-countdown";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const USER_REGEX = /^[A-z]{3}/;
-const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
-const ONLY_NUMBER_REGEX = /^[0-9\b]+$/;
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/api/register";
+// const USER_REGEX = /^[A-z]{3}/;
+// const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
+// const ONLY_NUMBER_REGEX = /^[0-9\b]+$/;
+// const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+// const REGISTER_URL = "/api/register";
 
 const UserVerification = () => {
-  const { resendEmailVerification } = useAuth();
-  const { isLoading, setIsLoading } = useStateContext();
+  // const { resendEmailVerification } = useAuth();
+  // const { isLoading, setIsLoading } = useStateContext();
 
-  const userRef = useRef();
-  const phoneRef = useRef();
-  const jumlahanakRef = useRef();
-  const emailRef = useRef();
-  const errRef = useRef();
+  // const userRef = useRef();
+  // const phoneRef = useRef();
+  // const jumlahanakRef = useRef();
+  // const emailRef = useRef();
+  // const errRef = useRef();
 
-  const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  // const [user, setUser] = useState("");
+  // const [validName, setValidName] = useState(false);
+  // const [userFocus, setUserFocus] = useState(false);
 
-  const [phone, setPhone] = useState("");
-  const [validPhone, setValidPhone] = useState(false);
-  const [phoneFocus, setPhoneFocus] = useState(false);
+  // const [phone, setPhone] = useState("");
+  // const [validPhone, setValidPhone] = useState(false);
+  // const [phoneFocus, setPhoneFocus] = useState(false);
 
-  const [jumlahanak, setJumlahAnak] = useState("");
-  const [validJumlahAnak, setValidJumlahAnak] = useState(false);
-  const [jumlahAnakFocus, setJumlahAnakFocus] = useState(false);
+  // const [jumlahanak, setJumlahAnak] = useState("");
+  // const [validJumlahAnak, setValidJumlahAnak] = useState(false);
+  // const [jumlahAnakFocus, setJumlahAnakFocus] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [emailVerify, setEmailVerify] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [emailVerify, setEmailVerify] = useState("");
+  // const [validEmail, setValidEmail] = useState(false);
+  // const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
+  // const [pwd, setPwd] = useState("");
+  // const [validPwd, setValidPwd] = useState(false);
+  // const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  // const [matchPwd, setMatchPwd] = useState("");
+  // const [validMatch, setValidMatch] = useState(false);
+  // const [matchFocus, setMatchFocus] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [errMsgName, setErrMsgName] = useState("");
-  const [errMsgPhone, setErrMsgPhone] = useState("");
-  const [errMsgJumlahAnak, setErrMsgJumlahAnak] = useState("");
-  const [errMsgEmail, setErrMsgEmail] = useState("");
-  const [errMsgPwd, setErrMsgPwd] = useState("");
-  const [errMsgMatchPwd, setErrMsgMatchPwd] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [errMsg, setErrMsg] = useState("");
+  // const [errMsgName, setErrMsgName] = useState("");
+  // const [errMsgPhone, setErrMsgPhone] = useState("");
+  // const [errMsgJumlahAnak, setErrMsgJumlahAnak] = useState("");
+  // const [errMsgEmail, setErrMsgEmail] = useState("");
+  // const [errMsgPwd, setErrMsgPwd] = useState("");
+  // const [errMsgMatchPwd, setErrMsgMatchPwd] = useState("");
+  // const [success, setSuccess] = useState(false);
+  const [sts, setSts] = useState("");
   const [otp, setOtp] = useState("");
   const [showCountdown, setShowCountdown] = useState(false);
-  const [sts, setSts] = useState("");
-  const [countdownTime, setCountdownTime] = useState(Date.now() + 300000);
+  const [countdownTime, setCountdownTime] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -93,7 +93,7 @@ const UserVerification = () => {
 
     if (showCountdown) {
       countdownInterval = setInterval(() => {
-        setCountdownTime((prevTime) => prevTime - 1000);
+        setCountdownTime((prevTime) => prevTime - 100);
       }, 1000);
     }
 

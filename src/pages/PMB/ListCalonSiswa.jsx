@@ -31,7 +31,7 @@ const ListCalonSiswa = () => {
   console.log("MASUUUKKKKKK === ", dataActiveAdmission);
 
   const groupedCandidates = dataMyAdmission.reduce((result, current) => {
-    const { year } = current.admission?.admission?.academicYear;
+    const { year } = current.admissionPhase?.admission?.academicYear;
     if (year) {
       if (!result[year]) {
         result[year] = [];

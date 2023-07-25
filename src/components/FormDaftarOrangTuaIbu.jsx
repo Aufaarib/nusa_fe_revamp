@@ -20,6 +20,8 @@ import {
   getAdmissionRegistrationParentsIbu,
 } from "../api/Registrasi";
 import {
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
@@ -54,10 +56,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
 
   useEffect(() => {
     fetchAdmissonParents();
-    if (parent.id == "" && parents[indexOrtu].id !== "") {
-      setParent(parents[indexOrtu]);
-    }
-  }, [parent]);
+  }, []);
 
   const updateParents = (e) => {
     const fieldName = e.target.id;
@@ -147,11 +146,11 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusUpdateSuccess();
+        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ibu");
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusUpdateFailed();
+        AlertStatusTambahFailed();
       });
   };
 

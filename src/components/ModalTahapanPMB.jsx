@@ -20,11 +20,13 @@ import useAuth from "../hooks/useAuth";
 import { useStateContext } from "../contexts/ContextProvider";
 import { useEffect, useState } from "react";
 import {
+  daftarUlangAgreement,
   getAdmissionRegistrationApplicant,
   getAdmissionRegistrationParentsAyah,
   getAdmissionRegistrationParentsIbu,
   getAdmissionRegistrationParentsWali,
 } from "../api/Registrasi";
+import moment from "moment/moment";
 
 const ModalTahapanPMB = ({
   status,
@@ -38,8 +40,8 @@ const ModalTahapanPMB = ({
   const { auth } = useAuth();
   const verified = "verified";
   const {
+    dataAdmissionRegistration,
     admissionSteps1,
-    daftarUlangAgreement,
     resendEmailVerification,
     paymentAgreement,
     successMsgSendVerify,
@@ -49,12 +51,14 @@ const ModalTahapanPMB = ({
   const Nama = localStorage.getItem("NAMA");
   const navigate = useNavigate();
   const path = "/pmb/form-data-murid";
-
   const navigateFormulir = () => {
     navigate(path);
   };
 
-  console.log("ADMISSION STEP 1 === ", admissionSteps1.status);
+  // useEffect(() => {
+  //   setAmount(dataAdmissionRegistration.admissionPhase.amount);
+  // }, []);
+  // const amount = dataAdmissionRegistration.admissionPhase.amount;
 
   return (
     <>
@@ -174,7 +178,7 @@ const ModalTahapanPMB = ({
                     {/* {step == 6 && ""} */}
                   </h4>
                   <br />
-                  {status == "Belum Mulai" && <p>{details.message}</p>}
+                  {status == "Belum Mulai" && <p>tes</p>}
                   {step == 1 && status == "Berhasil" && (
                     <p>{details.message}</p>
                   )}
@@ -228,14 +232,30 @@ const ModalTahapanPMB = ({
                                 <strong className="capitalize">{Nama}</strong>
                                 <br />
                                 <hr />
-                                Batas Akhir Pembayaran :
+                                Batas Akhir Pembayaran : {""}
+                                <strong>
+                                  {moment(
+                                    dataAdmissionRegistration.admissionPhase
+                                      .endDate
+                                  ).format("DD-MM-YYYY")}
+                                </strong>
                                 <hr />
-                                <strong>Total Tagihan : </strong>
+                                Total Tagihan : {""}
+                                <strong>
+                                  {new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    minimumFractionDigits: 0,
+                                  }).format(
+                                    dataAdmissionRegistration.admissionPhase
+                                      .amount
+                                  )}
+                                </strong>
                                 <hr />
                                 <br />
                               </p>
                               Silahkan lakukan transfer sebesar{" "}
-                              <strong>Rp. 2.000.000</strong> ke rekening berikut
+                              <strong>Total Tagihan</strong> ke rekening berikut
                               :
                               <br />
                               Bank DKI Syariah cabang Pondok Indah
@@ -320,30 +340,29 @@ const ModalTahapanPMB = ({
                           </p>
                           <br />
                           <p>
-                            Nama Lengkap :
-                            <strong className="capitalize">
-                              {/* {item.nama_depan} {item.nama_tengah}
-                          {item.nama_belakang} */}
+                            Nama Anak :{" "}
+                            <strong>
+                              {dataAdmissionRegistration.childName}
                             </strong>
                           </p>
-                          <p>
+                          {/* <p>
                             Kategori:
-                            {/* <strong>{item.hasil_test.kategori}</strong> */}
-                          </p>
+                          </p> */}
                           <p>
-                            Hasil Tes:
-                            {/* <strong>{item.hasil_test.hasil_akhir}</strong> */}
+                            Nilai Tes :{" "}
+                            <strong>
+                              {dataAdmissionRegistration.testResult.score}
+                            </strong>
                           </p>
-                          <p>
+                          {/* <p>
                             Lampiran Tes:
                             <a
                               // href={item.hasil_test.pdf}
                               className="break-all"
                               target="_blank"
                             >
-                              {/* {item.hasil_test.pdf} */}
                             </a>
-                          </p>
+                          </p> */}
                           <br />
                           <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
                         </div>
@@ -351,25 +370,44 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
-                  {step == 4 && status !== "Belum Mulai" && (
+                  {step == 4 && status == "Belum Mulai" && (
                     <div>
                       <p>
                         Alhamdulillah, Ananda telah lulus test penerimaan calon
-                        murid baru SAIM. Selamat ya Ayah/ Bunda.
+                        murid baru SAIM.
                       </p>
                       <br />
                       <p>
                         Untuk proses selanjutnya, klik link persetujuan berikut:
                       </p>
-                      {status !== "Berhasil" && (
-                        <Link
-                          onClick={daftarUlangAgreement}
-                          className="mt-3 btn-merah"
-                        >
-                          Persetujuan Daftar Ulang
-                        </Link>
-                      )}
+                      <Link
+                        onClick={daftarUlangAgreement}
+                        className="mt-3 btn-merah"
+                      >
+                        Persetujuan Daftar Ulang
+                      </Link>
                     </div>
+                  )}
+
+                  {step == 4 && status !== "Belum Mulai" && (
+                    <>
+                      {status == "Dalam Proses" && (
+                        <div>
+                          <p>
+                            Persetujuan Daftar Ulang Telah Terkirim Dan Dalam
+                            Proses Pengecekan Oleh Admin
+                          </p>
+                        </div>
+                      )}
+                      {status == "Berhasil" && (
+                        <div>
+                          <p>
+                            Proses Pendaftaran Ulang Telah Selesai, Silahkan
+                            Lanjut Ke Tahap Berikutnya
+                          </p>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {step == 5 && status == "Berhasil" && (

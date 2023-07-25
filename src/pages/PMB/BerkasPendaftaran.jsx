@@ -17,9 +17,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
 import { BsChevronLeft } from "react-icons/bs";
 import {
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../../components/ModalPopUp";
+import { useRef } from "react";
 // import { L10n } from "@syncfusion/ej2-base";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -27,6 +30,10 @@ const SUBMIT_URL = "/admission/registration/REG00038/additionalFile";
 
 const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  const SUBMIT_URL = `/admission/registration/${regNumber}/additionalFile`;
+  const domain = process.env.REACT_APP_BASE_URL;
+  const [isLoading, setIsLoading] = useState(false);
   const {
     documents,
     setDocuments,
@@ -37,91 +44,111 @@ const BerkasPendaftaran = () => {
     formCheck,
     getFormCheck,
   } = useStateContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const [fileUpload, setFileUpload] = useState({});
-  const [fileRapor, setFileRapor] = useState([]);
-  const [fileKk, setFileKk] = useState([]);
-  const [fileAkte, setFileAkte] = useState([]);
-  const [fileIjazah, setFileIjazah] = useState([]);
 
-  const navigate = useNavigate();
-  const path = "/pmb/tahapan-pmb";
+  const [fileInvoice, setFileInvoice] = useState(null);
+  const uploaderRef = useRef(null);
+  const [filePasPhoto, setPasPhoto] = useState(null);
+  const [fileKk, setFileKk] = useState(null);
+  const [fileAkte, setFileAkte] = useState(null);
+  const [fileRapor, setFileRapor] = useState(null);
 
-  // Uploader component
-  let uploadObj;
-  let asyncSettings;
-  let dropContainerRef;
-  let dropContainerEle;
-  dropContainerEle = null;
-  dropContainerRef = (element) => {
-    dropContainerEle = element;
+  // Define your asyncSettings for the UploaderComponent (modify this as needed)
+  const asyncSettings = {
+    saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
+    removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
   };
-  asyncSettings = {
-    saveUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Save",
-    removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
+
+  // Define your minFileSize and maxFileSize (modify these as needed)
+  const minFileSize = 0;
+  const maxFileSize = 5000000; // 5 MB (you can modify this value)
+
+  // Function to handle removing a file
+  const onRemoveFile = (args) => {
+    // setFileInvoice(null);
   };
-  function onRemoveFile(args) {
-    args.postRawFile = false;
-  }
-  function onFileUpload(args) {
-    console.log("UPLOADING..");
-    // args.customFormData = [{ id: fileUpload.id }];
-    args.currentRequest.setRequestHeader("Authorization", token);
-    setFileUpload(args);
-    console.log(args);
-  }
-  function onSuccess() {
-    getDocumentsData();
-    console.log("SUCCESS");
-  }
 
-  let minFileSize = 1000;
-  let maxFileSize = 1000000;
+  // Function to handle uploading a file
+  const onFileUpload = (args) => {
+    // You can perform any custom actions before the file upload starts if needed
+  };
 
-  const handleSubmit = async (e) => {
-    let params = {
-      rapor: fileRapor,
-      kartu_keluarga: fileKk,
-      akte_kelahiran: fileAkte,
-      ijazah: fileIjazah,
-    };
-    e.preventDefault();
-    setIsLoading(true);
-    console.log("file untuk upload", "=> ", params);
+  // Function to handle upload success
+  const onAkte = (args) => {
+    // You can perform any custom actions after a successful upload if needed
+    console.log("File uploaded successfully!", args);
+    setFileAkte(args);
+  };
 
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      authorization: token,
-    };
+  const onRapor = (args) => {
+    // You can perform any custom actions after a successful upload if needed
+    console.log("File uploaded successfully!", args);
+    setFileRapor(args);
+  };
+
+  const onKK = (args) => {
+    // You can perform any custom actions after a successful upload if needed
+    console.log("File uploaded successfully!", args);
+    setFileKk(args);
+  };
+
+  const onPasPhoto = (args) => {
+    // You can perform any custom actions after a successful upload if needed
+    console.log("File uploaded successfully!", args);
+    setPasPhoto(args);
+  };
+
+  // Function to handle file upload to the API using Axios
+  const handleFileUpload = () => {
+    // Replace 'your_api_base_url' with the base URL of your API
+    // const formData = new FormData();
+    // formData.append("file", filesData.file.rawFile);
+    const rapor = fileRapor.file.rawFile;
+    const akte = fileAkte.file.rawFile;
+    const kk = fileKk.file.rawFile;
+    const pasPhoto = filePasPhoto.file.rawFile;
+
+    console.log("FilesData:", rapor);
+
+    // const formData = new FormData();
+    // formData.append("invoice", file);
+    // console.log("GG === ", formData);
+
     axios
-      .post(SUBMIT_URL, params, { headers })
-      .then(() => {
-        setIsLoading(false);
-        AlertStatusUpdateSuccess();
+      .post(
+        SUBMIT_URL,
+        {
+          rapor,
+          akte,
+          kk,
+          pasPhoto,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle success response if needed
+        console.log("File uploaded successfully!", response);
+        AlertStatusTambahSuccess("/pmb/berkas-pendaftaran");
       })
-      .catch(() => {
-        setIsLoading(false);
-        AlertStatusUpdateFailed();
+      .catch((error) => {
+        // Handle error response if needed
+        console.error("Error uploading file:", error);
+        AlertStatusTambahFailed();
       });
   };
-
-  function getExtension(filename) {
-    return filename.split(".").pop();
-  }
-
-  let akte_kelahiran = fileUpload.akte_kelahiran;
-  let kartu_keluarga = fileUpload.kartu_keluarga;
-  let rapor = fileUpload.rapor;
-  let foto = fileUpload.foto;
 
   return (
     <>
       <Header
         home="PMB"
-        prev="Tahapan"
-        navePrev={path}
-        at="Berkas Pendaftaran"
-        title="Form Berkas Pendaftaran"
+        // prev="Bank"
+        // navePrev={path}
+        at="Bukti Pembayaran"
+        title="Form Bukti Pembayaran"
       />
       <article>
         <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
@@ -134,31 +161,25 @@ const BerkasPendaftaran = () => {
               THUMBNAIL
             </div> */}
             <UploaderComponent
-              id="akte_kelahiran"
+              id="invoice"
               type="file"
-              ref={(scope) => {
-                setFileAkte(scope?.filesData[0]);
-              }}
+              ref={uploaderRef}
               asyncSettings={asyncSettings}
-              removing={onRemoveFile.bind(this)}
-              uploading={onFileUpload.bind(this)}
-              success={onSuccess.bind(this)}
+              removing={onRemoveFile}
+              uploading={onFileUpload}
+              success={onAkte.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".pdf"
-              accept=".pdf"
+              allowedExtensions=".png"
+              accept=".png"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !akte_kelahiran ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
               }}
-            >
-              {/* <FilesDirective>
-								<UploadedFilesDirective name={akte_kelahiran} size={25000} type=".pdf"></UploadedFilesDirective>
-							</FilesDirective> */}
-            </UploaderComponent>
+            />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .pdf</i>
+              <i>Jenis berkas: .png</i>
             </small>
           </section>
 
@@ -166,43 +187,27 @@ const BerkasPendaftaran = () => {
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
               Kartu Keluarga{" "}
-              {/* {!kartu_keluarga ? (
-                <span className="ml-1 text-merah">*</span>
-              ) : (
-                <span>
-                  <MdVerified className="inline-block text-md text-green-600 ml-0.5 mb-1" />{" "}
-                  <strong className="text-green-600 text">
-                    Sudah Diunggah
-                  </strong>
-                </span>
-              )} */}
             </label>
             <UploaderComponent
-              id="kartu_keluarga"
+              id="invoice"
               type="file"
-              ref={(scope) => {
-                setFileKk(scope?.filesData[0]);
-              }}
+              ref={uploaderRef}
               asyncSettings={asyncSettings}
-              removing={onRemoveFile.bind(this)}
-              uploading={onFileUpload.bind(this)}
-              success={onSuccess.bind(this)}
+              removing={onRemoveFile}
+              uploading={onFileUpload}
+              success={onKK.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".pdf"
-              accept=".pdf"
+              allowedExtensions=".png"
+              accept=".png"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !kartu_keluarga ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
               }}
-            >
-              {/* <FilesDirective>
-								<UploadedFilesDirective name={kartu_keluarga} size={25000} type=".pdf"></UploadedFilesDirective>
-							</FilesDirective> */}
-            </UploaderComponent>
+            />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .pdf</i>
+              <i>Jenis berkas: .png</i>
             </small>
           </section>
 
@@ -210,43 +215,27 @@ const BerkasPendaftaran = () => {
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
               Rapor{" "}
-              {!rapor ? (
-                <span className="ml-1 text-merah">*</span>
-              ) : (
-                <span>
-                  <MdVerified className="inline-block text-md text-green-600 ml-0.5 mb-1" />{" "}
-                  <strong className="text-green-600 text">
-                    Sudah Diunggah
-                  </strong>
-                </span>
-              )}
             </label>
             <UploaderComponent
-              id="rapor"
+              id="invoice"
               type="file"
-              ref={(scope) => {
-                setFileRapor(scope?.filesData[0]);
-              }}
+              ref={uploaderRef}
               asyncSettings={asyncSettings}
-              removing={onRemoveFile.bind(this)}
-              uploading={onFileUpload.bind(this)}
-              success={onSuccess.bind(this)}
+              removing={onRemoveFile}
+              uploading={onFileUpload}
+              success={onRapor.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".pdf"
-              accept=".pdf"
+              allowedExtensions=".png"
+              accept=".png"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !rapor ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
               }}
-            >
-              {/* <FilesDirective>
-								<UploadedFilesDirective name={rapor} size={25000} type=".pdf"></UploadedFilesDirective>
-							</FilesDirective> */}
-            </UploaderComponent>
+            />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .pdf</i>
+              <i>Jenis berkas: .png</i>
             </small>
           </section>
 
@@ -254,40 +243,27 @@ const BerkasPendaftaran = () => {
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
               Pas Foto 3x4{" "}
-              {!foto ? (
-                <span className="ml-1 text-merah">*</span>
-              ) : (
-                <span>
-                  <MdVerified className="inline-block text-md text-green-600 ml-0.5 mb-1" />{" "}
-                  <strong className="text-green-600 text">
-                    Sudah Diunggah
-                  </strong>
-                </span>
-              )}
             </label>
             <UploaderComponent
-              id="foto"
+              id="invoice"
               type="file"
-              ref={(scope) => {
-                setFileIjazah(scope?.filesData[0]);
-              }}
+              ref={uploaderRef}
               asyncSettings={asyncSettings}
-              removing={onRemoveFile.bind(this)}
-              uploading={onFileUpload.bind(this)}
-              success={onSuccess.bind(this)}
+              removing={onRemoveFile}
+              uploading={onFileUpload}
+              success={onPasPhoto.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".jpg,.png,.jpeg"
+              allowedExtensions=".png"
+              accept=".png"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
-              buttons={{ browse: !foto ? "Unggah Berkas" : "Ganti Berkas" }}
-            >
-              {/* <FilesDirective>
-								<UploadedFilesDirective name={name_foto} size={25000} type={foto_extension}></UploadedFilesDirective>
-							</FilesDirective> */}
-            </UploaderComponent>
+              buttons={{
+                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+              }}
+            />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .jpg, .png</i>
+              <i>Jenis berkas: .png</i>
             </small>
           </section>
         </div>
@@ -296,7 +272,7 @@ const BerkasPendaftaran = () => {
           <button
             type="button"
             className="w-auto btn-merah"
-            onClick={handleSubmit}
+            onClick={handleFileUpload}
           >
             {isLoading ? (
               <CgSpinner className="mr-2 text-xl animate-spin" />

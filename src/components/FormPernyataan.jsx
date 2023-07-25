@@ -16,6 +16,8 @@ import { DropdownListComponents, DropdownRadioInputGender } from "./Dropdown";
 import { getAdmissionAnswer, getAdmissionStatement } from "../api/Registrasi";
 import Header from "./Header";
 import {
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
@@ -95,11 +97,11 @@ const FormPernyataan = ({ indexMurid }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusUpdateSuccess();
+        AlertStatusTambahSuccess("/pmb/form-pernyataan");
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusUpdateFailed();
+        AlertStatusTambahFailed();
       });
   };
 

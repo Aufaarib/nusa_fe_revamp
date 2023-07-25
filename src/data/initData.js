@@ -392,7 +392,7 @@ export const dropdownData = {
     { id: "1", text: "Sepeda" },
     { id: "2", text: "Motor" },
     { id: "3", text: "Mobil" },
-    { id: "4", text: "Lainnya" },
+    { id: "4", text: "Transportasi Umum" },
   ],
   pendidikanTerakhir: [
     { id: "1", text: "SMA" },
