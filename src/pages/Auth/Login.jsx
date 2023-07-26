@@ -1,71 +1,45 @@
-import { useRef, useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import logoSaim from "../../data/logo-saim.png";
-import assalamualaikum from "../../data/assalamualaikum.png";
-import { CgSpinner } from "react-icons/cg";
-import { FaEye, FaInvision, FaLowVision, FaTimesCircle } from "react-icons/fa";
-import { useStateContext } from "../../contexts/ContextProvider";
-// import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
-import { AlertEmpty, AlertLoginFailed } from "../../components/ModalPopUp";
 import { IconButton, Input, InputAdornment } from "@mui/material";
-
-// const LOGIN_URL = "/api/login";
+import { useEffect, useRef, useState } from "react";
+import { CgSpinner } from "react-icons/cg";
+import { FaEye, FaLowVision } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import { AlertLoginFailed } from "../../components/ModalPopUp";
+import { useStateContext } from "../../contexts/ContextProvider";
+import assalamualaikum from "../../data/assalamualaikum.png";
+import logoSaim from "../../data/logo-saim.png";
 
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
-  const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  // const [errMsg, setErrMsg] = useState("");
+  // const [sccsMsg, setSccsMsg] = useState("");
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
   });
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  // const { auth, setAuth } = useAuth();
-  // const role = JSON.parse(localStorage.getItem('ROLE'));
-  // const role = localStorage.getItem("ROLE");
-  // const location = useLocation();
-  // const from = location.state?.from.pathname || "/";
-
+  const navigate = useNavigate();
   const userRef = useRef();
-  const errRef = useRef();
-
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [errMsgUser, setErrMsgUser] = useState("");
-  // const [errMsgPwd, setErrMsgPwd] = useState("");
-  // const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd]);
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
 
   const navigateRegister = () => {
     navigate("/register");
   };
 
-  // useEffect(() => {
-  //   navigate("/pmb", { replace: true });
-  // }, [])
-
-  // useEffect(() => {
-  //   localStorage.setItem('USER_CREDS', JSON.stringify(auth))
-  // }, [])
+  const directTo = "Login";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
-
     try {
       const response = await axios.post(
         process.env.REACT_APP_BASE_URL + "/user/login",
@@ -74,17 +48,19 @@ const Login = () => {
           password: pwd,
         }
       );
+
       const role = response?.data?.body.role;
       const email = response?.data?.body.email;
       const verified = response?.data?.body.status;
       const token = response?.headers?.authorization;
       const nama = response?.data?.body.fullname;
-      setIsLoading(false);
       localStorage.setItem("TOKEN", token);
       localStorage.setItem("NAMA", nama);
       localStorage.setItem("ROLE", role);
       localStorage.setItem("EMAIL", email);
-      console.log(role);
+
+      setIsLoading(false);
+
       if (response.status === 200) {
         if (role === "ADMIN" && verified === 1) {
           navigate("/admin/dashboard", { replace: true });
@@ -94,6 +70,7 @@ const Login = () => {
           navigate("/verify", {
             state: {
               email: email,
+              direct: directTo,
             },
           });
         } else {
@@ -101,10 +78,6 @@ const Login = () => {
         }
       }
     } catch (err) {
-      // console.error("ERROR === ", err?.response?.data.errors)
-      // const errMsg = err?.response?.data.errors;
-      // setErrMsg(errMsg);
-      // errRef.current.focus();
       AlertLoginFailed();
       setIsLoading(false);
     }
@@ -183,26 +156,6 @@ const Login = () => {
               </Link>
             </div>
           </div>
-
-          {/* <div
-            ref={errRef}
-            className={
-              errMsg
-                ? "errmsg px-4 py-3 mt-3 mb-3 mb-4 rounded-md text-merah text-sm bg-red-100 xl:w-480 relative"
-                : "hidden"
-            }
-            aria-live="assertive"
-            role="alert"
-          >
-            {Object.entries(errMsg).map(([, fieldErrors]) =>
-              fieldErrors.map((fieldError, index) => (
-                <p key={index} className="flex gap-2">
-                  <FaTimesCircle className="my-1" /> {fieldError}
-                </p>
-              ))
-            )}
-          </div> */}
-
           <button className="btn-merah">
             Masuk{" "}
             {isLoading ? (
@@ -214,14 +167,8 @@ const Login = () => {
           <button className="btn-putih" onClick={navigateRegister}>
             Daftar Akun Baru
           </button>
-
-          {/* <Link to={"/register"} className="block mb-16">
-            
-            <span className="ml-1 underline line text-merah"></span>
-          </Link> */}
         </form>
       </section>
-
       <p className="py-4 text-sm text-center lg:hidden text-merah">
         Copyright 2022. PT. Nafisha Universal Network
       </p>

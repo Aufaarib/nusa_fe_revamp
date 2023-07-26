@@ -67,6 +67,7 @@ import UserVerification from "./pages/Auth/UserVerification";
 import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
 import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
 
 const App = () => {
   return (
@@ -78,6 +79,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<UserVerification />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/reset-pwd" element={<ResetPassword />} />
 
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuthAdmin />}>

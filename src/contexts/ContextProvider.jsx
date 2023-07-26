@@ -1,34 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import axios from "../api/axios";
-import Echo from "laravel-echo";
-import Pusher from "pusher-js";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
-  getAdmissionRegistrationApplicant,
   getAdmissionRegistrationByRegNumber,
-  getAdmissionRegistrationParentsAyah,
-  getAdmissionRegistrationParentsIbu,
-  getAdmissionRegistrationParentsWali,
   getAdmissionSteps,
 } from "../api/Registrasi";
-import { useCallback } from "react";
-import {
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
-
-// const RESEND_URL = "/api/email/verification-notification";
-// const PAYMENT_AGREEMENT_URL = "/api/pmb/parent-agreement-education-fee";
-// const DAFTAR_ULANG_AGREEMENT_URL = "/api/pmb/parent-agreement-re-registration";
-// const STEPS_PMB_URL = "/api/pmb/info";
-// const STUDENTS_URL = "/api/pmb/students";
-// const PARENTS_URL = "/api/pmb/parents";
-// const DOCUMENTS_URL = "/api/pmb/documents";
-// const FORM_CHECK_URL = "/api/pmb/form-check";
-// const NOTIFICATIONS = "/api/notifications";
-// const BROADCAST_AUTH = "/api/broadcasting/auth";
-// const GET_USER = "/api/user";
 
 const StateContext = createContext();
 
@@ -69,6 +49,7 @@ export const ContextProvider = ({ children }) => {
       read_at: "",
     },
   ]);
+
   const [notificationNew, setNotificationNew] = useState(false);
   const [notificationUnreadLength, setNotificationUnreadLength] = useState(0);
 
@@ -120,12 +101,10 @@ export const ContextProvider = ({ children }) => {
   const [admissionSteps3, setDataStep3] = useState([]);
   const [admissionSteps4, setDataStep4] = useState([]);
   const [admissionSteps5, setDataStep5] = useState([]);
-  const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
   const [dataAdmissionRegistration, setDataAdmissionRegistration] =
     useState("");
-
-  console.log("STEPPS === ", admissionSteps4);
-  console.log("REG_NUMBER === ", localStorage.getItem("REG_NUMBER"));
+  const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
+  const [stsGetAdmissionReg, setStsGetAdmissionReg] = useState("");
 
   // To update the status value later:
   const updateStatus = useCallback(
@@ -185,7 +164,7 @@ export const ContextProvider = ({ children }) => {
           },
           payment_education: {
             ...prevState.payment_education,
-            status: "Berhasil",
+            status: statusStep5,
           },
         };
       });
@@ -204,7 +183,7 @@ export const ContextProvider = ({ children }) => {
     );
     getAdmissionRegistrationByRegNumber(
       setDataAdmissionRegistration,
-      setStsAdmissionSteps
+      setStsGetAdmissionReg
     );
   }, []);
 

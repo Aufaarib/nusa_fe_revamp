@@ -1,11 +1,8 @@
 import {
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
   AlertStatusReVerified,
   AlertStatusReVerifiedFailed,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
   AlertStatusVerified,
@@ -102,7 +99,6 @@ export function getAdmissionAnswer(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
-
 export function getAdmissionRegistration(setData, setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
@@ -120,7 +116,6 @@ export function getAdmissionRegistration(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
-
 export function getAdmissionRegistrationByRegNumber(setData, setSts) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
@@ -142,29 +137,12 @@ export function getAdmissionRegistrationByRegNumber(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
-
-// export function getAdmissionRegistration(setData, setSts) {
-//   axios
-//     .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
-//       headers: { authorization: localStorage.getItem("TOKEN") },
-//     })
-//     .then((res) => {
-//       console.log("ADMISSION REGISTRATION === ", res.data.body);
-//       setData(res.data.body);
-//       setSts({ type: "success" });
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//     });
-// }
-
 export function getMyAdmission(setData, setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/user/admission", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      // console.log("My Admission === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
@@ -184,7 +162,6 @@ export function getAdditionalFile(setData, setSts) {
       }
     )
     .then((res) => {
-      // console.log("My Admission === ", res.data.body);
       setData(res.data.body.additionalFiles);
       setSts({ type: "success" });
     })
@@ -202,7 +179,6 @@ export function getAdmissionSteps(
   setSts
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
-  console.log("REGNUMMMM === ", regNumber);
   axios
     .get(
       process.env.REACT_APP_BASE_URL +
@@ -224,11 +200,11 @@ export function getAdmissionSteps(
         } else if (i.step === "5") {
           setDataStep5(i);
         }
-        // setSts(res.data.code);
       }
+      setSts(res.response.data.code);
     })
     .catch((res) => {
-      // setSts(res.data.code);
+      setSts(res.response.data.code);
     });
 }
 

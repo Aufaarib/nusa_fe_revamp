@@ -1,64 +1,34 @@
-import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  FaRegCheckCircle,
-  FaRegUserCircle,
-  FaRegTimesCircle,
-  FaRegPauseCircle,
-  FaRegArrowAltCircleRight,
-  FaTimesCircle,
-} from "react-icons/fa";
-import {
-  MdOutlinePayments,
-  MdPayment,
-  MdOutlineFactCheck,
-} from "react-icons/md";
-import { CgSpinner } from "react-icons/cg";
+import { AnimatePresence, motion } from "framer-motion";
+import moment from "moment/moment";
 import { BiEdit } from "react-icons/bi";
 import { GoChecklist } from "react-icons/go";
-import useAuth from "../hooks/useAuth";
+import { MdOutlineFactCheck, MdPayment } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { daftarUlangAgreement } from "../api/Registrasi";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useEffect, useState } from "react";
 import {
-  daftarUlangAgreement,
-  getAdmissionRegistrationApplicant,
-  getAdmissionRegistrationParentsAyah,
-  getAdmissionRegistrationParentsIbu,
-  getAdmissionRegistrationParentsWali,
-} from "../api/Registrasi";
-import moment from "moment/moment";
+  FaRegArrowAltCircleRight,
+  FaRegCheckCircle,
+  FaRegPauseCircle,
+  FaRegTimesCircle,
+  FaRegUserCircle,
+} from "react-icons/fa";
 
-const ModalTahapanPMB = ({
-  status,
-  title,
-  step,
-  details,
-  onClick,
-  selected,
-  setSelected,
-}) => {
-  const { auth } = useAuth();
-  const verified = "verified";
+const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
   const {
     dataAdmissionRegistration,
     admissionSteps1,
-    resendEmailVerification,
-    paymentAgreement,
-    successMsgSendVerify,
-    errMsgSendVerify,
     isLoading,
+    setIsLoading,
   } = useStateContext();
-  const Nama = localStorage.getItem("NAMA");
+
   const navigate = useNavigate();
+  const Nama = localStorage.getItem("NAMA");
   const path = "/pmb/form-data-murid";
+
   const navigateFormulir = () => {
     navigate(path);
   };
-
-  // useEffect(() => {
-  //   setAmount(dataAdmissionRegistration.admissionPhase.amount);
-  // }, []);
-  // const amount = dataAdmissionRegistration.admissionPhase.amount;
 
   return (
     <>
@@ -121,11 +91,6 @@ const ModalTahapanPMB = ({
                     <GoChecklist className={`p-3 text-5xl text-white`} />
                   </span>
                 )}
-                {/* {step == 6 && (
-                  <span className={`step ml-0.5 mr-4 rounded-full`}>
-                    <MdOutlinePayments className={`p-3 text-5xl text-white`} />
-                  </span>
-                )} */}
 
                 <motion.div layout="position">
                   <h5>
@@ -135,7 +100,6 @@ const ModalTahapanPMB = ({
                     {step == 3 && ". Hasil Tes"}
                     {step == 4 && ". Daftar Ulang"}
                     {step == 5 && ". Pembayaran Biaya Pendidikan"}
-                    {/* {step == 6 && ""} */}
                   </h5>
                   <p className="flex text-sm">
                     {status}
@@ -175,22 +139,8 @@ const ModalTahapanPMB = ({
                     {step == 3 && "Hasil Tes"}
                     {step == 4 && "Daftar Ulang"}
                     {step == 5 && "Pembayaran Biaya Pendidikan"}
-                    {/* {step == 6 && ""} */}
                   </h4>
                   <br />
-                  {/* {status == "Belum Mulai" && <p>tes</p>}
-                  {step == 1 && status == "Berhasil" && (
-                    <p>{details.message}</p>
-                  )}
-                  {step == 3 && status == "Dalam Proses" && (
-                    <p>{details.message}</p>
-                  )}
-                  {step == 4 && status == "Dalam Proses" && (
-                    <p>{details.message}</p>
-                  )}
-                  {step == 5 && status == "Berhasil" && (
-                    <p>{details.message}</p>
-                  )} */}
 
                   {status === "Belum Mulai" && (
                     <>
@@ -345,24 +295,12 @@ const ModalTahapanPMB = ({
                               {dataAdmissionRegistration.childName}
                             </strong>
                           </p>
-                          {/* <p>
-                            Kategori:
-                          </p> */}
                           <p>
                             Nilai Tes :{" "}
                             <strong>
                               {dataAdmissionRegistration.testResult.score}
                             </strong>
                           </p>
-                          {/* <p>
-                            Lampiran Tes:
-                            <a
-                              // href={item.hasil_test.pdf}
-                              className="break-all"
-                              target="_blank"
-                            >
-                            </a>
-                          </p> */}
                           <br />
                           <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
                         </div>

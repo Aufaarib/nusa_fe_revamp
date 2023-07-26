@@ -74,18 +74,22 @@ const UserVerification = () => {
   const [sts, setSts] = useState("");
   const [otp, setOtp] = useState("");
   const [showCountdown, setShowCountdown] = useState(false);
-  const [countdownTime, setCountdownTime] = useState("");
+  const [countdownTime, setCountdownTime] = useState(Date.now() + 300000);
   const location = useLocation();
   const navigate = useNavigate();
 
   // console.log("OTP === ", otp);
 
   const verifiedEmail = () => {
-    validateEmail(setSts, otp, navigateLogin);
+    validateEmail(setSts, otp, navigates);
   };
 
-  const navigateLogin = () => {
-    navigate("/login");
+  const navigates = () => {
+    if (location.state.direct === "Reset Password") {
+      navigate("/reset-pwd");
+    } else if (location.state.direct === "Login") {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -102,17 +106,13 @@ const UserVerification = () => {
 
   useEffect(() => {
     if (countdownTime > 0) {
-      // Start the countdown when the page is opened
       setShowCountdown(true);
     } else {
-      // Countdown is completed, handle the completion here (e.g., reset the state or perform an action)
       setShowCountdown(false);
-      // Handle countdown completion
     }
   }, []);
 
   const renderer = ({ hours, minutes, seconds }) => {
-    // Custom countdown display logic
     return (
       <span>
         {minutes}:{seconds}
@@ -129,21 +129,6 @@ const UserVerification = () => {
   return (
     <>
       <div className="justify-end min-h-screen lg:flex bg-krem">
-        <section
-          className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
-          style={{ background: "#E6E6E6" }}
-        >
-          <img
-            className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
-            src={logoSaim}
-            alt="SAIM"
-          />
-
-          <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2022. PT. Nafisha Universal Network
-          </p>
-        </section>
-
         <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
           <div className="relative block w-full mt-6 text-center">
             <img
@@ -214,11 +199,22 @@ const UserVerification = () => {
                 {" "}
                 Kirim Ulang Kode
               </button>
-              {/* <Link to="/login" className="btn-merah">
-                Kembali ke Halaman Log-In
-              </Link> */}
             </section>
           </div>
+        </section>
+        <section
+          className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
+          style={{ background: "#E6E6E6" }}
+        >
+          <img
+            className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
+            src={logoSaim}
+            alt="SAIM"
+          />
+
+          <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
+            Copyright 2022. PT. Nafisha Universal Network
+          </p>
         </section>
       </div>
     </>
