@@ -178,7 +178,7 @@ const ModalTahapanPMB = ({
                     {/* {step == 6 && ""} */}
                   </h4>
                   <br />
-                  {status == "Belum Mulai" && <p>tes</p>}
+                  {/* {status == "Belum Mulai" && <p>tes</p>}
                   {step == 1 && status == "Berhasil" && (
                     <p>{details.message}</p>
                   )}
@@ -190,9 +190,9 @@ const ModalTahapanPMB = ({
                   )}
                   {step == 5 && status == "Berhasil" && (
                     <p>{details.message}</p>
-                  )}
+                  )} */}
 
-                  {/* {status === "Belum Mulai" && (
+                  {status === "Belum Mulai" && (
                     <>
                       <div>
                         <p>Tahap ini belum dapat dilakukan.</p>
@@ -208,7 +208,7 @@ const ModalTahapanPMB = ({
                         <p>Tahap ini Gagal.</p>
                       </div>
                     </>
-                  )} */}
+                  )}
 
                   {step == 1 && status !== "Belum Mulai" && (
                     <>
@@ -370,33 +370,25 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
-                  {step == 4 && status == "Belum Mulai" && (
-                    <div>
-                      <p>
-                        Alhamdulillah, Ananda telah lulus test penerimaan calon
-                        murid baru SAIM.
-                      </p>
-                      <br />
-                      <p>
-                        Untuk proses selanjutnya, klik link persetujuan berikut:
-                      </p>
-                      <Link
-                        onClick={daftarUlangAgreement}
-                        className="mt-3 btn-merah"
-                      >
-                        Persetujuan Daftar Ulang
-                      </Link>
-                    </div>
-                  )}
-
                   {step == 4 && status !== "Belum Mulai" && (
                     <>
                       {status == "Dalam Proses" && (
                         <div>
                           <p>
-                            Persetujuan Daftar Ulang Telah Terkirim Dan Dalam
-                            Proses Pengecekan Oleh Admin
+                            Alhamdulillah, Ananda telah lulus test penerimaan
+                            calon murid baru SAIM.
                           </p>
+                          <br />
+                          <p>
+                            Untuk proses selanjutnya, klik link persetujuan
+                            berikut:
+                          </p>
+                          <Link
+                            onClick={daftarUlangAgreement}
+                            className="mt-3 btn-merah"
+                          >
+                            Persetujuan Daftar Ulang
+                          </Link>
                         </div>
                       )}
                       {status == "Berhasil" && (
@@ -410,87 +402,90 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
-                  {step == 5 && status == "Berhasil" && (
-                    <div>
-                      <p>Ini merupakan notifikasi pembayaran otomatis</p>
-                      <br />
-                      <p>
-                        Assalamualaikum Warrahmatullahi Wabarakatuh
-                        Bismillahirrahmanirrahim Semoga Ayah/Bunda senantiasa
-                        dalam lindungan Allah SWT.
-                      </p>
-                      <br />
-                      <p>
-                        Kami dari bagian keuangan Sekolah Adab Insan Mulia,
-                        menyampaikan informasi kewajiban keuangan ananda
-                      </p>
-                      <div className="grid grid-cols-3 gap-1">
-                        <p className="font-bold">NIS:</p>
-                        <p className="font-bold">
-                          {/* {currencyFormat(details.total_biaya)} */}
-                        </p>
-                        <p className="font-bold">
-                          {/* x {details.jumlah_anak_lulus} Anak */}
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-3 gap-1">
-                        <p className="font-bold">Nama Siswa:</p>
-                        <p className="font-bold">
-                          {/* {currencyFormat(
-                            details.total_biaya * details.jumlah_anak_lulus
-                          )} */}
-                        </p>
-                      </div>
-                      <br />
-                      <p>Berikut rincian kewajiban keuangan ananda</p>
-                      ***detail_tagihan_siswa***
-                      <p className="font-bold">Total Rp</p>
-                      <p className="font-bold">
-                        {/* {currencyFormat(details.total_biaya)} */}
-                      </p>
-                      <br />
-                      <p>
-                        Mohon Ayah/Bunda dapat segera menyelesaikan kewajiban
-                        keuangannya. Semoga Allah SWT mudahkan dan lancarkan
-                        rezekinya.
-                      </p>
-                      <br />
-                      Pembayaran dapat dilakukan dengan cara:
-                      <br />
-                      Transfer ke :
-                      <br />
-                      {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
-                      Bank DKI Syariah cabang Pondok Indah
-                      <br />
-                      Nomor Rekening : <strong> 71021590003 </strong>
-                      <br />
-                      Atas Nama : <strong> Yayasan Adab Insan Mulia </strong>
-                      <br />
-                      <br />
-                      Untuk informasi lebih lanjut, silahkan hubungi No Whatsapp
-                      <strong> 08129801108 </strong>
-                      (Ibu Hanny).
-                      <Link
-                        to={"/pmb/berkas-pembayaran"}
-                        className="mt-7 btn-merah"
-                      >
-                        Upload Bukti Pembayaran Pendidikan
-                      </Link>
-                    </div>
-                  )}
-
-                  {step == 5 && status == "Berhasil" && !verified && (
+                  {step == 5 && status !== "Belum Mulai" && (
                     <>
-                      <p>
-                        Ayah/ Bunda, Alhamdulillah semua rangkaian administrasi
-                        proses pendaftaran murid baru sudah diselesaikan dengan
-                        sudah dilakukan pembayaran biaya pendidikannya.
-                      </p>
-                      <br />
-                      <p>
-                        Untuk informasi selanjutnya ayah/bunda akan kami
-                        informasikan kembali.
-                      </p>
+                      {status == "Dalam Proses" && (
+                        <>
+                          <p>Ini merupakan notifikasi pembayaran otomatis</p>
+                          <br />
+                          <p>
+                            Assalamualaikum Warrahmatullahi Wabarakatuh
+                            Bismillahirrahmanirrahim Semoga Ayah/Bunda
+                            senantiasa dalam lindungan Allah SWT.
+                          </p>
+                          <br />
+                          <p>
+                            Kami dari bagian keuangan Sekolah Adab Insan Mulia,
+                            menyampaikan informasi kewajiban keuangan ananda
+                          </p>
+                          <br />
+                          <div className="font-bold flex gap-2">
+                            <p>Nama Siswa : </p>
+                            <p className="font-bold capitalize">
+                              {" "}
+                              {dataAdmissionRegistration.childName}
+                            </p>
+                          </div>
+                          <div className="font-bold flex gap-2">
+                            <p>Total Tagihan : </p>
+                            <p className="font-bold capitalize">
+                              {" "}
+                              {new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: 0,
+                              }).format(
+                                dataAdmissionRegistration.admissionPhase
+                                  .admission.details[0].amount
+                              )}
+                            </p>
+                          </div>
+                          <br />
+                          <p>
+                            Mohon Ayah/Bunda dapat segera menyelesaikan
+                            kewajiban keuangannya. Semoga Allah SWT mudahkan dan
+                            lancarkan rezekinya.
+                          </p>
+                          <br />
+                          Pembayaran dapat dilakukan melalui Transfer ke :
+                          <br />
+                          <br />
+                          {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                          Bank DKI Syariah cabang Pondok Indah
+                          <br />
+                          Nomor Rekening : <strong> 71021590003 </strong>
+                          <br />
+                          Atas Nama :{" "}
+                          <strong> Yayasan Adab Insan Mulia </strong>
+                          <br />
+                          <br />
+                          Untuk informasi lebih lanjut, silahkan hubungi No
+                          Whatsapp
+                          <strong> 08129801108 </strong>
+                          (Ibu Hanny).
+                          <Link
+                            to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
+                            className="mt-7 btn-merah"
+                          >
+                            Upload Bukti Pembayaran Pendidikan
+                          </Link>
+                        </>
+                      )}
+                      {status == "Berhasil" && (
+                        <>
+                          <p>
+                            Ayah/ Bunda, Alhamdulillah semua rangkaian
+                            administrasi proses pendaftaran murid baru sudah
+                            diselesaikan dengan sudah dilakukan pembayaran biaya
+                            pendidikannya.
+                          </p>
+                          <br />
+                          <p>
+                            Untuk informasi selanjutnya ayah/bunda akan kami
+                            informasikan kembali.
+                          </p>
+                        </>
+                      )}
                     </>
                   )}
 

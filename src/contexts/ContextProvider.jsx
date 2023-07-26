@@ -185,7 +185,7 @@ export const ContextProvider = ({ children }) => {
           },
           payment_education: {
             ...prevState.payment_education,
-            status: statusStep5,
+            status: "Berhasil",
           },
         };
       });

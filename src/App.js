@@ -65,6 +65,8 @@ import AdmissionDetails from "./pages/AdminPMB/AdmissionDetails";
 import UbahGelombang from "./pages/AdminPMB/UpdateGelombang";
 import UserVerification from "./pages/Auth/UserVerification";
 import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
+import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 
 const App = () => {
   return (
@@ -75,6 +77,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<UserVerification />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
 
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuthAdmin />}>
@@ -229,6 +232,10 @@ const App = () => {
             element={<BerkasPendaftaran />}
           />
           <Route path="/pmb/berkas-pembayaran" element={<BerkasPembayaran />} />
+          <Route
+            path="/pmb/berkas-pembayaran-biaya-pendidikan"
+            element={<BerkasPembayaranBiayaPendidikan />}
+          />
         </Route>
       </Route>
     </Routes>

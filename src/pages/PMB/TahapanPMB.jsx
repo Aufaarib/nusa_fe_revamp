@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 const TahapanPMB = () => {
   const {
     stepsPMB,
+    dataAdmissionRegistration,
     // setStepsPMB,
     // getStepsPMBData,
     // errStep,
@@ -45,7 +46,32 @@ const TahapanPMB = () => {
         at="Tahapan Penerimaan Murid Baru"
         title="Tahapan Penerimaan Murid Baru"
       />
-
+      <div
+        style={{
+          fontSize: "24px",
+          // marginBottom: "10px",
+          marginTop: "30px",
+          display: "flex",
+        }}
+      >
+        <p className="ml-1 font-bold text-hitam">Nama Anak :</p>
+        <p className="ml-1 font-bold text-merah capitalize">
+          {dataAdmissionRegistration.childName}
+        </p>
+      </div>
+      <div
+        style={{
+          fontSize: "24px",
+          marginBottom: "10px",
+          marginTop: "4px",
+          display: "flex",
+        }}
+      >
+        <p className="ml-1 font-bold text-hitam">No Registrasi :</p>
+        <p className="ml-1 font-bold text-merah capitalize">
+          {dataAdmissionRegistration.regNumber}
+        </p>
+      </div>
       <div>
         <article className="grid grid-rows-3 gap-6 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">
           {Object.keys(stepsPMB).map((keyName, index) => (

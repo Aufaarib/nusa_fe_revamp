@@ -21,13 +21,10 @@ export function validateEmail(setSts, otp, navigateLogin) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then((res) => {
-      // console.log("ADMISSION STATEMENT === ", otp);
-      // setData(res.data.body);
       AlertStatusVerified(navigateLogin);
       setSts(res.code);
     })
     .catch((res) => {
-      // console.log("ADMISSION STATEMENT === ", otp);
       AlertStatusVerifiedFailed();
       setSts(res.code);
     });
