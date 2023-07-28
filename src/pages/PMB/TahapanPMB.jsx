@@ -19,6 +19,8 @@ const TahapanPMB = () => {
     // getFormCheck,
   } = useStateContext();
 
+  console.log("RTTTTTTTTTTTTTTTTTTTTT === ", dataAdmissionRegistration);
+
   const navigate = useNavigate();
   const path = "/pmb/list-calon-siswa";
 

@@ -122,28 +122,33 @@ export const ContextProvider = ({ children }) => {
           (admissionSteps1.status == "valid" && "Berhasil") ||
           (admissionSteps1.status == "invalid" && "Gagal");
         const statusStep2 =
-          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
-          (admissionSteps2.status == "inreview" && "Dalam Proses") ||
-          (admissionSteps2.status == "valid" && "Berhasil") ||
-          (admissionSteps2.status == "invalid" && "Gagal");
+          admissionSteps1.status !== "valid"
+            ? "Belum Mulai"
+            : (admissionSteps2.status == "inreview" && "Dalam Proses") ||
+              (admissionSteps2.status == "valid" && "Berhasil") ||
+              (admissionSteps2.status == "invalid" && "Gagal");
         const statusStep3 =
-          (admissionSteps2.status !== "valid" && "Belum Mulai") ||
-          (admissionSteps3.length == 0 && "Dalam Proses") ||
-          (admissionSteps3.status == "inreview" && "Dalam Proses") ||
-          (admissionSteps3.status == "valid" && "Berhasil") ||
-          (admissionSteps3.status == "invalid" && "Gagal");
+          statusStep2 !== "valid"
+            ? "Belum Mulai"
+            : (admissionSteps3.length == 0 && "Dalam Proses") ||
+              (admissionSteps3.status == "inreview" && "Dalam Proses") ||
+              (admissionSteps3.status == "valid" && "Berhasil") ||
+              (admissionSteps3.status == "invalid" && "Gagal");
         const statusStep4 =
-          (admissionSteps3.status !== "valid" && "Belum Mulai") ||
-          (admissionSteps4.length == 0 && "Dalam Proses") ||
-          (admissionSteps4.status == "inreview" && "Dalam Proses") ||
-          (admissionSteps4.status == "valid" && "Berhasil") ||
-          (admissionSteps4.status == "invalid" && "Gagal");
+          statusStep3 !== "valid"
+            ? "Belum Mulai"
+            : (admissionSteps4.length == 0 && "Dalam Proses") ||
+              (admissionSteps4.status == "inreview" && "Dalam Proses") ||
+              (admissionSteps4.status == "valid" && "Berhasil") ||
+              (admissionSteps4.status == "invalid" && "Gagal");
+
         const statusStep5 =
-          (admissionSteps4.status !== "valid" && "Belum Mulai") ||
-          (admissionSteps4.status == "valid" && "Dalam Proses") ||
-          (admissionSteps5.status == "inreview" && "Dalam Proses") ||
-          (admissionSteps5.status == "valid" && "Berhasil") ||
-          (admissionSteps5.status == "invalid" && "Gagal");
+          statusStep4 !== "valid"
+            ? "Belum Mulai"
+            : (admissionSteps5.length == 0 && "Dalam Proses") ||
+              (admissionSteps5.status == "inreview" && "Dalam Proses") ||
+              (admissionSteps5.status == "valid" && "Berhasil") ||
+              (admissionSteps5.status == "invalid" && "Gagal");
         return {
           ...prevState,
           register_payment: {

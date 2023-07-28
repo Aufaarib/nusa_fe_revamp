@@ -27,8 +27,8 @@ const DataRegistrasi = () => {
   // const path = "/admin/admission/registration";
   let filteredItems = data;
 
-  // console.log("KAKAAAAA === ", data[0].isValidated);
-  const domain = process.env.REACT_APP_BASE_STATIC_FILE;
+  // console.log("KAKAAAAA === ", data);
+  // const domain = process.env.REACT_APP_BASE_STATIC_FILE;
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
@@ -50,6 +50,15 @@ const DataRegistrasi = () => {
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
   }, []);
+
+  const navigateRegistrationDetails = (code) => {
+    localStorage.setItem("REG_NUMBER", code);
+    navigate("/admin/list-detail-data-registrasi", {
+      state: {
+        code: code,
+      },
+    });
+  };
 
   const columns = [
     {
@@ -75,12 +84,12 @@ const DataRegistrasi = () => {
       cell: (data) => <div>{data.user.fullname}</div>,
       width: "auto",
     },
-    {
-      name: <div>Gelombang</div>,
-      selector: (data) => data.admission.name,
-      cell: (data) => <div>{data.admission.name}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Gelombang</div>,
+    //   selector: (data) => data.admission.name,
+    //   cell: (data) => <div>{data.admission.name}</div>,
+    //   width: "auto",
+    // },
     // {
     //   name: <div>Approval</div>,
     //   selector: (data) => data.isValidated,
@@ -92,38 +101,52 @@ const DataRegistrasi = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-          <button
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Bukti Pembayaran"
-            onClick={() => ApproveRegistrasi(data.regNumber)}
-          >
-            {data.isValidated == 1 ? (
-              <i className="fa fa-times"> Cancel Approve</i>
-            ) : (
-              <i className="fa fa-check"> Approve</i>
-            )}
-          </button>
-          <button
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Detail Pembayaran"
-            // onClick={() => handleNonActiveStatus(data.id, data.name)}
-          >
-            <i className="fa fa-dollar"> Detail Pembayaran</i>
-          </button>
-          <button
-            // onClick={() => openModalHapus(data.id, data.name)}
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Status"
-          >
-            <i className="fa fa-warning"> Upload Nilai Hasil Test</i>
-          </button>
-        </div>
+        <button
+          title="Detail Pembayaran"
+          onClick={() => navigateRegistrationDetails(data.regNumber)}
+        >
+          <i className="fa fa-info" />
+        </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "450px",
+      width: "300px",
     },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+    //     <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
+    //       <button
+    //         className="btn-mrh ml-3 w-auto px-2"
+    //         title="Bukti Pembayaran"
+    //         onClick={() => ApproveRegistrasi(data.regNumber)}
+    //       >
+    //         {data.isValidated == 1 ? (
+    //           <i className="fa fa-times"> Cancel Approve</i>
+    //         ) : (
+    //           <i className="fa fa-check"> Approve</i>
+    //         )}
+    //       </button>
+    //       <button
+    //         className="btn-mrh ml-3 w-auto px-2"
+    //         title="Detail Pembayaran"
+    //         // onClick={() => handleNonActiveStatus(data.id, data.name)}
+    //       >
+    //         <i className="fa fa-dollar"> Detail Pembayaran</i>
+    //       </button>
+    //       <button
+    //         // onClick={() => openModalHapus(data.id, data.name)}
+    //         className="btn-mrh ml-3 w-auto px-2"
+    //         title="Status"
+    //       >
+    //         <i className="fa fa-warning"> Upload Nilai Hasil Test</i>
+    //       </button>
+    //     </div>
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "450px",
+    // },
   ];
 
   const navigateTambahGelombang = () => {

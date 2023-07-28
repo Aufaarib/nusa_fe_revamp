@@ -51,7 +51,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     getAdmissionRegistrationParentsAyah(setAdmissionParents, setSts);
   };
 
-  console.log("KAKAKAKAKAKAKAKKAK === ", admissionParentsData.length);
+  console.log("KAKAKAKAKAKAKAKKAK === ", admissionParentsData.code);
 
   useEffect(() => {
     fetchAdmissonParents();
@@ -153,6 +153,73 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
       });
   };
 
+  const handleSubmitUpdate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const code = admissionParentsData.code;
+    const fullName = parent.fullName;
+    const familyIdentityNumber = parent.familyIdentityNumber;
+    const identityNumber = parent.identityNumber;
+    const gender = "male";
+    const relationship = "ayah";
+    const isBiological = parseInt(parent.isBiological);
+    const isOneHouse = parseInt(parent.isOneHouse);
+    const phoneNumber1 = parent.phoneNumber1;
+    const phoneNumber2 = parent.phoneNumber2;
+    const province = parent.province;
+    const city = parent.city;
+    const subDistrict = parent.subDistrict;
+    const village = parent.village;
+    const address = parent.address;
+    const postalCode = parent.postalCode;
+    const birthPlace = parent.birthPlace;
+    const birthDate = parent.birthDate;
+    const lastEducation = parent.lastEducation;
+    const placeOfWork = parent.placeOfWork;
+    const occupation = parent.occupation;
+    const incomeGrade = parseInt(parent.incomeGrade);
+
+    axios
+      .put(
+        process.env.REACT_APP_BASE_URL + `/user/parent/${code}`,
+        {
+          fullName,
+          familyIdentityNumber,
+          identityNumber,
+          gender,
+          relationship,
+          isBiological,
+          isOneHouse,
+          phoneNumber1,
+          phoneNumber2,
+          province,
+          city,
+          subDistrict,
+          village,
+          address,
+          postalCode,
+          birthPlace,
+          birthDate,
+          lastEducation,
+          occupation,
+          incomeGrade,
+          placeOfWork,
+        },
+        {
+          headers: { authorization: token },
+        }
+      )
+      .then(() => {
+        setIsLoading(false);
+        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ayah");
+      })
+      .catch(() => {
+        setIsLoading(false);
+        AlertStatusUpdateFailed();
+      });
+  };
+
   const [validPhone, setValidPhone] = useState(false);
 
   const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
@@ -192,7 +259,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.fullName}
               placeholder={admissionParentsData.fullName}
-              disable={true}
+              disable={false}
               required={true}
             />
             <TextInput
@@ -202,7 +269,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.familyIdentityNumber}
               placeholder={admissionParentsData.familyIdentityNumber}
-              disable={true}
+              disable={false}
               required={true}
             />
             <TextInput
@@ -212,57 +279,31 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.identityNumber}
               placeholder={admissionParentsData.identityNumber}
-              disable={true}
+              disable={false}
               required={true}
             />
             <br />
-            {admissionParentsData.isBiological === 1 ? (
-              <TextInput
-                label="Hubungan Ayah"
-                type="text"
-                id="isBiological"
-                onChange={updateParents}
-                // value="Kandung"
-                placeholder="Kandung"
-                disable={true}
-                required={true}
-              />
-            ) : (
-              <TextInput
-                label="Hubungan Ayah"
-                type="text"
-                id="isBiological"
-                onChange={updateParents}
-                // value="Tiri"
-                placeholder="Tiri"
-                disable={true}
-                required={true}
-              />
-            )}
+            <DropdownRadioInputBiological
+              required={true}
+              label="Hubungan Ayah"
+              value1="1"
+              value2="0"
+              label2="Kandung"
+              label3="Tiri"
+              onChange={updateParentsRadio}
+              checked={parent.isBiological}
+            />
             <br />
-            {admissionParentsData.isOneHouse === 1 ? (
-              <TextInput
-                label="Tinggal Bersama"
-                type="text"
-                id="isOneHouse"
-                onChange={updateParents}
-                // value="Kandung"
-                placeholder="Ya"
-                disable={true}
-                required={true}
-              />
-            ) : (
-              <TextInput
-                label="Tinggal Bersama"
-                type="text"
-                id="isOneHouse"
-                onChange={updateParents}
-                // value="Tiri"
-                placeholder="Tidak"
-                disable={true}
-                required={true}
-              />
-            )}
+            <DropdownRadioInputisOneHouse
+              required={true}
+              label="Tinggal Bersama"
+              value1="1"
+              value2="0"
+              label2="Ya"
+              label3="Tidak"
+              onChange={updateParentsRadio}
+              checked={parent.isOneHouse}
+            />
             <br />
             <TextInput
               label="Nomor Ponsel 1"
@@ -271,7 +312,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.phoneNumber1}
               placeholder={admissionParentsData.phoneNumber_1}
-              disable={true}
+              disable={false}
               required={true}
             />
             <TextInput
@@ -281,7 +322,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.phoneNumber2}
               placeholder={admissionParentsData.phoneNumber_2}
-              disable={true}
+              disable={false}
               required={true}
             />
             <TextInput
@@ -291,7 +332,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.province}
               placeholder={admissionParentsData.province}
-              disable={true}
+              disable={false}
               required={true}
             />
             <TextInput
@@ -301,10 +342,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.city}
               placeholder={admissionParentsData.city}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Kecamatan"
               type="text"
@@ -312,10 +352,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.subDistrict}
               placeholder={admissionParentsData.subDistrict}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Kelurahan"
               type="text"
@@ -323,10 +362,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.village}
               placeholder={admissionParentsData.village}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Alamat"
               type="text"
@@ -334,10 +372,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.address}
               placeholder={admissionParentsData.address}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Kode Pos"
               type="number"
@@ -345,10 +382,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.postalCode}
               placeholder={admissionParentsData.postalCode}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Tempat Lahir"
               type="text"
@@ -356,21 +392,26 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.birthPlace}
               placeholder={admissionParentsData.birthPlace}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Tanggal Lahir"
               type="text"
               id="birthDate"
-              onChange={updateParents}
-              value={parent.birthDate}
+              // onChange={updateParents}
+              // value={parent.birthDate}
               placeholder={moment(admissionParentsData.birthDate).format(
                 "DD-MM-YYYY"
               )}
-              disable={true}
+              disable={false}
               required={true}
+            />
+            <DropdownDatePickers
+              label="Ubah Tanggal Lahir"
+              id="birthDate"
+              value={parent.birthDate}
+              change={updateParentsCal.bind(this)}
             />
 
             <TextInput
@@ -380,10 +421,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.lastEducation}
               placeholder={admissionParentsData.lastEducation}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Perusahaan Tempat Bekerja"
               type="text"
@@ -391,10 +431,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.placeOfWork}
               placeholder={admissionParentsData.placeOfWork}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Posisi/ Jabatan"
               type="text"
@@ -402,10 +441,9 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.occupation}
               placeholder={admissionParentsData.occupation}
-              disable={true}
+              disable={false}
               required={true}
             />
-
             <TextInput
               label="Penghasilan Tiap Bulan"
               type="number"
@@ -413,7 +451,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.incomeGrade}
               placeholder={admissionParentsData.incomeGrade}
-              disable={true}
+              disable={false}
               required={true}
               min="1"
             />
@@ -630,7 +668,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
           <button
             type="button"
             className="w-auto btn-merah"
-            onClick={handleSubmit}
+            onClick={handleSubmitUpdate}
           >
             {isLoading ? (
               <CgSpinner className="mr-2 text-xl animate-spin" />

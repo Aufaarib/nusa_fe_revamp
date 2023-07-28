@@ -77,24 +77,8 @@ const SetupPMB = () => {
             title="Detail Pembayaran"
             onClick={() => navigateAdmissionDetails(data.code)}
           >
-            <i className="fa fa-warning" /> Detail
+            <i className="fa fa-info" />
           </button>
-          {data?.status === 1 && (
-            <button
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.status)}
-            >
-              <i className="fa fa-play mt-1 mr-1"></i> Aktif
-            </button>
-          )}
-          {data?.status === 0 && (
-            <button
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.status)}
-            >
-              <i className="fa fa-pause mt-1 mr-1"></i> Tidak Aktif
-            </button>
-          )}
         </div>
       ),
       ignoreRowClick: true,

@@ -309,7 +309,35 @@ export const AlertStatusVerifiedFailed = () => {
   });
 };
 
-// SA STATUS UPDATE
+export const AlertPaymentProof = (url) => {
+  const domain = process.env.REACT_APP_BASE_STATIC_FILE;
+  console.log("KAKA", domain + url);
+  styledSweetAlert.fire({
+    title: "Bukti Pembayaran",
+    imageUrl: domain + url, // Replace with the path to your image
+    imageWidth: 400, // Adjust the width of the image as needed
+    imageHeight: 200, // Adjust the height of the image as needed
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
+export const AlertStatusValidatePayment = (onValidate, id) => {
+  styledSweetAlert
+    .fire({
+      title: "Konfirmasi",
+      text: "Apakah anda setuju merubah status murid?",
+      showConfirmButton: true,
+      confirmButtonText: "Ubah",
+      showCancelButton: "Batal",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        onValidate(id);
+      }
+    });
+};
+
 export const AlertStatusUpdateSuccess = () => {
   styledSweetAlert.fire({
     title: "Ubah Data Berhasil",

@@ -17,7 +17,7 @@
 .btn-form {
   display: flex;
   margin-top: 5px;
-  margin-left: 523px;
+  justify-content: end;
 }
 
 .grid-container {

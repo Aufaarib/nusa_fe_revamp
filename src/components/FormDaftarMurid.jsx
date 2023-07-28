@@ -17,6 +17,7 @@ import { getAdmissionRegistrationApplicant } from "../api/Registrasi";
 import { dropdownData } from "../data/initData";
 import Header from "./Header";
 import {
+  AlertEmpty,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
@@ -97,45 +98,164 @@ const FormDaftarMurid = ({ indexMurid }) => {
     const healthRecord = kesehatan;
     const identityNumber = noAktaLahir;
 
-    axios
-      .post(
-        process.env.REACT_APP_BASE_URL +
-          `/admission/registration/${regNumber}/applicant`,
-        {
-          firstName,
-          middleName,
-          lastName,
-          childStatus,
-          childNumber,
-          height,
-          religion,
-          birthPlace,
-          birthDate,
-          gender,
-          bloodType,
-          hobby,
-          weight,
-          familyIdentityNumber,
-          distanceFromHome,
-          transportation,
-          schoolOriginClass,
-          schoolOriginName,
-          characteristic,
-          healthRecord,
-          identityNumber,
-        },
-        {
-          headers: { authorization: token },
-        }
-      )
-      .then(() => {
-        setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-data-murid");
-      })
-      .catch(() => {
-        setIsLoading(false);
-        AlertStatusTambahFailed();
-      });
+    if (
+      identityNumber == "" ||
+      healthRecord == "" ||
+      characteristic == "" ||
+      schoolOriginName == "" ||
+      schoolOriginClass == "" ||
+      transportation == "" ||
+      distanceFromHome === 0 ||
+      familyIdentityNumber == "" ||
+      weight === 0 ||
+      hobby == "" ||
+      bloodType == "" ||
+      gender == "" ||
+      birthDate == "" ||
+      birthPlace == "" ||
+      height === 0 ||
+      childNumber === 0 ||
+      childStatus == "" ||
+      lastName == "" ||
+      religion == "" ||
+      middleName == "" ||
+      firstName == ""
+    ) {
+      setIsLoading(false);
+      AlertEmpty();
+    } else {
+      axios
+        .post(
+          process.env.REACT_APP_BASE_URL +
+            `/admission/registration/${regNumber}/applicant`,
+          {
+            firstName,
+            middleName,
+            lastName,
+            childStatus,
+            childNumber,
+            height,
+            religion,
+            birthPlace,
+            birthDate,
+            gender,
+            bloodType,
+            hobby,
+            weight,
+            familyIdentityNumber,
+            distanceFromHome,
+            transportation,
+            schoolOriginClass,
+            schoolOriginName,
+            characteristic,
+            healthRecord,
+            identityNumber,
+          },
+          {
+            headers: { authorization: token },
+          }
+        )
+        .then(() => {
+          setIsLoading(false);
+          AlertStatusTambahSuccess("/pmb/form-data-murid");
+        })
+        .catch(() => {
+          setIsLoading(false);
+          AlertStatusTambahFailed();
+        });
+    }
+  };
+  const handleSubmitUpdate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const firstName = namaDepan;
+    const middleName = namaTengah;
+    const religion = agama;
+    const lastName = namaAkhir;
+    const childStatus = statusAnak;
+    const childNumber = parseInt(anakKe);
+    const height = parseInt(tinggi);
+    const birthPlace = tempatLahir;
+    const birthDate = tanggalLahir;
+    const gender = jenisKelamin;
+    const bloodType = golonganDarah;
+    const hobby = hobi;
+    const weight = parseInt(berat);
+    const familyIdentityNumber = noAktaLahir;
+    const distanceFromHome = parseInt(jarak);
+    const transportation = transportasi;
+    const schoolOriginClass = kelasSaatMendaftar;
+    const schoolOriginName = asalSekolah;
+    const characteristic = karakter;
+    const healthRecord = kesehatan;
+    const identityNumber = noAktaLahir;
+
+    if (
+      identityNumber == "" ||
+      healthRecord == "" ||
+      characteristic == "" ||
+      schoolOriginName == "" ||
+      schoolOriginClass == "" ||
+      transportation == "" ||
+      distanceFromHome == 0 ||
+      familyIdentityNumber == "" ||
+      weight === 0 ||
+      hobby == "" ||
+      bloodType == "" ||
+      gender == "" ||
+      birthDate == "" ||
+      birthPlace == "" ||
+      height == 0 ||
+      childNumber == 0 ||
+      childStatus == "" ||
+      lastName == "" ||
+      religion == "" ||
+      middleName == "" ||
+      firstName == ""
+    ) {
+      AlertEmpty();
+      setIsLoading(false);
+    } else {
+      axios
+        .put(
+          process.env.REACT_APP_BASE_URL +
+            `/admission/registration/${regNumber}/applicant`,
+          {
+            firstName,
+            middleName,
+            lastName,
+            childStatus,
+            childNumber,
+            height,
+            religion,
+            birthPlace,
+            birthDate,
+            gender,
+            bloodType,
+            hobby,
+            weight,
+            familyIdentityNumber,
+            distanceFromHome,
+            transportation,
+            schoolOriginClass,
+            schoolOriginName,
+            characteristic,
+            healthRecord,
+            identityNumber,
+          },
+          {
+            headers: { authorization: token },
+          }
+        )
+        .then(() => {
+          setIsLoading(false);
+          AlertStatusTambahSuccess("/pmb/form-data-murid");
+        })
+        .catch(() => {
+          setIsLoading(false);
+          AlertStatusTambahFailed();
+        });
+    }
   };
 
   return (
@@ -165,60 +285,66 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nama Depan"
                 type="text"
                 id="firstName"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                value={namaDepan}
+                // defaultValue={admissionApplicantData.firstName}
                 placeholder={admissionApplicantData.firstName}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Agama"
                 type="text"
                 id="religion"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={religion}
+                onChange={(e) => setReligion(e.target.value)}
+                value={agama}
                 placeholder={admissionApplicantData.religion}
-                disable={true}
+                // defaultValue={admissionApplicantData.religion}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Nama Tengah"
                 type="text"
                 id="middleName"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={middleName}
+                onChange={(e) => setMiddleName(e.target.value)}
+                value={namaDepan}
                 placeholder={admissionApplicantData.middleName}
-                disable={true}
+                // defaultValue={admissionApplicantData.middleName}
+                disable={false}
                 required={false}
               />
               <TextInput
                 label="Nama Belakang"
                 type="text"
                 id="lastName"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                value={namaAkhir}
                 placeholder={admissionApplicantData.lastName}
-                disable={true}
+                // defaultValue={admissionApplicantData.lastName}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Status Anak"
                 type="text"
                 id="childStatus"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={childStatus}
+                onChange={(e) => setChildStatus(e.target.value)}
+                value={statusAnak}
                 placeholder={admissionApplicantData.childStatus}
-                disable={true}
+                // defaultValue={admissionApplicantData.childStatus}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Anak ke"
                 type="number"
                 id="childNumber"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={childNumber}
+                onChange={(e) => setChildNumber(e.target.value)}
+                value={anakKe}
                 placeholder={admissionApplicantData.childNumber}
-                disable={true}
+                // defaultValue={admissionApplicantData.childNumber}
+                disable={false}
                 required={true}
                 min="1"
               />
@@ -226,10 +352,11 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tinggi Badan Anak (cm)"
                 type="number"
                 id="height"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                value={tinggi}
                 placeholder={admissionApplicantData.height + " cm"}
-                disable={true}
+                // defaultValue={admissionApplicantData.height}
+                disable={false}
                 required={true}
                 min="1"
               />
@@ -237,33 +364,40 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Tempat Lahir"
                 type="text"
                 id="birthPlace"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={birthPlace}
+                onChange={(e) => setBirthPlace(e.target.value)}
+                value={tempatLahir}
                 placeholder={admissionApplicantData.birthPlace}
-                disable={true}
+                // defaultValue={admissionApplicantData.birthPlace}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Tanggal Lahir"
                 type="text"
-                id="birthDate"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={birthDate}
+                id="birthPlace"
                 placeholder={moment(admissionApplicantData.birthDate).format(
                   "DD-MM-YYYY"
                 )}
-                disable={true}
+                disable={false}
                 required={true}
+              />
+              <DropdownDatePickers
+                label="Ubah Tanggal Lahir"
+                id="birthDate"
+                value={tanggalLahir}
+                defaultValue={admissionApplicantData.birthDate}
+                change={(e) => setBirthDate(e.element.value)}
               />
               {admissionApplicantData.gender === "male" ? (
                 <TextInput
                   label="Jenis Kelamin"
                   type="text"
                   id="gender"
-                  // onChange={(e) => setFirstName(e.value)}
-                  // value={gender}
+                  // onChange={(e) => setGender(e.target.value)}
+                  // value={jenisKelamin}
                   placeholder="Laki-Laki"
-                  disable={true}
+                  // defaultValue={admissionApplicantData.gender}
+                  disable={false}
                   required={true}
                 />
               ) : (
@@ -271,41 +405,66 @@ const FormDaftarMurid = ({ indexMurid }) => {
                   label="Jenis Kelamin"
                   type="text"
                   id="gender"
-                  // onChange={(e) => setFirstName(e.value)}
-                  // value={gender}
+                  // onChange={(e) => setGender(e.target.value)}
+                  // value={jenisKelamin}
                   placeholder="Perempuan"
-                  disable={true}
+                  // defaultValue={admissionApplicantData.gender}
+                  disable={false}
                   required={true}
                 />
               )}
+              <br />
+              <DropdownRadioInputGender
+                required={true}
+                label="Ubah Jenis Kelamin"
+                value1="female"
+                value2="male"
+                label2="Perempuan"
+                label3="Laki-Laki"
+                onChange={(e) => setGender(e.target.value)}
+                // placeholder={admissionApplicantData.gender}
+                checked={jenisKelamin}
+              />
+              <br />
               <TextInput
                 label="Golongan Darah"
                 type="text"
                 id="bloodType"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={bloodType}
+                // onChange={(e) => setBloodType(e.target.value)}
+                // value={golonganDarah}
                 placeholder={admissionApplicantData.bloodType}
-                disable={true}
+                // defaultValue={admissionApplicantData.bloodType}
+                disable={false}
                 required={true}
+              />
+              <br />
+              <DropdownRadioInputBloodType
+                required={true}
+                label="Ubah Golongan Darah"
+                onChange={(e) => setBloodType(e.target.value)}
+                // placeholder={admissionApplicantData.bloodType}
+                checked={golonganDarah}
               />
               <TextInput
                 label="Hobi Anak"
                 type="text"
                 id="hobby"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={hobby}
+                onChange={(e) => setHobby(e.target.value)}
+                value={hobi}
                 placeholder={admissionApplicantData.hobby}
-                disable={true}
+                // defaultValue={admissionApplicantData.hobby}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Berat Badan Anak (Kg)"
                 type="number"
                 id="weight"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                value={berat}
                 placeholder={admissionApplicantData.weight}
-                disable={true}
+                // defaultValue={admissionApplicantData.weight}
+                disable={false}
                 required={true}
                 min="1"
               />
@@ -313,41 +472,46 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Nomor Kartu Keluarga"
                 type="text"
                 id="familyIdentityNumber"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={familyIdentityNumber}
+                onChange={(e) => setFamilyIdentityNumber(e.target.value)}
+                value={noKK}
                 placeholder={admissionApplicantData.familyIdentityNumber}
-                disable={true}
+                // defaultValue={admissionApplicantData.familyIdentityNumber}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Jarak Rumah ke Sekolah (Km)"
                 type="number"
                 id="distanceFromHome"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={distanceFromHome}
+                onChange={(e) => setDistanceFromHome(e.target.value)}
+                value={jarak}
                 placeholder={admissionApplicantData.distanceFromHome + " Km"}
-                disable={true}
+                // defaultValue={admissionApplicantData.distanceFromHome}
+                disable={false}
                 required={false}
                 min="1"
               />
-              <TextInput
-                label="Transportasi ke Sekolah"
-                type="text"
-                id="transportation"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={transportation}
-                placeholder={admissionApplicantData.transportation}
-                disable={true}
+              <br />
+              <DropdownListComponents
                 required={true}
+                label="Transportasi ke Sekolah"
+                disable={false}
+                id="transportation"
+                dataSource={dropdownData.transportasiSekolah}
+                placeholder={admissionApplicantData.transportation}
+                value={transportasi}
+                change={(e) => setTransportation(e.value)}
+                popupHeight="auto"
               />
               <TextInput
                 label="Kelas Pada Saat Mendaftar"
                 type="number"
                 id="schoolOriginClass"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={schoolOriginClass}
+                onChange={(e) => setSchoolOriginClass(e.target.value)}
+                value={kelasSaatMendaftar}
                 placeholder={admissionApplicantData.schoolOriginClass}
-                disable={true}
+                // defaultValue={admissionApplicantData.schoolOriginClass}
+                disable={false}
                 required={true}
                 min="1"
                 max="6"
@@ -356,40 +520,44 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 label="Asal Sekolah"
                 type="text"
                 id="schoolOriginName"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={schoolOriginName}
+                onChange={(e) => setSchoolOriginName(e.target.value)}
+                value={asalSekolah}
                 placeholder={admissionApplicantData.schoolOriginName}
-                disable={true}
+                // defaultValue={admissionApplicantData.firstName}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Sifat Dominan Anak"
                 type="text"
                 id="characteristic"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={characteristic}
+                onChange={(e) => setCharacteristic(e.target.value)}
+                value={karakter}
                 placeholder={admissionApplicantData.characteristic}
-                disable={true}
+                // defaultValue={admissionApplicantData.characteristic}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Penyakit Berat yang Pernah Diderita"
                 type="text"
                 id="healthRecord"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={healthRecord}
+                onChange={(e) => setHealthRecord(e.target.value)}
+                value={kesehatan}
                 placeholder={admissionApplicantData.healthRecord}
-                disable={true}
+                // defaultValue={admissionApplicantData.healthRecord}
+                disable={false}
                 required={true}
               />
               <TextInput
                 label="Nomor Akta Lahir Anak"
                 type="text"
                 id="identityNumber"
-                // onChange={(e) => setFirstName(e.value)}
-                // value={identityNumber}
+                onChange={(e) => setIdentityNumber(e.target.value)}
+                value={noAktaLahir}
                 placeholder={admissionApplicantData.identityNumber}
-                disable={true}
+                // defaultValue={admissionApplicantData.identityNumber}
+                disable={false}
                 required={true}
               />
             </section>
@@ -614,8 +782,17 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
       <section className="flex mt-12">
         {admissionApplicantData !== null && (
-          <button type="button" className="w-auto btn-disabled">
-            Data Sudah Tersimpan
+          <button
+            type="button"
+            className="w-auto btn-merah"
+            onClick={handleSubmitUpdate}
+          >
+            {isLoading ? (
+              <CgSpinner className="mr-2 text-xl animate-spin" />
+            ) : (
+              <AiOutlineEdit className="mr-2 text-2xl" />
+            )}
+            Edit
           </button>
         )}
         {admissionApplicantData === null && (

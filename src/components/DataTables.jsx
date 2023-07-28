@@ -325,10 +325,117 @@ export function FilterComponentWithoutButton({
   );
 }
 
+export function DataTablesRegistrationDetail({
+  columns,
+  status,
+  data,
+  defaultSortFieldId,
+  Approve,
+  Deny,
+  setRegistrationPayment,
+  setRegistrationData,
+  setTest,
+  setEducationalPayment,
+}) {
+  const CustomStylesTable = {
+    table: {
+      style: {
+        width: "auto", // set the width of the table wrapper
+        backgroundColor: "#F3F4F6",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for data cells
+        justifyContent: "center",
+        fontWeight: "bold",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#FFF",
+        marginTop: "10px",
+        borderRadius: "10px",
+        border: "0px",
+        minHeight: "72px", // override the row height
+        "&:not(:last-of-type)": {
+          border: "0px",
+        },
+      },
+    },
+    denseStyle: {
+      minHeight: "32px",
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#8F0D1E",
+        minHeight: "52px",
+        borderRadius: "10px",
+      },
+      denseStyle: {
+        minHeight: "32px",
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for head cells
+        paddingRight: "10px",
+        justifyContent: "center",
+        color: "rgb(243 241 241)",
+      },
+    },
+  };
+  return (
+    <>
+      <div>
+        {status == 0 ? (
+          <div style={{ textAlign: "center" }}>
+            <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+          </div>
+        ) : (
+          <div
+            style={{
+              borderRadius: "6px",
+              backgroundColor: "#F3F4F6",
+              padding: "30px 30px 0px",
+            }}
+          >
+            <div>
+              <DataTable
+                columns={columns}
+                customStyles={CustomStylesTable}
+                data={data}
+                defaultSortAsc={false}
+                defaultSortFieldId={defaultSortFieldId}
+              />
+              <div className="btn-form">
+                <button
+                  type="button"
+                  className="w-auto btn-merah flex justify-center mb-5"
+                  onClick={Approve}
+                >
+                  Setuju
+                </button>
+                <button
+                  type="button"
+                  className="w-auto btn-putih flex justify-center mb-5"
+                  onClick={Deny}
+                >
+                  Tolak
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
 export function DataTablesPMBWithoutButton({
   columns,
   status,
-  data = [],
+  data,
   defaultSortFieldId,
   filterText,
   onFilter,

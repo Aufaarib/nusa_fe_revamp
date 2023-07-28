@@ -68,6 +68,7 @@ import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
 import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
+import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
 
 const App = () => {
   return (
@@ -95,6 +96,10 @@ const App = () => {
           <Route
             path="/admin/list-data-registrasi"
             element={<DataRegistrasi />}
+          />
+          <Route
+            path="/admin/list-detail-data-registrasi"
+            element={<DetailDataRegistrasi />}
           />
           <Route
             path="/admin/konfirmasi-pembayaran"

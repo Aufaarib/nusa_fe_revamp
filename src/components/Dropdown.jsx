@@ -442,12 +442,12 @@ export const DropdownDatePickers = ({
   dataSource,
   id,
   name,
-  fields,
   value,
   change,
   required,
   defaultValue,
   isClearable,
+  // placeholder,
 }) => {
   return (
     <div>

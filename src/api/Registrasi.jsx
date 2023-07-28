@@ -10,6 +10,26 @@ import {
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
+export function ApproveEducationalPayment(id, setSts, setData) {
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  axios
+    .put(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${regNumber}/aproved/payment/${id}`,
+      null,
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
+    .then((res) => {
+      AlertStatusUpdateSuccess();
+      getRegistrationDetail(setSts, setData);
+      // setSts(res.code);
+    })
+    .catch((res) => {
+      AlertStatusUpdateFailed();
+      // setSts(res.code);
+    });
+}
+
 export function validateEmail(setSts, otp, navigateLogin) {
   axios
     .post(
@@ -101,14 +121,14 @@ export function getAdmissionAnswer(setData, setSts) {
 }
 export function getAdmissionRegistration(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
-      headers: { authorization: localStorage.getItem("TOKEN") },
-    })
+    .get(
+      process.env.REACT_APP_BASE_URL + "/admission/registration?pageSize=100",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then((res) => {
-      console.log(
-        "ADMISSION REGISTRATION === ",
-        res.data.body[0].user.fullname
-      );
+      // console.log("ADMISSION REGISTRATION === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
@@ -116,6 +136,26 @@ export function getAdmissionRegistration(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
+
+// GET BIAYA PENDIDIKAN
+export function getRegistrationDetail(setSts, setData) {
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${regNumber}/payment`,
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
+    .then((res) => {
+      // console.log("===", res.data.body[0].amount);
+      setData(res.data.body);
+      setSts(res.code);
+    })
+    .catch((res) => {
+      setSts(res.code);
+    });
+}
+
 export function getAdmissionRegistrationByRegNumber(setData, setSts) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
@@ -201,10 +241,37 @@ export function getAdmissionSteps(
           setDataStep5(i);
         }
       }
-      setSts(res.response.data.code);
+      // setSts(res.response.data.code);
     })
     .catch((res) => {
-      setSts(res.response.data.code);
+      // setSts(res.response.data.code);
+    });
+}
+
+export function updateAdmissionSteps(
+  setData,
+  setSts,
+  code,
+  step,
+  status,
+  note
+) {
+  axios
+    .put(
+      process.env.REACT_APP_BASE_URL + `/admission/registration/${code}/step`,
+      { step, status, note },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusUpdateSuccess();
+      getAdmissionRegistration(setData, setSts);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }
 
@@ -385,12 +452,11 @@ export function uploadHasilTest(setData, setSts, code) {
     });
 }
 
-export function approvedRegistration(setData, setSts, code) {
+export function approvedRegistration(setData, setSts, code, status) {
   axios
     .put(
-      process.env.REACT_APP_BASE_URL +
-        `/admission/registration/${code}/aproved/registration`,
-      {},
+      process.env.REACT_APP_BASE_URL + `/admission/registration/${code}/aprove`,
+      { status },
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }
