@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineCancel, MdVerified } from "react-icons/md";
 import { Button } from ".";
 import { userProfileData } from "../data/initData";
@@ -32,6 +32,12 @@ const UserProfile = () => {
     setOpenForm("");
   };
 
+  const navigate = useNavigate();
+
+  const navigateProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <div className="nav-item absolute right-6 top-16 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
       <div className="flex items-center justify-between">
@@ -60,11 +66,6 @@ const UserProfile = () => {
           </p>
           <p className="flex text-xs text-gray-500 break-all dark:text-gray-400">
             {auth.email}
-            <MdVerified
-              className={`text-green text-md ${
-                !verified ? "text-gray-500" : "text-green-500"
-              } ml-0.5`}
-            />
           </p>
         </div>
       </div>
@@ -76,6 +77,7 @@ const UserProfile = () => {
           >
             <button
               type="button"
+              onClick={() => navigateProfile()}
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
               className="p-3 text-xl rounded-lg hover:bg-light-gray"
             >

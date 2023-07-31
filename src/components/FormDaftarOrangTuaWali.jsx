@@ -268,7 +268,20 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 placeholder={admissionParentsData.fullName}
                 disable={false}
                 required={true}
+              />{" "}
+              <br />
+              <DropdownRadioInputGender
+                required={true}
+                label="Ubah Jenis Kelamin"
+                value1="female"
+                value2="male"
+                label2="Perempuan"
+                label3="Laki-Laki"
+                onChange={updateParentsRadio}
+                // placeholder={admissionApplicantData.gender}
+                checked={parent.gender}
               />
+              <br />
               <TextInput
                 label="Nomor Kartu Keluarga"
                 type="number"
@@ -420,7 +433,6 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 value={parent.birthDate}
                 change={updateParentsCal.bind(this)}
               />
-
               {admissionParentsData.gender === "male" ? (
                 <TextInput
                   label="Jenis Kelamin"
@@ -513,6 +525,19 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 disable={false}
                 required={true}
               />
+              <br />
+              <DropdownRadioInputGender
+                required={true}
+                label="Ubah Jenis Kelamin"
+                value1="female"
+                value2="male"
+                label2="Perempuan"
+                label3="Laki-Laki"
+                onChange={updateParentsRadio}
+                // placeholder={admissionApplicantData.gender}
+                checked={parent.gender}
+              />
+              <br />
               <TextInput
                 label="Nomor Kartu Keluarga"
                 type="number"

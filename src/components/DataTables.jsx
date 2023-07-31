@@ -332,8 +332,8 @@ export function DataTablesRegistrationDetail({
   defaultSortFieldId,
   Approve,
   Deny,
-  setRegistrationPayment,
-  setRegistrationData,
+  buttonNegative,
+  buttonPositive,
   setTest,
   setEducationalPayment,
 }) {
@@ -414,14 +414,14 @@ export function DataTablesRegistrationDetail({
                   className="w-auto btn-merah flex justify-center mb-5"
                   onClick={Approve}
                 >
-                  Setuju
+                  {buttonPositive}
                 </button>
                 <button
                   type="button"
                   className="w-auto btn-putih flex justify-center mb-5"
                   onClick={Deny}
                 >
-                  Tolak
+                  {buttonNegative}
                 </button>
               </div>
             </div>

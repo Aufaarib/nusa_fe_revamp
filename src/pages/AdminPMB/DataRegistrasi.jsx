@@ -53,11 +53,7 @@ const DataRegistrasi = () => {
 
   const navigateRegistrationDetails = (code) => {
     localStorage.setItem("REG_NUMBER", code);
-    navigate("/admin/list-detail-data-registrasi", {
-      state: {
-        code: code,
-      },
-    });
+    navigate("/admin/list-detail-data-registrasi");
   };
 
   const columns = [

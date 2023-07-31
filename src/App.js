@@ -69,6 +69,7 @@ import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidi
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
+import ProfilepPage from "./components/ProfilePage";
 
 const App = () => {
   return (
@@ -218,6 +219,7 @@ const App = () => {
           <Route path="/pmb/list-calon-siswa" element={<ListCalonSiswa />} />
           <Route path="/pmb/tahapan-pmb" element={<TahapanPMB />} />
           <Route path="/pmb/form-data-murid" element={<FormMurid />} />
+          <Route path="/profile" element={<ProfilepPage />} />
           <Route
             path="/pmb/form-data-orang-tua-ayah"
             element={<FormOrangTua />}

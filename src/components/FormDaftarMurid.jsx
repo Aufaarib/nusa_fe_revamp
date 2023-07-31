@@ -8,6 +8,7 @@ import moment from "moment/moment";
 import {
   DropdownDatePickers,
   DropdownListComponents,
+  DropdownRadioInputBiological,
   DropdownRadioInputBloodType,
   DropdownRadioInputGender,
 } from "./Dropdown";
@@ -603,7 +604,19 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 disable={false}
                 required={true}
               />
-              <TextInput
+              <br />
+              <DropdownRadioInputBiological
+                required={true}
+                label="Status Anak"
+                value1="Kandung"
+                value2="Tiri"
+                label2="Kandung"
+                label3="Tiri"
+                onChange={(e) => setChildStatus(e.target.value)}
+                checked={statusAnak}
+              />
+              <br />
+              {/* <TextInput
                 label="Status Anak"
                 type="text"
                 id="childStatus"
@@ -612,7 +625,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 // placeholder={admissionApplicantData.childStatus}
                 disable={false}
                 required={true}
-              />
+              /> */}
               <TextInput
                 label="Anak ke"
                 type="number"

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import {
   getAdmissionRegistrationByRegNumber,
+  getAdmissionRegistrationByRegNumberUser,
   getAdmissionSteps,
 } from "../api/Registrasi";
 
@@ -101,8 +102,9 @@ export const ContextProvider = ({ children }) => {
   const [admissionSteps3, setDataStep3] = useState([]);
   const [admissionSteps4, setDataStep4] = useState([]);
   const [admissionSteps5, setDataStep5] = useState([]);
-  const [dataAdmissionRegistration, setDataAdmissionRegistration] =
-    useState("");
+  const [dataAdmissionRegistration, setDataAdmissionRegistration] = useState(
+    []
+  );
   const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
   const [stsGetAdmissionReg, setStsGetAdmissionReg] = useState("");
 
@@ -122,33 +124,36 @@ export const ContextProvider = ({ children }) => {
           (admissionSteps1.status == "valid" && "Berhasil") ||
           (admissionSteps1.status == "invalid" && "Gagal");
         const statusStep2 =
-          admissionSteps1.status !== "valid"
-            ? "Belum Mulai"
-            : (admissionSteps2.status == "inreview" && "Dalam Proses") ||
-              (admissionSteps2.status == "valid" && "Berhasil") ||
-              (admissionSteps2.status == "invalid" && "Gagal");
+          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps2.status == "valid" && "Berhasil") ||
+          (admissionSteps2.status == "invalid" && "Gagal");
         const statusStep3 =
-          statusStep2 !== "valid"
-            ? "Belum Mulai"
-            : (admissionSteps3.length == 0 && "Dalam Proses") ||
-              (admissionSteps3.status == "inreview" && "Dalam Proses") ||
-              (admissionSteps3.status == "valid" && "Berhasil") ||
-              (admissionSteps3.status == "invalid" && "Gagal");
+          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps3.length == 0 && "Dalam Proses") ||
+          (admissionSteps3.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps3.status == "valid" && "Berhasil") ||
+          (admissionSteps3.status == "invalid" && "Gagal");
         const statusStep4 =
-          statusStep3 !== "valid"
-            ? "Belum Mulai"
-            : (admissionSteps4.length == 0 && "Dalam Proses") ||
-              (admissionSteps4.status == "inreview" && "Dalam Proses") ||
-              (admissionSteps4.status == "valid" && "Berhasil") ||
-              (admissionSteps4.status == "invalid" && "Gagal");
+          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps3.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps4.length == 0 && "Dalam Proses") ||
+          (admissionSteps4.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps4.status == "valid" && "Berhasil") ||
+          (admissionSteps4.status == "invalid" && "Gagal");
 
         const statusStep5 =
-          statusStep4 !== "valid"
-            ? "Belum Mulai"
-            : (admissionSteps5.length == 0 && "Dalam Proses") ||
-              (admissionSteps5.status == "inreview" && "Dalam Proses") ||
-              (admissionSteps5.status == "valid" && "Berhasil") ||
-              (admissionSteps5.status == "invalid" && "Gagal");
+          (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps3.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps4.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps5.length == 0 && "Dalam Proses") ||
+          (admissionSteps5.status == "inreview" && "Dalam Proses") ||
+          (admissionSteps5.status == "valid" && "Berhasil") ||
+          (admissionSteps5.status == "invalid" && "Gagal");
+
         return {
           ...prevState,
           register_payment: {
@@ -186,7 +191,7 @@ export const ContextProvider = ({ children }) => {
       setDataStep5,
       setStsAdmissionSteps
     );
-    getAdmissionRegistrationByRegNumber(
+    getAdmissionRegistrationByRegNumberUser(
       setDataAdmissionRegistration,
       setStsGetAdmissionReg
     );
