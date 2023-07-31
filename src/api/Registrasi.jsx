@@ -203,6 +203,23 @@ export function getAdmissionRegistrationByRegNumberAdmin(
     .catch((error) => {});
 }
 
+export function getAdmissionRegistrationByRegNumberAdminAnak(setDataAnak) {
+  const regNumber = localStorage.getItem("REG_NUMBER");
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      for (const i of res.data.body.applicant) {
+        setDataAnak(i);
+      }
+    })
+    .catch((error) => {});
+}
+
 export function getAdmissionRegistrationByRegNumberAdminAyah(setDataAyah) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios

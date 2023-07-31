@@ -147,8 +147,8 @@ const BerkasPendaftaran = () => {
         home="PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Bukti Pembayaran"
-        title="Form Bukti Pembayaran"
+        at="Berkas Pembayaran"
+        title="Form Berkas Pembayaran"
       />
       <article>
         <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
