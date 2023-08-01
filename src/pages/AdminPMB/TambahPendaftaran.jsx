@@ -201,7 +201,7 @@ export default function TambahPendaftaran() {
             required={true}
           />
           <TextInput
-            label="Amount"
+            label="Nominal"
             type="text"
             id="group"
             name="code"

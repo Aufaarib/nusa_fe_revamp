@@ -16,6 +16,10 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 import { validateEmail } from "../../api/Registrasi";
 import axios from "../../api/axios";
+import {
+  AlertLoginFailed,
+  AlertRegisterFailed,
+} from "../../components/ModalPopUp";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
@@ -140,6 +144,7 @@ const Register = () => {
         },
       });
     } catch (err) {
+      AlertRegisterFailed();
       setIsLoading(false);
     }
   };

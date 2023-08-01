@@ -76,7 +76,7 @@ const ListCalonSiswa = () => {
               <div className="text-wrapper-2">Tahun Ajaran {year}</div>
               <br />
               <div
-                key={year}
+                // key={year}
                 style={{
                   display: "flex",
                   flexDirection: "row",

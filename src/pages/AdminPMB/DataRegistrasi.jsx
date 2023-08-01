@@ -37,8 +37,6 @@ const DataRegistrasi = () => {
   }
 
   const ApproveRegistrasi = (code) => {
-    // const url = dataInvoice.paymentRecipt;
-    // console.
     // getPaymentInvoice(setDataInvoice, setSts, code);
     AlertValidateRegistration(code, onValidate);
   };
@@ -71,34 +69,46 @@ const DataRegistrasi = () => {
     {
       name: <div>Nama Anak</div>,
       selector: (data) => data.childName,
-      cell: (data) => <div>{data.childName}</div>,
+      cell: (data) => <div className="capitalize">{data.childName}</div>,
       width: "auto",
     },
     {
-      name: <div>Nama Orang Tua</div>,
-      selector: (data) => data.user.fullname,
-      cell: (data) => <div>{data.user.fullname}</div>,
+      name: <div>Tahun Ajaran</div>,
+      selector: (data) => data.admissionPhase.admission.academicYear.name,
+      cell: (data) => (
+        <div>{data.admissionPhase.admission.academicYear.name}</div>
+      ),
       width: "auto",
     },
-    // {
-    //   name: <div>Gelombang</div>,
-    //   selector: (data) => data.admission.name,
-    //   cell: (data) => <div>{data.admission.name}</div>,
-    //   width: "auto",
-    // },
-    // {
-    //   name: <div>Approval</div>,
-    //   selector: (data) => data.isValidated,
-    //   cell: (data) => (
-    //     <div>{data.isValidated == 1 ? "Validated" : "Un-validated"}</div>
-    //   ),
-    //   width: "auto",
-    // },
+    {
+      name: <div>Status</div>,
+      selector: (data) => data.status,
+      cell: (data) => (
+        <div
+          className={
+            data.status === "valid"
+              ? "capitalize text-hijau"
+              : "capitalize text-merah"
+          }
+        >
+          {data.status}
+        </div>
+      ),
+      width: "auto",
+    },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          title="Detail Pembayaran"
+          style={{
+            height: "25px",
+            width: "25px",
+            backgroundColor: "black",
+            borderRadius: "50%",
+            display: "inline-block",
+            color: "white",
+          }}
+          title="Detail Registrasi"
           onClick={() => navigateRegistrationDetails(data.regNumber)}
         >
           <i className="fa fa-info" />
@@ -108,41 +118,6 @@ const DataRegistrasi = () => {
       button: true,
       width: "300px",
     },
-    // {
-    //   name: <div>Aksi</div>,
-    //   cell: (data) => (
-    //     <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-    //       <button
-    //         className="btn-mrh ml-3 w-auto px-2"
-    //         title="Bukti Pembayaran"
-    //         onClick={() => ApproveRegistrasi(data.regNumber)}
-    //       >
-    //         {data.isValidated == 1 ? (
-    //           <i className="fa fa-times"> Cancel Approve</i>
-    //         ) : (
-    //           <i className="fa fa-check"> Approve</i>
-    //         )}
-    //       </button>
-    //       <button
-    //         className="btn-mrh ml-3 w-auto px-2"
-    //         title="Detail Pembayaran"
-    //         // onClick={() => handleNonActiveStatus(data.id, data.name)}
-    //       >
-    //         <i className="fa fa-dollar"> Detail Pembayaran</i>
-    //       </button>
-    //       <button
-    //         // onClick={() => openModalHapus(data.id, data.name)}
-    //         className="btn-mrh ml-3 w-auto px-2"
-    //         title="Status"
-    //       >
-    //         <i className="fa fa-warning"> Upload Nilai Hasil Test</i>
-    //       </button>
-    //     </div>
-    //   ),
-    //   ignoreRowClick: true,
-    //   button: true,
-    //   width: "450px",
-    // },
   ];
 
   const navigateTambahGelombang = () => {
@@ -166,33 +141,6 @@ const DataRegistrasi = () => {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        {/* <ModalStatusList
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          status={sts}
-        /> */}
-
-        {/* <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesModalHapus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Hapus Data Bank</h2>
-            <h4 className="mb-3 text-merah">{desc_nama}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onDelete}>
-              Hapus
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalHapus}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
       </div>
     </>
   );

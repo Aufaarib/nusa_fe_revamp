@@ -29,21 +29,6 @@ const SetupPMB = () => {
     getAdmission(setData, setSts);
   }, []);
 
-  const handleStatus = (code, status) => {
-    AlertUbahStatus(code, code, status, onUpdateStatus);
-    // setisOpenUpdateTidakAktif(true);
-    // setStatus("Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
-  };
-
-  const onUpdateStatus = (code) => {
-    updateStatusAdmission(setSts, code, setData);
-    // closeModalUpdateAktif();
-    // closeModalUpdateTidakAktif();
-    // setisOpenStatus(true);
-  };
-
   const columns = [
     {
       name: <div>No</div>,
@@ -65,21 +50,36 @@ const SetupPMB = () => {
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
-      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+      cell: (data) => (
+        <div
+          className={
+            data.status === 1
+              ? "capitalize text-hijau"
+              : "capitalize text-merah"
+          }
+        >
+          {data.status == 1 ? "Aktif" : "Tidak Aktif"}
+        </div>
+      ),
       width: "auto",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-          <button
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Detail Pembayaran"
-            onClick={() => navigateAdmissionDetails(data.code)}
-          >
-            <i className="fa fa-info" />
-          </button>
-        </div>
+        <button
+          style={{
+            height: "25px",
+            width: "25px",
+            backgroundColor: "black",
+            borderRadius: "50%",
+            display: "inline-block",
+            color: "white",
+          }}
+          title="Detail Pendaftaran"
+          onClick={() => navigateAdmissionDetails(data.code, data.status)}
+        >
+          <i className="fa fa-info" />
+        </button>
       ),
       ignoreRowClick: true,
       button: true,
@@ -87,14 +87,11 @@ const SetupPMB = () => {
     },
   ];
 
-  // const navigateTambahGelombang = () => {
-  //   navigate("/admin/tambah-gelombang-pmb");
-  // };
-
-  const navigateAdmissionDetails = (code) => {
+  const navigateAdmissionDetails = (code, status) => {
     navigate("/admin/admission-detail", {
       state: {
         code: code,
+        status: status,
       },
     });
   };

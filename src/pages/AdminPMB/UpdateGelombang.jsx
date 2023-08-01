@@ -151,7 +151,7 @@ export default function UbahGelombang() {
           />
 
           <TextInput
-            label="Amount"
+            label="Nominal"
             type="number"
             placeholder={location.state.amount}
             onChange={handleAmountChange}

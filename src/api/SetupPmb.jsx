@@ -59,7 +59,7 @@ export function getAdmissionDetails(setData, setSts, code) {
 //       });
 //   }
 
-export function updateStatusAdmission(setSts, code, setData) {
+export function updateStatusAdmission(setSts, code) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -71,7 +71,6 @@ export function updateStatusAdmission(setSts, code, setData) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusUpdateSuccess();
-      getAdmission(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });

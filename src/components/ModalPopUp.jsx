@@ -273,9 +273,9 @@ export const AlertStatusUpdateDataSuccess = (path) => {
 export const AlertStatusVerified = (navigateLogin) => {
   styledSweetAlert
     .fire({
-      title: "Akun Telah Terverifikasi, Silahkan Kembali Login",
+      title: "Akun Berhasil Terverifikasi, Silahkan Kembali Login",
       showConfirmButton: true,
-      confirmButtonText: "Kembali",
+      confirmButtonText: "Login",
     })
     .then((result) => {
       if (result.isConfirmed) {
@@ -311,7 +311,6 @@ export const AlertStatusVerifiedFailed = () => {
 
 export const AlertPaymentProof = (url) => {
   const domain = process.env.REACT_APP_BASE_STATIC_FILE;
-  console.log("KAKA", domain + url);
   styledSweetAlert.fire({
     title: "Bukti Pembayaran",
     imageUrl: domain + url, // Replace with the path to your image
@@ -357,6 +356,14 @@ export const AlertStatusUpdateFailed = () => {
 export const AlertLoginFailed = () => {
   styledSweetAlert.fire({
     title: "Email atau Password Tidak Sesuai",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
+export const AlertRegisterFailed = () => {
+  styledSweetAlert.fire({
+    title: "Email Sudah Terdaftar",
     showConfirmButton: true,
     confirmButtonText: "Tutup",
   });
@@ -453,7 +460,6 @@ export const AlertValidateRegistration = (
 };
 
 export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
-  console.log(status);
   if (status === 1) {
     styledSweetAlert
       .fire({

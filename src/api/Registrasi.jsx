@@ -213,9 +213,8 @@ export function getAdmissionRegistrationByRegNumberAdminAnak(setDataAnak) {
       }
     )
     .then((res) => {
-      for (const i of res.data.body.applicant) {
-        setDataAnak(i);
-      }
+      setDataAnak(res.data.body.applicant);
+      console.log("ANAK === ", res.data.body.applicant);
     })
     .catch((error) => {});
 }

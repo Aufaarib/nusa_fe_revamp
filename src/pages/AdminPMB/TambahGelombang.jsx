@@ -155,7 +155,7 @@ export default function TambahGelombang() {
           />
 
           <TextInput
-            label="Amount"
+            label="Nominal"
             type="text"
             onChange={handleInputChange}
             value={amount}

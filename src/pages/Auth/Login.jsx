@@ -40,47 +40,44 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const response = await axios.post(
-        process.env.REACT_APP_BASE_URL + "/user/login",
-        {
-          email: user,
-          password: pwd,
+    axios
+      .post(process.env.REACT_APP_BASE_URL + "/user/login", {
+        email: user,
+        password: pwd,
+      })
+      .then((res) => {
+        const role = res?.data?.body.role;
+        const email = res?.data?.body.email;
+        const verified = res?.data?.body.status;
+        const token = res?.headers?.authorization;
+        const nama = res?.data?.body.fullname;
+        localStorage.setItem("TOKEN", token);
+        localStorage.setItem("NAMA", nama);
+        localStorage.setItem("ROLE", role);
+        localStorage.setItem("EMAIL", email);
+        setIsLoading(false);
+        if (res.status === 200) {
+          if (role === "ADMIN" && verified === 1) {
+            navigate("/admin/dashboard", { replace: true });
+          } else if (role === "USER" && verified === 1) {
+            navigate("/pmb/list-calon-siswa", { replace: true });
+          } else if (verified !== 1) {
+            navigate("/verify", {
+              state: {
+                email: email,
+                direct: directTo,
+              },
+            });
+          } else {
+            navigate("/login");
+          }
         }
-      );
-
-      const role = response?.data?.body.role;
-      const email = response?.data?.body.email;
-      const verified = response?.data?.body.status;
-      const token = response?.headers?.authorization;
-      const nama = response?.data?.body.fullname;
-      localStorage.setItem("TOKEN", token);
-      localStorage.setItem("NAMA", nama);
-      localStorage.setItem("ROLE", role);
-      localStorage.setItem("EMAIL", email);
-
-      setIsLoading(false);
-
-      if (response.status === 200) {
-        if (role === "ADMIN" && verified === 1) {
-          navigate("/admin/dashboard", { replace: true });
-        } else if (role === "USER" && verified === 1) {
-          navigate("/pmb/list-calon-siswa", { replace: true });
-        } else if (verified !== 1) {
-          navigate("/verify", {
-            state: {
-              email: email,
-              direct: directTo,
-            },
-          });
-        } else {
-          navigate("/login");
-        }
-      }
-    } catch (err) {
-      AlertLoginFailed();
-      setIsLoading(false);
-    }
+      })
+      .catch((error) => {
+        console.log("ERRR === ", error);
+        AlertLoginFailed();
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -151,7 +148,7 @@ const Login = () => {
               }
             />
             <div className="flex justify-end">
-              <Link to={"/forgot"} className="flex mt-2 mb-1 btn-mrh">
+              <Link to={"/forgot"} className="flex mt-2 mb-1 w-auto btn-mrh">
                 Lupa Password
               </Link>
             </div>

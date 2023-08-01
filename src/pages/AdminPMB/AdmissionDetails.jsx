@@ -2,10 +2,18 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getBank } from "../../api/Bank";
 import { Header } from "../../components";
-import { DataTablesPMB } from "../../components/DataTables";
-import { getAdmission, getAdmissionDetails } from "../../api/SetupPmb";
+import {
+  DataTablesAdmissionDetail,
+  DataTablesPMB,
+} from "../../components/DataTables";
+import {
+  getAdmission,
+  getAdmissionDetails,
+  updateStatusAdmission,
+} from "../../api/SetupPmb";
 import { BsChevronBarLeft, BsChevronBarRight } from "react-icons/bs";
 import moment from "moment/moment";
+import { AlertUbahStatus } from "../../components/ModalPopUp";
 
 const AdmissionDetails = () => {
   const [data, setData] = useState([]);
@@ -19,6 +27,7 @@ const AdmissionDetails = () => {
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
   const code = location.state.code;
+  const status = location.state.status;
 
   let filteredItems = data;
 
@@ -63,7 +72,7 @@ const AdmissionDetails = () => {
       width: "auto",
     },
     {
-      name: <div>Amount</div>,
+      name: <div>Nominal</div>,
       selector: (data) => data.amount,
       cell: (data) => (
         <div>
@@ -95,7 +104,7 @@ const AdmissionDetails = () => {
               )
             }
           >
-            <i className="fa fa-warning" /> Ubah
+            <i className="fa fa-edit" /> Ubah
           </button>
         </div>
       ),
@@ -134,9 +143,14 @@ const AdmissionDetails = () => {
     });
   };
 
-  //   const navigateTambahPendaftaran = () => {
-  //     navigate("/admin/list-setup-pmb");
-  //   };
+  const handleStatus = () => {
+    AlertUbahStatus(code, code, status, onUpdateStatus);
+  };
+
+  const onUpdateStatus = (code) => {
+    updateStatusAdmission(setSts, code);
+    navigate(path);
+  };
 
   return (
     <>
@@ -149,13 +163,14 @@ const AdmissionDetails = () => {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesPMB
+        <DataTablesAdmissionDetail
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahGelombang}
+          onClickCreatePhase={() => navigateTambahGelombang()}
+          onClickActivate={() => handleStatus()}
+          buttonActivate={status === 1 ? "Non-Aktifkan" : "Aktifkan"}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          buttontxt="Tambah Gelombang"
         />
       </div>
       <div className="flex justify-start w-full">

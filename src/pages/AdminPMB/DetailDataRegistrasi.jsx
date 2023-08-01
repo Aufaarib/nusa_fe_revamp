@@ -72,7 +72,7 @@ const DetailDataRegistrasi = () => {
   };
 
   const fetchRegistrationData = () => {
-    getAdmissionRegistrationByRegNumberAdminAyah(setData);
+    getAdmissionRegistrationByRegNumberAdminAnak(setData);
     setFetched("regData");
     setFetchedRegData("fetchAnak");
   };
@@ -223,7 +223,7 @@ const DetailDataRegistrasi = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            gap: "100px",
+            gap: "50px",
             marginBottom: "20px",
             backgroundColor: "#F3F4F6",
             justifyContent: "center",
@@ -246,7 +246,7 @@ const DetailDataRegistrasi = () => {
             style={{
               borderRadius: "6px",
               padding: "20px 20px",
-              width: "auto",
+              width: "200px",
               backgroundColor: fetched === "regData" ? "#8F0D1E" : "",
               color: fetched === "regData" ? "white" : "",
             }}
@@ -258,7 +258,7 @@ const DetailDataRegistrasi = () => {
             style={{
               borderRadius: "6px",
               padding: "20px 20px",
-              width: "auto",
+              width: "200px",
               backgroundColor: fetched === "testResult" ? "#8F0D1E" : "",
               color: fetched === "testResult" ? "white" : "",
             }}
@@ -282,7 +282,7 @@ const DetailDataRegistrasi = () => {
 
         {fetched !== "regData" && (
           <>
-            {data !== null ? (
+            {data !== null && (
               <DataTablesRegistrationDetail
                 columns={columnsPayments}
                 data={fetched === "reg" ? [data] : fetched === "edu" && data}
@@ -303,8 +303,6 @@ const DetailDataRegistrasi = () => {
                 onFilter={(e) => setFilterText(e.target.value)}
                 filterText={filterText}
               />
-            ) : (
-              <h1>KOSONGG</h1>
             )}
           </>
         )}
@@ -321,18 +319,19 @@ const DetailDataRegistrasi = () => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                gap: "140px",
+                gap: "20px",
                 marginBottom: "20px",
                 backgroundColor: "#FFF",
                 justifyContent: "center",
                 borderRadius: "6px",
+                padding: "0",
               }}
             >
               <button
                 style={{
                   borderRadius: "6px",
                   padding: "20px 20px",
-                  width: "auto",
+                  width: "200px",
                   backgroundColor:
                     fetchedRegData === "fetchAnak" ? "#8F0D1E" : "",
                   color: fetchedRegData === "fetchAnak" ? "white" : "",
@@ -345,7 +344,7 @@ const DetailDataRegistrasi = () => {
                 style={{
                   borderRadius: "6px",
                   padding: "20px 20px",
-                  width: "auto",
+                  width: "200px",
                   backgroundColor:
                     fetchedRegData === "fetchAyah" ? "#8F0D1E" : "",
                   color: fetchedRegData === "fetchAyah" ? "white" : "",
@@ -358,7 +357,7 @@ const DetailDataRegistrasi = () => {
                 style={{
                   borderRadius: "6px",
                   padding: "20px 20px",
-                  width: "auto",
+                  width: "200px",
                   backgroundColor:
                     fetchedRegData === "fetchIbu" ? "#8F0D1E" : "",
                   color: fetchedRegData === "fetchIbu" ? "white" : "",
@@ -371,7 +370,7 @@ const DetailDataRegistrasi = () => {
                 style={{
                   borderRadius: "6px",
                   padding: "20px 20px",
-                  width: "auto",
+                  width: "200px",
                   backgroundColor:
                     fetchedRegData === "fetchWali" ? "#8F0D1E" : "",
                   color: fetchedRegData === "fetchWali" ? "white" : "",
@@ -381,11 +380,8 @@ const DetailDataRegistrasi = () => {
                 <i className="fa fa-users" /> Data Wali
               </button>
             </div>
-            <section
-              style={{ marginLeft: "125px" }}
-              className="xs:col-span-3 lg:col-span-1 mt-5"
-            >
-              {data !== null ? (
+            <section style={{ margin: "0 12%" }}>
+              {data !== null && (
                 <>
                   {fetchedRegData === "fetchAnak" && (
                     <>
@@ -393,7 +389,7 @@ const DetailDataRegistrasi = () => {
                         label="Nama Depan"
                         type="text"
                         id="firstName"
-                        placeholder={data.religion}
+                        placeholder={data.firstName}
                         disable={true}
                         required={false}
                       />
@@ -465,7 +461,9 @@ const DetailDataRegistrasi = () => {
                         label="Tanggal Lahir"
                         type="text"
                         id="birthDate"
-                        placeholder={data.birthDate}
+                        placeholder={moment(data.birthDate).format(
+                          "DD-MM-YYYY"
+                        )}
                         disable={true}
                       />
                       <TextInput
@@ -713,8 +711,6 @@ const DetailDataRegistrasi = () => {
                     </>
                   )}
                 </>
-              ) : (
-                <h1>KOSONGGG</h1>
               )}
             </section>
             <div className="btn-form">

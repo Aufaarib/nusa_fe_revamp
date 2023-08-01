@@ -189,12 +189,12 @@ export const sidebarMenus = [
 ];
 
 export const sidebarMenusAdmin = [
-  {
-    title: "Dashboard",
-    path: `admin/dashboard`,
-    icon: <AiOutlineBarChart />,
-    links: [],
-  },
+  // {
+  //   title: "Dashboard",
+  //   path: `admin/dashboard`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [],
+  // },
   {
     title: "Admin PMB",
     path: `admin/pmb`,
@@ -227,80 +227,80 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
-  {
-    title: "Admin Keuangan",
-    path: `admin/keuangan`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Cost Center",
-        path: `admin/list-cost-center`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Tipe Transaksi",
-        path: `admin/list-tipe-transaksi`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Bank",
-        path: `admin/list-bank`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Biaya Pendidikan",
-        path: `admin/list-biaya-pendidikan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Biaya Operasional",
-        path: `admin/list-biaya-operasional`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
-  {
-    title: "Admin KBM",
-    path: `admin/kbm`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Guru",
-        path: `admin/list-guru`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelompok Mapel",
-        path: `admin/list-kelompok-mapel`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelas",
-        path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Semester",
-        path: `admin/list-semester`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Mata Pelajaran",
-        path: `admin/list-mata-pelajaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Jadwal Mapel",
-        path: `admin/list-jadwal-mata-pelajaran`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
+  // {
+  //   title: "Admin Keuangan",
+  //   path: `admin/keuangan`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Cost Center",
+  //       path: `admin/list-cost-center`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Tipe Transaksi",
+  //       path: `admin/list-tipe-transaksi`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Bank",
+  //       path: `admin/list-bank`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Biaya Pendidikan",
+  //       path: `admin/list-biaya-pendidikan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Biaya Operasional",
+  //       path: `admin/list-biaya-operasional`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Admin KBM",
+  //   path: `admin/kbm`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Guru",
+  //       path: `admin/list-guru`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelompok Mapel",
+  //       path: `admin/list-kelompok-mapel`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelas",
+  //       path: `admin/list-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Semester",
+  //       path: `admin/list-semester`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kurikulum",
+  //       path: `admin/list-kurikulum`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Mata Pelajaran",
+  //       path: `admin/list-mata-pelajaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Jadwal Mapel",
+  //       path: `admin/list-jadwal-mata-pelajaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  // ],
+  // },
 ];
 
 export const themeColors = [

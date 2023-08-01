@@ -54,9 +54,9 @@ const TahunAjaran = () => {
       width: "auto",
     },
     {
-      name: <div>Kurikulum Id</div>,
-      selector: (data) => data.curriculumId,
-      cell: (data) => <div>{data.curriculumId}</div>,
+      name: <div>Kurikulum</div>,
+      selector: (data) => data.curriculum.name,
+      cell: (data) => <div>{data.curriculum.name}</div>,
       width: "auto",
     },
     {
@@ -64,7 +64,7 @@ const TahunAjaran = () => {
       cell: (data) => (
         <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
           <button
-            className="btn-action-merah ml-3 w-auto px-2"
+            className="btn-mrh ml-3 w-auto px-2"
             title="Bukti Pembayaran"
             onClick={() =>
               navigateUbahTahunAjaran(
@@ -76,7 +76,7 @@ const TahunAjaran = () => {
               )
             }
           >
-            <i className="fa fa-pencil" /> Ubah
+            <i className="fa fa-edit" /> Ubah
           </button>
         </div>
       ),
