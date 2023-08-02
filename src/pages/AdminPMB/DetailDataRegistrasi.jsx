@@ -5,10 +5,6 @@ import { BsChevronBarLeft } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   getAdmissionRegistrationByRegNumberAdmin,
-  getAdmissionRegistrationByRegNumberAdminAnak,
-  getAdmissionRegistrationByRegNumberAdminAyah,
-  getAdmissionRegistrationByRegNumberAdminIbu,
-  getAdmissionRegistrationByRegNumberAdminWali,
   updateAdmissionSteps,
   uploadHasilTest,
 } from "../../api/Registrasi";
@@ -28,6 +24,7 @@ const DetailDataRegistrasi = () => {
   const [wali, setDataWali] = useState([]);
   const [dataStep1, setDataStep1] = useState({});
   const [dataStep2, setDataStep2] = useState({});
+  const [dataStep3, setDataStep3] = useState({});
   const [dataStep5, setDataStep5] = useState({});
   const [edu, setEdu] = useState({});
   const [amount, setAmount] = useState("");
@@ -41,7 +38,7 @@ const DetailDataRegistrasi = () => {
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
 
-  console.log("EDUUU === ", data);
+  console.log("EDUUU === ", dataStep3);
   console.log("LL === ", anak);
 
   const fetchEducationPayment = () => {
@@ -64,17 +61,18 @@ const DetailDataRegistrasi = () => {
       setDataIbu,
       setDataWali,
       setDataStep1,
-      // setDataStep3,
+      setDataStep2,
+      setDataStep3,
       setDataStep5
     );
   };
 
   const fetchTestResult = () => {
-    setFetched("testResult");
+    setFetched("3");
   };
 
   const fetchRegistrationData = () => {
-    setFetched("regData");
+    setFetched("2");
     setFetchedRegData("fetchAnak");
     fetchAdmissionRegistration();
   };
@@ -260,6 +258,50 @@ const DetailDataRegistrasi = () => {
     },
   ];
 
+  const columnTestResult = [
+    {
+      cell: (data) => (
+        <div>
+          <Checkbox></Checkbox>
+        </div>
+      ),
+      width: "60px",
+    },
+    {
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Tanggal</div>,
+      //   selector: (data) => data.createdAt,
+      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Status</div>,
+      selector: (data) => data.status,
+      cell: (data) => (
+        <div>{dataStep3.status === "valid" ? "Valid" : "In Review"}</div>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Aksi</div>,
+      cell: (data) => (
+        <button
+          title="Detail Pembayaran"
+          onClick={() => navigateUbahStatus(data.regNumber)}
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        </button>
+      ),
+      ignoreRowClick: true,
+      button: true,
+      width: "100px",
+    },
+  ];
+
   return (
     <>
       <Header
@@ -299,8 +341,8 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "regData" ? "#8F0D1E" : "",
-              color: fetched === "regData" ? "white" : "",
+              backgroundColor: fetched === "2" ? "#8F0D1E" : "",
+              color: fetched === "2" ? "white" : "",
             }}
             onClick={() => fetchRegistrationData()}
           >
@@ -311,8 +353,8 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "testResult" ? "#8F0D1E" : "",
-              color: fetched === "testResult" ? "white" : "",
+              backgroundColor: fetched === "3" ? "#8F0D1E" : "",
+              color: fetched === "3" ? "white" : "",
             }}
             onClick={() => fetchTestResult()}
           >
@@ -332,20 +374,18 @@ const DetailDataRegistrasi = () => {
           </button>
         </div>
 
-        {fetched !== "regData" && (
+        {fetched !== "2" && (
           <>
             {data !== null && (
               <DataTablesRegistrationDetail
-                columns={columnsPayments}
+                columns={fetched === "3" ? columnTestResult : columnsPayments}
                 data={[data]}
-                buttonPositive={fetched === "testResult" ? "Kirim" : "Setuju"}
-                buttonNegative={fetched === "testResult" ? "" : "Tolak"}
                 Approve={() => {
                   fetched === "5"
                     ? ApproveEducationPayment("5")
                     : fetched === "1"
                     ? ApproveEducationPayment("1")
-                    : fetched === "testResult" && uploadTestResult();
+                    : fetched === "3" && uploadTestResult();
                 }}
                 Deny={() => {
                   fetched === "5"
@@ -359,7 +399,7 @@ const DetailDataRegistrasi = () => {
           </>
         )}
 
-        {fetched === "regData" && (
+        {fetched === "2" && (
           <div
             style={{
               borderRadius: "6px",
@@ -431,16 +471,6 @@ const DetailDataRegistrasi = () => {
               >
                 <i className="fa fa-users" /> Data Wali
               </button>
-            </div>
-            <br />
-            <div>
-              <TextInput
-                label="Status Tahapan"
-                type="text"
-                id="incomeGrade"
-                value={data.status}
-                disable={true}
-              />
             </div>
             <br />
             <section style={{ margin: "0 12%" }}>
@@ -776,6 +806,23 @@ const DetailDataRegistrasi = () => {
                 </>
               )}
             </section>
+            <br />
+            <div style={{ display: "flex" }}>
+              <TextInput
+                label="Status Tahapan"
+                type="text"
+                id="incomeGrade"
+                value={dataStep2.status}
+                disable={true}
+              />
+              <button
+                onClick={() => navigateUbahStatus()}
+                className="btn-merah"
+              >
+                t
+              </button>
+            </div>
+            <br />
             {/* <div className="btn-form">
               <button
                 type="button"

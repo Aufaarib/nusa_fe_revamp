@@ -184,6 +184,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
   setDataWali,
   setDataStep1,
   setDataStep2,
+  setDataStep3,
   setDataStep5
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
@@ -201,6 +202,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       for (const i of res.data.body.user.parents) {
         switch (i.relationship) {
           case "ayah":
+            setData(res.data.body);
             setDataAyah(i);
           case "ibu":
             setDataIbu(i);
@@ -217,6 +219,8 @@ export function getAdmissionRegistrationByRegNumberAdmin(
           setDataStep1(i);
         } else if (i.step === "2") {
           setDataStep2(i);
+        } else if (i.step === "3") {
+          setDataStep3(i);
         } else if (i.step === "5") {
           setDataStep5(i);
         }

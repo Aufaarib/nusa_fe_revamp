@@ -16,6 +16,8 @@ const UpdateStatusStepPage = () => {
   const code = localStorage.getItem("REG_NUMBER");
   const fetched = location?.state?.fetched;
 
+  console.log("FETCHED === ", fetched);
+
   const UpdateConfirm = () => {
     AlertStatusValidatePayment(AcceptStep, fetched);
   };
