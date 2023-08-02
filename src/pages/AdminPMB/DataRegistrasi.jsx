@@ -16,12 +16,7 @@ import { AlertValidateRegistration } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
-  const [dataInvoice, setDataInvoice] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   // const path = "/admin/admission/registration";
