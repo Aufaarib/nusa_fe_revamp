@@ -70,6 +70,7 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
 import ProfilepPage from "./components/ProfilePage";
+import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
 
 const App = () => {
   return (
@@ -162,6 +163,10 @@ const App = () => {
           <Route
             path="/admin/ubah-tahun-ajaran"
             element={<UbahTahunAjaran />}
+          />
+          <Route
+            path="/admin/ubah-status-step"
+            element={<UpdateStatusStepPage />}
           />
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />

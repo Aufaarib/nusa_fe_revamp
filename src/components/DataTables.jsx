@@ -673,7 +673,7 @@ export function DataTablesRegistrationDetail({
             style={{
               borderRadius: "6px",
               backgroundColor: "#F3F4F6",
-              padding: "30px 30px 0px",
+              padding: "30px 30px 30px",
             }}
           >
             <div>
@@ -684,7 +684,7 @@ export function DataTablesRegistrationDetail({
                 defaultSortAsc={false}
                 defaultSortFieldId={defaultSortFieldId}
               />
-              <div className="btn-form">
+              {/* <div className="btn-form">
                 <button
                   type="button"
                   className="w-auto btn-merah flex justify-center mb-5"
@@ -699,7 +699,7 @@ export function DataTablesRegistrationDetail({
                 >
                   {buttonNegative}
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

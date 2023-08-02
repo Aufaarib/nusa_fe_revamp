@@ -357,6 +357,48 @@ export const DropdownPendaftaran = ({
     </div>
   );
 };
+
+export const DropdownValidasiStep = ({
+  isSearchable,
+  label,
+  type,
+  id,
+  name,
+  ref,
+  autoComplete,
+  onChange,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  const options = [
+    { value: "valid", label: "Valid" },
+    { value: "invalid", label: "In-Valid" },
+  ];
+
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <Select
+          className="ml-20"
+          isSearchable={isSearchable}
+          isClearable={isClearable}
+          defaultValue={defaultValue}
+          placeholder="Pilih Salah Satu..."
+          options={options}
+          onChange={onChange}
+        />
+      </form>
+    </div>
+  );
+};
+
 export const DropdownTipeTransaksi = ({
   isSearchable,
   label,

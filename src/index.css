@@ -470,6 +470,28 @@
     @apply text-merah;
   }
 
+  /* .flex-button {
+    @apply flex;
+    @apply justify-center;
+    gap: 10px;
+    align-items: center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+  } */
+
   .btn-action-merah {
     @apply rounded;
     @apply shadow-md;

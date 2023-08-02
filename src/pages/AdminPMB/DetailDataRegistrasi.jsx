@@ -1,45 +1,37 @@
+import { Checkbox } from "@mui/material";
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
+import { BsChevronBarLeft } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  ApproveEducationalPayment,
-  approvedRegistration,
-  getAdmissionRegistrationApplicant,
-  getAdmissionRegistrationByRegNumber,
   getAdmissionRegistrationByRegNumberAdmin,
   getAdmissionRegistrationByRegNumberAdminAnak,
   getAdmissionRegistrationByRegNumberAdminAyah,
   getAdmissionRegistrationByRegNumberAdminIbu,
-  getAdmissionRegistrationByRegNumberAdminOrtu,
   getAdmissionRegistrationByRegNumberAdminWali,
-  getAdmissionRegistrationParentsWali,
-  getRegistrationDetail,
   updateAdmissionSteps,
   uploadHasilTest,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
-import {
-  DataTablesRegistrationDataDetail,
-  DataTablesRegistrationDetail,
-} from "../../components/DataTables";
+import { DataTablesRegistrationDetail } from "../../components/DataTables";
 import {
   AlertPaymentProof,
   AlertStatusValidatePayment,
 } from "../../components/ModalPopUp";
-import { Checkbox } from "@mui/material";
-import moment from "moment/moment";
 import TextInput from "../../components/TextInput";
-import { BsChevronBarLeft } from "react-icons/bs";
 
 const DetailDataRegistrasi = () => {
   const [data, setData] = useState([]);
+  const [anak, setDataAnak] = useState([]);
+  const [ayah, setDataAyah] = useState([]);
+  const [ibu, setDataIbu] = useState([]);
+  const [wali, setDataWali] = useState([]);
   const [dataStep1, setDataStep1] = useState({});
+  const [dataStep2, setDataStep2] = useState({});
   const [dataStep5, setDataStep5] = useState({});
+  const [edu, setEdu] = useState({});
   const [amount, setAmount] = useState("");
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const [fetched, setFetched] = useState("");
   const [fetchedRegData, setFetchedRegData] = useState("");
@@ -47,22 +39,32 @@ const DetailDataRegistrasi = () => {
   const location = useLocation();
   const code = localStorage.getItem("REG_NUMBER");
   const path = "/admin/list-data-registrasi";
-  let filteredItems = data;
+  const updatedFetched = location?.state?.fetched;
 
-  // console.log("LL === ", dataStep1.status);
-  console.log("LL === ", data);
+  console.log("EDUUU === ", data);
+  console.log("LL === ", anak);
 
   const fetchEducationPayment = () => {
-    setFetched("edu");
-    getRegistrationDetail(setSts, setData, code);
+    setFetched("5");
+    fetchAdmissionRegistration();
   };
 
   const fetchRegistrationPayment = () => {
-    setFetched("reg");
+    setFetched("1");
+    fetchAdmissionRegistration();
+  };
+
+  const fetchAdmissionRegistration = () => {
     getAdmissionRegistrationByRegNumberAdmin(
       setData,
       setAmount,
+      setEdu,
+      setDataAnak,
+      setDataAyah,
+      setDataIbu,
+      setDataWali,
       setDataStep1,
+      // setDataStep3,
       setDataStep5
     );
   };
@@ -72,33 +74,39 @@ const DetailDataRegistrasi = () => {
   };
 
   const fetchRegistrationData = () => {
-    getAdmissionRegistrationByRegNumberAdminAnak(setData);
     setFetched("regData");
     setFetchedRegData("fetchAnak");
+    fetchAdmissionRegistration();
   };
 
   const fetchAnak = () => {
     setFetchedRegData("fetchAnak");
-    getAdmissionRegistrationByRegNumberAdminAnak(setData);
+    fetchAdmissionRegistration();
   };
 
   const fetchAyah = () => {
     setFetchedRegData("fetchAyah");
-    getAdmissionRegistrationByRegNumberAdminAyah(setData);
+    fetchAdmissionRegistration();
   };
 
   const fetchIbu = () => {
     setFetchedRegData("fetchIbu");
-    getAdmissionRegistrationByRegNumberAdminIbu(setData);
+    fetchAdmissionRegistration();
   };
 
   const fetchWali = () => {
     setFetchedRegData("fetchWali");
-    getAdmissionRegistrationByRegNumberAdminWali(setData);
+    fetchAdmissionRegistration();
   };
 
   useEffect(() => {
-    fetchRegistrationPayment();
+    if (updatedFetched === undefined) {
+      setFetched("1");
+      fetchAdmissionRegistration();
+    } else {
+      setFetched(updatedFetched);
+      fetchAdmissionRegistration();
+    }
   }, []);
 
   const openPaymentProof = (url) => {
@@ -106,11 +114,11 @@ const DetailDataRegistrasi = () => {
   };
 
   const ApproveEducationPayment = (id) => {
-    AlertStatusValidatePayment(onValidate, id);
+    AlertStatusValidatePayment(AcceptStep, id);
   };
 
-  const onValidate = (id) => {
-    ApproveEducationalPayment(id, setSts, setData);
+  const DenyEducationPayment = (id) => {
+    AlertStatusValidatePayment(DenyStep, id);
   };
 
   const uploadTestResult = () => {
@@ -121,13 +129,57 @@ const DetailDataRegistrasi = () => {
   const AcceptStep = (step) => {
     const status = "valid";
     const note = "Bukti Tervalidasi";
-    updateAdmissionSteps(setSts, code, step, status, note);
+    if (step === "1") {
+      updateAdmissionSteps(
+        setSts,
+        fetchRegistrationPayment,
+        code,
+        step,
+        status,
+        note
+      );
+    } else if (step === "5") {
+      updateAdmissionSteps(
+        setSts,
+        fetchEducationPayment,
+        code,
+        step,
+        status,
+        note
+      );
+    }
   };
 
   const DenyStep = (step) => {
     const status = "invalid";
     const note = "Bukti Tidak Tervalidasi";
-    updateAdmissionSteps(setSts, code, step, status, note);
+    if (step === "1") {
+      updateAdmissionSteps(
+        setSts,
+        fetchRegistrationPayment,
+        code,
+        step,
+        status,
+        note
+      );
+    } else if (step === "5") {
+      updateAdmissionSteps(
+        setSts,
+        fetchEducationPayment,
+        code,
+        step,
+        status,
+        note
+      );
+    }
+  };
+
+  const navigateUbahStatus = () => {
+    navigate("/admin/ubah-status-step", {
+      state: {
+        fetched: fetched,
+      },
+    });
   };
 
   const columnsPayments = [
@@ -156,9 +208,9 @@ const DetailDataRegistrasi = () => {
         <button
           title="Tampil Bukti Pembayaran"
           onClick={() => {
-            fetched === "reg"
+            fetched === "1"
               ? openPaymentProof(data.invoice)
-              : fetched === "edu" && openPaymentProof(data.paymentRecipt);
+              : fetched === "5" && openPaymentProof(edu.paymentRecipt);
           }}
         >
           <i style={{ fontSize: "21px" }} className="fa fa-file" />
@@ -171,7 +223,7 @@ const DetailDataRegistrasi = () => {
       // selector: (data) => data.admissionPhase.amount,
       cell: (data) => (
         <div>
-          {fetched === "reg" ? amount.amount : fetched === "edu" && data.amount}
+          {fetched === "1" ? amount.amount : fetched === "5" && edu.amount}
         </div>
       ),
       width: "auto",
@@ -181,11 +233,11 @@ const DetailDataRegistrasi = () => {
       selector: (data) => data.status,
       cell: (data) => (
         <div>
-          {fetched === "reg"
+          {fetched === "1"
             ? dataStep1.status === "valid"
               ? "Valid"
               : "In Review"
-            : fetched === "edu" && dataStep5.status == "valid"
+            : fetched === "5" && dataStep5.status == "valid"
             ? "Valid"
             : "In Review"}
         </div>
@@ -197,9 +249,9 @@ const DetailDataRegistrasi = () => {
       cell: (data) => (
         <button
           title="Detail Pembayaran"
-          //   onClick={() => openPaymentProof(data.paymentRecipt)}
+          onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i style={{ fontSize: "21px" }} className="fa fa-cog" />
+          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
         </button>
       ),
       ignoreRowClick: true,
@@ -235,8 +287,8 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "reg" ? "#8F0D1E" : "",
-              color: fetched === "reg" ? "white" : "",
+              backgroundColor: fetched === "1" ? "#8F0D1E" : "",
+              color: fetched === "1" ? "white" : "",
             }}
             onClick={() => fetchRegistrationPayment()}
           >
@@ -271,8 +323,8 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "edu" ? "#8F0D1E" : "",
-              color: fetched === "edu" ? "white" : "",
+              backgroundColor: fetched === "5" ? "#8F0D1E" : "",
+              color: fetched === "5" ? "white" : "",
             }}
             onClick={() => fetchEducationPayment()}
           >
@@ -285,20 +337,20 @@ const DetailDataRegistrasi = () => {
             {data !== null && (
               <DataTablesRegistrationDetail
                 columns={columnsPayments}
-                data={fetched === "reg" ? [data] : fetched === "edu" && data}
+                data={[data]}
                 buttonPositive={fetched === "testResult" ? "Kirim" : "Setuju"}
                 buttonNegative={fetched === "testResult" ? "" : "Tolak"}
                 Approve={() => {
-                  fetched === "edu"
-                    ? AcceptStep("5")
-                    : fetched === "reg"
-                    ? AcceptStep("1")
+                  fetched === "5"
+                    ? ApproveEducationPayment("5")
+                    : fetched === "1"
+                    ? ApproveEducationPayment("1")
                     : fetched === "testResult" && uploadTestResult();
                 }}
                 Deny={() => {
-                  fetched === "edu"
-                    ? DenyStep("5")
-                    : fetched === "reg" && DenyStep("1");
+                  fetched === "5"
+                    ? DenyEducationPayment("5")
+                    : fetched === "1" && DenyEducationPayment("1");
                 }}
                 onFilter={(e) => setFilterText(e.target.value)}
                 filterText={filterText}
@@ -380,6 +432,17 @@ const DetailDataRegistrasi = () => {
                 <i className="fa fa-users" /> Data Wali
               </button>
             </div>
+            <br />
+            <div>
+              <TextInput
+                label="Status Tahapan"
+                type="text"
+                id="incomeGrade"
+                value={data.status}
+                disable={true}
+              />
+            </div>
+            <br />
             <section style={{ margin: "0 12%" }}>
               {data !== null && (
                 <>
@@ -389,7 +452,7 @@ const DetailDataRegistrasi = () => {
                         label="Nama Depan"
                         type="text"
                         id="firstName"
-                        placeholder={data.firstName}
+                        placeholder={anak.firstName}
                         disable={true}
                         required={false}
                       />
@@ -397,14 +460,14 @@ const DetailDataRegistrasi = () => {
                         label="Agama"
                         type="text"
                         id="religion"
-                        placeholder={data.religion}
+                        placeholder={anak.religion}
                         disable={true}
                       />
                       <TextInput
                         label="Nama Tengah"
                         type="text"
                         id="middleName"
-                        placeholder={data.middleName}
+                        placeholder={anak.middleName}
                         disable={true}
                         required={false}
                       />
@@ -412,56 +475,56 @@ const DetailDataRegistrasi = () => {
                         label="Nama Belakang"
                         type="text"
                         id="lastName"
-                        placeholder={data.lastName}
+                        placeholder={anak.lastName}
                         disable={true}
                       />
                       <TextInput
                         label="Status Anak"
                         type="text"
                         id="childStatus"
-                        placeholder={data.childStatus}
+                        placeholder={anak.childStatus}
                         disable={true}
                       />
                       <TextInput
                         label="No KK"
                         type="text"
                         id="familyIdentityNumber"
-                        placeholder={data.familyIdentityNumber}
+                        placeholder={anak.familyIdentityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="No Akta Lahir"
                         type="number"
                         id="identityNumber"
-                        placeholder={data.identityNumber}
+                        placeholder={anak.identityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Anak ke"
                         type="number"
                         id="childNumber"
-                        placeholder={data.childNumber}
+                        placeholder={anak.childNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Tinggi Badan Anak (cm)"
                         type="number"
                         id="height"
-                        placeholder={data.height}
+                        placeholder={anak.height}
                         disable={true}
                       />
                       <TextInput
                         label="Tempat Lahir"
                         type="text"
                         id="birthPlace"
-                        placeholder={data.birthPlace}
+                        placeholder={anak.birthPlace}
                         disable={true}
                       />
                       <TextInput
                         label="Tanggal Lahir"
                         type="text"
                         id="birthDate"
-                        placeholder={moment(data.birthDate).format(
+                        placeholder={moment(anak.birthDate).format(
                           "DD-MM-YYYY"
                         )}
                         disable={true}
@@ -471,7 +534,7 @@ const DetailDataRegistrasi = () => {
                         type="text"
                         id="gender"
                         placeholder={
-                          data.gender === "female" ? "Perempuan" : "Laki-Laki"
+                          anak.gender === "female" ? "Perempuan" : "Laki-Laki"
                         }
                         disable={true}
                       />
@@ -479,7 +542,7 @@ const DetailDataRegistrasi = () => {
                         label="Golongan Darah"
                         type="text"
                         id="bloodType"
-                        placeholder={data.bloodType}
+                        placeholder={anak.bloodType}
                         disable={true}
                       />
                       <TextInput
@@ -487,7 +550,7 @@ const DetailDataRegistrasi = () => {
                         type="text"
                         id="bloodType"
                         placeholder={
-                          data.gender === "female" ? "Perempuan" : "Laki-Laki"
+                          anak.gender === "female" ? "Perempuan" : "Laki-Laki"
                         }
                         disable={true}
                       />
@@ -495,63 +558,63 @@ const DetailDataRegistrasi = () => {
                         label="Berat Badan Anak"
                         type="text"
                         id="hobby"
-                        placeholder={data.hobby}
+                        placeholder={anak.hobby}
                         disable={true}
                       />
                       <TextInput
                         label="No KK"
                         type="text"
                         id="familyIdentityNumber"
-                        placeholder={data.familyIdentityNumber}
+                        placeholder={anak.familyIdentityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="No Akta Lahir"
                         type="number"
                         id="identityNumber"
-                        placeholder={data.identityNumber}
+                        placeholder={anak.identityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Jarak Rumah Ke Sekolah"
                         type="text"
                         id="distanceFromHome"
-                        placeholder={data.distanceFromHome}
+                        placeholder={anak.distanceFromHome}
                         disable={true}
                       />
                       <TextInput
                         label="Transportasi Ke Sekolah"
                         type="text"
                         id="transportation"
-                        placeholder={data.transportation}
+                        placeholder={anak.transportation}
                         disable={true}
                       />
                       <TextInput
                         label="Kelas Pada Saat Mendaftar"
                         type="number"
                         id="schoolOriginClass"
-                        placeholder={data.schoolOriginClass}
+                        placeholder={anak.schoolOriginClass}
                         disable={true}
                       />
                       <TextInput
                         label="Asal Sekolah"
                         type="number"
                         id="schoolOriginName"
-                        placeholder={data.schoolOriginName}
+                        placeholder={anak.schoolOriginName}
                         disable={true}
                       />
                       <TextInput
                         label="Sifat Dominan Anak"
                         type="number"
                         id="characteristic"
-                        placeholder={data.characteristic}
+                        placeholder={anak.characteristic}
                         disable={true}
                       />
                       <TextInput
                         label="Penyakit Berat Yang Pernah Diderita"
                         type="text"
                         id="healthRecord"
-                        placeholder={data.healthRecord}
+                        placeholder={anak.healthRecord}
                         disable={true}
                       />
                     </>
@@ -713,7 +776,7 @@ const DetailDataRegistrasi = () => {
                 </>
               )}
             </section>
-            <div className="btn-form">
+            {/* <div className="btn-form">
               <button
                 type="button"
                 className="w-auto btn-merah flex justify-center mb-5"
@@ -728,7 +791,7 @@ const DetailDataRegistrasi = () => {
               >
                 Tolak
               </button>
-            </div>
+            </div> */}
           </div>
         )}
       </div>

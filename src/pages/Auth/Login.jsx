@@ -4,7 +4,7 @@ import { CgSpinner } from "react-icons/cg";
 import { FaEye, FaLowVision } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import { AlertLoginFailed } from "../../components/ModalPopUp";
+import { AlertLoginFailed, AlertNetwork } from "../../components/ModalPopUp";
 import { useStateContext } from "../../contexts/ContextProvider";
 import assalamualaikum from "../../data/assalamualaikum.png";
 import logoSaim from "../../data/logo-saim.png";
@@ -74,8 +74,12 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log("ERRR === ", error);
-        AlertLoginFailed();
+        console.log("ERRR === ", error.code);
+        if (error.code === "ERR_NETWORK") {
+          AlertNetwork();
+        } else {
+          AlertLoginFailed();
+        }
         setIsLoading(false);
       });
   };

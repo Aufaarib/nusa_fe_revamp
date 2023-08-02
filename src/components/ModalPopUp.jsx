@@ -361,6 +361,14 @@ export const AlertLoginFailed = () => {
   });
 };
 
+export const AlertNetwork = () => {
+  styledSweetAlert.fire({
+    title: "Koneksi Bermasalah",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
 export const AlertRegisterFailed = () => {
   styledSweetAlert.fire({
     title: "Email Sudah Terdaftar",

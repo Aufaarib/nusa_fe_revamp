@@ -18,6 +18,7 @@ import { validateEmail } from "../../api/Registrasi";
 import axios from "../../api/axios";
 import {
   AlertLoginFailed,
+  AlertNetwork,
   AlertRegisterFailed,
 } from "../../components/ModalPopUp";
 
@@ -143,8 +144,13 @@ const Register = () => {
           direct: directTo,
         },
       });
-    } catch (err) {
-      AlertRegisterFailed();
+    } catch (error) {
+      console.log("ERRR === ", error.code);
+      if (error.code === "ERR_NETWORK") {
+        AlertNetwork();
+      } else {
+        AlertLoginFailed();
+      }
       setIsLoading(false);
     }
   };

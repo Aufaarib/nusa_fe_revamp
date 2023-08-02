@@ -177,8 +177,13 @@ export function getAdmissionRegistrationByRegNumberUser(setData, setSts) {
 export function getAdmissionRegistrationByRegNumberAdmin(
   setData,
   setAmount,
+  setEdu,
+  setDataAnak,
+  setDataAyah,
+  setDataIbu,
+  setDataWali,
   setDataStep1,
-  // setDataStep3,
+  setDataStep2,
   setDataStep5
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
@@ -190,11 +195,28 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       }
     )
     .then((res) => {
+      setDataAnak(res.data.body.applicant);
       setAmount(res.data.body.admissionPhase);
       setData(res.data.body);
+      for (const i of res.data.body.user.parents) {
+        switch (i.relationship) {
+          case "ayah":
+            setDataAyah(i);
+          case "ibu":
+            setDataIbu(i);
+          case "wali":
+            setDataWali(i);
+          // setSts(res.data.code);
+        }
+      }
+      for (const i of res.data.body.payments) {
+        setEdu(i);
+      }
       for (const i of res.data.body.steps) {
         if (i.step === "1") {
           setDataStep1(i);
+        } else if (i.step === "2") {
+          setDataStep2(i);
         } else if (i.step === "5") {
           setDataStep5(i);
         }
@@ -363,7 +385,6 @@ export function updateAdmissionSteps(setSts, code, step, status, note) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusUpdateSuccess();
-      // getAdmissionRegistration(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
