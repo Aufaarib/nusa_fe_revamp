@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBank } from "../../api/Bank";
-import { Header } from "../../components";
 import {
-  DataTablesPMB,
-  DataTablesPMBWithoutButton,
-} from "../../components/DataTables";
-import {
-  ApprovedRegistration,
   approvedRegistration,
   getAdmissionRegistration,
-  getPaymentInvoice,
 } from "../../api/Registrasi";
+import { Header } from "../../components";
+import { DataTablesPMBWithoutButton } from "../../components/DataTables";
 import { AlertValidateRegistration } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
