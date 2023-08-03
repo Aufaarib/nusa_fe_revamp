@@ -374,6 +374,7 @@ export const DropdownValidasiStep = ({
   const options = [
     { value: "valid", label: "Valid" },
     { value: "invalid", label: "In-Valid" },
+    { value: "inreview", label: "In-Review" },
   ];
 
   return (

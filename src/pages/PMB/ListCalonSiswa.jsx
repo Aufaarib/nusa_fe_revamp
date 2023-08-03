@@ -73,7 +73,7 @@ const ListCalonSiswa = () => {
         <>
           {Object.entries(groupedCandidates).map(([year, candidates]) => (
             <div>
-              <div className="text-wrapper-2">Tahun Ajaran {year}</div>
+              <div className="text-wrapper-2 mt-5">Tahun Ajaran {year}</div>
               <br />
               <div
                 key={year}

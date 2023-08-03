@@ -395,16 +395,6 @@ export function FilterComponentWithoutButton({
             <option value="null">Data Tidak Tersedia</option>
           </select>
         )}
-        {/* <div style={{ display: "inline-block", float: "right" }}>
-          <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-mrh"
-            onClick={onClick}
-          >
-            <i className="fa fa-plus mr-1 mt-1"></i>
-            {button}
-          </button>
-        </div> */}
       </div>
     </>
   );
@@ -475,7 +465,6 @@ export function DataTablesAdmissionDetail({
             display: flex;
             border-radius: 10px;
             justify-content: center;
-            background-color: #D5D5D540;
             margin-top: 20px;
             width: 100%;
             padding: 10px 0;
@@ -584,9 +573,9 @@ export function DataTablesAdmissionDetail({
         <div>
           <style>{styles}</style>
           <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
+            previousLabel=""
+            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+            breakLabel={<a className="text-merah bold">...</a>}
             pageRangeDisplayed={5}
             marginPagesDisplayed={2}
             forcePage={currentPage}
@@ -772,7 +761,6 @@ export function DataTablesPMBWithoutButton({
             display: flex;
             border-radius: 10px;
             justify-content: center;
-            background-color: #D5D5D540;
             margin-top: 20px;
             width: 100%;
             padding: 10px 0;
@@ -878,9 +866,9 @@ export function DataTablesPMBWithoutButton({
         <div>
           <style>{styles}</style>
           <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
+            previousLabel=""
+            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+            breakLabel={<a className="text-merah">...</a>}
             pageRangeDisplayed={5}
             marginPagesDisplayed={2}
             forcePage={currentPage}
@@ -959,7 +947,6 @@ export function DataTablesPMB({
             display: flex;
             border-radius: 10px;
             justify-content: center;
-            background-color: #D5D5D540;
             margin-top: 20px;
             width: 100%;
             padding: 10px 0;
@@ -1067,9 +1054,9 @@ export function DataTablesPMB({
         <div>
           <style>{styles}</style>
           <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
+            previousLabel=""
+            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+            breakLabel={<a className="text-merah">...</a>}
             pageRangeDisplayed={5}
             marginPagesDisplayed={2}
             forcePage={currentPage}
@@ -1148,7 +1135,6 @@ export function DataTables({
             display: flex;
             border-radius: 10px;
             justify-content: center;
-            background-color: #D5D5D540;
             margin-top: 20px;
             width: 100%;
             padding: 10px 0;
@@ -1256,9 +1242,9 @@ export function DataTables({
         <div>
           <style>{styles}</style>
           <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
+            previousLabel=""
+            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+            breakLabel={<a className="text-merah">...</a>}
             pageRangeDisplayed={5}
             marginPagesDisplayed={2}
             forcePage={currentPage}
@@ -1335,7 +1321,6 @@ export function DataTablesSaring({
             display: flex;
             border-radius: 10px;
             justify-content: center;
-            background-color: #D5D5D540;
             margin-top: 20px;
             width: 100%;
             padding: 10px 0;
@@ -1442,9 +1427,9 @@ export function DataTablesSaring({
         <div>
           <style>{styles}</style>
           <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
+            previousLabel=""
+            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+            breakLabel={<a className="text-merah">...</a>}
             // pageRangeDisplayed={5}
             // marginPagesDisplayed={2}
             forcePage={currentPage}

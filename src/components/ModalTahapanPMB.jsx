@@ -373,8 +373,8 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                                 currency: "IDR",
                                 minimumFractionDigits: 0,
                               }).format(
-                                dataAdmissionRegistration.admissionPhase
-                                  .admission.details[0].amount
+                                dataAdmissionRegistration?.admissionPhase
+                                  .admission?.details[0]?.amount
                               )}
                             </p>
                           </div>

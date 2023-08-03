@@ -13,7 +13,7 @@ export default function UbahGelombang() {
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [amount, setAmount] = useState();
+  const [jumlah, setAmount] = useState("");
   const [increment, setIncrement] = useState();
   // const created_by = localStorage.getItem("NAMA");
   const [sts, setSts] = useState(undefined);
@@ -23,13 +23,12 @@ export default function UbahGelombang() {
   const id = location.state.id;
   const code = location.state.code;
 
-  console.log(code);
-
   const postData = (e) => {
     e.preventDefault();
 
     // const semester_id = parseInt(semester);
     // const status = statusVal.value;
+    const amount = parseInt(jumlah.replace(/\./g, ""), 10);
 
     if (
       name.length === 0 ||
@@ -90,6 +89,13 @@ export default function UbahGelombang() {
     setIncrement(value);
   };
 
+  const handleInputChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    setAmount(inputVal);
+  };
+
   // const SemesterOptions = semesterData.map((c) => ({
   //   label: c.name + " - " + c.status,
   //   value: c.id,
@@ -134,27 +140,25 @@ export default function UbahGelombang() {
             required={true}
           />
 
-          <TextInput
+          <DropdownDatePickers
             label="Tanggal Mulai"
-            type="text"
+            value={startDate}
             placeholder={location.state.startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            required={true}
+            change={(e) => setStartDate(e.element.value)}
           />
-
-          <TextInput
+          <DropdownDatePickers
             label="Tanggal Selesai"
-            type="text"
+            value={endDate}
             placeholder={location.state.endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            required={true}
+            change={(e) => setEndDate(e.element.value)}
           />
 
           <TextInput
             label="Nominal"
-            type="number"
+            type="text"
+            value={jumlah}
             placeholder={location.state.amount}
-            onChange={handleAmountChange}
+            onChange={handleInputChange}
             required={true}
           />
 

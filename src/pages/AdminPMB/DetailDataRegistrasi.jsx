@@ -6,27 +6,23 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   getAdmissionRegistrationByRegNumberAdmin,
   updateAdmissionSteps,
-  uploadHasilTest,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesRegistrationDetail } from "../../components/DataTables";
-import {
-  AlertPaymentProof,
-  AlertStatusValidatePayment,
-} from "../../components/ModalPopUp";
+import { AlertPaymentProof } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 
 const DetailDataRegistrasi = () => {
   const [data, setData] = useState([]);
-  const [anak, setDataAnak] = useState([]);
-  const [ayah, setDataAyah] = useState([]);
-  const [ibu, setDataIbu] = useState([]);
-  const [wali, setDataWali] = useState([]);
-  const [dataStep1, setDataStep1] = useState({});
-  const [dataStep2, setDataStep2] = useState({});
-  const [dataStep3, setDataStep3] = useState({});
-  const [dataStep5, setDataStep5] = useState({});
-  const [edu, setEdu] = useState({});
+  const [anak, setDataAnak] = useState(null);
+  const [ayah, setDataAyah] = useState(null);
+  const [ibu, setDataIbu] = useState(null);
+  const [wali, setDataWali] = useState(null);
+  const [dataStep1, setDataStep1] = useState(null);
+  const [dataStep2, setDataStep2] = useState(null);
+  const [dataStep3, setDataStep3] = useState(null);
+  const [dataStep5, setDataStep5] = useState(null);
+  const [edu, setEdu] = useState([]);
   const [amount, setAmount] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
@@ -38,8 +34,16 @@ const DetailDataRegistrasi = () => {
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
 
-  console.log("EDUUU === ", dataStep3);
-  console.log("LL === ", anak);
+  console.log("DATA === ", data);
+  console.log("STEP1 === ", dataStep1);
+  console.log("STEP2 === ", dataStep2);
+  console.log("STEP3 === ", dataStep3);
+  console.log("STEP5 === ", dataStep5);
+  console.log("PEMBAYARAN === ", amount);
+  console.log("ANAK === ", anak);
+  console.log("AYAH === ", ayah);
+  console.log("IBU === ", ibu);
+  console.log("WALI === ", wali);
 
   const fetchEducationPayment = () => {
     setFetched("5");
@@ -48,6 +52,16 @@ const DetailDataRegistrasi = () => {
 
   const fetchRegistrationPayment = () => {
     setFetched("1");
+    fetchAdmissionRegistration();
+  };
+
+  const fetchTestResult = () => {
+    setFetched("3");
+  };
+
+  const fetchRegistrationData = () => {
+    setFetched("2");
+    setFetchedRegData("fetchAnak");
     fetchAdmissionRegistration();
   };
 
@@ -65,16 +79,6 @@ const DetailDataRegistrasi = () => {
       setDataStep3,
       setDataStep5
     );
-  };
-
-  const fetchTestResult = () => {
-    setFetched("3");
-  };
-
-  const fetchRegistrationData = () => {
-    setFetched("2");
-    setFetchedRegData("fetchAnak");
-    fetchAdmissionRegistration();
   };
 
   const fetchAnak = () => {
@@ -111,66 +115,66 @@ const DetailDataRegistrasi = () => {
     AlertPaymentProof(url);
   };
 
-  const ApproveEducationPayment = (id) => {
-    AlertStatusValidatePayment(AcceptStep, id);
-  };
+  // const ApproveEducationPayment = (id) => {
+  //   AlertStatusValidatePayment(AcceptStep, id);
+  // };
 
-  const DenyEducationPayment = (id) => {
-    AlertStatusValidatePayment(DenyStep, id);
-  };
+  // const DenyEducationPayment = (id) => {
+  //   AlertStatusValidatePayment(DenyStep, id);
+  // };
 
-  const uploadTestResult = () => {
-    const score = 100;
-    uploadHasilTest(score);
-  };
+  // const uploadTestResult = () => {
+  //   const score = 100;
+  //   uploadHasilTest(score);
+  // };
 
-  const AcceptStep = (step) => {
-    const status = "valid";
-    const note = "Bukti Tervalidasi";
-    if (step === "1") {
-      updateAdmissionSteps(
-        setSts,
-        fetchRegistrationPayment,
-        code,
-        step,
-        status,
-        note
-      );
-    } else if (step === "5") {
-      updateAdmissionSteps(
-        setSts,
-        fetchEducationPayment,
-        code,
-        step,
-        status,
-        note
-      );
-    }
-  };
+  // const AcceptStep = (step) => {
+  //   const status = "valid";
+  //   const note = "Bukti Tervalidasi";
+  //   if (step === "1") {
+  //     updateAdmissionSteps(
+  //       setSts,
+  //       fetchRegistrationPayment,
+  //       code,
+  //       step,
+  //       status,
+  //       note
+  //     );
+  //   } else if (step === "5") {
+  //     updateAdmissionSteps(
+  //       setSts,
+  //       fetchEducationPayment,
+  //       code,
+  //       step,
+  //       status,
+  //       note
+  //     );
+  //   }
+  // };
 
-  const DenyStep = (step) => {
-    const status = "invalid";
-    const note = "Bukti Tidak Tervalidasi";
-    if (step === "1") {
-      updateAdmissionSteps(
-        setSts,
-        fetchRegistrationPayment,
-        code,
-        step,
-        status,
-        note
-      );
-    } else if (step === "5") {
-      updateAdmissionSteps(
-        setSts,
-        fetchEducationPayment,
-        code,
-        step,
-        status,
-        note
-      );
-    }
-  };
+  // const DenyStep = (step) => {
+  //   const status = "invalid";
+  //   const note = "Bukti Tidak Tervalidasi";
+  //   if (step === "1") {
+  //     updateAdmissionSteps(
+  //       setSts,
+  //       fetchRegistrationPayment,
+  //       code,
+  //       step,
+  //       status,
+  //       note
+  //     );
+  //   } else if (step === "5") {
+  //     updateAdmissionSteps(
+  //       setSts,
+  //       fetchEducationPayment,
+  //       code,
+  //       step,
+  //       status,
+  //       note
+  //     );
+  //   }
+  // };
 
   const navigateUbahStatus = () => {
     navigate("/admin/ubah-status-step", {
@@ -197,7 +201,13 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Tanggal</div>,
       //   selector: (data) => data.createdAt,
-      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      cell: (data) => (
+        <div>
+          {fetched === "1"
+            ? moment(dataStep1.createdAt).format("DD-MM-YYYY")
+            : moment(dataStep5.createdAt).format("DD-MM-YYYY")}
+        </div>
+      ),
       width: "auto",
     },
     {
@@ -221,21 +231,32 @@ const DetailDataRegistrasi = () => {
       // selector: (data) => data.admissionPhase.amount,
       cell: (data) => (
         <div>
-          {fetched === "1" ? amount.amount : fetched === "5" && edu.amount}
+          {fetched === "1"
+            ? new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+              }).format(amount.amount)
+            : fetched === "5" &&
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+              }).format(edu.amount)}
         </div>
       ),
       width: "auto",
     },
     {
       name: <div>Status</div>,
-      selector: (data) => data.status,
+      // selector: (data) => data.status,
       cell: (data) => (
         <div>
           {fetched === "1"
             ? dataStep1.status === "valid"
               ? "Valid"
               : "In Review"
-            : fetched === "5" && dataStep5.status == "valid"
+            : fetched === "5" && dataStep5.status === "valid"
             ? "Valid"
             : "In Review"}
         </div>
@@ -282,7 +303,7 @@ const DetailDataRegistrasi = () => {
       name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => (
-        <div>{dataStep3.status === "valid" ? "Valid" : "In Review"}</div>
+        <div>{dataStep3?.status === "valid" ? "Valid" : "In Review"}</div>
       ),
       width: "auto",
     },
@@ -333,6 +354,7 @@ const DetailDataRegistrasi = () => {
               color: fetched === "1" ? "white" : "",
             }}
             onClick={() => fetchRegistrationPayment()}
+            disabled={dataStep1 !== null ? false : true}
           >
             <i className="fa fa-bank" /> Uang Pendaftaran
           </button>
@@ -345,6 +367,7 @@ const DetailDataRegistrasi = () => {
               color: fetched === "2" ? "white" : "",
             }}
             onClick={() => fetchRegistrationData()}
+            disabled={dataStep2 !== null ? false : true}
           >
             <i className="fa fa-user" /> Data Pendaftaran
           </button>
@@ -357,6 +380,7 @@ const DetailDataRegistrasi = () => {
               color: fetched === "3" ? "white" : "",
             }}
             onClick={() => fetchTestResult()}
+            disabled={dataStep2?.status !== "valid" ? true : false}
           >
             <i className="fa fa-pencil-square-o" /> Hasil Test
           </button>
@@ -369,32 +393,53 @@ const DetailDataRegistrasi = () => {
               color: fetched === "5" ? "white" : "",
             }}
             onClick={() => fetchEducationPayment()}
+            disabled={dataStep5 !== null ? false : true}
           >
             <i className="fa fa-bank" /> Uang Pendidikan
           </button>
         </div>
 
-        {fetched !== "2" && (
+        {fetched === "1" && (
           <>
-            {data !== null && (
+            {dataStep1 !== null ? (
               <DataTablesRegistrationDetail
-                columns={fetched === "3" ? columnTestResult : columnsPayments}
+                columns={columnsPayments}
                 data={[data]}
-                Approve={() => {
-                  fetched === "5"
-                    ? ApproveEducationPayment("5")
-                    : fetched === "1"
-                    ? ApproveEducationPayment("1")
-                    : fetched === "3" && uploadTestResult();
-                }}
-                Deny={() => {
-                  fetched === "5"
-                    ? DenyEducationPayment("5")
-                    : fetched === "1" && DenyEducationPayment("1");
-                }}
-                onFilter={(e) => setFilterText(e.target.value)}
-                filterText={filterText}
               />
+            ) : (
+              <h1>Kosong</h1>
+            )}
+          </>
+        )}
+        {fetched === "3" && (
+          <>
+            {dataStep3 !== null ? (
+              <DataTablesRegistrationDetail
+                columns={columnTestResult}
+                data={[data]}
+              />
+            ) : (
+              <>
+                <h1>Kosong</h1>
+                <button
+                  onClick={(e) => navigate("/admin/upload-hasil-tes")}
+                  className="btn-merah"
+                >
+                  Kirim Hasil Test
+                </button>
+              </>
+            )}
+          </>
+        )}
+        {fetched === "5" && (
+          <>
+            {dataStep5 !== null ? (
+              <DataTablesRegistrationDetail
+                columns={columnsPayments}
+                data={[data]}
+              />
+            ) : (
+              <h1>Kosong</h1>
             )}
           </>
         )}
@@ -474,15 +519,15 @@ const DetailDataRegistrasi = () => {
             </div>
             <br />
             <section style={{ margin: "0 12%" }}>
-              {data !== null && (
+              {fetchedRegData === "fetchAnak" && (
                 <>
-                  {fetchedRegData === "fetchAnak" && (
+                  {anak !== null ? (
                     <>
                       <TextInput
                         label="Nama Depan"
                         type="text"
                         id="firstName"
-                        placeholder={anak.firstName}
+                        placeholder={anak?.firstName}
                         disable={true}
                         required={false}
                       />
@@ -490,14 +535,14 @@ const DetailDataRegistrasi = () => {
                         label="Agama"
                         type="text"
                         id="religion"
-                        placeholder={anak.religion}
+                        placeholder={anak?.religion}
                         disable={true}
                       />
                       <TextInput
                         label="Nama Tengah"
                         type="text"
                         id="middleName"
-                        placeholder={anak.middleName}
+                        placeholder={anak?.middleName}
                         disable={true}
                         required={false}
                       />
@@ -505,56 +550,56 @@ const DetailDataRegistrasi = () => {
                         label="Nama Belakang"
                         type="text"
                         id="lastName"
-                        placeholder={anak.lastName}
+                        placeholder={anak?.lastName}
                         disable={true}
                       />
                       <TextInput
                         label="Status Anak"
                         type="text"
                         id="childStatus"
-                        placeholder={anak.childStatus}
+                        placeholder={anak?.childStatus}
                         disable={true}
                       />
                       <TextInput
                         label="No KK"
                         type="text"
                         id="familyIdentityNumber"
-                        placeholder={anak.familyIdentityNumber}
+                        placeholder={anak?.familyIdentityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="No Akta Lahir"
                         type="number"
                         id="identityNumber"
-                        placeholder={anak.identityNumber}
+                        placeholder={anak?.identityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Anak ke"
                         type="number"
                         id="childNumber"
-                        placeholder={anak.childNumber}
+                        placeholder={anak?.childNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Tinggi Badan Anak (cm)"
                         type="number"
                         id="height"
-                        placeholder={anak.height}
+                        placeholder={anak?.height}
                         disable={true}
                       />
                       <TextInput
                         label="Tempat Lahir"
                         type="text"
                         id="birthPlace"
-                        placeholder={anak.birthPlace}
+                        placeholder={anak?.birthPlace}
                         disable={true}
                       />
                       <TextInput
                         label="Tanggal Lahir"
                         type="text"
                         id="birthDate"
-                        placeholder={moment(anak.birthDate).format(
+                        placeholder={moment(anak?.birthDate).format(
                           "DD-MM-YYYY"
                         )}
                         disable={true}
@@ -564,7 +609,7 @@ const DetailDataRegistrasi = () => {
                         type="text"
                         id="gender"
                         placeholder={
-                          anak.gender === "female" ? "Perempuan" : "Laki-Laki"
+                          anak?.gender === "female" ? "Perempuan" : "Laki-Laki"
                         }
                         disable={true}
                       />
@@ -572,7 +617,7 @@ const DetailDataRegistrasi = () => {
                         label="Golongan Darah"
                         type="text"
                         id="bloodType"
-                        placeholder={anak.bloodType}
+                        placeholder={anak?.bloodType}
                         disable={true}
                       />
                       <TextInput
@@ -580,7 +625,7 @@ const DetailDataRegistrasi = () => {
                         type="text"
                         id="bloodType"
                         placeholder={
-                          anak.gender === "female" ? "Perempuan" : "Laki-Laki"
+                          anak?.gender === "female" ? "Perempuan" : "Laki-Laki"
                         }
                         disable={true}
                       />
@@ -588,103 +633,94 @@ const DetailDataRegistrasi = () => {
                         label="Berat Badan Anak"
                         type="text"
                         id="hobby"
-                        placeholder={anak.hobby}
+                        placeholder={anak?.hobby}
                         disable={true}
                       />
                       <TextInput
                         label="No KK"
                         type="text"
                         id="familyIdentityNumber"
-                        placeholder={anak.familyIdentityNumber}
+                        placeholder={anak?.familyIdentityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="No Akta Lahir"
                         type="number"
                         id="identityNumber"
-                        placeholder={anak.identityNumber}
+                        placeholder={anak?.identityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Jarak Rumah Ke Sekolah"
                         type="text"
                         id="distanceFromHome"
-                        placeholder={anak.distanceFromHome}
+                        placeholder={anak?.distanceFromHome}
                         disable={true}
                       />
                       <TextInput
                         label="Transportasi Ke Sekolah"
                         type="text"
                         id="transportation"
-                        placeholder={anak.transportation}
+                        placeholder={anak?.transportation}
                         disable={true}
                       />
                       <TextInput
                         label="Kelas Pada Saat Mendaftar"
                         type="number"
                         id="schoolOriginClass"
-                        placeholder={anak.schoolOriginClass}
+                        placeholder={anak?.schoolOriginClass}
                         disable={true}
                       />
                       <TextInput
                         label="Asal Sekolah"
                         type="number"
                         id="schoolOriginName"
-                        placeholder={anak.schoolOriginName}
+                        placeholder={anak?.schoolOriginName}
                         disable={true}
                       />
                       <TextInput
                         label="Sifat Dominan Anak"
                         type="number"
                         id="characteristic"
-                        placeholder={anak.characteristic}
+                        placeholder={anak?.characteristic}
                         disable={true}
                       />
                       <TextInput
                         label="Penyakit Berat Yang Pernah Diderita"
                         type="text"
                         id="healthRecord"
-                        placeholder={anak.healthRecord}
+                        placeholder={anak?.healthRecord}
                         disable={true}
                       />
                     </>
+                  ) : (
+                    <h1>kosonggg</h1>
                   )}
-                  {fetchedRegData !== "fetchAnak" && (
+                </>
+              )}
+              {fetchedRegData === "fetchAyah" && (
+                <>
+                  {ayah !== null ? (
                     <>
                       <TextInput
                         label="Nama Lengkap"
                         type="text"
                         id="fullName"
-                        placeholder={data.fullName}
+                        placeholder={ayah?.fullName}
                         disable={true}
                       />
-                      {fetchedRegData === "fetchWali" && (
-                        <>
-                          <TextInput
-                            label="Jenis Kelamin"
-                            type="text"
-                            id="gender"
-                            placeholder={
-                              data.gender === "female"
-                                ? "Perempuan"
-                                : "Laki-Laki"
-                            }
-                            disable={true}
-                          />
-                        </>
-                      )}
                       <TextInput
                         label="Nomor Kartu Keluarga"
                         type="text"
                         id="familyIdentityNumber"
-                        placeholder={data.familyIdentityNumber}
+                        placeholder={ayah?.familyIdentityNumber}
                         disable={true}
                       />
                       <TextInput
                         label="Nomor KTP"
                         type="text"
                         id="identityNumber"
-                        placeholder={data.identityNumber}
+                        placeholder={ayah?.identityNumber}
                         disable={true}
                       />
                       <TextInput
@@ -692,7 +728,7 @@ const DetailDataRegistrasi = () => {
                         type="text"
                         id="isBiological"
                         placeholder={
-                          data.isBiological === 1 ? "Kandung" : "Tiri"
+                          ayah?.isBiological === 1 ? "Kandung" : "Tiri"
                         }
                         disable={true}
                       />
@@ -700,108 +736,409 @@ const DetailDataRegistrasi = () => {
                         label="Tinggal Bersama"
                         type="text"
                         id="isOneHouse"
-                        placeholder={data.isOneHouse === 1 ? "Ya" : "Tidak"}
+                        placeholder={ayah?.isOneHouse === 1 ? "Ya" : "Tidak"}
                         disable={true}
                       />
                       <TextInput
                         label="No Ponsel 1"
                         type="text"
                         id="phoneNumber_1"
-                        placeholder={data.phoneNumber_1}
+                        placeholder={ayah?.phoneNumber_1}
                         disable={true}
                       />
                       <TextInput
                         label="No Ponsel 2"
                         type="text"
                         id="phoneNumber_2"
-                        placeholder={data.phoneNumber_2}
+                        placeholder={ayah?.phoneNumber_2}
                         disable={true}
                       />
                       <TextInput
                         label="Provinsi"
                         type="text"
                         id="province"
-                        placeholder={data.province}
+                        placeholder={ayah?.province}
                         disable={true}
                       />
                       <TextInput
                         label="Kota"
                         type="text"
                         id="city"
-                        placeholder={data.city}
+                        placeholder={ayah?.city}
                         disable={true}
                       />
                       <TextInput
                         label="Kecamatan"
                         type="text"
                         id="subDistrict"
-                        placeholder={data.subDistrict}
+                        placeholder={ayah?.subDistrict}
                         disable={true}
                       />
                       <TextInput
                         label="Kelurahan"
                         type="text"
                         id="village"
-                        placeholder={data.village}
+                        placeholder={ayah?.village}
                         disable={true}
                       />
                       <TextInput
                         label="Alamat"
                         type="text"
                         id="address"
-                        placeholder={data.address}
+                        placeholder={ayah?.address}
                         disable={true}
                       />
                       <TextInput
                         label="Kode Pos"
                         type="text"
                         id="postalCode"
-                        placeholder={data.postalCode}
+                        placeholder={ayah?.postalCode}
                         disable={true}
                       />
                       <TextInput
                         label="Tempat Lahir"
                         type="text"
                         id="birthPlace"
-                        placeholder={data.birthPlace}
+                        placeholder={ayah?.birthPlace}
                         disable={true}
                       />
                       <TextInput
                         label="Tanggal Lahir"
                         type="text"
                         id="birthDate"
-                        placeholder={data.birthDate}
+                        placeholder={ayah?.birthDate}
                         disable={true}
                       />
                       <TextInput
                         label="Pendidikan Terakhir"
                         type="text"
                         id="lastEducation"
-                        placeholder={data.lastEducation}
+                        placeholder={ayah?.lastEducation}
                         disable={true}
                       />
                       <TextInput
                         label="Perusahaan Tempat Bekerja"
                         type="text"
                         id="placeOfWork"
-                        placeholder={data.placeOfWork}
+                        placeholder={ayah?.placeOfWork}
                         disable={true}
                       />
                       <TextInput
                         label="Posisi/Jabatan"
                         type="text"
                         id="occupation"
-                        placeholder={data.occupation}
+                        placeholder={ayah?.occupation}
                         disable={true}
                       />
                       <TextInput
                         label="Penghasilan Tiap Bulan"
                         type="text"
                         id="incomeGrade"
-                        placeholder={data.incomeGrade}
+                        placeholder={ayah?.incomeGrade}
                         disable={true}
                       />
                     </>
+                  ) : (
+                    <h1>kosonggg</h1>
+                  )}
+                </>
+              )}
+              {fetchedRegData === "fetchIbu" && (
+                <>
+                  {ibu !== null ? (
+                    <>
+                      <TextInput
+                        label="Nama Lengkap"
+                        type="text"
+                        id="fullName"
+                        placeholder={ibu?.fullName}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Nomor Kartu Keluarga"
+                        type="text"
+                        id="familyIdentityNumber"
+                        placeholder={ibu?.familyIdentityNumber}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Nomor KTP"
+                        type="text"
+                        id="identityNumber"
+                        placeholder={ibu?.identityNumber}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Hubungan Ayah"
+                        type="text"
+                        id="isBiological"
+                        placeholder={
+                          ibu?.isBiological === 1 ? "Kandung" : "Tiri"
+                        }
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tinggal Bersama"
+                        type="text"
+                        id="isOneHouse"
+                        placeholder={ibu?.isOneHouse === 1 ? "Ya" : "Tidak"}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="No Ponsel 1"
+                        type="text"
+                        id="phoneNumber_1"
+                        placeholder={ibu?.phoneNumber_1}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="No Ponsel 2"
+                        type="text"
+                        id="phoneNumber_2"
+                        placeholder={ibu?.phoneNumber_2}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Provinsi"
+                        type="text"
+                        id="province"
+                        placeholder={ibu?.province}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kota"
+                        type="text"
+                        id="city"
+                        placeholder={ibu?.city}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kecamatan"
+                        type="text"
+                        id="subDistrict"
+                        placeholder={ibu?.subDistrict}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kelurahan"
+                        type="text"
+                        id="village"
+                        placeholder={ibu?.village}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Alamat"
+                        type="text"
+                        id="address"
+                        placeholder={ibu?.address}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kode Pos"
+                        type="text"
+                        id="postalCode"
+                        placeholder={ibu?.postalCode}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tempat Lahir"
+                        type="text"
+                        id="birthPlace"
+                        placeholder={ibu?.birthPlace}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tanggal Lahir"
+                        type="text"
+                        id="birthDate"
+                        placeholder={ibu?.birthDate}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Pendidikan Terakhir"
+                        type="text"
+                        id="lastEducation"
+                        placeholder={ibu?.lastEducation}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Perusahaan Tempat Bekerja"
+                        type="text"
+                        id="placeOfWork"
+                        placeholder={ibu?.placeOfWork}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Posisi/Jabatan"
+                        type="text"
+                        id="occupation"
+                        placeholder={ibu?.occupation}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Penghasilan Tiap Bulan"
+                        type="text"
+                        id="incomeGrade"
+                        placeholder={ibu?.incomeGrade}
+                        disable={true}
+                      />
+                    </>
+                  ) : (
+                    <h1>kosonggg</h1>
+                  )}
+                </>
+              )}
+              {fetchedRegData === "fetchWali" && (
+                <>
+                  {wali !== null ? (
+                    <>
+                      <TextInput
+                        label="Nama Lengkap"
+                        type="text"
+                        id="fullName"
+                        placeholder={wali?.fullName}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Jenis Kelamin"
+                        type="text"
+                        id="gender"
+                        placeholder={
+                          wali?.gender === "female" ? "Perempuan" : "Laki-Laki"
+                        }
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Nomor Kartu Keluarga"
+                        type="text"
+                        id="familyIdentityNumber"
+                        placeholder={wali?.familyIdentityNumber}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Nomor KTP"
+                        type="text"
+                        id="identityNumber"
+                        placeholder={wali?.identityNumber}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Hubungan Ayah"
+                        type="text"
+                        id="isBiological"
+                        placeholder={
+                          wali?.isBiological === 1 ? "Kandung" : "Tiri"
+                        }
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tinggal Bersama"
+                        type="text"
+                        id="isOneHouse"
+                        placeholder={wali?.isOneHouse === 1 ? "Ya" : "Tidak"}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="No Ponsel 1"
+                        type="text"
+                        id="phoneNumber_1"
+                        placeholder={wali?.phoneNumber_1}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="No Ponsel 2"
+                        type="text"
+                        id="phoneNumber_2"
+                        placeholder={wali?.phoneNumber_2}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Provinsi"
+                        type="text"
+                        id="province"
+                        placeholder={wali?.province}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kota"
+                        type="text"
+                        id="city"
+                        placeholder={wali?.city}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kecamatan"
+                        type="text"
+                        id="subDistrict"
+                        placeholder={wali?.subDistrict}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kelurahan"
+                        type="text"
+                        id="village"
+                        placeholder={wali?.village}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Alamat"
+                        type="text"
+                        id="address"
+                        placeholder={wali?.address}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Kode Pos"
+                        type="text"
+                        id="postalCode"
+                        placeholder={wali?.postalCode}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tempat Lahir"
+                        type="text"
+                        id="birthPlace"
+                        placeholder={wali?.birthPlace}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Tanggal Lahir"
+                        type="text"
+                        id="birthDate"
+                        placeholder={wali?.birthDate}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Pendidikan Terakhir"
+                        type="text"
+                        id="lastEducation"
+                        placeholder={wali?.lastEducation}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Perusahaan Tempat Bekerja"
+                        type="text"
+                        id="placeOfWork"
+                        placeholder={wali?.placeOfWork}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Posisi/Jabatan"
+                        type="text"
+                        id="occupation"
+                        placeholder={wali?.occupation}
+                        disable={true}
+                      />
+                      <TextInput
+                        label="Penghasilan Tiap Bulan"
+                        type="text"
+                        id="incomeGrade"
+                        placeholder={wali?.incomeGrade}
+                        disable={true}
+                      />
+                    </>
+                  ) : (
+                    <h1>kosonggg</h1>
                   )}
                 </>
               )}
@@ -812,7 +1149,7 @@ const DetailDataRegistrasi = () => {
                 label="Status Tahapan"
                 type="text"
                 id="incomeGrade"
-                value={dataStep2.status}
+                value={dataStep2?.status}
                 disable={true}
               />
               <button
@@ -823,22 +1160,6 @@ const DetailDataRegistrasi = () => {
               </button>
             </div>
             <br />
-            {/* <div className="btn-form">
-              <button
-                type="button"
-                className="w-auto btn-merah flex justify-center mb-5"
-                onClick={() => AcceptStep("2")}
-              >
-                Setuju
-              </button>
-              <button
-                type="button"
-                className="w-auto btn-putih flex justify-center mb-5"
-                onClick={() => DenyStep("2")}
-              >
-                Tolak
-              </button>
-            </div> */}
           </div>
         )}
       </div>

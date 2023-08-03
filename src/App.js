@@ -71,6 +71,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
 import ProfilepPage from "./components/ProfilePage";
 import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
+import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
 
 const App = () => {
   return (
@@ -168,6 +169,7 @@ const App = () => {
             path="/admin/ubah-status-step"
             element={<UpdateStatusStepPage />}
           />
+          <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
           <Route

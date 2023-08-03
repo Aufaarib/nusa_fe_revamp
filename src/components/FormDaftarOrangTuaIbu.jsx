@@ -689,7 +689,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
 
         <div className="flex justify-end w-full">
           <Link
-            to={"/pmb/form-data-orang-tua-ibu"}
+            to={"/pmb/form-data-orang-tua-ayah"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
             <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendaftaran

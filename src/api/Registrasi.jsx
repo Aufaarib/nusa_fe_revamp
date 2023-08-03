@@ -202,11 +202,10 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       for (const i of res.data.body.user.parents) {
         switch (i.relationship) {
           case "ayah":
-            setData(res.data.body);
             setDataAyah(i);
           case "ibu":
             setDataIbu(i);
-          case "wali":
+          case "perwalian":
             setDataWali(i);
           // setSts(res.data.code);
         }

@@ -4,7 +4,7 @@ import { postGuru } from "../../api/Guru";
 import { Header } from "../../components";
 import { AlertEmpty } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
-import { DropdownSiswa } from "../../components/Dropdown";
+import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
 import { getTahunAjaran } from "../../api/TahunAjaran";
 import { postAdmission } from "../../api/SetupPmb";
 import { BsHandIndexThumbFill } from "react-icons/bs";
@@ -139,6 +139,13 @@ export default function TambahPendaftaran() {
   //   setAcademicYear(e.value);
   // };
 
+  const handleInputChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    setAmount(inputVal);
+  };
+
   return (
     <div>
       <div style={{ marginBottom: "20px" }}>
@@ -184,91 +191,23 @@ export default function TambahPendaftaran() {
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
-          <TextInput
+          <DropdownDatePickers
             label="Tanggal Mulai"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setStartDate(e.target.value)}
-            required={true}
+            value={startDate}
+            change={(e) => setStartDate(e.element.value)}
           />
-          <TextInput
+          <DropdownDatePickers
             label="Tanggal Selesai"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setEndDate(e.target.value)}
-            required={true}
+            value={endDate}
+            change={(e) => setEndDate(e.element.value)}
           />
           <TextInput
             label="Nominal"
             type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setAmount(e.target.value)}
+            value={amount}
+            onChange={handleInputChange}
             required={true}
           />
-          {/* {formFields.map((field, index) => (
-            <div style={{ marginTop: "20px" }} key={index}>
-              <TextInput
-                label="Gelombang Ke"
-                type="number"
-                onChange={(e) =>
-                  handleChange(index, "increment", e.target.value)
-                }
-                required={true}
-              />
-              <TextInput
-                label="Nama Gelombang"
-                type="text"
-                id="group"
-                name="code"
-                onChange={(e) => handleChange(index, "name", e.target.value)}
-                required={true}
-              />
-              <TextInput
-                label="Tanggal Mulai"
-                type="text"
-                id="group"
-                name="code"
-                onChange={(e) =>
-                  handleChange(index, "startDate", e.target.value)
-                }
-                required={true}
-              />
-              <TextInput
-                label="Tanggal Selesai"
-                type="text"
-                id="group"
-                name="code"
-                onChange={(e) => handleChange(index, "endDate", e.target.value)}
-                required={true}
-              />
-              <TextInput
-                label="Amount"
-                type="text"
-                id="group"
-                name="code"
-                onChange={(e) => handleChange(index, "amount", e.target.value)}
-                required={true}
-              />
-
-              <div style={{ marginRight: "255px" }}>
-                <button
-                  className="btn-putih"
-                  onClick={() => removeField(index)}
-                >
-                  Hapus Form
-                </button>
-              </div>
-            </div>
-          ))}
-          <div style={{ marginRight: "255px" }}>
-            <button className="btn-merah" onClick={addField}>
-              Tambah Form
-            </button>
-          </div> */}
-
           <div className="btn-form">
             <button
               type="button"
@@ -285,17 +224,6 @@ export default function TambahPendaftaran() {
               Batal
             </button>
           </div>
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateKurikulum}
-          />
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>
