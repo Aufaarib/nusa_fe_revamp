@@ -183,6 +183,13 @@ const DetailDataRegistrasi = () => {
       },
     });
   };
+  const navigateUploadHasilTes = () => {
+    navigate("/admin/upload-hasil-tes", {
+      state: {
+        fetched: fetched,
+      },
+    });
+  };
 
   const columnsPayments = [
     {
@@ -350,8 +357,9 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "1" ? "#8F0D1E" : "",
-              color: fetched === "1" ? "white" : "",
+              backgroundColor:
+                dataStep1 !== null ? fetched === "1" && "#8F0D1E" : "",
+              color: dataStep1 !== null ? fetched === "1" && "white" : "grey",
             }}
             onClick={() => fetchRegistrationPayment()}
             disabled={dataStep1 !== null ? false : true}
@@ -363,11 +371,20 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "2" ? "#8F0D1E" : "",
-              color: fetched === "2" ? "white" : "",
+              backgroundColor: fetched === "2" && "#8F0D1E",
+              color:
+                dataStep1?.status === "valid"
+                  ? fetched === "2" && "white"
+                  : "grey",
             }}
             onClick={() => fetchRegistrationData()}
-            disabled={dataStep2 !== null ? false : true}
+            disabled={
+              dataStep1 !== null
+                ? dataStep1?.status !== "valid"
+                  ? true
+                  : false
+                : true
+            }
           >
             <i className="fa fa-user" /> Data Pendaftaran
           </button>
@@ -376,8 +393,11 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "3" ? "#8F0D1E" : "",
-              color: fetched === "3" ? "white" : "",
+              backgroundColor: fetched === "3" && "#8F0D1E",
+              color:
+                dataStep2?.status === "valid"
+                  ? fetched === "3" && "white"
+                  : "grey",
             }}
             onClick={() => fetchTestResult()}
             disabled={dataStep2?.status !== "valid" ? true : false}
@@ -389,8 +409,11 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "5" ? "#8F0D1E" : "",
-              color: fetched === "5" ? "white" : "",
+              backgroundColor: fetched === "5" && "#8F0D1E",
+              color:
+                dataStep3?.status === "valid"
+                  ? fetched === "5" && "white"
+                  : "grey",
             }}
             onClick={() => fetchEducationPayment()}
             disabled={dataStep5 !== null ? false : true}
@@ -407,7 +430,16 @@ const DetailDataRegistrasi = () => {
                 data={[data]}
               />
             ) : (
-              <h1>Kosong</h1>
+              <div
+                style={{
+                  borderRadius: "6px",
+                  backgroundColor: "#F3F4F6",
+                  padding: "30px 30px 30px",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Data Tidak Ditemukan</h1>
+              </div>
             )}
           </>
         )}
@@ -419,15 +451,22 @@ const DetailDataRegistrasi = () => {
                 data={[data]}
               />
             ) : (
-              <>
-                <h1>Kosong</h1>
+              <div
+                style={{
+                  borderRadius: "6px",
+                  backgroundColor: "#F3F4F6",
+                  padding: "30px 30px 30px",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Data Tidak Ditemukan</h1>
                 <button
-                  onClick={(e) => navigate("/admin/upload-hasil-tes")}
+                  onClick={() => navigateUploadHasilTes()}
                   className="btn-merah"
                 >
                   Kirim Hasil Test
                 </button>
-              </>
+              </div>
             )}
           </>
         )}
@@ -439,7 +478,16 @@ const DetailDataRegistrasi = () => {
                 data={[data]}
               />
             ) : (
-              <h1>Kosong</h1>
+              <div
+                style={{
+                  borderRadius: "6px",
+                  backgroundColor: "#F3F4F6",
+                  padding: "30px 30px 30px",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Data Tidak Ditemukan</h1>
+              </div>
             )}
           </>
         )}
@@ -448,7 +496,7 @@ const DetailDataRegistrasi = () => {
           <div
             style={{
               borderRadius: "6px",
-              backgroundColor: "#F3F4F6",
+              // backgroundColor: "#F3F4F6",
               padding: "30px 30px 30px",
             }}
           >
@@ -458,7 +506,7 @@ const DetailDataRegistrasi = () => {
                 flexDirection: "row",
                 gap: "20px",
                 marginBottom: "20px",
-                backgroundColor: "#FFF",
+                backgroundColor: "#F3F4F6",
                 justifyContent: "center",
                 borderRadius: "6px",
                 padding: "0",
@@ -517,8 +565,30 @@ const DetailDataRegistrasi = () => {
                 <i className="fa fa-users" /> Data Wali
               </button>
             </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                margin: "0px 95px 0px;",
+                backgroundColor: "#F3F4F6",
+                borderRadius: "8px",
+                padding: "28px",
+                boxShadow: "45px #000000",
+              }}
+            >
+              <div>
+                <TextInput label="Status Tahapan" value={dataStep2?.status} />
+                <button
+                  onClick={() => navigateUbahStatus()}
+                  style={{ fontFamily: "roboto" }}
+                  className="btn-pth"
+                >
+                  Ubah
+                </button>
+              </div>
+            </div>
             <br />
-            <section style={{ margin: "0 12%" }}>
+            <section style={{ margin: "0 13%" }}>
               {fetchedRegData === "fetchAnak" && (
                 <>
                   {anak !== null ? (
@@ -694,7 +764,16 @@ const DetailDataRegistrasi = () => {
                       />
                     </>
                   ) : (
-                    <h1>kosonggg</h1>
+                    <div
+                      style={{
+                        borderRadius: "6px",
+                        backgroundColor: "#F3F4F6",
+                        padding: "30px 30px 30px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <h1>Data Tidak Ditemukan</h1>
+                    </div>
                   )}
                 </>
               )}
@@ -839,7 +918,16 @@ const DetailDataRegistrasi = () => {
                       />
                     </>
                   ) : (
-                    <h1>kosonggg</h1>
+                    <div
+                      style={{
+                        borderRadius: "6px",
+                        backgroundColor: "#F3F4F6",
+                        padding: "30px 30px 30px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <h1>Data Tidak Ditemukan</h1>
+                    </div>
                   )}
                 </>
               )}
@@ -984,7 +1072,16 @@ const DetailDataRegistrasi = () => {
                       />
                     </>
                   ) : (
-                    <h1>kosonggg</h1>
+                    <div
+                      style={{
+                        borderRadius: "6px",
+                        backgroundColor: "#F3F4F6",
+                        padding: "30px 30px 30px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <h1>Data Tidak Ditemukan</h1>
+                    </div>
                   )}
                 </>
               )}
@@ -1138,28 +1235,20 @@ const DetailDataRegistrasi = () => {
                       />
                     </>
                   ) : (
-                    <h1>kosonggg</h1>
+                    <div
+                      style={{
+                        borderRadius: "6px",
+                        backgroundColor: "#F3F4F6",
+                        padding: "30px 30px 30px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <h1>Data Tidak Ditemukan</h1>
+                    </div>
                   )}
                 </>
               )}
             </section>
-            <br />
-            <div style={{ display: "flex" }}>
-              <TextInput
-                label="Status Tahapan"
-                type="text"
-                id="incomeGrade"
-                value={dataStep2?.status}
-                disable={true}
-              />
-              <button
-                onClick={() => navigateUbahStatus()}
-                className="btn-merah"
-              >
-                t
-              </button>
-            </div>
-            <br />
           </div>
         )}
       </div>

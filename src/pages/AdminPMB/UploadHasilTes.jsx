@@ -18,13 +18,23 @@ const UploadHasilTes = () => {
 
   console.log("FETCHED === ", fetched);
 
+  // const AcceptStep = (step) => {
+  //   updateAdmissionSteps(setSts, code, step, status, note);
+  //   navigateRegistrationDetails();
+  // };
+
+  const navigateRegistrationDetails = () => {
+    navigate("/admin/list-detail-data-registrasi", {
+      state: {
+        fetched: fetched,
+      },
+    });
+  };
+
   const uploadTestResults = () => {
     const score = parseInt(nilai);
     uploadHasilTest(score);
-  };
-
-  const navigateRegistrationDetails = () => {
-    navigate("/admin/list-detail-data-registrasi");
+    navigateRegistrationDetails();
   };
 
   return (

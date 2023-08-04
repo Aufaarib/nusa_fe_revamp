@@ -673,22 +673,6 @@ export function DataTablesRegistrationDetail({
                 defaultSortAsc={false}
                 defaultSortFieldId={defaultSortFieldId}
               />
-              {/* <div className="btn-form">
-                <button
-                  type="button"
-                  className="w-auto btn-merah flex justify-center mb-5"
-                  onClick={Approve}
-                >
-                  {buttonPositive}
-                </button>
-                <button
-                  type="button"
-                  className="w-auto btn-putih flex justify-center mb-5"
-                  onClick={Deny}
-                >
-                  {buttonNegative}
-                </button>
-              </div> */}
             </div>
           </div>
         )}

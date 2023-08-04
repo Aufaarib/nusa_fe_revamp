@@ -446,6 +446,26 @@
     @apply bg-merah;
     @apply text-putih;
   }
+
+  .btn-pth {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply leading-snug;
+    @apply text-gelap;
+    @apply text-base;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-putih;
+    @apply px-7;
+    /* border: 1px solid #000000; */
+  }
+
   .btn-mrh {
     /* @apply flex; */
     @apply justify-center;
