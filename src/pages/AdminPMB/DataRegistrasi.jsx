@@ -1,38 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  approvedRegistration,
-  getAdmissionRegistration,
-} from "../../api/Registrasi";
+import { getAdmissionRegistration } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesPMBWithoutButton } from "../../components/DataTables";
-import { AlertValidateRegistration } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  // const path = "/admin/admission/registration";
   let filteredItems = data;
-
-  // console.log("KAKAAAAA === ", data);
-  // const domain = process.env.REACT_APP_BASE_STATIC_FILE;
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.regNumber.toLowerCase().includes(filterText.toLowerCase())
     );
   }
-
-  const ApproveRegistrasi = (code) => {
-    // getPaymentInvoice(setDataInvoice, setSts, code);
-    AlertValidateRegistration(code, onValidate);
-  };
-
-  const onValidate = (code) => {
-    approvedRegistration(setData, setSts, code);
-  };
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
@@ -108,10 +91,6 @@ const DataRegistrasi = () => {
       width: "300px",
     },
   ];
-
-  const navigateTambahGelombang = () => {
-    navigate("/admin/gelombang-pmb");
-  };
 
   return (
     <>

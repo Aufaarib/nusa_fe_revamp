@@ -62,23 +62,20 @@ const TahunAjaran = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-          <button
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Bukti Pembayaran"
-            onClick={() =>
-              navigateUbahTahunAjaran(
-                data.code,
-                data.name,
-                data.year,
-                data.curriculumId,
-                data.status
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Ubah
-          </button>
-        </div>
+        <button
+          title="Edit"
+          onClick={() =>
+            navigateUbahTahunAjaran(
+              data.code,
+              data.name,
+              data.year,
+              data.curriculumId,
+              data.status
+            )
+          }
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        </button>
       ),
       ignoreRowClick: true,
       button: true,

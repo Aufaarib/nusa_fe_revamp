@@ -19,8 +19,6 @@ const TahapanPMB = () => {
     // getFormCheck,
   } = useStateContext();
 
-  console.log("RTTTTTTTTTTTTTTTTTTTTT === ", dataAdmissionRegistration);
-
   const navigate = useNavigate();
   const path = "/pmb/list-calon-siswa";
 
@@ -56,21 +54,8 @@ const TahapanPMB = () => {
           display: "flex",
         }}
       >
-        <p className="ml-1 font-bold text-hitam">Nama Anak :</p>
         <p className="ml-1 font-bold text-merah capitalize">
-          {dataAdmissionRegistration.childName}
-        </p>
-      </div>
-      <div
-        style={{
-          fontSize: "24px",
-          marginBottom: "10px",
-          marginTop: "4px",
-          display: "flex",
-        }}
-      >
-        <p className="ml-1 font-bold text-hitam">No Registrasi :</p>
-        <p className="ml-1 font-bold text-merah capitalize">
+          {dataAdmissionRegistration.childName} -{" "}
           {dataAdmissionRegistration.regNumber}
         </p>
       </div>
@@ -104,7 +89,7 @@ const TahapanPMB = () => {
       <div className="flex justify-start w-full">
         <Link
           to={path}
-          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
           <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali Ke
           List Calon Murid

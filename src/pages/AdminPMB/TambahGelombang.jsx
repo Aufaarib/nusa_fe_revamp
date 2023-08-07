@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postGuru } from "../../api/Guru";
 import { Header } from "../../components";
-import { AlertEmpty } from "../../components/ModalPopUp";
+import { AlertEmpty, AlertStatusFailed } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 import { DropdownDatePickers } from "../../components/Dropdown";
 import DatePicker from "react-date-picker";
@@ -30,8 +30,6 @@ export default function TambahGelombang() {
   const postData = (e) => {
     e.preventDefault();
 
-    const jumlah = parseInt(amount.replace(/\./g, ""), 10);
-
     if (
       name.length === 0 ||
       increment === 0 ||
@@ -39,8 +37,9 @@ export default function TambahGelombang() {
       endDate.length === 0 ||
       amount === 0
     ) {
-      AlertEmpty();
+      AlertStatusFailed("Input Tidak Lengkap", "Tutup");
     } else {
+      const jumlah = parseInt(amount.replace(/\./g, ""), 10);
       postAdmissionPhase(
         setSts,
         path,
@@ -138,7 +137,18 @@ export default function TambahGelombang() {
             required={true}
           />
 
-          <TextInput
+          <DropdownDatePickers
+            label="Tanggal Mulai"
+            value={startDate}
+            change={(e) => setStartDate(e.element.value)}
+          />
+          <DropdownDatePickers
+            label="Tanggal Selesai"
+            value={endDate}
+            change={(e) => setEndDate(e.element.value)}
+          />
+
+          {/* <TextInput
             label="Tanggal Mulai"
             type="text"
             placeholder="Format YYYY-MM-DD"
@@ -152,7 +162,7 @@ export default function TambahGelombang() {
             placeholder="Format YYYY-MM-DD"
             onChange={(e) => setEndDate(e.target.value)}
             required={true}
-          />
+          /> */}
 
           <TextInput
             label="Nominal"

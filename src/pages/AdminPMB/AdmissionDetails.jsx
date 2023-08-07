@@ -89,24 +89,21 @@ const AdmissionDetails = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-          <button
-            className="btn-mrh ml-3 w-auto px-2"
-            title="Detail Pembayaran"
-            onClick={() =>
-              navigateUbahGelombang(
-                data.id,
-                data.increment,
-                data.name,
-                data.startDate,
-                data.endDate,
-                data.amount
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Ubah
-          </button>
-        </div>
+        <button
+          title="Edit"
+          onClick={() =>
+            navigateUbahGelombang(
+              data.id,
+              data.increment,
+              data.name,
+              data.startDate,
+              data.endDate,
+              data.amount
+            )
+          }
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        </button>
       ),
       ignoreRowClick: true,
       button: true,
@@ -176,7 +173,7 @@ const AdmissionDetails = () => {
       <div className="flex justify-start w-full">
         <Link
           to={path}
-          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
           <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
         </Link>

@@ -8,33 +8,14 @@ import { AlertLoginFailed, AlertNetwork } from "../../components/ModalPopUp";
 import { useStateContext } from "../../contexts/ContextProvider";
 import assalamualaikum from "../../data/assalamualaikum.png";
 import logoSaim from "../../data/logo-saim.png";
+import styled from "styled-components";
+import { TextInputPassword } from "../../components/TextInput";
 
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-  // const [errMsg, setErrMsg] = useState("");
-  // const [sccsMsg, setSccsMsg] = useState("");
-  const [values, setValues] = useState({
-    password: "",
-    showPassword: false,
-  });
-
   const navigate = useNavigate();
-  const userRef = useRef();
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const navigateRegister = () => {
-    navigate("/register");
-  };
-
   const directTo = "Login";
 
   const handleSubmit = async (e) => {
@@ -85,75 +66,86 @@ const Login = () => {
   };
 
   return (
-    <div className="justify-end lg:min-h-screen lg:flex lg:bg-krem">
-      <section
-        className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
-        style={{ background: "#E6E6E6" }}
-      >
-        <img
-          className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
-          src={logoSaim}
-          alt="SAIM"
-        />
+    <div className="justify-end lg:flex">
+      <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
+        <img className="logo-login" src={logoSaim} alt="SAIM" />
 
         <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-          Copyright 2022. PT. Nafisha Universal Network
+          Copyright 2023 PT. Nafisha Universal Network
         </p>
+      </section>
+
+      <section className="line-separator">
+        <div className="line" />
       </section>
 
       <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
         <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
-          <div className="relative block text-center xl:w-480 mb-9">
-            <img
-              className="m-auto mb-3 h-200 w-200 xs:hidden lg:block"
-              src={assalamualaikum}
-              alt="Assalamuálaikum"
-            />
-            <h4>Selamat Datang di Web Penerimaan Murid Baru</h4>
+          <div className="relative block xl:w-480">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "20px",
+              }}
+            >
+              <label
+                style={{
+                  color: "#8F0D1E",
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                }}
+              >
+                Silahkan Masuk
+              </label>
+            </div>
           </div>
-
-          <h2 className="text-center mt-7 mb-7">Silahkan Masuk</h2>
 
           {/* USER */}
           <div className="relative block xl:w-480">
             <label htmlFor="user" className="flex mt-4 mb-1 form-label">
-              Email
+              E-mail
             </label>
-            <Input
-              className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-              type="text"
-              id="user"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-            />
+            <div
+              className="block w-full text-base font-normal text-gray-700 bg-white "
+              style={{
+                display: "flex",
+                textAlign: "center",
+                fontSize: "16px",
+                borderRadius: "10px",
+              }}
+            >
+              <input
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  outline: "none",
+                  borderRadius: "10px",
+                  background: "#E6E6E6",
+                }}
+                type="text"
+                id="user"
+                autoComplete="off"
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
+                required
+              />
+            </div>
           </div>
 
           {/* PASSWORD */}
           <div>
-            <label htmlFor="password" className="flex mt-4 mb-1 form-label">
-              Password
-            </label>
-            <Input
-              className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-              type={values.showPassword ? "text" : "password"}
-              id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required={true}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword}>
-                    {values.showPassword ? <FaLowVision /> : <FaEye />}
-                  </IconButton>
-                </InputAdornment>
-              }
+            <TextInputPassword
+              label="Kata Sandi"
+              setPwd={(e) => setPwd(e.target.value)}
+              pwd={pwd}
             />
             <div className="flex justify-end">
-              <Link to={"/forgot"} className="flex mt-2 mb-1 w-auto btn-mrh">
-                Lupa Password
+              <Link
+                to={"/forgot"}
+                className="flex mt-2 mb-1 w-auto text-merah underline"
+              >
+                Lupa Kata Sandi?
               </Link>
             </div>
           </div>
@@ -165,14 +157,20 @@ const Login = () => {
               ""
             )}
           </button>
-          <button className="btn-putih" onClick={navigateRegister}>
-            Daftar Akun Baru
-          </button>
+          <div className="flex mt-7 justify-center">
+            <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
+              Belum Punya Akun?
+            </label>
+            <Link
+              to={"/register"}
+              style={{ fontSize: "14px" }}
+              className="text-merah underline"
+            >
+              Daftar
+            </Link>
+          </div>
         </form>
       </section>
-      <p className="py-4 text-sm text-center lg:hidden text-merah">
-        Copyright 2022. PT. Nafisha Universal Network
-      </p>
     </div>
   );
 };

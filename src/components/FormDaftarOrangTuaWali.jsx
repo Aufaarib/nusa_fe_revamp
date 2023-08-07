@@ -766,7 +766,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
         <div className="flex justify-end w-full">
           <Link
             to={"/pmb/form-data-orang-tua-ibu"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
           >
             <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendaftaran
             Ibu
@@ -777,7 +777,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
             className={`${
               openForm == "form_ortu_identitas" &&
               "pointer-events-none text-gray-300"
-            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
+            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap`}
           >
             Form Pernyataan <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>

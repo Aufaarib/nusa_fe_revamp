@@ -504,6 +504,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 change={(e) => setTransportation(e.value)}
                 popupHeight="auto"
               />
+              <br />
               <TextInput
                 label="Kelas Pada Saat Mendaftar"
                 type="number"
@@ -616,16 +617,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 checked={statusAnak}
               />
               <br />
-              {/* <TextInput
-                label="Status Anak"
-                type="text"
-                id="childStatus"
-                onChange={(e) => setChildStatus(e.target.value)}
-                value={statusAnak}
-                // placeholder={admissionApplicantData.childStatus}
-                disable={false}
-                required={true}
-              /> */}
               <TextInput
                 label="Anak ke"
                 type="number"
@@ -664,6 +655,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 value={tanggalLahir}
                 change={(e) => setBirthDate(e.element.value)}
               />
+              <br />
               <DropdownRadioInputGender
                 required={true}
                 label="Jenis Kelamin"
@@ -675,6 +667,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 // placeholder={admissionApplicantData.gender}
                 checked={jenisKelamin}
               />
+              <br />
               <DropdownRadioInputBloodType
                 required={true}
                 label="Golongan Darah"
@@ -682,6 +675,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 // placeholder={admissionApplicantData.bloodType}
                 checked={golonganDarah}
               />
+              <br />
               <TextInput
                 label="Hobi Anak"
                 type="text"
@@ -826,7 +820,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
         <div className="flex justify-end w-full">
           <Link
             to={"/pmb/tahapan-pmb"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
           >
             <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali Ke
             Tahapan
@@ -836,7 +830,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
             to={"/pmb/form-data-orang-tua-ayah"}
             className={`${
               openForm == "form_murid" && "pointer-events-none text-gray-300"
-            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
+            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap`}
           >
             Pendaftaran Ayah <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>

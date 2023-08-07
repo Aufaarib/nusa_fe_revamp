@@ -76,7 +76,7 @@ export function FilterComponent({
               marginLeft: "10px",
             }}
           >
-            <option value="null">Data Tidak Tersedua</option>
+            <option value="null">Data Tidak Tersedia</option>
           </select>
         )}
         <div style={{ display: "inline-block", float: "right" }}>

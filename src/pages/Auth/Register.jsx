@@ -7,7 +7,7 @@ import {
   FaLowVision,
   FaTimesCircle,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import assalamualaikum from "../../data/assalamualaikum.png";
 import logoSaim from "../../data/logo-saim.png";
 
@@ -20,7 +20,9 @@ import {
   AlertLoginFailed,
   AlertNetwork,
   AlertRegisterFailed,
+  AlertStatusFailed,
 } from "../../components/ModalPopUp";
+import { TextInputPassword } from "../../components/TextInput";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
@@ -77,10 +79,6 @@ const Register = () => {
     navigate("/login");
   };
 
-  const verifiedEmail = () => {
-    validateEmail(setSts, otp);
-  };
-
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -116,14 +114,6 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
-      setErrMsg("Invalid Entry");
-      return;
-    }
-
     try {
       const response = await axios.post(
         process.env.REACT_APP_BASE_URL + "/user/register/parent",
@@ -136,7 +126,6 @@ const Register = () => {
         }
       );
       localStorage.setItem("TOKEN", response?.headers?.authorization);
-
       setIsLoading(false);
       navigate("/verify", {
         state: {
@@ -145,11 +134,10 @@ const Register = () => {
         },
       });
     } catch (error) {
-      console.log("ERRR === ", error.code);
       if (error.code === "ERR_NETWORK") {
-        AlertNetwork();
+        AlertStatusFailed("Koneksi Bermasalah", "Tutup");
       } else {
-        AlertLoginFailed();
+        AlertStatusFailed("Gagal", "Tutup");
       }
       setIsLoading(false);
     }
@@ -157,62 +145,79 @@ const Register = () => {
 
   return (
     <>
-      <div className="justify-end min-h-screen lg:flex bg-krem">
-        <section
-          className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
-          style={{ background: "#E6E6E6" }}
-        >
-          <img
-            className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
-            src={logoSaim}
-            alt="SAIM"
-          />
+      <div className="justify-end lg:flex">
+        <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
+          <img className="logo-login" src={logoSaim} alt="SAIM" />
 
           <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2022. PT. Nafisha Universal Network
+            Copyright 2023 PT. Nafisha Universal Network
           </p>
         </section>
 
-        <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
-          <div className="relative block w-full mt-6 text-center">
-            <img
-              className="m-auto mb-3 h-200 w-200 xs:hidden lg:block"
-              src={assalamualaikum}
-              alt="Assalamuálaikum"
-            />
-            <h4>
-              Selamat Datang <br />
-              di Web Penerimaan Murid Baru
-            </h4>
-            <h5 className=" text-merah">
-              Silahkan isi form dibawah ini untuk memulai
-            </h5>
-          </div>
+        <section className="line-separator">
+          <div className="line" />
+        </section>
 
-          <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
+        <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
+          <form onSubmit={handleSubmit} className="block mt-1 mb-7 px-7">
+            <div className="relative block xl:w-480">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginTop: "20px",
+                }}
+              >
+                <label
+                  style={{
+                    color: "#8F0D1E",
+                    fontSize: "32px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Pendaftaran Akun Baru
+                </label>
+              </div>
+            </div>
             {/* NAMA LENGKAP */}
             <div className="relative block w-full lg:w-480">
-              <label htmlFor="username" className="flex mt-4 mb-1 form-label">
+              <label htmlFor="username" className="flex mt-1 mb-1 form-label">
                 Nama Lengkap
               </label>
-              <input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                type="text"
-                id="username"
-                ref={userRef}
-                autoComplete="on"
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-                aria-invalid={validName ? "false" : "true"}
-                aria-describedby="uidnote"
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
-              />
+              <div
+                className="block w-full text-base font-normal text-gray-700 bg-white "
+                style={{
+                  display: "flex",
+                  textAlign: "center",
+                  fontSize: "16px",
+                  borderRadius: "10px",
+                }}
+              >
+                <input
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    outline: "none",
+                    borderRadius: "10px",
+                    background: "#E6E6E6",
+                  }}
+                  type="text"
+                  id="username"
+                  ref={userRef}
+                  autoComplete="on"
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                  required
+                  aria-invalid={validName ? "false" : "true"}
+                  aria-describedby="uidnote"
+                  onFocus={() => setUserFocus(true)}
+                  onBlur={() => setUserFocus(false)}
+                />
+              </div>
               <FaCheckCircle
                 className={
                   validName
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-2 text-green-600"
                     : "hidden"
                 }
               />
@@ -220,7 +225,7 @@ const Register = () => {
                 className={
                   validName || !user
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-2 text-red-600"
                 }
               />
               <p
@@ -241,24 +246,40 @@ const Register = () => {
               <label htmlFor="phone" className="flex mt-4 mb-1 form-label">
                 No. Telepon
               </label>
-              <input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                type="text"
-                id="phone"
-                ref={phoneRef}
-                autoComplete="on"
-                onChange={(e) => setPhone(e.target.value)}
-                value={phone}
-                required
-                aria-invalid={validPhone ? "false" : "true"}
-                aria-describedby="phonenote"
-                onFocus={() => setPhoneFocus(true)}
-                onBlur={() => setPhoneFocus(false)}
-              />
+              <div
+                className="block w-full text-base font-normal text-gray-700 bg-white "
+                style={{
+                  display: "flex",
+                  textAlign: "center",
+                  fontSize: "16px",
+                  borderRadius: "10px",
+                }}
+              >
+                <input
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    outline: "none",
+                    borderRadius: "10px",
+                    background: "#E6E6E6",
+                  }}
+                  type="text"
+                  id="phone"
+                  ref={phoneRef}
+                  autoComplete="on"
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
+                  required
+                  aria-invalid={validPhone ? "false" : "true"}
+                  aria-describedby="phonenote"
+                  onFocus={() => setPhoneFocus(true)}
+                  onBlur={() => setPhoneFocus(false)}
+                />
+              </div>
               <FaCheckCircle
                 className={
                   validPhone
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-2 text-green-600"
                     : "hidden"
                 }
               />
@@ -266,7 +287,7 @@ const Register = () => {
                 className={
                   validPhone || !phone
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-2 text-red-600"
                 }
               />
               <p
@@ -287,24 +308,40 @@ const Register = () => {
               <label htmlFor="email" className="flex mt-4 mb-1 form-label">
                 E-mail
               </label>
-              <input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                type="email"
-                id="email"
-                ref={emailRef}
-                autoComplete="on"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required
-                aria-invalid={validEmail ? "false" : "true"}
-                aria-describedby="emailnote"
-                onFocus={() => setEmailFocus(true)}
-                onBlur={() => setEmailFocus(false)}
-              />
+              <div
+                className="block w-full text-base font-normal text-gray-700 bg-white "
+                style={{
+                  display: "flex",
+                  textAlign: "center",
+                  fontSize: "16px",
+                  borderRadius: "10px",
+                }}
+              >
+                <input
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    outline: "none",
+                    borderRadius: "10px",
+                    background: "#E6E6E6",
+                  }}
+                  type="email"
+                  id="email"
+                  ref={emailRef}
+                  autoComplete="on"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  required
+                  aria-invalid={validEmail ? "false" : "true"}
+                  aria-describedby="emailnote"
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
+                />
+              </div>
               <FaCheckCircle
                 className={
                   validEmail
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-2 text-green-600"
                     : "hidden"
                 }
               />
@@ -312,7 +349,7 @@ const Register = () => {
                 className={
                   validEmail || !email
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-2 text-red-600"
                 }
               />
               <p
@@ -329,35 +366,15 @@ const Register = () => {
             </div>
 
             <div className="relative block xl:w-480">
-              <label htmlFor="password" className="flex mt-4 mb-1 form-label">
-                Kata Sandi
-              </label>
-              <Input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
-                type={values.showPassword ? "text" : "password"}
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-                aria-invalid={validPwd ? "false" : "true"}
-                aria-describedby="pwdnote"
-                onFocus={() => setPwdFocus(true)}
-                onBlur={() => setPwdFocus(false)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <IconButton
-                      onClick={handleClickShowPassword}
-                      // onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <FaLowVision /> : <FaEye />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+              <TextInputPassword
+                label="Kata Sandi"
+                setPwd={(e) => setPwd(e.target.value)}
+                pwd={pwd}
               />
               <FaCheckCircle
                 className={
                   validPwd
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-12 text-green-600"
                     : "hidden"
                 }
               />
@@ -365,7 +382,7 @@ const Register = () => {
                 className={
                   validPwd || !pwd
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-12 text-red-600"
                 }
               />
               <p
@@ -385,29 +402,15 @@ const Register = () => {
             </div>
 
             <div className="relative block xl:w-480">
-              <label
-                htmlFor="confirm_pwd"
-                className="flex mt-4 mb-1 form-label"
-              >
-                Ulangi Kata Sandi
-              </label>
-              <Input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
-                type={values.showPassword ? "text" : "password"}
-                id="confirm_pwd"
-                onChange={(e) => setMatchPwd(e.target.value)}
-                // value={"B!5millah"}
-                value={matchPwd}
-                required
-                aria-invalid={validMatch ? "false" : "true"}
-                aria-describedby="confirmnote"
-                onFocus={() => setMatchFocus(true)}
-                onBlur={() => setMatchFocus(false)}
+              <TextInputPassword
+                label="Ulangi Kata Sandi"
+                setPwd={(e) => setMatchPwd(e.target.value)}
+                pwd={matchPwd}
               />
               <FaCheckCircle
                 className={
                   validMatch && matchPwd
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-12 text-green-600"
                     : "hidden"
                 }
               />
@@ -415,7 +418,7 @@ const Register = () => {
                 className={
                   validMatch || !matchPwd
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-12 text-red-600"
                 }
               />
               <p
@@ -441,7 +444,7 @@ const Register = () => {
                   ? true
                   : false
               }
-              className="flex justify-center w-full py-3 my-6 mr-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
+              className="flex justify-center w-full py-3 my-6 mr-3 mt-11 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
             >
               Daftar{" "}
               {isLoading ? (
@@ -451,9 +454,18 @@ const Register = () => {
               )}
             </button>
 
-            <button className="btn-putih" onClick={navigateLogin}>
-              Kembali Ke Login
-            </button>
+            <div className="flex mt-9 justify-center">
+              <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
+                Sudah Punya Akun?
+              </label>
+              <Link
+                to={"/login"}
+                style={{ fontSize: "14px" }}
+                className="text-merah underline"
+              >
+                Login
+              </Link>
+            </div>
           </form>
         </section>
       </div>

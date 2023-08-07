@@ -55,10 +55,9 @@ const ListCalonSiswa = () => {
         <button
           className="btn-mrh"
           style={{
-            marginTop: "20px",
-            marginRight: "25px",
+            // marginTop: "20px",
+            // marginRight: "25px",
             borderRadius: "5px",
-            fontFamily: "Roboto-Medium, Helvetica",
             fontSize: "14px",
             cursor: "pointer",
           }}
@@ -72,37 +71,31 @@ const ListCalonSiswa = () => {
       {dataMyAdmission.length !== 0 ? (
         <>
           {Object.entries(groupedCandidates).map(([year, candidates]) => (
-            <div>
+            <>
               <div className="text-wrapper-2 mt-5">Tahun Ajaran {year}</div>
               <br />
-              <div
-                key={year}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  gap: "16px",
-                }}
-              >
+              <div key={year} className="child-card">
                 {candidates.map(({ childName, regNumber, status }) => (
                   <div
                     className="frame"
-                    style={{ flex: "0 0 30%", gap: "16px" }}
+                    // style={{ flex: "0 0 30%", gap: "16px" }}
                   >
                     <div
                       className="overlap-group"
-                      style={{ display: "flex", gap: "16px" }}
+                      // style={{ display: "flex", gap: "16px" }}
                     >
                       <div className="div-wrapper">
                         <div className="text-wrapper-3">PMB</div>
                       </div>
                       <div className="frame-2" style={{ flex: 1 }}>
-                        <div className="text-wrapper-4">{childName}</div>
+                        <div className="text-wrapper-4 capitalize">
+                          {childName}
+                        </div>
                         <div className="text-wrapper-5">{regNumber}</div>
-                        <div className="tambah">
+                        <div>
                           <button
                             onClick={() => setRegNumbers(regNumber)}
-                            className="text-wrapper-6"
+                            className="btn-modal-merah"
                           >
                             Lihat
                           </button>
@@ -114,21 +107,29 @@ const ListCalonSiswa = () => {
                           alt="Group"
                           src="https://generation-sessions.s3.amazonaws.com/bc45777641ff997f7635a4fe39868a07/img/group-1-2@2x.png"
                         />
-                        <div className="text-wrapper-7">
-                          {status === "inreview"
-                            ? "Sedang Berlangsung"
-                            : "Aktif"}
+                        <div
+                          style={
+                            status === "valid"
+                              ? { color: "#15803D", fontWeight: "bold" }
+                              : { color: "#8f0d1e", fontWeight: "bold" }
+                          }
+                        >
+                          {status !== "valid" ? "Belum Aktif" : "Aktif"}
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </>
           ))}
         </>
       ) : (
-        <h1>Belum Ada Anak Yang Terdaftar</h1>
+        <div style={{ textAlign: "center", marginTop: "100px" }}>
+          <strong style={{ color: "gray", fontSize: "28px" }}>
+            Belum Ada Anak Yang Terdaftar
+          </strong>
+        </div>
       )}
       <ModalTambahCalonMurid
         isOpenCostCenter={isOpenCostCenter}

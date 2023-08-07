@@ -1,6 +1,9 @@
 import {
+  AlertMessage,
+  AlertStatusFailed,
   AlertStatusReVerified,
   AlertStatusReVerifiedFailed,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
@@ -30,7 +33,7 @@ export function ApproveEducationalPayment(id, setSts, setData) {
     });
 }
 
-export function validateEmail(setSts, otp, navigateLogin) {
+export function validateOTP(setSts, otp, navigateLogin, directTo) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/user/verification",
@@ -38,11 +41,23 @@ export function validateEmail(setSts, otp, navigateLogin) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then((res) => {
-      AlertStatusVerified(navigateLogin);
+      if (directTo === "Reset Password") {
+        AlertStatusSuccess(
+          navigateLogin,
+          "Kode Reset Password Sesuai",
+          "Reset Password"
+        );
+      } else if (directTo === "Login") {
+        AlertStatusSuccess(
+          navigateLogin,
+          "Akun Berhasil Ter-Verifikasi",
+          "Kembali Ke Halaman Login"
+        );
+      }
       setSts(res.code);
     })
     .catch((res) => {
-      AlertStatusVerifiedFailed();
+      AlertStatusFailed("Verifikasi Akun Gagal", "Tutup");
       setSts(res.code);
     });
 }
@@ -67,21 +82,22 @@ export function daftarUlangAgreement() {
     });
 }
 
-export function revalidateEmail(setSts, otp) {
+export function revalidateEmail(setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/user/verification", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      // console.log("ADMISSION STATEMENT === ", otp);
-      // setData(res.data.body);
       setSts({ type: "success" });
-      AlertStatusReVerified();
+      AlertMessage(
+        "Kode Verifikasi Telah Terkirim",
+        "Silahkan Cek Kembali Email Anda",
+        "Tutup"
+      );
     })
     .catch((error) => {
-      // console.log("ADMISSION STATEMENT === ", otp);
       setSts({ type: "error", error });
-      AlertStatusReVerifiedFailed();
+      AlertStatusFailed("Gagal", "Tutup");
     });
 }
 
@@ -573,7 +589,7 @@ export function uploadHasilTest(score) {
     });
 }
 
-export function approvedRegistration(setData, setSts, code, status) {
+export function approvedRegistration(code, status, onReload) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/registration/${code}/aprove`,
@@ -583,12 +599,12 @@ export function approvedRegistration(setData, setSts, code, status) {
       }
     )
     .then(() => {
-      setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
-      getAdmissionRegistration(setData, setSts);
+      // setSts({ type: "success" });
+      AlertMessage("Berhasil", "Status Pendaftar Berhasil Diubah", "Tutup");
+      onReload();
     })
     .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      // setSts({ type: "error", error });
+      AlertStatusFailed("Gagal", "Tutup");
     });
 }

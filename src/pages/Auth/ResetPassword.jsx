@@ -1,25 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
-import {
-  FaCheckCircle,
-  FaEye,
-  FaInfoCircle,
-  FaLowVision,
-  FaTimesCircle,
-} from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import assalamualaikum from "../../data/assalamualaikum.png";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import logoSaim from "../../data/logo-saim.png";
 
 import { useStateContext } from "../../contexts/ContextProvider";
-
-import { IconButton, Input, InputAdornment } from "@mui/material";
-import { validateEmail } from "../../api/Registrasi";
 import axios from "../../api/axios";
 import {
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
+  AlertStatusFailed,
+  AlertStatusSuccess,
 } from "../../components/ModalPopUp";
+import { TextInputPassword } from "../../components/TextInput";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
@@ -98,57 +89,50 @@ const ResetPassword = () => {
       );
       localStorage.setItem("TOKEN", response?.headers?.authorization);
       setIsLoading(false);
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        navigateLogin,
+        "Password Berhasil Diubah",
+        "Kembali Ke Halaman Login"
+      );
     } catch (err) {
       setIsLoading(false);
-      AlertStatusTambahFailed();
+      AlertStatusFailed("Ubah Status Gagal", "Coba Lagi");
     }
   };
 
   return (
     <>
-      <div className="justify-end min-h-screen lg:flex bg-krem">
+      <div className="justify-end min-h-screen lg:flex">
         <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
-          <div className="relative block w-full mt-6 text-center">
-            <img
-              className="m-auto mb-3 h-200 w-200 xs:hidden lg:block"
-              src={assalamualaikum}
-              alt="Assalamuálaikum"
-            />
-            <h4>Atur Ulang Password</h4>
-          </div>
-
-          <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
+          <form onSubmit={handleSubmit} className="block">
             <div className="relative block xl:w-480">
-              <label htmlFor="password" className="flex mt-4 mb-1 form-label">
-                Kata Sandi
-              </label>
-              <Input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
-                type={values.showPassword ? "text" : "password"}
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-                aria-invalid={validPwd ? "false" : "true"}
-                aria-describedby="pwdnote"
-                onFocus={() => setPwdFocus(true)}
-                onBlur={() => setPwdFocus(false)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <IconButton
-                      onClick={handleClickShowPassword}
-                      // onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <FaLowVision /> : <FaEye />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <label
+                  style={{
+                    color: "#8F0D1E",
+                    fontSize: "32px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Atur Ulang Kata Sandi
+                </label>
+              </div>
+            </div>
+            <div className="relative block xl:w-480">
+              <TextInputPassword
+                label="Kata Sandi"
+                setPwd={(e) => setPwd(e.target.value)}
+                pwd={pwd}
               />
               <FaCheckCircle
                 className={
                   validPwd
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-11 text-green-600"
                     : "hidden"
                 }
               />
@@ -156,7 +140,7 @@ const ResetPassword = () => {
                 className={
                   validPwd || !pwd
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-11 text-red-600"
                 }
               />
               <p
@@ -176,29 +160,15 @@ const ResetPassword = () => {
             </div>
 
             <div className="relative block xl:w-480">
-              <label
-                htmlFor="confirm_pwd"
-                className="flex mt-4 mb-1 form-label"
-              >
-                Ulangi Kata Sandi
-              </label>
-              <Input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
-                type={values.showPassword ? "text" : "password"}
-                id="confirm_pwd"
-                onChange={(e) => setMatchPwd(e.target.value)}
-                // value={"B!5millah"}
-                value={matchPwd}
-                required
-                aria-invalid={validMatch ? "false" : "true"}
-                aria-describedby="confirmnote"
-                onFocus={() => setMatchFocus(true)}
-                onBlur={() => setMatchFocus(false)}
+              <TextInputPassword
+                label="Ulangi Kata Sandi"
+                setPwd={(e) => setMatchPwd(e.target.value)}
+                pwd={matchPwd}
               />
               <FaCheckCircle
                 className={
                   validMatch && matchPwd
-                    ? "valid absolute top-10 right-2 text-green-600"
+                    ? "valid absolute top-11 right-11 text-green-600"
                     : "hidden"
                 }
               />
@@ -206,7 +176,7 @@ const ResetPassword = () => {
                 className={
                   validMatch || !matchPwd
                     ? "hidden"
-                    : "invalid absolute top-10 right-2 text-red-600"
+                    : "invalid absolute top-11 right-11 text-red-600"
                 }
               />
               <p
@@ -234,24 +204,37 @@ const ResetPassword = () => {
               )}
             </button>
 
-            <button className="btn-putih" onClick={navigateLogin}>
-              Kembali Ke Login
-            </button>
+            <div className="flex mt-9 justify-center">
+              <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
+                Sudah Punya Akun?
+              </label>
+              <Link
+                to={"/login"}
+                style={{ fontSize: "14px" }}
+                className="text-merah underline"
+              >
+                Login
+              </Link>
+            </div>
           </form>
         </section>
-        <section
-          className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
-          style={{ background: "#E6E6E6" }}
-        >
+        <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
           <img
-            className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
+            className="lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
             src={logoSaim}
             alt="SAIM"
           />
 
           <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2022. PT. Nafisha Universal Network
+            Copyright 2023 PT. Nafisha Universal Network
           </p>
+        </section>
+
+        <section
+          style={{ left: "678px" }}
+          className="top-0 flex items-center justify-center min-h-full lg:fixed"
+        >
+          <div style={{ borderRight: "1px solid #8F8F8F", height: "500px" }} />
         </section>
       </div>
     </>

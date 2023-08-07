@@ -154,37 +154,25 @@
 
   .frame {
     height: 220px;
-    min-width: 471px;
+    min-width: auto;
     position: relative;
-  }
-
-  .overlap-group {
-    background-color: #ffffff;
-    border: 1px solid;
-    border-color: #bdbcbc;
-    border-radius: 8px;
-    height: 222px;
-    left: -1px;
-    position: relative;
-    top: -1px;
-    width: 473px;
   }
 
   .div-wrapper {
     background-color: #8f0d1e;
-    border: 1px solid;
-    border-color: #bdbcbc;
+    /* border: 1px solid; */
+    /* border-color: #bdbcbc; */
     border-radius: 8px 8px 0px 0px;
     height: 52px;
     left: 0;
     position: absolute;
     top: 0;
-    width: 473px;
+    width: 100%;
   }
 
   .text-wrapper-3 {
     color: #ffffff;
-    font-family: "Roboto", Helvetica;
+    /* font-family: "Roboto", Helvetica; */
     font-size: 18px;
     font-weight: 700;
     height: 20px;
@@ -204,12 +192,11 @@
     left: 30px;
     position: absolute;
     top: 84px;
-    width: fit-content;
+    width: auto;
   }
 
   .text-wrapper-4 {
     color: #000000;
-    font-family: "Roboto", Helvetica;
     font-size: 22px;
     font-weight: 700;
     letter-spacing: 0;
@@ -217,19 +204,18 @@
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
-    width: fit-content;
+    width: auto;
   }
 
   .text-wrapper-5 {
     color: #000000;
-    font-family: "Roboto", Helvetica;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 20px;
     position: relative;
     white-space: nowrap;
-    width: fit-content;
+    width: auto;
   }
 
   .tambah {
@@ -257,33 +243,99 @@
     width: fit-content;
   }
 
+  .child-card {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 22px;
+  }
+
+  .group {
+    width: 95px;
+    position: relative;
+  }
+
+  .overlap-group {
+    background-color: #ffffff;
+    display: block;
+    border: 1px solid;
+    border-color: #bdbcbc;
+    border-radius: 8px;
+    height: 222px;
+    left: -1px;
+    position: relative;
+    top: -1px;
+    width: 480px;
+  }
+
   .frame-3 {
     align-items: center;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    left: 292px;
+    left: 285px;
     position: absolute;
-    top: 64px;
-    width: fit-content;
+    top: 66px;
+    width: 128px;
   }
 
-  .group {
-    height: 110px;
-    min-width: 95px;
-    position: relative;
+  .logo-login {
+    width: 360px;
+    /* margin-top: 2px; */
+    margin-bottom: 55px;
   }
 
-  .text-wrapper-7 {
-    color: #000000;
-    font-family: "Roboto", Helvetica;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 20px;
-    position: relative;
-    white-space: nowrap;
-    width: fit-content;
+  .line-separator {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .line {
+    border-right: 1px solid #8f8f8f;
+    height: 490px;
+  }
+
+  @media (max-width: 620px) {
+    .child-card {
+      justify-content: center;
+    }
+
+    .overlap-group {
+      width: 290px;
+    }
+
+    .frame-3 {
+      left: 174px;
+      top: 70px;
+      width: 90px;
+    }
+
+    .group {
+      width: 80px;
+    }
+
+    .logo-login {
+      width: 200px;
+      margin-top: 100px;
+    }
+
+    .line-separator {
+      justify-content: center;
+      display: flex;
+    }
+
+    .line {
+      border-right: 0px;
+      border-bottom: 1px solid #8f8f8f;
+      width: 253px;
+      margin-top: 60px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .element-2 {
@@ -374,6 +426,77 @@
     color: #333333;
   }
 
+  .nama-anak {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    left: 31px;
+    position: absolute;
+    top: 103px;
+  }
+
+  .input {
+    align-items: center;
+    background-color: #edf0f7;
+    border: 1px solid;
+    border-color: #ebebeb;
+    border-radius: 5px;
+    display: flex;
+    gap: 8px;
+    height: 40px;
+    justify-content: center;
+    padding: 8px;
+    position: relative;
+    width: 368px;
+  }
+
+  .buttonModalWrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #ebebeb;
+    /* width: 100%; */
+    gap: 20px;
+    padding: 10px 20px;
+  }
+
+  .btn-modal-merah {
+    display: flex;
+    width: 100px;
+    height: 30px;
+    padding: 7px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #8f0d1e;
+    border-radius: 4px;
+    background: #8f0d1e;
+    color: white;
+  }
+  .btn-modal-merah:hover {
+    background: white;
+    color: #8f0d1e;
+  }
+
+  .btn-modal-putih {
+    display: flex;
+    width: 100px;
+    height: 30px;
+    padding: 7px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #8f0d1e;
+    border-radius: 4px;
+    background: white;
+    color: #8f0d1e;
+  }
+  .btn-modal-putih:hover {
+    background: #8f0d1e;
+    color: white;
+  }
+
   .react-datepicker__triangle {
     display: none;
   }
@@ -397,6 +520,25 @@
     @apply px-7;
   }
 
+  .btn-navigate {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply px-7;
+  }
+
   .btn-merah {
     @apply flex;
     @apply justify-center;
@@ -415,11 +557,11 @@
     @apply shadow-md;
     @apply bg-merah;
     @apply px-7;
+    border: 1px solid #8f0d1e;
   }
   .btn-merah:hover {
     @apply bg-putih;
     @apply text-merah;
-    border: 1px solid #8f0d1e;
   }
 
   .btn-putih {
@@ -489,28 +631,6 @@
     @apply bg-putih;
     @apply text-merah;
   }
-
-  /* .flex-button {
-    @apply flex;
-    @apply justify-center;
-    gap: 10px;
-    align-items: center;
-    width: 110px;
-    height: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    @apply font-medium;
-    @apply leading-snug;
-    @apply text-white;
-    @apply transition;
-    @apply duration-150;
-    @apply ease-in-out;
-    @apply rounded;
-    @apply shadow-md;
-    @apply bg-merah;
-  } */
 
   .btn-action-merah {
     @apply rounded;

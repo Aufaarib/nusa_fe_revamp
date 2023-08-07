@@ -5,7 +5,10 @@ import { Header } from "../../components";
 import { DropdownValidasiStep } from "../../components/Dropdown";
 import TextInput from "../../components/TextInput";
 import { updateAdmissionSteps } from "../../api/Registrasi";
-import { AlertStatusValidatePayment } from "../../components/ModalPopUp";
+import {
+  AlertStatusFailed,
+  AlertStatusValidatePayment,
+} from "../../components/ModalPopUp";
 
 const UpdateStatusStepPage = () => {
   const [status, setStatus] = useState("");
@@ -16,10 +19,12 @@ const UpdateStatusStepPage = () => {
   const code = localStorage.getItem("REG_NUMBER");
   const fetched = location?.state?.fetched;
 
-  console.log("FETCHED === ", fetched);
-
   const UpdateConfirm = () => {
-    AlertStatusValidatePayment(AcceptStep, fetched);
+    if (status === "" || note === "") {
+      AlertStatusFailed("Input Tidak Lengkap", "Tutup");
+    } else {
+      AlertStatusValidatePayment(AcceptStep, fetched);
+    }
   };
   const AcceptStep = (step) => {
     updateAdmissionSteps(setSts, code, step, status, note);
@@ -55,8 +60,8 @@ const UpdateStatusStepPage = () => {
               onChange={(e) => setStatus(e.value)}
             />
             <TextInput
-              label="Deskripsi"
-              type="text"
+              label="Note"
+              type="textarea"
               id="group"
               name="code"
               onChange={(e) => setNote(e.target.value)}

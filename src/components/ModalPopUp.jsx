@@ -1,22 +1,23 @@
 import Modal from "react-modal";
 import Swal from "sweetalert2";
-import TextInput from "./TextInput";
+import TextInput, { TextInputModal } from "./TextInput";
 import { DropdownDebitKredit, DropdownGroup } from "./Dropdown";
 import { FilterDate } from "./DataTables";
 import { useNavigate } from "react-router-dom";
 
 export const CustomStylesStatus = {
   content: {
-    width: "auto",
+    // width: "385px",
     top: "50%",
     left: "50%",
     right: "auto",
     bottom: "auto",
+    borderRadius: "8px",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     border: "none",
     cursor: "auto",
-    padding: "30px",
+    padding: "0px",
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,.5)",
@@ -172,33 +173,37 @@ export const ModalTambahCalonMurid = ({
       contentLabel="Modal Status"
       ariaHideApp={false}
     >
-      <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
-        Form Tambah Calon Murid
-      </p>
-      <article>
-        <TextInput
+      <div className="div-wrapper">
+        <div className="text-wrapper-3">Form Pendaftaran Anak</div>
+      </div>
+      <div
+        style={{
+          padding: "90px 35px 50px 30px",
+          width: "400px",
+          fontSize: "22px",
+          fontWeight: "bold",
+        }}
+      >
+        <TextInputModal
           label="Nama Anak"
           type="text"
           onChange={onChange}
           required={true}
+          placeholder="Masukkan Nama"
         />
-        <div className="btn-form">
-          <button
-            type="button"
-            className="w-20 btn-merah flex justify-center mb-5"
-            onClick={post}
-          >
-            Simpan
-          </button>
-          <button
-            type="button"
-            className="w-20 btn-putih flex justify-center mb-5"
-            onClick={closeModalCostCenter}
-          >
-            Batal
-          </button>
-        </div>
-      </article>
+      </div>
+      <div className="buttonModalWrapper">
+        <button type="button" className="btn-modal-merah" onClick={post}>
+          Simpan
+        </button>
+        <button
+          type="button"
+          className="btn-modal-putih"
+          onClick={closeModalCostCenter}
+        >
+          Tutup
+        </button>
+      </div>
     </Modal>
   );
 };
@@ -213,6 +218,55 @@ const styledSweetAlert = Swal.mixin({
   width: "auto",
   buttonsStyling: false,
 });
+
+//Dynamic Text
+export const AlertMessage = (title, text, buttonText) => {
+  styledSweetAlert.fire({
+    title: title,
+    text: text,
+    showConfirmButton: true,
+    confirmButtonText: buttonText,
+  });
+};
+
+export const AlertConfirmation = (onConfirm, title, confirmButtonText) => {
+  styledSweetAlert
+    .fire({
+      title: title,
+      showConfirmButton: true,
+      confirmButtonText: confirmButtonText,
+      showCancelButton: true,
+      cancelButtonText: "Batal",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        onConfirm();
+      }
+    });
+};
+
+export const AlertStatusSuccess = (navigate, title, buttonText) => {
+  styledSweetAlert
+    .fire({
+      title: title,
+      showConfirmButton: true,
+      confirmButtonText: buttonText,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        // Redirect to another page
+        navigate();
+      }
+    });
+};
+
+export const AlertStatusFailed = (title, buttonText) => {
+  styledSweetAlert.fire({
+    title: title,
+    showConfirmButton: true,
+    confirmButtonText: buttonText,
+  });
+};
 
 // SA STATUS TAMBAH
 export const AlertStatusTambahSuccess = (path) => {

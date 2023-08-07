@@ -4,12 +4,19 @@ import { useEffect, useState } from "react";
 import { BsChevronBarLeft } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
+  approvedRegistration,
   getAdmissionRegistrationByRegNumberAdmin,
   updateAdmissionSteps,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesRegistrationDetail } from "../../components/DataTables";
-import { AlertPaymentProof } from "../../components/ModalPopUp";
+import {
+  AlertConfirmation,
+  AlertMessage,
+  AlertPaymentProof,
+  AlertStatusSuccess,
+  AlertValidateRegistration,
+} from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 
 const DetailDataRegistrasi = () => {
@@ -24,8 +31,6 @@ const DetailDataRegistrasi = () => {
   const [dataStep5, setDataStep5] = useState(null);
   const [edu, setEdu] = useState([]);
   const [amount, setAmount] = useState("");
-  const [sts, setSts] = useState(undefined);
-  const [filterText, setFilterText] = useState("");
   const [fetched, setFetched] = useState("");
   const [fetchedRegData, setFetchedRegData] = useState("");
   const navigate = useNavigate();
@@ -34,16 +39,16 @@ const DetailDataRegistrasi = () => {
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
 
-  console.log("DATA === ", data);
-  console.log("STEP1 === ", dataStep1);
-  console.log("STEP2 === ", dataStep2);
-  console.log("STEP3 === ", dataStep3);
-  console.log("STEP5 === ", dataStep5);
-  console.log("PEMBAYARAN === ", amount);
-  console.log("ANAK === ", anak);
-  console.log("AYAH === ", ayah);
-  console.log("IBU === ", ibu);
-  console.log("WALI === ", wali);
+  // console.log("DATA === ", data);
+  // console.log("STEP1 === ", dataStep1);
+  // console.log("STEP2 === ", dataStep2);
+  // console.log("STEP3 === ", dataStep3);
+  // console.log("STEP5 === ", dataStep5);
+  // console.log("PEMBAYARAN === ", amount);
+  // console.log("ANAK === ", anak);
+  // console.log("AYAH === ", ayah);
+  // console.log("IBU === ", ibu);
+  // console.log("WALI === ", wali);
 
   const fetchEducationPayment = () => {
     setFetched("5");
@@ -109,72 +114,12 @@ const DetailDataRegistrasi = () => {
       setFetched(updatedFetched);
       fetchAdmissionRegistration();
     }
+    fetchAdmissionRegistration();
   }, []);
 
   const openPaymentProof = (url) => {
     AlertPaymentProof(url);
   };
-
-  // const ApproveEducationPayment = (id) => {
-  //   AlertStatusValidatePayment(AcceptStep, id);
-  // };
-
-  // const DenyEducationPayment = (id) => {
-  //   AlertStatusValidatePayment(DenyStep, id);
-  // };
-
-  // const uploadTestResult = () => {
-  //   const score = 100;
-  //   uploadHasilTest(score);
-  // };
-
-  // const AcceptStep = (step) => {
-  //   const status = "valid";
-  //   const note = "Bukti Tervalidasi";
-  //   if (step === "1") {
-  //     updateAdmissionSteps(
-  //       setSts,
-  //       fetchRegistrationPayment,
-  //       code,
-  //       step,
-  //       status,
-  //       note
-  //     );
-  //   } else if (step === "5") {
-  //     updateAdmissionSteps(
-  //       setSts,
-  //       fetchEducationPayment,
-  //       code,
-  //       step,
-  //       status,
-  //       note
-  //     );
-  //   }
-  // };
-
-  // const DenyStep = (step) => {
-  //   const status = "invalid";
-  //   const note = "Bukti Tidak Tervalidasi";
-  //   if (step === "1") {
-  //     updateAdmissionSteps(
-  //       setSts,
-  //       fetchRegistrationPayment,
-  //       code,
-  //       step,
-  //       status,
-  //       note
-  //     );
-  //   } else if (step === "5") {
-  //     updateAdmissionSteps(
-  //       setSts,
-  //       fetchEducationPayment,
-  //       code,
-  //       step,
-  //       status,
-  //       note
-  //     );
-  //   }
-  // };
 
   const navigateUbahStatus = () => {
     navigate("/admin/ubah-status-step", {
@@ -207,7 +152,6 @@ const DetailDataRegistrasi = () => {
     },
     {
       name: <div>Tanggal</div>,
-      //   selector: (data) => data.createdAt,
       cell: (data) => (
         <div>
           {fetched === "1"
@@ -235,7 +179,6 @@ const DetailDataRegistrasi = () => {
     },
     {
       name: <div>Nominal</div>,
-      // selector: (data) => data.admissionPhase.amount,
       cell: (data) => (
         <div>
           {fetched === "1"
@@ -256,16 +199,19 @@ const DetailDataRegistrasi = () => {
     },
     {
       name: <div>Status</div>,
-      // selector: (data) => data.status,
       cell: (data) => (
         <div>
           {fetched === "1"
             ? dataStep1.status === "valid"
-              ? "Valid"
-              : "In Review"
-            : fetched === "5" && dataStep5.status === "valid"
-            ? "Valid"
-            : "In Review"}
+              ? "Sesuai"
+              : dataStep1.status === "inreview"
+              ? "Sedang Di Tinjau"
+              : dataStep1.status === "invalid" && "Tidak Sesuai"
+            : dataStep5.status === "valid"
+            ? "Sesuai"
+            : dataStep5.status === "inreview"
+            ? "Sedang Di Tinjau"
+            : dataStep5.status === "invalid" && "Tidak Sesuai"}
         </div>
       ),
       width: "auto",
@@ -273,10 +219,7 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button
-          title="Detail Pembayaran"
-          onClick={() => navigateUbahStatus(data.regNumber)}
-        >
+        <button title="Edit" onClick={() => navigateUbahStatus(data.regNumber)}>
           <i style={{ fontSize: "21px" }} className="fa fa-edit" />
         </button>
       ),
@@ -302,53 +245,111 @@ const DetailDataRegistrasi = () => {
     },
     {
       name: <div>Tanggal</div>,
-      //   selector: (data) => data.createdAt,
       cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
-      width: "auto",
+      width: "250px",
     },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => (
-        <div>{dataStep3?.status === "valid" ? "Valid" : "In Review"}</div>
+        <div>
+          {dataStep3.status === "valid"
+            ? "Sesuai"
+            : dataStep3.status === "inreview"
+            ? "Sedang Di Tinjau"
+            : dataStep3.status === "invalid" && "Tidak Sesuai"}
+        </div>
       ),
-      width: "auto",
+      width: "200px",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button
-          title="Detail Pembayaran"
-          onClick={() => navigateUbahStatus(data.regNumber)}
-        >
+        <button title="Edit" onClick={() => navigateUbahStatus(data.regNumber)}>
           <i style={{ fontSize: "21px" }} className="fa fa-edit" />
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "100px",
+      width: "350px",
     },
   ];
+
+  const ApproveRegistrasi = () => {
+    if (
+      (dataStep1?.status !== "valid" || dataStep2?.status !== "valid",
+      dataStep3?.status !== "valid",
+      dataStep5?.status !== "valid")
+    ) {
+      AlertMessage("Gagal", "Validasi Pendaftaran Belum Lengkap", "Tutup");
+    } else {
+      data.status === "valid"
+        ? AlertConfirmation(
+            onConfirm,
+            "Non-Aktifkan Pendaftar?",
+            "Non-Aktifkan"
+          )
+        : data.status === "inreview" &&
+          AlertConfirmation(onConfirm, "Aktifkan Pendaftar?", "Aktifkan");
+    }
+  };
+
+  const onConfirm = () => {
+    const status =
+      data.status === "valid"
+        ? "inreview"
+        : data.status === "inreview" && "valid";
+    approvedRegistration(code, status, fetchAdmissionRegistration);
+  };
 
   return (
     <>
       <Header
         home="Admin PMB"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Data Registrasi"
+        navePrev={path}
         at={code}
-        title={code}
+        title={data.childName + " - " + code}
       />
 
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "20px" }}>
+        <div style={{ display: "inline-block", float: "left" }}>
+          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+            <h4 className="text-hitam">Status Pendfatar :</h4>
+            {data.status === "valid" ? (
+              <h4 className="text-hijau">Aktif</h4>
+            ) : (
+              data.status === "inreview" && (
+                <h4 className="text-merah">Tidak Aktif</h4>
+              )
+            )}
+          </div>
+        </div>
+
+        <div style={{ display: "inline-block", float: "right" }}>
+          <div style={{ display: "flex" }}>
+            <button
+              style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
+              className="btn-mrh"
+              onClick={() => ApproveRegistrasi()}
+            >
+              <i className="fa fa-cog" />
+              {data.status === "inreview"
+                ? " Aktifkan Pendaftar"
+                : data.status === "valid" && " Non-Aktifkan"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginTop: "70px" }}>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            gap: "50px",
             marginBottom: "20px",
             backgroundColor: "#F3F4F6",
-            justifyContent: "center",
+            justifyContent: "space-between",
             borderRadius: "6px",
           }}
         >
@@ -395,12 +396,20 @@ const DetailDataRegistrasi = () => {
               width: "200px",
               backgroundColor: fetched === "3" && "#8F0D1E",
               color:
-                dataStep2?.status === "valid"
-                  ? fetched === "3" && "white"
+                dataStep1?.status === "valid" && dataStep2?.status === "valid"
+                  ? dataStep3 !== null
+                    ? fetched === "3" && "white"
+                    : "grey"
                   : "grey",
             }}
             onClick={() => fetchTestResult()}
-            disabled={dataStep2?.status !== "valid" ? true : false}
+            disabled={
+              dataStep1?.status === "valid" && dataStep2?.status === "valid"
+                ? dataStep3 !== null
+                  ? false
+                  : true
+                : true
+            }
           >
             <i className="fa fa-pencil-square-o" /> Hasil Test
           </button>
@@ -411,12 +420,24 @@ const DetailDataRegistrasi = () => {
               width: "200px",
               backgroundColor: fetched === "5" && "#8F0D1E",
               color:
+                dataStep1?.status === "valid" &&
+                dataStep2?.status === "valid" &&
                 dataStep3?.status === "valid"
-                  ? fetched === "5" && "white"
+                  ? dataStep5 !== null
+                    ? fetched === "5" && "white"
+                    : "grey"
                   : "grey",
             }}
             onClick={() => fetchEducationPayment()}
-            disabled={dataStep5 !== null ? false : true}
+            disabled={
+              dataStep1?.status === "valid" &&
+              dataStep2?.status === "valid" &&
+              dataStep3?.status === "valid"
+                ? dataStep5 !== null
+                  ? false
+                  : true
+                : true
+            }
           >
             <i className="fa fa-bank" /> Uang Pendidikan
           </button>
@@ -504,10 +525,9 @@ const DetailDataRegistrasi = () => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                gap: "20px",
                 marginBottom: "20px",
                 backgroundColor: "#F3F4F6",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 borderRadius: "6px",
                 padding: "0",
               }}
@@ -569,18 +589,27 @@ const DetailDataRegistrasi = () => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                margin: "0px 95px 0px;",
+                margin: "0px 95px 0px",
                 backgroundColor: "#F3F4F6",
                 borderRadius: "8px",
                 padding: "28px",
-                boxShadow: "45px #000000",
+                boxShadow: "#000000",
               }}
             >
               <div>
-                <TextInput label="Status Tahapan" value={dataStep2?.status} />
+                <TextInput
+                  label="Status Tahapan"
+                  value={
+                    dataStep2?.status === "valid"
+                      ? "Sesuai"
+                      : dataStep2?.status === "inreview"
+                      ? "Sedang Di Tinjau"
+                      : dataStep2?.status === "invalid" && "Tidak Sesuai"
+                  }
+                  disable={true}
+                />
                 <button
                   onClick={() => navigateUbahStatus()}
-                  style={{ fontFamily: "roboto" }}
                   className="btn-pth"
                 >
                   Ubah
@@ -1255,7 +1284,7 @@ const DetailDataRegistrasi = () => {
       <div className="flex justify-start w-full">
         <Link
           to={path}
-          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
           <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
         </Link>

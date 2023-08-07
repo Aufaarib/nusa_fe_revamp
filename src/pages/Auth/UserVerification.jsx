@@ -13,7 +13,11 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import useAuth from "../../hooks/useAuth";
 
 import axios from "../../api/axios";
-import { revalidateEmail, validateEmail } from "../../api/Registrasi";
+import {
+  revalidateEmail,
+  validateEmail,
+  validateOTP,
+} from "../../api/Registrasi";
 import {
   AlertStatusVerified,
   AlertStatusVerifiedFailed,
@@ -77,17 +81,18 @@ const UserVerification = () => {
   const [countdownTime, setCountdownTime] = useState(Date.now() + 300000);
   const location = useLocation();
   const navigate = useNavigate();
+  const directTo = location.state.direct;
 
   // console.log("OTP === ", otp);
 
   const verifiedEmail = () => {
-    validateEmail(setSts, otp, navigates);
+    validateOTP(setSts, otp, navigates, directTo);
   };
 
   const navigates = () => {
-    if (location.state.direct === "Reset Password") {
+    if (directTo === "Reset Password") {
       navigate("/reset-pwd");
-    } else if (location.state.direct === "Login") {
+    } else if (directTo === "Login") {
       navigate("/login");
     }
   };
@@ -128,14 +133,9 @@ const UserVerification = () => {
 
   return (
     <>
-      <div className="justify-end min-h-screen lg:flex bg-krem">
+      <div className="justify-end min-h-screen lg:flex">
         <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
-          <div className="relative block w-full mt-6 text-center">
-            <img
-              className="m-auto mb-3 h-200 w-200 xs:hidden lg:block"
-              src={assalamualaikum}
-              alt="Assalamuálaikum"
-            />
+          <div className="relative block w-full text-center">
             <section
               style={{
                 display: "flex",
@@ -202,19 +202,23 @@ const UserVerification = () => {
             </section>
           </div>
         </section>
-        <section
-          className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2"
-          style={{ background: "#E6E6E6" }}
-        >
+        <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
           <img
-            className="m-7 lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
+            className="lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
             src={logoSaim}
             alt="SAIM"
           />
 
           <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2022. PT. Nafisha Universal Network
+            Copyright 2023 PT. Nafisha Universal Network
           </p>
+        </section>
+
+        <section
+          style={{ left: "678px" }}
+          className="top-0 flex items-center justify-center min-h-full lg:fixed"
+        >
+          <div style={{ borderRight: "1px solid #8F8F8F", height: "500px" }} />
         </section>
       </div>
     </>

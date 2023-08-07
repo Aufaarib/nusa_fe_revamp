@@ -9,17 +9,19 @@ const Header = ({ home, prev, at, navHome, navePrev, title, icon }) => (
           {home}
         </Typography>
         {prev && (
-          <Link fontSize="14px" underline="hover" color="gray" href={navePrev}>
-            {prev}
+          <Link underline="hover" href={navePrev}>
+            <Typography fontSize="14px" color="gray">
+              {prev}
+            </Typography>
           </Link>
         )}
         {at && (
-          <Typography fontSize="14px" color="red">
+          <Typography fontSize="14px" color="#8F0D1E">
             {at}
           </Typography>
         )}
       </Breadcrumbs>
-      <h1 className=" mt-3 xs:text-xl md:text-2xl lg:text-3xl placeholder:tracking-tight text-hitam ">
+      <h1 className="mt-3 xs:text-xl md:text-2xl lg:text-3xl placeholder:tracking-tight text-hitam ">
         <span className="xs:hidden md:inline-block">{icon}</span>
         {title}
       </h1>

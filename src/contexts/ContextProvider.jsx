@@ -554,6 +554,10 @@ export const ContextProvider = ({ children }) => {
       value={{
         dataAdmissionRegistration,
         admissionSteps1,
+        admissionSteps2,
+        admissionSteps3,
+        admissionSteps4,
+        admissionSteps5,
         dataIbu,
         setDataIbu,
         dataAyah,

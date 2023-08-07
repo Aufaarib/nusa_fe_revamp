@@ -22,7 +22,27 @@ export const DropdownKurikulum = ({
           </label>
         )}
         <span>:</span>
-        <div>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <div>
           <Select
             className="ml-20"
             isClearable={isClearable}
@@ -31,16 +51,7 @@ export const DropdownKurikulum = ({
             options={options}
             onChange={onChange}
           />
-          {/* <p>
-            <a
-              style={{ fontSize: "12px", borderBottom: "1px solid #8F0D1E" }}
-              className="block text-merah float-right"
-              onClick={handleOnClick}
-            >
-              Tambah Cost Center
-            </a>
-          </p> */}
-        </div>
+        </div> */}
       </form>
     </div>
   );
@@ -70,7 +81,28 @@ export const DropdownStatus = ({
           </label>
         )}
         <span>:</span>
-        <div>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <div>
           <Select
             className="ml-20"
             isSearchable={isSearchable}
@@ -80,7 +112,7 @@ export const DropdownStatus = ({
             options={options}
             onChange={onChange}
           />
-        </div>
+        </div> */}
       </form>
     </div>
   );
@@ -110,7 +142,28 @@ export const DropdownGroup = ({
           </label>
         )}
         <span>:</span>
-        <div>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <div>
           <Select
             className="ml-20"
             isSearchable={isSearchable}
@@ -120,7 +173,7 @@ export const DropdownGroup = ({
             options={options}
             onChange={onChange}
           />
-        </div>
+        </div> */}
       </form>
     </div>
   );
@@ -145,7 +198,36 @@ export const DropdownCostCenter = ({
           </label>
         )}
         <span>:</span>
-        <div>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+          <p>
+            <a
+              style={{ fontSize: "12px", borderBottom: "1px solid #8F0D1E" }}
+              className="block text-merah float-right"
+              onClick={handleOnClick}
+            >
+              Tambah Cost Center
+            </a>
+          </p>
+        </div>
+        {/* <div>
           <Select
             className="ml-20"
             isClearable={isClearable}
@@ -163,7 +245,7 @@ export const DropdownCostCenter = ({
               Tambah Cost Center
             </a>
           </p>
-        </div>
+        </div> */}
       </form>
     </div>
   );
@@ -192,14 +274,34 @@ export const DropdownSiswa = ({
           </label>
         )}
         <span>:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isClearable={isClearable}
           defaultValue={defaultValue}
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -228,7 +330,28 @@ export const DropdownJenisTransaksi = ({
           </label>
         )}
         <span>:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isSearchable={isSearchable}
           isClearable={isClearable}
@@ -236,7 +359,7 @@ export const DropdownJenisTransaksi = ({
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -270,7 +393,28 @@ export const DropdownDebitKredit = ({
           </label>
         )}
         <span className="mt-2">:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isSearchable={isSearchable}
           isClearable={isClearable}
@@ -278,7 +422,7 @@ export const DropdownDebitKredit = ({
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -307,7 +451,28 @@ export const DropdownBank = ({
           </label>
         )}
         <span>:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isSearchable={isSearchable}
           isClearable={isClearable}
@@ -316,7 +481,7 @@ export const DropdownBank = ({
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -344,7 +509,28 @@ export const DropdownPendaftaran = ({
           </label>
         )}
         <span>:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isSearchable={isSearchable}
           isClearable={isClearable}
@@ -352,7 +538,7 @@ export const DropdownPendaftaran = ({
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -372,9 +558,9 @@ export const DropdownValidasiStep = ({
   isClearable,
 }) => {
   const options = [
-    { value: "valid", label: "Valid" },
-    { value: "invalid", label: "In-Valid" },
-    { value: "inreview", label: "In-Review" },
+    { value: "valid", label: "Sesuai" },
+    { value: "invalid", label: "Tidak Sesuai" },
+    { value: "inreview", label: "Sedang Di Tinjau" },
   ];
 
   return (
@@ -386,15 +572,27 @@ export const DropdownValidasiStep = ({
           </label>
         )}
         <span>:</span>
-        <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        />
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
       </form>
     </div>
   );
@@ -427,7 +625,28 @@ export const DropdownTipeTransaksi = ({
           </label>
         )}
         <span>:</span>
-        <Select
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isSearchable={isSearchable}
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+        </div>
+        {/* <Select
           className="ml-20"
           isSearchable={isSearchable}
           isClearable={isClearable}
@@ -435,7 +654,7 @@ export const DropdownTipeTransaksi = ({
           placeholder="Pilih Salah Satu..."
           options={options}
           onChange={onChange}
-        />
+        /> */}
       </form>
     </div>
   );
@@ -463,7 +682,16 @@ export const DropdownListComponents = ({
           </label>
         )}
         <span>:</span>
-        <div className="ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            // border: "1px solid gray",
+          }}
+        >
           <DropDownListComponent
             placeholder={placeholder}
             id={id}
@@ -474,6 +702,17 @@ export const DropdownListComponents = ({
             // popupHeight="auto"
           />
         </div>
+        {/* <div className="ml-20">
+          <DropDownListComponent
+            placeholder={placeholder}
+            id={id}
+            dataSource={dataSource}
+            fields={fields}
+            value={value}
+            change={change}
+            // popupHeight="auto"
+          />
+        </div> */}
       </form>
     </div>
   );
@@ -482,7 +721,6 @@ export const DropdownListComponents = ({
 export const DropdownDatePickers = ({
   placeholder,
   label,
-  dataSource,
   id,
   name,
   value,
@@ -490,7 +728,6 @@ export const DropdownDatePickers = ({
   required,
   defaultValue,
   isClearable,
-  // placeholder,
 }) => {
   return (
     <div>
@@ -501,14 +738,34 @@ export const DropdownDatePickers = ({
           </label>
         )}
         <span>:</span>
-        <div className="ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
           <DatePickerComponent
             id={id}
             value={value}
             change={change}
             format="yyy-MM-dd"
+            placeholder="Pilih Tanggal (YYYY-MM-DD)"
           />
         </div>
+        {/* <div>
+          <DatePickerComponent
+            id={id}
+            value={value}
+            change={change}
+            format="yyy-MM-dd"
+            placeholder="Pilih Tanggal (YYYY-MM-DD)"
+          />
+        </div> */}
       </form>
     </div>
   );
@@ -539,7 +796,18 @@ export const DropdownRadioInputisOneHouse = ({
           </label>
         )}
         <span>:</span>
-        <div className="flex gap-5 w-full ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            gap: "20px",
+            // border: "1px solid gray",
+          }}
+        >
           <RadioInput
             value={value1}
             label={label2}
@@ -555,6 +823,22 @@ export const DropdownRadioInputisOneHouse = ({
             checked={checked}
           />
         </div>
+        {/* <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value={value1}
+            label={label2}
+            name="isOneHouse"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value={value2}
+            label={label3}
+            name="isOneHouse"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div> */}
       </form>
     </div>
   );
@@ -585,7 +869,18 @@ export const DropdownRadioInputBiological = ({
           </label>
         )}
         <span>:</span>
-        <div className="flex gap-5 w-full ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            gap: "20px",
+            // border: "1px solid gray",
+          }}
+        >
           <RadioInput
             value={value1}
             label={label2}
@@ -601,6 +896,22 @@ export const DropdownRadioInputBiological = ({
             checked={checked}
           />
         </div>
+        {/* <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value={value1}
+            label={label2}
+            name="isBiological"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value={value2}
+            label={label3}
+            name="isBiological"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div> */}
       </form>
     </div>
   );
@@ -631,7 +942,17 @@ export const DropdownRadioInputGender = ({
           </label>
         )}
         <span>:</span>
-        <div className="flex gap-5 w-full ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            gap: "20px",
+            // border: "1px solid gray",
+          }}
+        >
           <RadioInput
             value={value1}
             label={label2}
@@ -647,6 +968,22 @@ export const DropdownRadioInputGender = ({
             checked={checked}
           />
         </div>
+        {/* <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value={value1}
+            label={label2}
+            name="gender"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value={value2}
+            label={label3}
+            name="gender"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div> */}
       </form>
     </div>
   );
@@ -674,7 +1011,17 @@ export const DropdownRadioInputBloodType = ({
           </label>
         )}
         <span>:</span>
-        <div className="flex gap-7 w-full ml-20">
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            gap: "20px",
+            // border: "1px solid gray",
+          }}
+        >
           <RadioInput
             value="A"
             label="A"
@@ -704,6 +1051,36 @@ export const DropdownRadioInputBloodType = ({
             checked={checked}
           />
         </div>
+        {/* <div className="flex gap-7 w-full ml-20">
+          <RadioInput
+            value="A"
+            label="A"
+            name="bloodType"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="AB"
+            label="AB"
+            name="bloodType"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="B"
+            label="B"
+            name="bloodType"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="O"
+            label="O"
+            name="bloodType"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div> */}
       </form>
     </div>
   );

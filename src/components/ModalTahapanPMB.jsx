@@ -18,6 +18,10 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
   const {
     dataAdmissionRegistration,
     admissionSteps1,
+    admissionSteps2,
+    admissionSteps3,
+    admissionSteps4,
+    admissionSteps5,
     isLoading,
     setIsLoading,
   } = useStateContext();
@@ -46,7 +50,10 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
       <AnimatePresence>
         {selected && (
-          <div className="fixed inset-0 top-0 left-0 z-50 flex overflow-y-scroll">
+          <div
+            style={{ top: "100px" }}
+            className="fixed inset-0 left-0 z-50 flex overflow-y-scroll"
+          >
             <motion.div
               layoutId={step}
               className={`relative xs:w-9/12 md:w-6/12 xl:w-5/12 2xl:w-4/12 overflow-hidden rounded-lg shadow-2xl cursor-default m-auto
@@ -152,94 +159,113 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                     </>
                   )}
 
-                  {status === "Gagal" && (
+                  {step == 1 && status !== "Belum Mulai" ? (
                     <>
-                      <div>
-                        <p>Tahap ini Gagal.</p>
-                      </div>
-                    </>
-                  )}
-
-                  {step == 1 && status !== "Belum Mulai" && (
-                    <>
-                      {status == "Dalam Proses" && (
-                        <>
-                          {admissionSteps1.status !== "inreview" ? (
-                            <>
-                              <p>
-                                Bagi para Ayah/Bunda yang sudah melakukan
-                                registrasi, maka tahapan selanjutnya adalah
-                                Ayah/Bunda bisa melakukan pembayaran pendaftaran
-                                dengan ketentuan sebagai berikut.
-                              </p>
-                              <br />
-                              <p>
-                                <strong>Informasi Akun:</strong>
-                              </p>
-                              <br />
-                              <p>
-                                Nama Lengkap : {""}
-                                <strong className="capitalize">{Nama}</strong>
-                                <br />
-                                <hr />
-                                Batas Akhir Pembayaran : {""}
-                                <strong>
-                                  {moment(
-                                    dataAdmissionRegistration.admissionPhase
-                                      .endDate
-                                  ).format("DD-MM-YYYY")}
-                                </strong>
-                                <hr />
-                                Total Tagihan : {""}
-                                <strong>
-                                  {new Intl.NumberFormat("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR",
-                                    minimumFractionDigits: 0,
-                                  }).format(
-                                    dataAdmissionRegistration.admissionPhase
-                                      .amount
-                                  )}
-                                </strong>
-                                <hr />
-                                <br />
-                              </p>
-                              Silahkan lakukan transfer sebesar{" "}
-                              <strong>Total Tagihan</strong> ke rekening berikut
-                              :
-                              <br />
-                              Bank DKI Syariah cabang Pondok Indah
-                              <br />
-                              Nomor Rekening :<strong> 71021590003</strong>
-                              <br />
-                              <br />
-                              Untuk informasi lebih lanjut dan konfirmasi
-                              setelah melakukan transfer, silahkan hubungi No
-                              Whatsapp
-                              <strong> 08129801108 </strong> (Ibu Hanny).
-                              <Link
-                                to={"/pmb/berkas-pembayaran"}
-                                className="mt-7 btn-merah"
-                              >
-                                Upload Bukti Pembayaran Registrasi
-                              </Link>
-                            </>
-                          ) : (
-                            <>
-                              <p>
-                                Bukti Pembayaran Telah Berhasil Terkirim, dan
-                                sedang proses pengecekan oleh admin
-                              </p>
-                            </>
+                      <p>
+                        Bagi para Ayah/Bunda yang sudah melakukan registrasi,
+                        maka tahapan selanjutnya adalah Ayah/Bunda bisa
+                        melakukan pembayaran pendaftaran dengan ketentuan
+                        sebagai berikut.
+                      </p>
+                      <br />
+                      <p>
+                        <strong>Informasi Akun:</strong>
+                      </p>
+                      <br />
+                      <p>
+                        Nama Lengkap : {""}
+                        <strong className="capitalize">{Nama}</strong>
+                        <br />
+                        <hr />
+                        Batas Akhir Pembayaran : {""}
+                        <strong>
+                          {moment(
+                            dataAdmissionRegistration.admissionPhase.endDate
+                          ).format("DD-MM-YYYY")}
+                        </strong>
+                        <hr />
+                        Total Tagihan : {""}
+                        <strong>
+                          {new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            minimumFractionDigits: 0,
+                          }).format(
+                            dataAdmissionRegistration.admissionPhase.amount
                           )}
+                        </strong>
+                        <hr />
+                        <br />
+                        <p>
+                          Catatan :{" "}
+                          <strong className="capitalize">
+                            {admissionSteps1.note}
+                          </strong>
+                        </p>
+                        <br />
+                      </p>
+                      Silahkan lakukan transfer sebesar{" "}
+                      <strong>Total Tagihan</strong> ke rekening berikut :
+                      <br />
+                      Bank DKI Syariah cabang Pondok Indah
+                      <br />
+                      Nomor Rekening :<strong> 71021590003</strong>
+                      <br />
+                      <br />
+                      Untuk informasi lebih lanjut dan konfirmasi setelah
+                      melakukan transfer, silahkan hubungi No Whatsapp
+                      <strong> 08129801108 </strong> (Ibu Hanny).
+                      <Link
+                        to={"/pmb/berkas-pembayaran"}
+                        className="mt-7 btn-merah"
+                      >
+                        Upload Bukti Pembayaran Registrasi
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      {step == 1 && status === "Dalam Proses" && (
+                        <>
+                          <p>
+                            Bukti Pembayaran Telah Berhasil Terkirim, dan sedang
+                            proses pengecekan oleh admin
+                          </p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps1.note}
+                            </strong>
+                          </p>
                         </>
                       )}
-                      {status == "Berhasil" && (
+                      {step == 1 && status === "Berhasil" && (
                         <>
                           <p>
                             Alhamdulillah, Pembayaran sudah selesai. silahkan
                             lanjut ke tahap berikutnya
                           </p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps1.note}
+                            </strong>
+                          </p>
+                        </>
+                      )}
+                      {step == 1 && status === "Gagal" && (
+                        <>
+                          <div>
+                            <p>Tahap ini Gagal.</p>
+                            <br />
+                            <p>
+                              Catatan :{" "}
+                              <strong className="capitalize">
+                                {admissionSteps1.note}
+                              </strong>
+                            </p>
+                          </div>
                         </>
                       )}
                     </>
@@ -248,21 +274,17 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                   {/* pengisian formulir */}
                   {step == 2 && status !== "Belum Mulai" && (
                     <>
-                      {status == "Berhasil" && (
-                        <div>
-                          <p>
-                            Alhamdulillah pengisian formulir data Calon Siswa
-                            dan Keluarga telah berhasil.
-                          </p>
-                          <br />
-                          <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
-                        </div>
-                      )}
-                      {status !== "Berhasil" && (
+                      {status === "Dalam Proses" && (
                         <div>
                           <p>Pengisian Form Belum Lengkap</p>
-                          <br />
                           <p>Silahkan Lengkapi Pengisian Form.</p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps2.note}
+                            </strong>
+                          </p>
                           <br />
                           <button
                             className="btn-mrh"
@@ -272,6 +294,37 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           </button>
                         </div>
                       )}
+                      {status == "Berhasil" && (
+                        <div>
+                          <p>
+                            Alhamdulillah pengisian formulir data Calon Siswa
+                            dan Keluarga telah berhasil.
+                          </p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps2.note}
+                            </strong>
+                          </p>
+                          <br />
+                          <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
+                        </div>
+                      )}
+                      {status === "Gagal" && (
+                        <>
+                          <div>
+                            <p>Tahap ini Gagal.</p>
+                            <br />
+                            <p>
+                              Catatan :{" "}
+                              <strong className="capitalize">
+                                {admissionSteps2.note}
+                              </strong>
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </>
                   )}
 
@@ -280,6 +333,13 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                       {status === "Dalam Proses" && (
                         <div>
                           <p>Rangkaian Test Sedang Berlangsung</p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps3.note}
+                            </strong>
+                          </p>
                         </div>
                       )}
                       {status === "Berhasil" && (
@@ -302,8 +362,29 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             </strong>
                           </p>
                           <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps3.note}
+                            </strong>
+                          </p>
+                          <br />
                           <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
                         </div>
+                      )}
+                      {status === "Gagal" && (
+                        <>
+                          <div>
+                            <p>Tahap ini Gagal.</p>
+                            <br />
+                            <p>
+                              Catatan :{" "}
+                              <strong className="capitalize">
+                                {admissionSteps3.note}
+                              </strong>
+                            </p>
+                          </div>
+                        </>
                       )}
                     </>
                   )}
@@ -315,6 +396,12 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           <p>
                             Alhamdulillah, Ananda telah lulus test penerimaan
                             calon murid baru SAIM.
+                          </p>
+                          <br />
+                          <br />
+                          <br />
+                          <p>
+                            Catatan : <strong>{admissionSteps4.note}</strong>
                           </p>
                           <br />
                           <p>
@@ -335,6 +422,13 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             Proses Pendaftaran Ulang Telah Selesai, Silahkan
                             Lanjut Ke Tahap Berikutnya
                           </p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps4.note}
+                            </strong>
+                          </p>
                         </div>
                       )}
                     </>
@@ -344,84 +438,127 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                     <>
                       {status == "Dalam Proses" && (
                         <>
-                          <p>Ini merupakan notifikasi pembayaran otomatis</p>
-                          <br />
-                          <p>
-                            Assalamualaikum Warrahmatullahi Wabarakatuh
-                            Bismillahirrahmanirrahim Semoga Ayah/Bunda
-                            senantiasa dalam lindungan Allah SWT.
-                          </p>
-                          <br />
-                          <p>
-                            Kami dari bagian keuangan Sekolah Adab Insan Mulia,
-                            menyampaikan informasi kewajiban keuangan ananda
-                          </p>
-                          <br />
-                          <div className="font-bold flex gap-2">
-                            <p>Nama Siswa : </p>
-                            <p className="font-bold capitalize">
-                              {" "}
-                              {dataAdmissionRegistration.childName}
-                            </p>
-                          </div>
-                          <div className="font-bold flex gap-2">
-                            <p>Total Tagihan : </p>
-                            <p className="font-bold capitalize">
-                              {" "}
-                              {new Intl.NumberFormat("id-ID", {
-                                style: "currency",
-                                currency: "IDR",
-                                minimumFractionDigits: 0,
-                              }).format(
-                                dataAdmissionRegistration?.admissionPhase
-                                  .admission?.details[0]?.amount
-                              )}
-                            </p>
-                          </div>
-                          <br />
-                          <p>
-                            Mohon Ayah/Bunda dapat segera menyelesaikan
-                            kewajiban keuangannya. Semoga Allah SWT mudahkan dan
-                            lancarkan rezekinya.
-                          </p>
-                          <br />
-                          Pembayaran dapat dilakukan melalui Transfer ke :
-                          <br />
-                          <br />
-                          {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
-                          Bank DKI Syariah cabang Pondok Indah
-                          <br />
-                          Nomor Rekening : <strong> 71021590003 </strong>
-                          <br />
-                          Atas Nama :{" "}
-                          <strong> Yayasan Adab Insan Mulia </strong>
-                          <br />
-                          <br />
-                          Untuk informasi lebih lanjut, silahkan hubungi No
-                          Whatsapp
-                          <strong> 08129801108 </strong>
-                          (Ibu Hanny).
-                          <Link
-                            to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
-                            className="mt-7 btn-merah"
-                          >
-                            Upload Bukti Pembayaran Pendidikan
-                          </Link>
+                          {status !== "Dalam Proses" ? (
+                            <>
+                              <p>
+                                Assalamualaikum Warrahmatullahi Wabarakatuh
+                                Bismillahirrahmanirrahim Semoga Ayah/Bunda
+                                senantiasa dalam lindungan Allah SWT.
+                              </p>
+                              <br />
+                              <p>
+                                Kami dari bagian keuangan Sekolah Adab Insan
+                                Mulia, menyampaikan informasi kewajiban keuangan
+                                ananda
+                              </p>
+                              <br />
+                              <div className="font-bold flex gap-2">
+                                <p>Nama Siswa : </p>
+                                <p className="font-bold capitalize">
+                                  {" "}
+                                  {dataAdmissionRegistration.childName}
+                                </p>
+                              </div>
+                              <div className="font-bold flex gap-2">
+                                <p>Total Tagihan : </p>
+                                <p className="font-bold capitalize">
+                                  {" "}
+                                  {new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    minimumFractionDigits: 0,
+                                  }).format(
+                                    dataAdmissionRegistration?.admissionPhase
+                                      .admission?.details[0]?.amount
+                                  )}
+                                </p>
+                              </div>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps5.note}
+                                </strong>
+                              </p>
+                              <br />
+                              <p>
+                                Mohon Ayah/Bunda dapat segera menyelesaikan
+                                kewajiban keuangannya. Semoga Allah SWT mudahkan
+                                dan lancarkan rezekinya.
+                              </p>
+                              <br />
+                              Pembayaran dapat dilakukan melalui Transfer ke :
+                              <br />
+                              <br />
+                              {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                              Bank DKI Syariah cabang Pondok Indah
+                              <br />
+                              Nomor Rekening : <strong> 71021590003 </strong>
+                              <br />
+                              Atas Nama :{" "}
+                              <strong> Yayasan Adab Insan Mulia </strong>
+                              <br />
+                              <br />
+                              Untuk informasi lebih lanjut, silahkan hubungi No
+                              Whatsapp
+                              <strong> 08129801108 </strong>
+                              (Ibu Hanny).
+                              <Link
+                                to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
+                                className="mt-7 btn-merah"
+                              >
+                                Upload Bukti Pembayaran Pendidikan
+                              </Link>
+                            </>
+                          ) : (
+                            <>
+                              <p>
+                                Bukti Pembayaran Telah Berhasil Terkirim, dan
+                                sedang proses pengecekan oleh admin
+                              </p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps5.note}
+                                </strong>
+                              </p>
+                            </>
+                          )}
                         </>
                       )}
                       {status == "Berhasil" && (
                         <>
                           <p>
-                            Ayah/ Bunda, Alhamdulillah semua rangkaian
-                            administrasi proses pendaftaran murid baru sudah
-                            diselesaikan dengan sudah dilakukan pembayaran biaya
-                            pendidikannya.
+                            Alhamdulillah, semua rangkaian administrasi proses
+                            pendaftaran murid baru sudah selesai.
+                          </p>
+                          <br />
+                          <p>
+                            Catatan :{" "}
+                            <strong className="capitalize">
+                              {admissionSteps5.note}
+                            </strong>
                           </p>
                           <br />
                           <p>
                             Untuk informasi selanjutnya ayah/bunda akan kami
                             informasikan kembali.
                           </p>
+                        </>
+                      )}
+                      {status === "Gagal" && (
+                        <>
+                          <div>
+                            <p>Tahap ini Gagal.</p>
+                            <br />
+                            <p>
+                              Catatan :{" "}
+                              <strong className="capitalize">
+                                {admissionSteps5.note}
+                              </strong>
+                            </p>
+                          </div>
                         </>
                       )}
                     </>
