@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBank } from "../../api/Bank";
+import { getAdmission } from "../../api/SetupPmb";
 import { Header } from "../../components";
 import { DataTablesPMB } from "../../components/DataTables";
-import { getAdmission, updateStatusAdmission } from "../../api/SetupPmb";
-import { AlertUbahStatus } from "../../components/ModalPopUp";
 
 const SetupPMB = () => {
   const [data, setData] = useState([]);
@@ -36,7 +34,7 @@ const SetupPMB = () => {
       width: "55px",
     },
     {
-      name: <div>Code</div>,
+      name: <div>Kode</div>,
       selector: (data) => data.code,
       cell: (data) => <div>{data.code}</div>,
       width: "auto",
@@ -67,18 +65,19 @@ const SetupPMB = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          style={{
-            height: "25px",
-            width: "25px",
-            backgroundColor: "black",
-            borderRadius: "50%",
-            display: "inline-block",
-            color: "white",
-          }}
+          // style={{
+          //   height: "25px",
+          //   width: "25px",
+          //   backgroundColor: "black",
+          //   borderRadius: "50%",
+          //   display: "inline-block",
+          //   color: "white",
+          // }}
           title="Detail Pendaftaran"
+          className="btn-action-merah"
           onClick={() => navigateAdmissionDetails(data.code, data.status)}
         >
-          <i className="fa fa-info" />
+          <i className="fa fa-eye"> Detail Pendaftaran </i>
         </button>
       ),
       ignoreRowClick: true,

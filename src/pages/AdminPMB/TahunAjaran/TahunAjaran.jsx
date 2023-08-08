@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBank } from "../../../api/Bank";
+import { getTahunAjaran } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
-import { getAdmission } from "../../../api/SetupPmb";
-import { getTahunAjaran } from "../../../api/TahunAjaran";
 
 const TahunAjaran = () => {
   const [data, setData] = useState([]);
@@ -63,6 +61,7 @@ const TahunAjaran = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
+          className="btn-action-merah"
           title="Edit"
           onClick={() =>
             navigateUbahTahunAjaran(
@@ -74,7 +73,7 @@ const TahunAjaran = () => {
             )
           }
         >
-          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+          <i className="fa fa-edit"> Ubah </i>
         </button>
       ),
       ignoreRowClick: true,

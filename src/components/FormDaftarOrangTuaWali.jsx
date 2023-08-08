@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -5,25 +6,20 @@ import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import TextInput from "./TextInput";
-import moment from "moment/moment";
 
-import { dropdownData } from "../data/initData";
 import { useStateContext } from "../contexts/ContextProvider";
 
+import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
 import {
   DropdownDatePickers,
-  DropdownListComponents,
   DropdownRadioInputBiological,
   DropdownRadioInputGender,
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
-import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
 import {
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
 
 // const PARENTS_URL = "/api/pmb/parent";

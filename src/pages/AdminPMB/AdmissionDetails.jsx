@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getBank } from "../../api/Bank";
-import { Header } from "../../components";
-import {
-  DataTablesAdmissionDetail,
-  DataTablesPMB,
-} from "../../components/DataTables";
-import {
-  getAdmission,
-  getAdmissionDetails,
-  updateStatusAdmission,
-} from "../../api/SetupPmb";
-import { BsChevronBarLeft, BsChevronBarRight } from "react-icons/bs";
 import moment from "moment/moment";
+import { useEffect, useState } from "react";
+import { BsChevronBarLeft } from "react-icons/bs";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getAdmissionDetails, updateStatusAdmission } from "../../api/SetupPmb";
+import { Header } from "../../components";
+import { DataTablesAdmissionDetail } from "../../components/DataTables";
 import { AlertUbahStatus } from "../../components/ModalPopUp";
 
 const AdmissionDetails = () => {
@@ -90,6 +82,7 @@ const AdmissionDetails = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
+          className="btn-action-merah"
           title="Edit"
           onClick={() =>
             navigateUbahGelombang(
@@ -102,7 +95,7 @@ const AdmissionDetails = () => {
             )
           }
         >
-          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+          <i className="fa fa-edit"> Ubah </i>
         </button>
       ),
       ignoreRowClick: true,

@@ -1,18 +1,13 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { DropdownJenisTransaksi } from "../../../components/Dropdown";
-import { getSemester } from "../../../api/Semester";
-import { DropdownStatus } from "../../../components/Dropdown";
-import { postKurikulum } from "../../../api/Kurikulum";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
-import { Header } from "../../../components";
 import { postGuru } from "../../../api/Guru";
+import { Header } from "../../../components";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
+import {
+  DropdownDatePickers,
+  DropdownRadioInputGender,
+} from "../../../components/Dropdown";
 
 export default function TambahGuru() {
   const [fullname, setFullname] = useState("");
@@ -101,14 +96,6 @@ export default function TambahGuru() {
           Form Tambah Guru
         </p>
         <article>
-          {/* <TextInput
-            label="Code"
-            type="number"
-            id="group"
-            name="code"
-            onChange={(e) => setCode(e.target.value)}
-            required={true}
-          /> */}
           <TextInput
             label="Nama Lengkap"
             type="text"
@@ -117,14 +104,28 @@ export default function TambahGuru() {
             onChange={(e) => setFullname(e.target.value)}
             required={true}
           />
-          <TextInput
+          <br />
+          <DropdownRadioInputGender
+            required={true}
+            label="Jenis Kelamin"
+            value1="female"
+            value2="male"
+            label2="Perempuan"
+            label3="Laki-Laki"
+            onChange={(e) => setGender(e.target.value)}
+            // placeholder={admissionApplicantData.gender}
+            checked={gender}
+          />
+          <br />
+          {/* <TextInput
             label="Jenis Kelamin"
             type="text"
             id="group"
             name="code"
             onChange={(e) => setGender(e.target.value)}
             required={true}
-          />
+          /> */}
+
           <TextInput
             label="Religion"
             type="text"
@@ -133,38 +134,30 @@ export default function TambahGuru() {
             onChange={(e) => setReligion(e.target.value)}
             required={true}
           />
+
           <TextInput
             label="Tempat Lahir"
             type="text"
             id="group"
             name="code"
-            onChange={(e) => setBirthPlace(e.target.value)}
+            onChange={(e) => setBirthPlace(e.element.value)}
             required={true}
           />
-          <TextInput
+
+          <DropdownDatePickers
+            label="Tanggal Lahir"
+            id="birthDate"
+            // value={parent.birthDate}
+            change={(e) => setBirthDate(e.element.value)}
+          />
+
+          {/* <TextInput
             label="Tanggal Lahir"
             type="text"
             id="group"
             name="code"
             onChange={(e) => setBirthDate(e.target.value)}
             required={true}
-          />
-          {/* <DropdownStatus
-            label="Status"
-            required={true}
-            isClearable={true}
-            defaultValue={statusVal}
-            isSearchable={false}
-            onChange={setStatus}
-          /> */}
-          {/* <DropdownJenisTransaksi
-            label="Semester"
-            required={true}
-            defaultValue={semester}
-            isClearable={false}
-            options={SemesterOptions}
-            isSearchable={false}
-            onChange={(e) => setSemester(e.value)}
           /> */}
 
           <div className="btn-form">
@@ -183,17 +176,6 @@ export default function TambahGuru() {
               Batal
             </button>
           </div>
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateKurikulum}
-          />
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

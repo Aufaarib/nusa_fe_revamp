@@ -58,10 +58,9 @@ export function FilterComponent({
             value={valueRows}
             onChange={onChangeRows}
           >
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
             <option value="20">Tampilkan 20</option>
+            <option value="50">Tampilkan 50</option>
+            <option value="100">Tampilkan 100</option>
             <option value="all">Tampilkan Semua</option>
           </select>
         ) : (
@@ -132,10 +131,9 @@ export function FilterComponentSaring({
             value={valueRows}
             onChange={onChangeRows}
           >
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
             <option value="20">Tampilkan 20</option>
+            <option value="50">Tampilkan 50</option>
+            <option value="100">Tampilkan 100</option>
             <option value="all">Tampilkan Semua</option>
           </select>
         ) : (
@@ -290,10 +288,9 @@ export function FilterComponentActivateAdmission({
             value={valueRows}
             onChange={onChangeRows}
           >
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
             <option value="20">Tampilkan 20</option>
+            <option value="50">Tampilkan 50</option>
+            <option value="100">Tampilkan 100</option>
             <option value="all">Tampilkan Semua</option>
           </select>
         ) : (
@@ -338,11 +335,11 @@ export function FilterComponentActivateAdmission({
 export function FilterComponentWithoutButton({
   filterText,
   onFilter,
-  onClick,
   data = [],
   onChangeRows,
   valueRows,
   button,
+  dataLength,
 }) {
   return (
     <>
@@ -374,10 +371,9 @@ export function FilterComponentWithoutButton({
             value={valueRows}
             onChange={onChangeRows}
           >
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
             <option value="20">Tampilkan 20</option>
+            <option value="50">Tampilkan 50</option>
+            <option value="100">Tampilkan 100</option>
             <option value="all">Tampilkan Semua</option>
           </select>
         ) : (
@@ -395,6 +391,21 @@ export function FilterComponentWithoutButton({
             <option value="null">Data Tidak Tersedia</option>
           </select>
         )}
+        <div style={{ display: "inline-block", float: "right" }}>
+          {/* <div style={{ display: "flex", gap: "5px" }}> */}
+          <label
+            style={{
+              fontSize: "14px",
+              backgroundColor: "transparent",
+              color: "black",
+              border: "1px solid #8F0D1E",
+            }}
+            className="btn-mrh"
+          >
+            Total {dataLength} Data
+          </label>
+          {/* </div> */}
+        </div>
       </div>
     </>
   );
@@ -403,7 +414,7 @@ export function FilterComponentWithoutButton({
 export function DataTablesAdmissionDetail({
   columns,
   status,
-  data = [],
+  data,
   defaultSortFieldId,
   filterText,
   onFilter,
@@ -513,8 +524,14 @@ export function DataTablesAdmissionDetail({
         // }
         `;
 
+  const descSort = data.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
+  console.log("KOLLAAOOOO === ", descSort);
+
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -793,8 +810,14 @@ export function DataTablesPMBWithoutButton({
         // }
         `;
 
+  const descSort = data.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
+  console.log("KOLLAAOOOO === ", descSort);
+
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -816,6 +839,8 @@ export function DataTablesPMBWithoutButton({
     pageCount = Math.ceil(data.length / itemsPerPage);
   }
 
+  console.log("BIAR === ", data.length);
+
   return (
     <>
       <FilterComponentWithoutButton
@@ -824,6 +849,7 @@ export function DataTablesPMBWithoutButton({
         valueRows={itemsPerPage}
         filterText={filterText}
         onFilter={onFilter}
+        dataLength={data.length}
       />
       {data ? (
         <div>
@@ -979,8 +1005,14 @@ export function DataTablesPMB({
         // }
         `;
 
+  const descSort = data.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
+  console.log("KOLLAAOOOO === ", descSort);
+
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -1168,7 +1200,7 @@ export function DataTables({
         `;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -1354,7 +1386,7 @@ export function DataTablesSaring({
         `;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);

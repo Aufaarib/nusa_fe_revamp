@@ -10,10 +10,13 @@ import axios from "./axios";
 
 export function getKelas(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_NUSA + "/class/fetch")
+    .get(process.env.REACT_APP_BASE_URL + "/classes")
     .then((res) => {
-      setData(res.data.data);
-      setSts({ type: "success" });
+      for (const i of res.data.body) {
+        setData(i);
+        console.log(i);
+        setSts({ type: "success" });
+      }
     })
     .catch((error) => {
       setSts({ type: "error", error });

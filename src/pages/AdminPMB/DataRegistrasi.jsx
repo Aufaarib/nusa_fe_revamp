@@ -6,9 +6,16 @@ import { DataTablesPMBWithoutButton } from "../../components/DataTables";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
+
+  // const filteredReg = data.filter((data) => data.regNumber === "REG00001");
+  // setFilteredData(filteredReg);
+
+  // console.log("DATA === ", data.id);
+
   let filteredItems = data;
 
   if (data !== null) {
@@ -53,7 +60,23 @@ const DataRegistrasi = () => {
       width: "auto",
     },
     {
-      name: <div>Status</div>,
+      name: <div>Status Pendaftaran</div>,
+      selector: (data) => data.status,
+      cell: (data) => (
+        <div
+          className={
+            data.status === "valid"
+              ? "capitalize text-hijau"
+              : "capitalize text-merah"
+          }
+        >
+          {data.status === "valid" ? "Terverifikasi" : "Belum Terverifikasi"}
+        </div>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Status Tahapan</div>,
       selector: (data) => data.status,
       cell: (data) => (
         <div
@@ -72,18 +95,19 @@ const DataRegistrasi = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          style={{
-            height: "25px",
-            width: "25px",
-            backgroundColor: "black",
-            borderRadius: "50%",
-            display: "inline-block",
-            color: "white",
-          }}
+          // style={{
+          //   height: "25px",
+          //   width: "25px",
+          //   backgroundColor: "black",
+          //   borderRadius: "50%",
+          //   display: "inline-block",
+          //   color: "white",
+          // }}
+          className="btn-action-merah"
           title="Detail Registrasi"
           onClick={() => navigateRegistrationDetails(data.regNumber)}
         >
-          <i className="fa fa-info" />
+          <i className="fa fa-eye"> Detail Registrasi </i>
         </button>
       ),
       ignoreRowClick: true,

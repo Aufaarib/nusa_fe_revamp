@@ -25,6 +25,10 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
     isLoading,
     setIsLoading,
   } = useStateContext();
+  const user = dataAdmissionRegistration.user;
+
+  console.log("FOR YOUU === ", user?.parents?.length);
+  console.log("FOR YOUURRRR === ", dataAdmissionRegistration.applicant);
 
   const navigate = useNavigate();
   const Nama = localStorage.getItem("NAMA");
@@ -109,7 +113,78 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                     {step == 5 && ". Pembayaran Biaya Pendidikan"}
                   </h5>
                   <p className="flex text-sm">
-                    {status}
+                    {status == "Belum Mulai" && "Belum Mulai"}
+                    {status == "Berhasil" && "Berhasil"}
+                    {status == "Gagal" && "Gagal"}
+                    {step == 1 && (
+                      <>
+                        {status == "Dalam Proses" && (
+                          <>
+                            {dataAdmissionRegistration.invoice === "" &&
+                              "Belum Melakukan Pembayaran"}
+                            {dataAdmissionRegistration.invoice !== "" &&
+                              "Proses Pengecekan Admin"}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {step == 2 && (
+                      <>
+                        {status == "Dalam Proses" && (
+                          <>
+                            {dataAdmissionRegistration.applicant === null &&
+                              ((user?.parents?.length !== 3 &&
+                                "Data Belum Lengkap") ||
+                                (dataAdmissionRegistration.statements ===
+                                  null &&
+                                  "Data Belum Lengkap") ||
+                                (dataAdmissionRegistration.additionalFiles ===
+                                  null &&
+                                  "Data Belum Lengkap"))}
+
+                            {dataAdmissionRegistration.applicant !== null &&
+                              ((user?.parents?.length === 3 &&
+                                "Proses Pengecekan Admin") ||
+                                (dataAdmissionRegistration.statements !==
+                                  null &&
+                                  "Proses Pengecekan Admin") ||
+                                (dataAdmissionRegistration.additionalFiles !==
+                                  null &&
+                                  "Proses Pengecekan Admin"))}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {step == 3 && (
+                      <>
+                        {status == "Dalam Proses" && (
+                          <>
+                            {dataAdmissionRegistration.testResult !== null &&
+                              "Proses Pengecekan Admin"}
+                            {dataAdmissionRegistration.testResult === null &&
+                              "Menunggu Hasil Tes"}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {step == 4 && (
+                      <>
+                        {status == "Dalam Proses" &&
+                          "Menunggu Persetujuan Orang Tua"}
+                      </>
+                    )}
+                    {step == 5 && (
+                      <>
+                        {status == "Dalam Proses" && (
+                          <>
+                            {dataAdmissionRegistration.payments?.length == 0 &&
+                              "Belum Melakukan Pembayaran"}
+                            {dataAdmissionRegistration.payments?.length != 0 &&
+                              "Proses Pengecekan Admin"}
+                          </>
+                        )}
+                      </>
+                    )}
                     {status == "Belum Mulai" && (
                       <FaRegPauseCircle className="ml-2 text-xl" />
                     )}
@@ -159,105 +234,44 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                     </>
                   )}
 
-                  {step == 1 && status !== "Belum Mulai" ? (
+                  {step == 1 && status != "Belum Mulai" && (
                     <>
-                      <p>
-                        Bagi para Ayah/Bunda yang sudah melakukan registrasi,
-                        maka tahapan selanjutnya adalah Ayah/Bunda bisa
-                        melakukan pembayaran pendaftaran dengan ketentuan
-                        sebagai berikut.
-                      </p>
-                      <br />
-                      <p>
-                        <strong>Informasi Akun:</strong>
-                      </p>
-                      <br />
-                      <p>
-                        Nama Lengkap : {""}
-                        <strong className="capitalize">{Nama}</strong>
-                        <br />
-                        <hr />
-                        Batas Akhir Pembayaran : {""}
-                        <strong>
-                          {moment(
-                            dataAdmissionRegistration.admissionPhase.endDate
-                          ).format("DD-MM-YYYY")}
-                        </strong>
-                        <hr />
-                        Total Tagihan : {""}
-                        <strong>
-                          {new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                            minimumFractionDigits: 0,
-                          }).format(
-                            dataAdmissionRegistration.admissionPhase.amount
-                          )}
-                        </strong>
-                        <hr />
-                        <br />
-                        <p>
-                          Catatan :{" "}
-                          <strong className="capitalize">
-                            {admissionSteps1.note}
-                          </strong>
-                        </p>
-                        <br />
-                      </p>
-                      Silahkan lakukan transfer sebesar{" "}
-                      <strong>Total Tagihan</strong> ke rekening berikut :
-                      <br />
-                      Bank DKI Syariah cabang Pondok Indah
-                      <br />
-                      Nomor Rekening :<strong> 71021590003</strong>
-                      <br />
-                      <br />
-                      Untuk informasi lebih lanjut dan konfirmasi setelah
-                      melakukan transfer, silahkan hubungi No Whatsapp
-                      <strong> 08129801108 </strong> (Ibu Hanny).
-                      <Link
-                        to={"/pmb/berkas-pembayaran"}
-                        className="mt-7 btn-merah"
-                      >
-                        Upload Bukti Pembayaran Registrasi
-                      </Link>
-                    </>
-                  ) : (
-                    <>
-                      {step == 1 && status === "Dalam Proses" && (
+                      {dataAdmissionRegistration.invoice === "" && (
                         <>
                           <p>
-                            Bukti Pembayaran Telah Berhasil Terkirim, dan sedang
-                            proses pengecekan oleh admin
+                            Bagi para Ayah/Bunda yang sudah melakukan
+                            registrasi, maka tahapan selanjutnya adalah
+                            Ayah/Bunda bisa melakukan pembayaran pendaftaran
+                            dengan ketentuan sebagai berikut.
                           </p>
                           <br />
                           <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps1.note}
-                            </strong>
-                          </p>
-                        </>
-                      )}
-                      {step == 1 && status === "Berhasil" && (
-                        <>
-                          <p>
-                            Alhamdulillah, Pembayaran sudah selesai. silahkan
-                            lanjut ke tahap berikutnya
+                            <strong>Informasi Akun:</strong>
                           </p>
                           <br />
                           <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps1.note}
+                            Nama Lengkap : {""}
+                            <strong className="capitalize">{Nama}</strong>
+                            <br />
+                            <hr />
+                            Batas Akhir Pembayaran : {""}
+                            <strong>
+                              {moment(
+                                dataAdmissionRegistration.admissionPhase.endDate
+                              ).format("DD-MM-YYYY")}
                             </strong>
-                          </p>
-                        </>
-                      )}
-                      {step == 1 && status === "Gagal" && (
-                        <>
-                          <div>
-                            <p>Tahap ini Gagal.</p>
+                            <hr />
+                            Total Tagihan : {""}
+                            <strong>
+                              {new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: 0,
+                              }).format(
+                                dataAdmissionRegistration.admissionPhase.amount
+                              )}
+                            </strong>
+                            <hr />
                             <br />
                             <p>
                               Catatan :{" "}
@@ -265,125 +279,384 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                                 {admissionSteps1.note}
                               </strong>
                             </p>
-                          </div>
+                            <br />
+                          </p>
+                          Silahkan lakukan transfer sebesar{" "}
+                          <strong>Total Tagihan</strong> ke rekening berikut :
+                          <br />
+                          Bank DKI Syariah cabang Pondok Indah
+                          <br />
+                          Nomor Rekening :<strong> 71021590003</strong>
+                          <br />
+                          <br />
+                          Untuk informasi lebih lanjut dan konfirmasi setelah
+                          melakukan transfer, silahkan hubungi No Whatsapp
+                          <strong> 08129801108 </strong> (Ibu Hanny).
+                          <Link
+                            to={"/pmb/berkas-pembayaran"}
+                            className="mt-7 btn-merah"
+                          >
+                            Upload Bukti Pembayaran Registrasi
+                          </Link>
+                        </>
+                      )}
+                      {dataAdmissionRegistration.invoice !== "" && (
+                        <>
+                          {status === "Dalam Proses" && (
+                            <>
+                              <p>
+                                Bukti Pembayaran Telah Berhasil Terkirim, dan
+                                sedang proses pengecekan oleh admin
+                              </p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps1.note}
+                                </strong>
+                              </p>
+                            </>
+                          )}
+                          {status === "Berhasil" && (
+                            <>
+                              <p>
+                                Alhamdulillah, Pembayaran sudah selesai.
+                                silahkan lanjut ke tahap berikutnya
+                              </p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps1.note}
+                                </strong>
+                              </p>
+                            </>
+                          )}
+                          {status === "Gagal" && (
+                            <>
+                              <div>
+                                <p>Tahap ini Gagal.</p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps1.note}
+                                  </strong>
+                                </p>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </>
                   )}
 
-                  {/* pengisian formulir */}
-                  {step == 2 && status !== "Belum Mulai" && (
+                  {step == 2 && status != "Belum Mulai" && (
                     <>
-                      {status === "Dalam Proses" && (
-                        <div>
-                          <p>Pengisian Form Belum Lengkap</p>
-                          <p>Silahkan Lengkapi Pengisian Form.</p>
-                          <br />
-                          <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps2.note}
-                            </strong>
-                          </p>
-                          <br />
-                          <button
-                            className="btn-mrh"
-                            onClick={() => navigateFormulir()}
-                          >
-                            Isi Formulir
-                          </button>
-                        </div>
-                      )}
-                      {status == "Berhasil" && (
-                        <div>
-                          <p>
-                            Alhamdulillah pengisian formulir data Calon Siswa
-                            dan Keluarga telah berhasil.
-                          </p>
-                          <br />
-                          <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps2.note}
-                            </strong>
-                          </p>
-                          <br />
-                          <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
-                        </div>
-                      )}
-                      {status === "Gagal" && (
-                        <>
-                          <div>
-                            <p>Tahap ini Gagal.</p>
-                            <br />
+                      {dataAdmissionRegistration.applicant === null &&
+                        ((user?.parents?.length !== 3 && (
+                          <>
+                            <p>Pengisian Form Belum Lengkap</p>
+                            <p>Silahkan Lengkapi Pengisian Form.</p>
+                            {/* <br />
                             <p>
                               Catatan :{" "}
                               <strong className="capitalize">
                                 {admissionSteps2.note}
                               </strong>
-                            </p>
-                          </div>
-                        </>
-                      )}
+                            </p> */}
+                            <br />
+                            <button
+                              className="btn-mrh"
+                              onClick={() => navigateFormulir()}
+                            >
+                              Isi Formulir
+                            </button>
+                          </>
+                        )) ||
+                          (dataAdmissionRegistration.statements === null && (
+                            <>
+                              <p>Pengisian Form Belum Lengkap</p>
+                              <p>Silahkan Lengkapi Pengisian Form.</p>
+                              {/* <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps2.note}
+                                </strong>
+                              </p> */}
+                              <br />
+                              <button
+                                className="btn-mrh"
+                                onClick={() => navigateFormulir()}
+                              >
+                                Isi Formulir
+                              </button>
+                            </>
+                          )) ||
+                          (dataAdmissionRegistration.additionalFiles ===
+                            null && (
+                            <>
+                              <p>Pengisian Form Belum Lengkap</p>
+                              <p>Silahkan Lengkapi Pengisian Form.</p>
+                              {/* <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps2.note}
+                                </strong>
+                              </p> */}
+                              <br />
+                              <button
+                                className="btn-mrh"
+                                onClick={() => navigateFormulir()}
+                              >
+                                Isi Formulir
+                              </button>
+                            </>
+                          )))}
+
+                      {dataAdmissionRegistration.applicant !== null &&
+                        ((user?.parents?.length === 3 && (
+                          <>
+                            {status == "Dalam Proses" && (
+                              <>
+                                <p>
+                                  Data Registrasi Telah Lengkap. Dan Sedang
+                                  Dalam Proses Pengecekan Oleh Admin
+                                </p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps1.note}
+                                  </strong>
+                                </p>
+                                <br />
+                                <button
+                                  className="btn-mrh"
+                                  onClick={() => navigateFormulir()}
+                                >
+                                  Ubah Formulir
+                                </button>
+                              </>
+                            )}
+                            {status == "Berhasil" && (
+                              <>
+                                <p>
+                                  Alhamdulillah pengisian formulir data Calon
+                                  Siswa dan Keluarga telah berhasil.
+                                </p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps2.note}
+                                  </strong>
+                                </p>
+                                <br />
+                                <p>
+                                  Silahkan melanjutkan ke tahapan berikutnya.
+                                </p>
+                              </>
+                            )}
+                            {status === "Gagal" && (
+                              <>
+                                <p>Tahap ini Gagal.</p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps2.note}
+                                  </strong>
+                                </p>
+                              </>
+                            )}
+                          </>
+                        )) ||
+                          (dataAdmissionRegistration.statements !== null && (
+                            <>
+                              {status == "Dalam Proses" && (
+                                <>
+                                  <p>
+                                    Data Registrasi Telah Lengkap. Dan Sedang
+                                    Dalam Proses Pengecekan Oleh Admin
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps1.note}
+                                    </strong>
+                                  </p>
+                                  <br />
+                                  <button
+                                    className="btn-mrh"
+                                    onClick={() => navigateFormulir()}
+                                  >
+                                    Ubah Formulir
+                                  </button>
+                                </>
+                              )}
+                              {status == "Berhasil" && (
+                                <>
+                                  <p>
+                                    Alhamdulillah pengisian formulir data Calon
+                                    Siswa dan Keluarga telah berhasil.
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps2.note}
+                                    </strong>
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Silahkan melanjutkan ke tahapan berikutnya.
+                                  </p>
+                                </>
+                              )}
+                              {status === "Gagal" && (
+                                <>
+                                  <p>Tahap ini Gagal.</p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps2.note}
+                                    </strong>
+                                  </p>
+                                </>
+                              )}
+                            </>
+                          )) ||
+                          (dataAdmissionRegistration.additionalFiles !==
+                            null && (
+                            <>
+                              {status == "Dalam Proses" && (
+                                <>
+                                  <p>
+                                    Data Registrasi Telah Lengkap. Dan Sedang
+                                    Dalam Proses Pengecekan Oleh Admin
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps1.note}
+                                    </strong>
+                                  </p>
+                                  <br />
+                                  <button
+                                    className="btn-mrh"
+                                    onClick={() => navigateFormulir()}
+                                  >
+                                    Ubah Formulir
+                                  </button>
+                                </>
+                              )}
+                              {status == "Berhasil" && (
+                                <>
+                                  <p>
+                                    Alhamdulillah pengisian formulir data Calon
+                                    Siswa dan Keluarga telah berhasil.
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps2.note}
+                                    </strong>
+                                  </p>
+                                  <br />
+                                  <p>
+                                    Silahkan melanjutkan ke tahapan berikutnya.
+                                  </p>
+                                </>
+                              )}
+                              {status === "Gagal" && (
+                                <>
+                                  <p>Tahap ini Gagal.</p>
+                                  <br />
+                                  <p>
+                                    Catatan :{" "}
+                                    <strong className="capitalize">
+                                      {admissionSteps2.note}
+                                    </strong>
+                                  </p>
+                                </>
+                              )}
+                            </>
+                          )))}
                     </>
                   )}
 
                   {step == 3 && status !== "Belum Mulai" && (
                     <>
-                      {status === "Dalam Proses" && (
-                        <div>
-                          <p>Rangkaian Test Sedang Berlangsung</p>
-                          <br />
-                          <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps3.note}
-                            </strong>
-                          </p>
-                        </div>
-                      )}
-                      {status === "Berhasil" && (
-                        <div>
-                          <p>
-                            Alhamdulillah Putra/ Putri Ayah/ Bunda telah
-                            melakukan rangkai tes dengan hasil sbb:
-                          </p>
-                          <br />
-                          <p>
-                            Nama Anak :{" "}
-                            <strong>
-                              {dataAdmissionRegistration.childName}
-                            </strong>
-                          </p>
-                          <p>
-                            Nilai Tes :{" "}
-                            <strong>
-                              {dataAdmissionRegistration.testResult.score}
-                            </strong>
-                          </p>
-                          <br />
-                          <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps3.note}
-                            </strong>
-                          </p>
-                          <br />
-                          <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
-                        </div>
-                      )}
-                      {status === "Gagal" && (
+                      {dataAdmissionRegistration.testResult === null && (
                         <>
-                          <div>
-                            <p>Tahap ini Gagal.</p>
-                            <br />
-                            <p>
-                              Catatan :{" "}
-                              <strong className="capitalize">
-                                {admissionSteps3.note}
-                              </strong>
-                            </p>
-                          </div>
+                          <p>Rangkaian Test Sedang Berlangsung</p>
+                        </>
+                      )}
+                      {dataAdmissionRegistration.testResult !== null && (
+                        <>
+                          {status === "Dalam Proses" && (
+                            <>
+                              <p>Rangkaian Test Sedang Berlangsung</p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps3.note}
+                                </strong>
+                              </p>
+                            </>
+                          )}
+                          {status === "Berhasil" && (
+                            <div>
+                              <p>
+                                Alhamdulillah Putra/ Putri Ayah/ Bunda telah
+                                melakukan rangkai tes dengan hasil sbb:
+                              </p>
+                              <br />
+                              <p>
+                                Nama Anak :{" "}
+                                <strong>
+                                  {dataAdmissionRegistration.childName}
+                                </strong>
+                              </p>
+                              <p>
+                                Nilai Tes :{" "}
+                                <strong>
+                                  {dataAdmissionRegistration.testResult.score}
+                                </strong>
+                              </p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps3.note}
+                                </strong>
+                              </p>
+                              <br />
+                              <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
+                            </div>
+                          )}
+                          {status === "Gagal" && (
+                            <>
+                              <div>
+                                <p>Tahap ini Gagal.</p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps3.note}
+                                  </strong>
+                                </p>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </>
@@ -397,17 +670,16 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             Alhamdulillah, Ananda telah lulus test penerimaan
                             calon murid baru SAIM.
                           </p>
-                          <br />
-                          <br />
-                          <br />
+                          {/* <br />
                           <p>
                             Catatan : <strong>{admissionSteps4.note}</strong>
-                          </p>
+                          </p> */}
                           <br />
                           <p>
-                            Untuk proses selanjutnya, klik link persetujuan
+                            Untuk proses selanjutnya, tombol persetujuan
                             berikut:
                           </p>
+                          <br />
                           <Link
                             onClick={daftarUlangAgreement}
                             className="mt-3 btn-merah"
@@ -436,81 +708,74 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
                   {step == 5 && status !== "Belum Mulai" && (
                     <>
-                      {status == "Dalam Proses" && (
+                      {dataAdmissionRegistration.payments?.length == 0 && (
                         <>
-                          {status !== "Dalam Proses" ? (
-                            <>
-                              <p>
-                                Assalamualaikum Warrahmatullahi Wabarakatuh
-                                Bismillahirrahmanirrahim Semoga Ayah/Bunda
-                                senantiasa dalam lindungan Allah SWT.
-                              </p>
-                              <br />
-                              <p>
-                                Kami dari bagian keuangan Sekolah Adab Insan
-                                Mulia, menyampaikan informasi kewajiban keuangan
-                                ananda
-                              </p>
-                              <br />
-                              <div className="font-bold flex gap-2">
-                                <p>Nama Siswa : </p>
-                                <p className="font-bold capitalize">
-                                  {" "}
-                                  {dataAdmissionRegistration.childName}
-                                </p>
-                              </div>
-                              <div className="font-bold flex gap-2">
-                                <p>Total Tagihan : </p>
-                                <p className="font-bold capitalize">
-                                  {" "}
-                                  {new Intl.NumberFormat("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR",
-                                    minimumFractionDigits: 0,
-                                  }).format(
-                                    dataAdmissionRegistration?.admissionPhase
-                                      .admission?.details[0]?.amount
-                                  )}
-                                </p>
-                              </div>
-                              <br />
-                              <p>
-                                Catatan :{" "}
-                                <strong className="capitalize">
-                                  {admissionSteps5.note}
-                                </strong>
-                              </p>
-                              <br />
-                              <p>
-                                Mohon Ayah/Bunda dapat segera menyelesaikan
-                                kewajiban keuangannya. Semoga Allah SWT mudahkan
-                                dan lancarkan rezekinya.
-                              </p>
-                              <br />
-                              Pembayaran dapat dilakukan melalui Transfer ke :
-                              <br />
-                              <br />
-                              {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
-                              Bank DKI Syariah cabang Pondok Indah
-                              <br />
-                              Nomor Rekening : <strong> 71021590003 </strong>
-                              <br />
-                              Atas Nama :{" "}
-                              <strong> Yayasan Adab Insan Mulia </strong>
-                              <br />
-                              <br />
-                              Untuk informasi lebih lanjut, silahkan hubungi No
-                              Whatsapp
-                              <strong> 08129801108 </strong>
-                              (Ibu Hanny).
-                              <Link
-                                to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
-                                className="mt-7 btn-merah"
-                              >
-                                Upload Bukti Pembayaran Pendidikan
-                              </Link>
-                            </>
-                          ) : (
+                          <p>
+                            Assalamualaikum Warrahmatullahi Wabarakatuh
+                            Bismillahirrahmanirrahim Semoga Ayah/Bunda
+                            senantiasa dalam lindungan Allah SWT.
+                          </p>
+                          <br />
+                          <p>
+                            Kami dari bagian keuangan Sekolah Adab Insan Mulia,
+                            menyampaikan informasi kewajiban keuangan ananda
+                          </p>
+                          <br />
+                          <div className="font-bold flex gap-2">
+                            <p>Nama Siswa : </p>
+                            <p className="font-bold capitalize">
+                              {" "}
+                              {dataAdmissionRegistration.childName}
+                            </p>
+                          </div>
+                          <div className="font-bold flex gap-2">
+                            <p>Total Tagihan : </p>
+                            <p className="font-bold capitalize">
+                              {" "}
+                              {new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: 0,
+                              }).format(
+                                dataAdmissionRegistration?.admissionPhase
+                                  .admission?.details[0]?.amount
+                              )}
+                            </p>
+                          </div>
+                          <br />
+                          <p>
+                            Mohon Ayah/Bunda dapat segera menyelesaikan
+                            kewajiban keuangannya. Semoga Allah SWT mudahkan dan
+                            lancarkan rezekinya.
+                          </p>
+                          <br />
+                          Pembayaran dapat dilakukan melalui Transfer ke :
+                          <br />
+                          <br />
+                          {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                          Bank DKI Syariah cabang Pondok Indah
+                          <br />
+                          Nomor Rekening : <strong> 71021590003 </strong>
+                          <br />
+                          Atas Nama :{" "}
+                          <strong> Yayasan Adab Insan Mulia </strong>
+                          <br />
+                          <br />
+                          Untuk informasi lebih lanjut, silahkan hubungi No
+                          Whatsapp
+                          <strong> 08129801108 </strong>
+                          (Ibu Hanny).
+                          <Link
+                            to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
+                            className="mt-7 btn-merah"
+                          >
+                            Upload Bukti Pembayaran Pendidikan
+                          </Link>
+                        </>
+                      )}
+                      {dataAdmissionRegistration.payments?.length != 0 && (
+                        <>
+                          {status === "Dalam Proses" && (
                             <>
                               <p>
                                 Bukti Pembayaran Telah Berhasil Terkirim, dan
@@ -525,44 +790,46 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                               </p>
                             </>
                           )}
-                        </>
-                      )}
-                      {status == "Berhasil" && (
-                        <>
-                          <p>
-                            Alhamdulillah, semua rangkaian administrasi proses
-                            pendaftaran murid baru sudah selesai.
-                          </p>
-                          <br />
-                          <p>
-                            Catatan :{" "}
-                            <strong className="capitalize">
-                              {admissionSteps5.note}
-                            </strong>
-                          </p>
-                          <br />
-                          <p>
-                            Untuk informasi selanjutnya ayah/bunda akan kami
-                            informasikan kembali.
-                          </p>
-                        </>
-                      )}
-                      {status === "Gagal" && (
-                        <>
-                          <div>
-                            <p>Tahap ini Gagal.</p>
-                            <br />
-                            <p>
-                              Catatan :{" "}
-                              <strong className="capitalize">
-                                {admissionSteps5.note}
-                              </strong>
-                            </p>
-                          </div>
+                          {status == "Berhasil" && (
+                            <>
+                              <p>
+                                Alhamdulillah, semua rangkaian administrasi
+                                proses pendaftaran murid baru sudah selesai.
+                              </p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps5.note}
+                                </strong>
+                              </p>
+                              <br />
+                              <p>
+                                Untuk informasi selanjutnya ayah/bunda akan kami
+                                informasikan kembali.
+                              </p>
+                            </>
+                          )}
+                          {status === "Gagal" && (
+                            <>
+                              <div>
+                                <p>Tahap ini Gagal.</p>
+                                <br />
+                                <p>
+                                  Catatan :{" "}
+                                  <strong className="capitalize">
+                                    {admissionSteps5.note}
+                                  </strong>
+                                </p>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </>
                   )}
+
+                  {/* {step == 5 && admissionSteps5.status !== undefined && <></>} */}
 
                   <br />
                   <br />

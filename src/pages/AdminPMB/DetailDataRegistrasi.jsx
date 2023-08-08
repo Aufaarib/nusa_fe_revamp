@@ -203,15 +203,15 @@ const DetailDataRegistrasi = () => {
         <div>
           {fetched === "1"
             ? dataStep1.status === "valid"
-              ? "Sesuai"
+              ? "Terverifikasi"
               : dataStep1.status === "inreview"
               ? "Sedang Di Tinjau"
-              : dataStep1.status === "invalid" && "Tidak Sesuai"
+              : dataStep1.status === "invalid" && "Tidak Terverifikasi"
             : dataStep5.status === "valid"
-            ? "Sesuai"
+            ? "Terverifikasi"
             : dataStep5.status === "inreview"
             ? "Sedang Di Tinjau"
-            : dataStep5.status === "invalid" && "Tidak Sesuai"}
+            : dataStep5.status === "invalid" && "Tidak Terverifikasi"}
         </div>
       ),
       width: "auto",
@@ -219,8 +219,12 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button title="Edit" onClick={() => navigateUbahStatus(data.regNumber)}>
-          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        <button
+          className="btn-action-merah"
+          title="Edit"
+          onClick={() => navigateUbahStatus(data.regNumber)}
+        >
+          <i className="fa fa-edit"> Ubah </i>
         </button>
       ),
       ignoreRowClick: true,
@@ -254,10 +258,10 @@ const DetailDataRegistrasi = () => {
       cell: (data) => (
         <div>
           {dataStep3.status === "valid"
-            ? "Sesuai"
+            ? "Terverifikasi"
             : dataStep3.status === "inreview"
             ? "Sedang Di Tinjau"
-            : dataStep3.status === "invalid" && "Tidak Sesuai"}
+            : dataStep3.status === "invalid" && "Tidak Terverifikasi"}
         </div>
       ),
       width: "200px",
@@ -265,8 +269,12 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button title="Edit" onClick={() => navigateUbahStatus(data.regNumber)}>
-          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        <button
+          className="btn-action-merah"
+          title="Edit"
+          onClick={() => navigateUbahStatus(data.regNumber)}
+        >
+          <i className="fa fa-edit"> Ubah </i>
         </button>
       ),
       ignoreRowClick: true,
@@ -315,12 +323,12 @@ const DetailDataRegistrasi = () => {
       <div style={{ marginTop: "20px" }}>
         <div style={{ display: "inline-block", float: "left" }}>
           <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-            <h4 className="text-hitam">Status Pendfatar :</h4>
+            <h4 className="text-hitam">Status Pendaftar :</h4>
             {data.status === "valid" ? (
-              <h4 className="text-hijau">Aktif</h4>
+              <h4 className="text-hijau">Terverifikasi</h4>
             ) : (
               data.status === "inreview" && (
-                <h4 className="text-merah">Tidak Aktif</h4>
+                <h4 className="text-merah">Tidak Terverifikasi</h4>
               )
             )}
           </div>
@@ -335,8 +343,8 @@ const DetailDataRegistrasi = () => {
             >
               <i className="fa fa-cog" />
               {data.status === "inreview"
-                ? " Aktifkan Pendaftar"
-                : data.status === "valid" && " Non-Aktifkan"}
+                ? " Verifikasi Pendaftar"
+                : data.status === "valid" && " Batal Verifikasi"}
             </button>
           </div>
         </div>
@@ -397,18 +405,18 @@ const DetailDataRegistrasi = () => {
               backgroundColor: fetched === "3" && "#8F0D1E",
               color:
                 dataStep1?.status === "valid" && dataStep2?.status === "valid"
-                  ? dataStep3 !== null
-                    ? fetched === "3" && "white"
-                    : "grey"
-                  : "grey",
+                  ? // ? dataStep3 === null
+                    fetched === "3" && "white"
+                  : // : "grey"
+                    "grey",
             }}
             onClick={() => fetchTestResult()}
             disabled={
               dataStep1?.status === "valid" && dataStep2?.status === "valid"
-                ? dataStep3 !== null
-                  ? false
-                  : true
-                : true
+                ? // ? dataStep3 === null
+                  false
+                : // : true
+                  true
             }
           >
             <i className="fa fa-pencil-square-o" /> Hasil Test
@@ -601,10 +609,10 @@ const DetailDataRegistrasi = () => {
                   label="Status Tahapan"
                   value={
                     dataStep2?.status === "valid"
-                      ? "Sesuai"
+                      ? "Terverifikasi"
                       : dataStep2?.status === "inreview"
                       ? "Sedang Di Tinjau"
-                      : dataStep2?.status === "invalid" && "Tidak Sesuai"
+                      : dataStep2?.status === "invalid" && "Tidak Terverifikasi"
                   }
                   disable={true}
                 />

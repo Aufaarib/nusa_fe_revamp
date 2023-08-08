@@ -10,17 +10,24 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Header } from "../../../components";
 import { updateGuru } from "../../../api/Guru";
+import {
+  DropdownDatePickers,
+  DropdownRadioInputGender,
+} from "../../../components/Dropdown";
+import moment from "moment";
 
 export default function UbahGuru() {
-  const [fullname, setFullname] = useState("");
-  const [gender, setGender] = useState("");
-  const [religion, setReligion] = useState("");
-  const [birthPlace, setBirthPlace] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const location = useLocation();
+  const [fullname, setFullname] = useState(location.state.fullname);
+  const [gender, setGender] = useState(location.state.gender);
+  const [religion, setReligion] = useState(location.state.religion);
+  const [birthPlace, setBirthPlace] = useState(location.state.birthPlace);
+  const [birthDate, setBirthDate] = useState(
+    moment(location.state.birthDate).format("YYYY-MM-DD")
+  );
   // const [isOpenStatus, setisOpenStatus] = useState(false);
   // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const path = "/admin/list-guru";
@@ -29,12 +36,18 @@ export default function UbahGuru() {
     e.preventDefault();
     const code = location.state.code;
 
+    console.log(fullname);
+    console.log(gender);
+    console.log(religion);
+    console.log(birthPlace);
+    console.log(birthDate);
+
     if (
-      fullname.length === 0 ||
-      gender.length === 0 ||
-      religion.length === 0 ||
-      birthPlace.length === 0 ||
-      birthDate.length === 0
+      fullname === "" ||
+      gender === "" ||
+      religion === "" ||
+      birthPlace === "" ||
+      birthDate === ""
     ) {
       AlertEmpty();
     } else {
@@ -51,15 +64,6 @@ export default function UbahGuru() {
       // setisOpenStatus(true);
     }
   };
-
-  // const closeModalEmpty = () => {
-  //   setisOpenEmpty(false);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
 
   const navigateKelas = () => {
     navigate(path);
@@ -85,47 +89,52 @@ export default function UbahGuru() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Ubah Kelas
+          Form Ubah Guru
         </p>
         <article>
-          {/* COL 1 */}
-          <section>
-            <TextInput
-              label="Nama Lengkap"
-              type="text"
-              placeholder={location.state.Fullname}
-              onChange={(e) => setFullname(e.target.value)}
-              required={true}
-            />
-            <TextInput
-              label="Jenis Kelamin"
-              type="text"
-              placeholder={location.state.Gender}
-              onChange={(e) => setGender(e.target.value)}
-              required={true}
-            />
-            <TextInput
-              label="Agama"
-              type="text"
-              placeholder={location.state.Religion}
-              onChange={(e) => setReligion(e.target.value)}
-              required={true}
-            />
-            <TextInput
-              label="Tempat Lahir"
-              type="text"
-              placeholder={location.state.BirthPlace}
-              onChange={(e) => setBirthPlace(e.target.value)}
-              required={true}
-            />
-            <TextInput
-              label="Tanggal Lahir"
-              type="text"
-              placeholder={location.state.BirthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              required={true}
-            />
-          </section>
+          <TextInput
+            label="Nama Lengkap"
+            type="text"
+            defaultValue={location.state.fullname}
+            onChange={(e) => setFullname(e.target.value)}
+            required={true}
+          />
+          <br />
+          <DropdownRadioInputGender
+            required={true}
+            label="Jenis Kelamin"
+            value1="female"
+            value2="male"
+            label2="Perempuan"
+            label3="Laki-Laki"
+            onChange={(e) => setGender(e.target.value)}
+            defaultValue={location.state.gender}
+            checked={gender}
+          />
+          <br />
+
+          <TextInput
+            label="Religion"
+            type="text"
+            onChange={(e) => setReligion(e.target.value)}
+            defaultValue={location.state.religion}
+            required={true}
+          />
+
+          <TextInput
+            label="Tempat Lahir"
+            type="text"
+            onChange={(e) => setBirthPlace(e.target.value)}
+            defaultValue={location.state.birthPlace}
+            required={true}
+          />
+
+          <DropdownDatePickers
+            label="Tanggal Lahir"
+            id="birthDate"
+            change={(e) => setBirthDate(e.element.value)}
+            value={moment(location.state.birthDate).format("YYYY-MM-DD")}
+          />
 
           <div className="btn-form">
             <button

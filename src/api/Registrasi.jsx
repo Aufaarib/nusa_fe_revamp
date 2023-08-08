@@ -144,7 +144,6 @@ export function getAdmissionRegistration(setData, setSts) {
       }
     )
     .then((res) => {
-      // console.log("ADMISSION REGISTRATION === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })

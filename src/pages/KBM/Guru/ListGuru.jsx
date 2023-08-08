@@ -5,6 +5,7 @@ import { DataTablesPMB } from "../../../components/DataTables";
 import { getGuru } from "../../../api/Guru";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
 import { updateStatusKurikulum } from "../../../api/Kurikulum";
+import moment from "moment";
 
 const HasilTes = () => {
   const [data, setData] = useState([]);
@@ -59,32 +60,32 @@ const HasilTes = () => {
       name: <div>Nama</div>,
       selector: (data) => data.fullname,
       cell: (data) => <div>{data.fullname}</div>,
-      width: "auto",
+      width: "200px",
     },
-    {
-      name: <div>Jenis Kelamin</div>,
-      selector: (data) => data.gender,
-      cell: (data) => <div>{data.gender}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Jenis Kelamin</div>,
+    //   selector: (data) => data.gender,
+    //   cell: (data) => <div>{data.gender}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Agama</div>,
       selector: (data) => data.religion,
       cell: (data) => <div>{data.religion}</div>,
       width: "auto",
     },
-    {
-      name: <div>Tempat Lahir</div>,
-      selector: (data) => data.birthPlace,
-      cell: (data) => <div>{data.birthPlace}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Tanggal Lahir</div>,
-      selector: (data) => data.birthDate,
-      cell: (data) => <div>{data.birthDate}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Tempat Lahir</div>,
+    //   selector: (data) => data.birthPlace,
+    //   cell: (data) => <div>{data.birthPlace}</div>,
+    //   width: "auto",
+    // },
+    // {
+    //   name: <div>Tanggal Lahir</div>,
+    //   selector: (data) => data.birthDate,
+    //   cell: (data) => moment(data.birthDate).format("DD/MM/YYYY"),
+    //   width: "auto",
+    // },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
@@ -94,53 +95,25 @@ const HasilTes = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-          <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-action-merah ml-3 w-auto px-2"
-            onClick={() =>
-              navigateUbahGuru(
-                data.code,
-                data.fullname,
-                data.gender,
-                data.religion,
-                data.birthPlace,
-                data.birthDate
-              )
-            }
-          >
-            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
-          </button>
-          {/* {data?.Status === 1 && (
-            <button
-              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.name, data.status)}
-            >
-              <i className="fa fa-play mt-1 mr-1"></i> Aktif
-            </button>
-          )}
-          {data?.Status === 0 && (
-            <button
-              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.name, data.status)}
-            >
-              <i className="fa fa-trash mt-1 mr-1"></i> Tidak Aktif
-            </button>
-          )} */}
-          {/* <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-mrh ml-3 w-auto px-2"
-            // onClick={() => handleNonActiveStatus(data.id, data.name)}
-          >
-            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
-          </button> */}
-        </div>
+        <button
+          title="Edit"
+          onClick={() =>
+            navigateUbahGuru(
+              data.code,
+              data.fullname,
+              data.gender,
+              data.religion,
+              data.birthPlace,
+              data.birthDate
+            )
+          }
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+        </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "150px",
     },
   ];
 

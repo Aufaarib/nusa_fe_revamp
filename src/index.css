@@ -633,14 +633,12 @@
   }
 
   .btn-action-merah {
+    font-size: 14px;
+    padding: 5px;
     @apply rounded;
     @apply shadow-md;
     @apply bg-merah;
-    @apply w-20;
-    @apply font-medium;
-    @apply leading-snug;
     @apply text-white;
-    @apply text-base;
   }
   .btn-action-merah:hover {
     @apply bg-putih;
