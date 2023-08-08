@@ -10,13 +10,14 @@ const Input = styled.input.attrs((props) => ({
   type: "text",
   size: props.small ? 5 : undefined,
 }))`
+  font-size: 14px;
   display: inline-block;
   float: left;
   height: 30px;
   width: 200px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid #bfbfbf;
-  padding: 15px;
+  padding: 8px;
 `;
 
 export function FilterComponent({
@@ -84,8 +85,7 @@ export function FilterComponent({
             className="btn-mrh"
             onClick={onClick}
           >
-            <i className="fa fa-plus mr-1 mt-1"></i>
-            {button}
+            <i className="fa fa-plus mr-1 mt-1">{button}</i>
           </button>
         </div>
       </div>
@@ -315,7 +315,6 @@ export function FilterComponentActivateAdmission({
               className="btn-mrh"
               onClick={onClickActivate}
             >
-              <i className="fa fa-cog mr-1 mt-1"></i>
               {buttonActivate}
             </button>
             <button
@@ -332,13 +331,15 @@ export function FilterComponentActivateAdmission({
     </>
   );
 }
+
 export function FilterComponentWithoutButton({
   filterText,
   onFilter,
   data = [],
   onChangeRows,
   valueRows,
-  button,
+  onChangeValidation,
+  valueValidation,
   dataLength,
 }) {
   return (
@@ -353,29 +354,47 @@ export function FilterComponentWithoutButton({
       >
         <Input
           id="search"
-          placeholder="Pencarian..."
+          placeholder="Search or Reg000..."
           value={filterText}
           onChange={onFilter}
         />
         {data ? (
-          <select
-            style={{
-              border: "1px solid grey",
-              borderRadius: "10px",
-              width: "auto",
-              height: "30px",
-              fontSize: "12px",
-              padding: "5px",
-              marginLeft: "10px",
-            }}
-            value={valueRows}
-            onChange={onChangeRows}
-          >
-            <option value="20">Tampilkan 20</option>
-            <option value="50">Tampilkan 50</option>
-            <option value="100">Tampilkan 100</option>
-            <option value="all">Tampilkan Semua</option>
-          </select>
+          <>
+            <select
+              style={{
+                border: "1px solid grey",
+                borderRadius: "10px",
+                width: "auto",
+                height: "32px",
+                fontSize: "12px",
+                padding: "5px",
+                marginLeft: "10px",
+              }}
+              value={valueRows}
+              onChange={onChangeRows}
+            >
+              <option value="20">Tampilkan 20</option>
+              <option value="50">Tampilkan 50</option>
+              <option value="100">Tampilkan 100</option>
+              <option value="all">Tampilkan Semua</option>
+            </select>
+            <select
+              style={{
+                border: "1px solid grey",
+                borderRadius: "10px",
+                width: "auto",
+                height: "32px",
+                fontSize: "12px",
+                padding: "5px",
+                marginLeft: "10px",
+              }}
+              value={valueValidation}
+              onChange={onChangeValidation}
+            >
+              <option value="valid">Tampilkan Terverifikasi</option>
+              <option value="inreview">Tampilkan Belum Terverifikasi</option>
+            </select>
+          </>
         ) : (
           <select
             style={{
@@ -391,21 +410,6 @@ export function FilterComponentWithoutButton({
             <option value="null">Data Tidak Tersedia</option>
           </select>
         )}
-        <div style={{ display: "inline-block", float: "right" }}>
-          {/* <div style={{ display: "flex", gap: "5px" }}> */}
-          <label
-            style={{
-              fontSize: "14px",
-              backgroundColor: "transparent",
-              color: "black",
-              border: "1px solid #8F0D1E",
-            }}
-            className="btn-mrh"
-          >
-            Total {dataLength} Data
-          </label>
-          {/* </div> */}
-        </div>
       </div>
     </>
   );
@@ -528,7 +532,7 @@ export function DataTablesAdmissionDetail({
     return b.id - a.id;
   });
 
-  console.log("KOLLAAOOOO === ", descSort);
+  // console.log("KOLLAAOOOO === ", descSort);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -587,20 +591,36 @@ export function DataTablesAdmissionDetail({
         </div>
       )}
       {itemsPerPage !== "all" && (
-        <div>
-          <style>{styles}</style>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
-            breakLabel={<a className="text-merah bold">...</a>}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
-            forcePage={currentPage}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-          />
+        <div
+          style={{
+            display: "block",
+            padding: "20px 0",
+          }}
+        >
+          <div
+            style={{ display: "inline-block", float: "left", fontSize: "14px" }}
+          >
+            <label>
+              Menampilkan{" "}
+              <strong className="text-merah">{currentPageData.length}</strong>{" "}
+              dari <strong className="text-merah">{data.length}</strong> Data
+            </label>
+          </div>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <style>{styles}</style>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+              breakLabel={<a className="text-merah">...</a>}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              forcePage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       )}
     </>
@@ -705,8 +725,8 @@ export function DataTablesPMBWithoutButton({
   defaultSortFieldId,
   filterText,
   onFilter,
-  onClick,
-  buttontxt,
+  onChangeValidation,
+  valueValidation,
 }) {
   const CustomStylesTable = {
     table: {
@@ -761,10 +781,7 @@ export function DataTablesPMBWithoutButton({
         .pagination {
             display: flex;
             border-radius: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px 0;
+            padding: 0 0;
         }
         .pagination li {
             display: inline-block;
@@ -794,33 +811,37 @@ export function DataTablesPMBWithoutButton({
             cursor: not-allowed;
             color: grey;
         }
-        // .pagination li:hover{
-        //     background-color: #8F0D1E;
-        // }
-        // .pagination li:hover a{
-        //     background-color: #8F0D1E;
-        //     color: #fff;
-        // }
-        // .pagination li.disabled:hover{
-        //     background-color: transparent;
-        // }
-        // .pagination li.disabled:hover a{
-        //     background-color: transparent;
-        //     color: grey;
-        // }
+        .pagination li.active:hover{
+            background-color: #8F0D1E;
+        }
+        .pagination li:hover{
+            background-color: #F8F8F8;
+        }
+        .pagination li.disabled:hover{
+            background-color: transparent;
+        }
+        .pagination li.disabled:hover a{
+            background-color: transparent;
+            color: grey;
+        }
         `;
 
   const descSort = data.sort(function (a, b) {
     return b.id - a.id;
   });
 
-  console.log("KOLLAAOOOO === ", descSort);
+  // console.log("KOLLAAOOOO === ", descSort);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
+    setCurrentPage(0);
+  };
+
+  const handleFilterStatusValidation = (e) => {
+    onChangeValidation(e);
     setCurrentPage(0);
   };
 
@@ -839,8 +860,6 @@ export function DataTablesPMBWithoutButton({
     pageCount = Math.ceil(data.length / itemsPerPage);
   }
 
-  console.log("BIAR === ", data.length);
-
   return (
     <>
       <FilterComponentWithoutButton
@@ -849,6 +868,8 @@ export function DataTablesPMBWithoutButton({
         valueRows={itemsPerPage}
         filterText={filterText}
         onFilter={onFilter}
+        onChangeValidation={handleFilterStatusValidation}
+        valueValidation={valueValidation}
         dataLength={data.length}
       />
       {data ? (
@@ -873,20 +894,36 @@ export function DataTablesPMBWithoutButton({
         </div>
       )}
       {itemsPerPage !== "all" && (
-        <div>
-          <style>{styles}</style>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
-            breakLabel={<a className="text-merah">...</a>}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
-            forcePage={currentPage}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-          />
+        <div
+          style={{
+            display: "block",
+            padding: "20px 0",
+          }}
+        >
+          <div
+            style={{ display: "inline-block", float: "left", fontSize: "14px" }}
+          >
+            <label>
+              Menampilkan{" "}
+              <strong className="text-merah">{currentPageData.length}</strong>{" "}
+              dari <strong className="text-merah">{data.length}</strong> Data
+            </label>
+          </div>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <style>{styles}</style>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+              breakLabel={<a className="text-merah">...</a>}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              forcePage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       )}
     </>
@@ -956,10 +993,7 @@ export function DataTablesPMB({
         .pagination {
             display: flex;
             border-radius: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px 0;
+            padding: 0 0;
         }
         .pagination li {
             display: inline-block;
@@ -1009,7 +1043,7 @@ export function DataTablesPMB({
     return b.id - a.id;
   });
 
-  console.log("KOLLAAOOOO === ", descSort);
+  // console.log("KOLLAAOOOO === ", descSort);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -1067,27 +1101,42 @@ export function DataTablesPMB({
         </div>
       )}
       {itemsPerPage !== "all" && (
-        <div>
-          <style>{styles}</style>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
-            breakLabel={<a className="text-merah">...</a>}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
-            forcePage={currentPage}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-          />
+        <div
+          style={{
+            display: "block",
+            padding: "20px 0",
+          }}
+        >
+          <div
+            style={{ display: "inline-block", float: "left", fontSize: "14px" }}
+          >
+            <label>
+              Menampilkan{" "}
+              <strong className="text-merah">{currentPageData.length}</strong>{" "}
+              dari <strong className="text-merah">{data.length}</strong> Data
+            </label>
+          </div>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <style>{styles}</style>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+              breakLabel={<a className="text-merah">...</a>}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              forcePage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       )}
     </>
   );
 }
 
-//Table Components
 export function DataTables({
   columns,
   status,
@@ -1150,10 +1199,7 @@ export function DataTables({
         .pagination {
             display: flex;
             border-radius: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px 0;
+            padding: 0 0;
         }
         .pagination li {
             display: inline-block;
@@ -1255,20 +1301,36 @@ export function DataTables({
         </div>
       )}
       {itemsPerPage !== "all" && (
-        <div>
-          <style>{styles}</style>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
-            breakLabel={<a className="text-merah">...</a>}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
-            forcePage={currentPage}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-          />
+        <div
+          style={{
+            display: "block",
+            padding: "20px 0",
+          }}
+        >
+          <div
+            style={{ display: "inline-block", float: "left", fontSize: "14px" }}
+          >
+            <label>
+              Menampilkan{" "}
+              <strong className="text-merah">{currentPageData.length}</strong>{" "}
+              dari <strong className="text-merah">{data.length}</strong> Data
+            </label>
+          </div>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <style>{styles}</style>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+              breakLabel={<a className="text-merah">...</a>}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              forcePage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       )}
     </>
@@ -1336,10 +1398,7 @@ export function DataTablesSaring({
         .pagination {
             display: flex;
             border-radius: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px 0;
+            padding: 0 0;
         }
         .pagination li {
             display: inline-block;
@@ -1440,20 +1499,36 @@ export function DataTablesSaring({
         </div>
       )}
       {itemsPerPage !== "all" && (
-        <div>
-          <style>{styles}</style>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
-            breakLabel={<a className="text-merah">...</a>}
-            // pageRangeDisplayed={5}
-            // marginPagesDisplayed={2}
-            forcePage={currentPage}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            activeClassName={"active"}
-          />
+        <div
+          style={{
+            display: "block",
+            padding: "20px 0",
+          }}
+        >
+          <div
+            style={{ display: "inline-block", float: "left", fontSize: "14px" }}
+          >
+            <label>
+              Menampilkan{" "}
+              <strong className="text-merah">{currentPageData.length}</strong>{" "}
+              dari <strong className="text-merah">{data.length}</strong> Data
+            </label>
+          </div>
+          <div style={{ display: "inline-block", float: "right" }}>
+            <style>{styles}</style>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+              breakLabel={<a className="text-merah">...</a>}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              forcePage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       )}
     </>

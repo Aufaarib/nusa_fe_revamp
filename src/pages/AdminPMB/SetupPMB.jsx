@@ -65,19 +65,10 @@ const SetupPMB = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          // style={{
-          //   height: "25px",
-          //   width: "25px",
-          //   backgroundColor: "black",
-          //   borderRadius: "50%",
-          //   display: "inline-block",
-          //   color: "white",
-          // }}
-          title="Detail Pendaftaran"
           className="btn-action-merah"
           onClick={() => navigateAdmissionDetails(data.code, data.status)}
         >
-          <i className="fa fa-eye"> Detail Pendaftaran </i>
+          <i className="fa fa-eye"> Detail </i>
         </button>
       ),
       ignoreRowClick: true,

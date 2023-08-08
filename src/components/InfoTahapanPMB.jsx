@@ -92,9 +92,9 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                 {status == "Dalam Proses" && (
                   <>
                     {dataAdmissionRegistration.invoice === "" &&
-                      "Belum Melakukan Pembayaran"}
+                      "Menunggu Pembayaran"}
                     {dataAdmissionRegistration.invoice !== "" &&
-                      "Proses Pengecekan Admin"}
+                      "Menunggu Validasi Admin"}
                   </>
                 )}
               </>
@@ -112,11 +112,11 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
 
                     {dataAdmissionRegistration.applicant !== null &&
                       ((user?.parents?.length === 3 &&
-                        "Proses Pengecekan Admin") ||
+                        "Menunggu Validasi Admin") ||
                         (dataAdmissionRegistration.statements !== null &&
-                          "Proses Pengecekan Admin") ||
+                          "Menunggu Validasi Admin") ||
                         (dataAdmissionRegistration.additionalFiles !== null &&
-                          "Proses Pengecekan Admin"))}
+                          "Menunggu Validasi Admin"))}
                   </>
                 )}
               </>
@@ -126,7 +126,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                 {status == "Dalam Proses" && (
                   <>
                     {dataAdmissionRegistration.testResult !== null &&
-                      "Proses Pengecekan Admin"}
+                      "Menunggu Validasi Admin"}
                     {dataAdmissionRegistration.testResult === null &&
                       "Menunggu Hasil Tes"}
                   </>
@@ -143,9 +143,9 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                 {status == "Dalam Proses" && (
                   <>
                     {dataAdmissionRegistration.payments?.length == 0 &&
-                      "Belum Melakukan Pembayaran"}
+                      "Menunggu Pembayaran"}
                     {dataAdmissionRegistration.payments?.length != 0 &&
-                      "Proses Pengecekan Admin"}
+                      "Menunggu Validasi Admin"}
                   </>
                 )}
               </>

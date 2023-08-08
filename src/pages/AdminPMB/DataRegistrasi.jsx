@@ -6,21 +6,29 @@ import { DataTablesPMBWithoutButton } from "../../components/DataTables";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
 
-  // const filteredReg = data.filter((data) => data.regNumber === "REG00001");
-  // setFilteredData(filteredReg);
+  const [validationFilter, setValidationFilter] = useState("inreview");
 
-  // console.log("DATA === ", data.id);
+  const handleFilterValidate = (event) => {
+    setValidationFilter(event.target.value);
+  };
+
+  console.log("DATA === ", data);
 
   let filteredItems = data;
 
   if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.regNumber.toLowerCase().includes(filterText.toLowerCase())
+    const filteredValidation = data.filter((data) =>
+      data.status.includes(validationFilter)
+    );
+
+    filteredItems = filteredValidation.filter(
+      (data) =>
+        data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+        data.childName.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
@@ -75,39 +83,30 @@ const DataRegistrasi = () => {
       ),
       width: "auto",
     },
-    {
-      name: <div>Status Tahapan</div>,
-      selector: (data) => data.status,
-      cell: (data) => (
-        <div
-          className={
-            data.status === "valid"
-              ? "capitalize text-hijau"
-              : "capitalize text-merah"
-          }
-        >
-          {data.status}
-        </div>
-      ),
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status Tahapan</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => (
+    //     <div
+    //       className={
+    //         data.status === "valid"
+    //           ? "capitalize text-hijau"
+    //           : "capitalize text-merah"
+    //       }
+    //     >
+    //       {data.status}
+    //     </div>
+    //   ),
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          // style={{
-          //   height: "25px",
-          //   width: "25px",
-          //   backgroundColor: "black",
-          //   borderRadius: "50%",
-          //   display: "inline-block",
-          //   color: "white",
-          // }}
           className="btn-action-merah"
-          title="Detail Registrasi"
           onClick={() => navigateRegistrationDetails(data.regNumber)}
         >
-          <i className="fa fa-eye"> Detail Registrasi </i>
+          <i className="fa fa-eye"> Detail </i>
         </button>
       ),
       ignoreRowClick: true,
@@ -115,6 +114,8 @@ const DataRegistrasi = () => {
       width: "300px",
     },
   ];
+
+  console.log("LAOS === ", validationFilter);
 
   return (
     <>
@@ -132,6 +133,8 @@ const DataRegistrasi = () => {
           data={filteredItems}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          onChangeValidation={handleFilterValidate}
+          valueValidation={validationFilter}
         />
       </div>
     </>

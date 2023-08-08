@@ -144,7 +144,16 @@ export function getAdmissionRegistration(setData, setSts) {
       }
     )
     .then((res) => {
-      setData(res.data.body);
+      let data = [];
+      res.data.body.forEach((element) => {
+        if (element.steps.length > 0) {
+          data.push(element);
+        }
+      });
+
+      console.log("DAFKAS === ", data);
+
+      setData(data);
       setSts({ type: "success" });
     })
     .catch((error) => {

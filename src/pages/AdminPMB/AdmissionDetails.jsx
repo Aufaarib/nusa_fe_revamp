@@ -158,7 +158,19 @@ const AdmissionDetails = () => {
           data={filteredItems}
           onClickCreatePhase={() => navigateTambahGelombang()}
           onClickActivate={() => handleStatus()}
-          buttonActivate={status === 1 ? "Non-Aktifkan" : "Aktifkan"}
+          buttonActivate={
+            status === 1 ? (
+              <>
+                <i className="fa fa-times-circle-o mr-1 mt-1" />
+                Non-Aktifkan
+              </>
+            ) : (
+              <>
+                <i className="fa fa-check-circle-o mr-1 mt-1" />
+                Aktifkan
+              </>
+            )
+          }
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />

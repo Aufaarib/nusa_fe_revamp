@@ -337,14 +337,17 @@ const DetailDataRegistrasi = () => {
         <div style={{ display: "inline-block", float: "right" }}>
           <div style={{ display: "flex" }}>
             <button
-              style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
-              className="btn-mrh"
+              // style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
+              className="btn-action-merah"
               onClick={() => ApproveRegistrasi()}
             >
-              <i className="fa fa-cog" />
-              {data.status === "inreview"
-                ? " Verifikasi Pendaftar"
-                : data.status === "valid" && " Batal Verifikasi"}
+              {data.status === "inreview" ? (
+                <i className="fa fa-check-circle-o"> Verifikasi </i>
+              ) : (
+                data.status === "valid" && (
+                  <i className="fa fa-times-circle-o"> Batalkan Verifikasi </i>
+                )
+              )}
             </button>
           </div>
         </div>
