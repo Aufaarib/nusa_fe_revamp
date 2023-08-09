@@ -474,10 +474,10 @@
     background: #8f0d1e;
     color: white;
   }
-  .btn-modal-merah:hover {
+  /* .btn-modal-merah:hover {
     background: white;
     color: #8f0d1e;
-  }
+  } */
 
   .btn-modal-putih {
     display: flex;
@@ -492,10 +492,10 @@
     background: white;
     color: #8f0d1e;
   }
-  .btn-modal-putih:hover {
+  /* .btn-modal-putih:hover {
     background: #8f0d1e;
     color: white;
-  }
+  } */
 
   .react-datepicker__triangle {
     display: none;
@@ -559,10 +559,10 @@
     @apply px-7;
     border: 1px solid #8f0d1e;
   }
-  .btn-merah:hover {
+  /* .btn-merah:hover {
     @apply bg-putih;
     @apply text-merah;
-  }
+  } */
 
   .btn-putih {
     @apply flex;
@@ -584,10 +584,10 @@
     @apply px-7;
     border: 1px solid #8f0d1e;
   }
-  .btn-putih:hover {
+  /* .btn-putih:hover {
     @apply bg-merah;
     @apply text-putih;
-  }
+  } */
 
   .btn-pth {
     @apply flex;
@@ -627,9 +627,18 @@
     @apply shadow-md;
     @apply bg-merah;
   }
-  .btn-mrh:hover {
+  /* .btn-mrh:hover {
     @apply bg-putih;
     @apply text-merah;
+  } */
+
+  .btn-action-disabled {
+    font-size: 14px;
+    padding: 5px;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-abu;
+    @apply text-white;
   }
 
   .btn-action-merah {
@@ -640,12 +649,12 @@
     @apply bg-merah;
     @apply text-white;
   }
-  .btn-action-merah:hover {
+  /* .btn-action-merah:hover {
     @apply bg-putih;
     @apply text-merah;
-  }
+  } */
 
-  .btn-action-ungu {
+  /* .btn-action-ungu {
     @apply rounded;
     @apply shadow-md;
     @apply bg-ungu;
@@ -685,7 +694,7 @@
   }
   .btn-action-pink:hover {
     @apply bg-gelap;
-  }
+  } */
   .pmb-belum-mulai {
     @apply bg-gray-100;
     @apply text-gray-700;

@@ -1,4 +1,6 @@
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -64,7 +66,11 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
       }
     )
     .then(() => {
-      AlertStatusUpdateSuccess();
+      AlertMessage(
+        "Penambahan Anak Berhasil",
+        "Silahkan Klik Lihat Untuk Memulai Proses PMB",
+        "Tutup"
+      );
       getMyAdmission(setData, setSts);
       setSts({ type: "success" });
     })

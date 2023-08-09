@@ -125,6 +125,7 @@ export const ContextProvider = ({ children }) => {
           (admissionSteps1.status == "invalid" && "Gagal");
         const statusStep2 =
           (admissionSteps1.status !== "valid" && "Belum Mulai") ||
+          (admissionSteps2.length == 0 && "Dalam Proses") ||
           (admissionSteps2.status == "inreview" && "Dalam Proses") ||
           (admissionSteps2.status == "valid" && "Berhasil") ||
           (admissionSteps2.status == "invalid" && "Gagal");
@@ -143,7 +144,6 @@ export const ContextProvider = ({ children }) => {
           (admissionSteps4.status == "inreview" && "Dalam Proses") ||
           (admissionSteps4.status == "valid" && "Berhasil") ||
           (admissionSteps4.status == "invalid" && "Gagal");
-
         const statusStep5 =
           (admissionSteps1.status !== "valid" && "Belum Mulai") ||
           (admissionSteps2.status !== "valid" && "Belum Mulai") ||

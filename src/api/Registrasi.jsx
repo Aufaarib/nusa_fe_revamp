@@ -63,7 +63,7 @@ export function validateOTP(setSts, otp, navigateLogin, directTo) {
 }
 
 // DAFTAR ULANG
-export function daftarUlangAgreement() {
+export function daftarUlangAgreement(path) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
     .post(
@@ -75,7 +75,11 @@ export function daftarUlangAgreement() {
       }
     )
     .then((res) => {
-      AlertStatusUpdateSuccess();
+      AlertStatusSuccess(
+        (window.location.href = path),
+        "Persetujuan Pendaftaran Ulang Berhasil",
+        "Tutup"
+      );
     })
     .catch((error) => {
       AlertStatusUpdateFailed();
@@ -577,7 +581,7 @@ export function getPaymentInvoice(setData, setSts, code) {
     });
 }
 
-export function uploadHasilTest(score) {
+export function uploadHasilTest(score, navigate) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
     .post(
@@ -589,6 +593,7 @@ export function uploadHasilTest(score) {
       }
     )
     .then(() => {
+      AlertStatusSuccess(navigate, "Upload Hasil Test Berhasil", "Tutup");
       // setSts({ type: "success" });
       // setData();
     })

@@ -284,12 +284,30 @@ const DetailDataRegistrasi = () => {
   ];
 
   const ApproveRegistrasi = () => {
-    if (
-      (dataStep1?.status !== "valid" || dataStep2?.status !== "valid",
-      dataStep3?.status !== "valid",
-      dataStep5?.status !== "valid")
-    ) {
-      AlertMessage("Gagal", "Validasi Pendaftaran Belum Lengkap", "Tutup");
+    if (dataStep1?.status !== "valid") {
+      AlertMessage(
+        "Tidak Dapat Melakukan Verifikasi",
+        "Pembayaran Biaya Registrasi Belum Terverifikasi",
+        "Tutup"
+      );
+    } else if (dataStep2?.status !== "valid") {
+      AlertMessage(
+        "Tidak Dapat Melakukan Verifikasi",
+        "Data Pendaftaran Belum Terverifikasi",
+        "Tutup"
+      );
+    } else if (dataStep3?.status !== "valid") {
+      AlertMessage(
+        "Tidak Dapat Melakukan Verifikasi",
+        "Hasil Tes Belum Terupload atau Terverifikasi",
+        "Tutup"
+      );
+    } else if (dataStep5?.status !== "valid") {
+      AlertMessage(
+        "Tidak Dapat Melakukan Verifikasi",
+        "Pembayaran Biaya Pendidikan Belum Terverifikasi",
+        "Tutup"
+      );
     } else {
       data.status === "valid"
         ? AlertConfirmation(
@@ -338,7 +356,14 @@ const DetailDataRegistrasi = () => {
           <div style={{ display: "flex" }}>
             <button
               // style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
-              className="btn-action-merah"
+              className={
+                dataStep1?.status !== "valid" ||
+                dataStep2?.status !== "valid" ||
+                dataStep3?.status !== "valid" ||
+                dataStep5?.status !== "valid"
+                  ? "btn-action-disabled"
+                  : "btn-action-merah"
+              }
               onClick={() => ApproveRegistrasi()}
             >
               {data.status === "inreview" ? (

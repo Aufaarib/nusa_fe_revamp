@@ -103,20 +103,12 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
               <>
                 {status == "Dalam Proses" && (
                   <>
-                    {dataAdmissionRegistration.applicant === null &&
-                      ((user?.parents?.length !== 3 && "Data Belum Lengkap") ||
-                        (dataAdmissionRegistration.statements === null &&
-                          "Data Belum Lengkap") ||
-                        (dataAdmissionRegistration.additionalFiles === null &&
-                          "Data Belum Lengkap"))}
-
-                    {dataAdmissionRegistration.applicant !== null &&
-                      ((user?.parents?.length === 3 &&
-                        "Menunggu Validasi Admin") ||
-                        (dataAdmissionRegistration.statements !== null &&
-                          "Menunggu Validasi Admin") ||
-                        (dataAdmissionRegistration.additionalFiles !== null &&
-                          "Menunggu Validasi Admin"))}
+                    {dataAdmissionRegistration.applicant === null ||
+                    user?.parents?.length !== 3 ||
+                    dataAdmissionRegistration.statements?.length === 0 ||
+                    dataAdmissionRegistration.additionalFiles?.length === 0
+                      ? "Data Belum Lengkap"
+                      : "Menunggu Validasi Admin"}
                   </>
                 )}
               </>

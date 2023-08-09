@@ -33,8 +33,7 @@ const UploadHasilTes = () => {
 
   const uploadTestResults = () => {
     const score = parseInt(nilai);
-    uploadHasilTest(score);
-    navigateRegistrationDetails();
+    uploadHasilTest(score, navigateRegistrationDetails());
   };
 
   return (

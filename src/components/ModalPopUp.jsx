@@ -255,7 +255,7 @@ export const AlertStatusSuccess = (navigate, title, buttonText) => {
     .then((result) => {
       if (result.isConfirmed) {
         // Redirect to another page
-        navigate();
+        navigate(navigate);
       }
     });
 };

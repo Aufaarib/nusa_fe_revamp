@@ -27,12 +27,13 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
   } = useStateContext();
   const user = dataAdmissionRegistration.user;
 
-  console.log("FOR YOUU === ", user?.parents?.length);
-  console.log("FOR YOUURRRR === ", dataAdmissionRegistration.applicant);
+  // console.log("FOR YOUU === ", user?.parents?.length);
+  console.log("FOR YOUURRRR === ", dataAdmissionRegistration.additionalFiles);
 
   const navigate = useNavigate();
   const Nama = localStorage.getItem("NAMA");
   const path = "/pmb/form-data-murid";
+  const path2 = "/pmb/tahapan-pmb";
 
   const navigateFormulir = () => {
     navigate(path);
@@ -55,8 +56,8 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
       <AnimatePresence>
         {selected && (
           <div
-            style={{ top: "100px" }}
-            className="fixed inset-0 left-0 z-50 flex overflow-y-scroll"
+            style={{ marginTop: "90px", marginBottom: "50px" }}
+            className="fixed inset-0 left-0 flex overflow-y-scroll"
           >
             <motion.div
               layoutId={step}
@@ -75,7 +76,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
             >
               <motion.div
                 layout="position"
-                className={`flex items-center text-base p-7 realative`}
+                className={`flex items-center text-base p-7 relative`}
               >
                 {step == 1 && (
                   <span className={`step ml-0.5 mr-4 rounded-full`}>
@@ -121,9 +122,9 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                         {status == "Dalam Proses" && (
                           <>
                             {dataAdmissionRegistration.invoice === "" &&
-                              "Belum Melakukan Pembayaran"}
+                              "Menunggu Pembayaran"}
                             {dataAdmissionRegistration.invoice !== "" &&
-                              "Proses Pengecekan Admin"}
+                              "Menunggu Validasi Admin"}
                           </>
                         )}
                       </>
@@ -132,25 +133,13 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                       <>
                         {status == "Dalam Proses" && (
                           <>
-                            {dataAdmissionRegistration.applicant === null &&
-                              ((user?.parents?.length !== 3 &&
-                                "Data Belum Lengkap") ||
-                                (dataAdmissionRegistration.statements ===
-                                  null &&
-                                  "Data Belum Lengkap") ||
-                                (dataAdmissionRegistration.additionalFiles ===
-                                  null &&
-                                  "Data Belum Lengkap"))}
-
-                            {dataAdmissionRegistration.applicant !== null &&
-                              ((user?.parents?.length === 3 &&
-                                "Proses Pengecekan Admin") ||
-                                (dataAdmissionRegistration.statements !==
-                                  null &&
-                                  "Proses Pengecekan Admin") ||
-                                (dataAdmissionRegistration.additionalFiles !==
-                                  null &&
-                                  "Proses Pengecekan Admin"))}
+                            {dataAdmissionRegistration.applicant === null ||
+                            user?.parents?.length !== 3 ||
+                            dataAdmissionRegistration.statements?.length ===
+                              0 ||
+                            dataAdmissionRegistration.additionalFiles === null
+                              ? "Data Belum Lengkap"
+                              : "Menunggu Validasi Admin"}
                           </>
                         )}
                       </>
@@ -160,7 +149,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                         {status == "Dalam Proses" && (
                           <>
                             {dataAdmissionRegistration.testResult !== null &&
-                              "Proses Pengecekan Admin"}
+                              "Menunggu Validasi Admin"}
                             {dataAdmissionRegistration.testResult === null &&
                               "Menunggu Hasil Tes"}
                           </>
@@ -178,9 +167,9 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                         {status == "Dalam Proses" && (
                           <>
                             {dataAdmissionRegistration.payments?.length == 0 &&
-                              "Belum Melakukan Pembayaran"}
+                              "Menunggu Pembayaran"}
                             {dataAdmissionRegistration.payments?.length != 0 &&
-                              "Proses Pengecekan Admin"}
+                              "Menunggu Validasi Admin"}
                           </>
                         )}
                       </>
@@ -201,7 +190,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                 </motion.div>
                 <motion.div
                   onClick={() => setSelected({})}
-                  className="absolute cursor-pointer top-4 right-4"
+                  className="absolute cursor-pointer top-1 right-1 p-1"
                 >
                   <FaRegTimesCircle className="text-2xl text-merah" />
                 </motion.div>
@@ -273,25 +262,35 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             </strong>
                             <hr />
                             <br />
-                            <p>
+                            {/* <p>
                               Catatan :{" "}
                               <strong className="capitalize">
                                 {admissionSteps1.note}
                               </strong>
                             </p>
-                            <br />
+                            <br /> */}
                           </p>
                           Silahkan lakukan transfer sebesar{" "}
                           <strong>Total Tagihan</strong> ke rekening berikut :
                           <br />
-                          Bank DKI Syariah cabang Pondok Indah
+                          <br />
+                          <strong>
+                            {" "}
+                            Bank DKI Syariah Cabang Pondok Indah{" "}
+                          </strong>
                           <br />
                           Nomor Rekening :<strong> 71021590003</strong>
                           <br />
                           <br />
-                          Untuk informasi lebih lanjut dan konfirmasi setelah
-                          melakukan transfer, silahkan hubungi No Whatsapp
+                          Untuk informasi lebih lanjut silahkan hubungi No
+                          Whatsapp
                           <strong> 08129801108 </strong> (Ibu Hanny).
+                          <br />
+                          <br />
+                          <strong>
+                            Tekan Tombol Dibawah Ini Untuk Unggah Bukti
+                            Pembayaran
+                          </strong>
                           <Link
                             to={"/pmb/berkas-pembayaran"}
                             className="mt-7 btn-merah"
@@ -353,242 +352,88 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
                   {step == 2 && status != "Belum Mulai" && (
                     <>
-                      {dataAdmissionRegistration.applicant === null &&
-                        ((user?.parents?.length !== 3 && (
-                          <>
-                            <p>Pengisian Form Belum Lengkap</p>
-                            <p>Silahkan Lengkapi Pengisian Form.</p>
-                            {/* <br />
-                            <p>
-                              Catatan :{" "}
-                              <strong className="capitalize">
-                                {admissionSteps2.note}
-                              </strong>
-                            </p> */}
-                            <br />
-                            <button
-                              className="btn-mrh"
-                              onClick={() => navigateFormulir()}
-                            >
-                              Isi Formulir
-                            </button>
-                          </>
-                        )) ||
-                          (dataAdmissionRegistration.statements === null && (
+                      {dataAdmissionRegistration.applicant === null ||
+                      user?.parents?.length !== 3 ||
+                      dataAdmissionRegistration.statements?.length === 0 ||
+                      dataAdmissionRegistration.additionalFiles?.length ===
+                        0 ? (
+                        <>
+                          <p>Pengisian Form Belum Lengkap</p>
+                          <p>Silahkan Lengkapi Pengisian Form.</p>
+                          <br />
+                          {dataAdmissionRegistration.applicant === null && (
+                            <p>- Data Anak Blm Lengkap</p>
+                          )}
+                          {user?.parents?.length !== 3 && (
+                            <p>- Data Ortu Blm Lengkap</p>
+                          )}
+                          {dataAdmissionRegistration.statements?.length ===
+                            0 && <p>- Data Pernyataan Blm Lengkap</p>}
+                          {dataAdmissionRegistration.additionalFiles?.length ===
+                            0 && <p>- Data Berkas Pendaftaran Blm Lengkap</p>}
+                          <br />
+                          <button
+                            className="btn-mrh"
+                            onClick={() => navigateFormulir()}
+                          >
+                            Isi Formulir
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {status == "Dalam Proses" && (
                             <>
-                              <p>Pengisian Form Belum Lengkap</p>
-                              <p>Silahkan Lengkapi Pengisian Form.</p>
-                              {/* <br />
+                              <p>
+                                Data Registrasi Telah Lengkap. Dan Sedang Dalam
+                                Proses Pengecekan Oleh Admin
+                              </p>
+                              <br />
                               <p>
                                 Catatan :{" "}
                                 <strong className="capitalize">
-                                  {admissionSteps2.note}
+                                  {admissionSteps1.note}
                                 </strong>
-                              </p> */}
+                              </p>
                               <br />
                               <button
                                 className="btn-mrh"
                                 onClick={() => navigateFormulir()}
                               >
-                                Isi Formulir
+                                Ubah Formulir
                               </button>
                             </>
-                          )) ||
-                          (dataAdmissionRegistration.additionalFiles ===
-                            null && (
+                          )}
+                          {status == "Berhasil" && (
                             <>
-                              <p>Pengisian Form Belum Lengkap</p>
-                              <p>Silahkan Lengkapi Pengisian Form.</p>
-                              {/* <br />
+                              <p>
+                                Alhamdulillah pengisian formulir data Calon
+                                Siswa dan Keluarga telah berhasil.
+                              </p>
+                              <br />
                               <p>
                                 Catatan :{" "}
                                 <strong className="capitalize">
                                   {admissionSteps2.note}
                                 </strong>
-                              </p> */}
+                              </p>
                               <br />
-                              <button
-                                className="btn-mrh"
-                                onClick={() => navigateFormulir()}
-                              >
-                                Isi Formulir
-                              </button>
+                              <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
                             </>
-                          )))}
-
-                      {dataAdmissionRegistration.applicant !== null &&
-                        ((user?.parents?.length === 3 && (
-                          <>
-                            {status == "Dalam Proses" && (
-                              <>
-                                <p>
-                                  Data Registrasi Telah Lengkap. Dan Sedang
-                                  Dalam Proses Pengecekan Oleh Admin
-                                </p>
-                                <br />
-                                <p>
-                                  Catatan :{" "}
-                                  <strong className="capitalize">
-                                    {admissionSteps1.note}
-                                  </strong>
-                                </p>
-                                <br />
-                                <button
-                                  className="btn-mrh"
-                                  onClick={() => navigateFormulir()}
-                                >
-                                  Ubah Formulir
-                                </button>
-                              </>
-                            )}
-                            {status == "Berhasil" && (
-                              <>
-                                <p>
-                                  Alhamdulillah pengisian formulir data Calon
-                                  Siswa dan Keluarga telah berhasil.
-                                </p>
-                                <br />
-                                <p>
-                                  Catatan :{" "}
-                                  <strong className="capitalize">
-                                    {admissionSteps2.note}
-                                  </strong>
-                                </p>
-                                <br />
-                                <p>
-                                  Silahkan melanjutkan ke tahapan berikutnya.
-                                </p>
-                              </>
-                            )}
-                            {status === "Gagal" && (
-                              <>
-                                <p>Tahap ini Gagal.</p>
-                                <br />
-                                <p>
-                                  Catatan :{" "}
-                                  <strong className="capitalize">
-                                    {admissionSteps2.note}
-                                  </strong>
-                                </p>
-                              </>
-                            )}
-                          </>
-                        )) ||
-                          (dataAdmissionRegistration.statements !== null && (
+                          )}
+                          {status === "Gagal" && (
                             <>
-                              {status == "Dalam Proses" && (
-                                <>
-                                  <p>
-                                    Data Registrasi Telah Lengkap. Dan Sedang
-                                    Dalam Proses Pengecekan Oleh Admin
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps1.note}
-                                    </strong>
-                                  </p>
-                                  <br />
-                                  <button
-                                    className="btn-mrh"
-                                    onClick={() => navigateFormulir()}
-                                  >
-                                    Ubah Formulir
-                                  </button>
-                                </>
-                              )}
-                              {status == "Berhasil" && (
-                                <>
-                                  <p>
-                                    Alhamdulillah pengisian formulir data Calon
-                                    Siswa dan Keluarga telah berhasil.
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps2.note}
-                                    </strong>
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Silahkan melanjutkan ke tahapan berikutnya.
-                                  </p>
-                                </>
-                              )}
-                              {status === "Gagal" && (
-                                <>
-                                  <p>Tahap ini Gagal.</p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps2.note}
-                                    </strong>
-                                  </p>
-                                </>
-                              )}
+                              <p>Tahap ini Gagal.</p>
+                              <br />
+                              <p>
+                                Catatan :{" "}
+                                <strong className="capitalize">
+                                  {admissionSteps2.note}
+                                </strong>
+                              </p>
                             </>
-                          )) ||
-                          (dataAdmissionRegistration.additionalFiles !==
-                            null && (
-                            <>
-                              {status == "Dalam Proses" && (
-                                <>
-                                  <p>
-                                    Data Registrasi Telah Lengkap. Dan Sedang
-                                    Dalam Proses Pengecekan Oleh Admin
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps1.note}
-                                    </strong>
-                                  </p>
-                                  <br />
-                                  <button
-                                    className="btn-mrh"
-                                    onClick={() => navigateFormulir()}
-                                  >
-                                    Ubah Formulir
-                                  </button>
-                                </>
-                              )}
-                              {status == "Berhasil" && (
-                                <>
-                                  <p>
-                                    Alhamdulillah pengisian formulir data Calon
-                                    Siswa dan Keluarga telah berhasil.
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps2.note}
-                                    </strong>
-                                  </p>
-                                  <br />
-                                  <p>
-                                    Silahkan melanjutkan ke tahapan berikutnya.
-                                  </p>
-                                </>
-                              )}
-                              {status === "Gagal" && (
-                                <>
-                                  <p>Tahap ini Gagal.</p>
-                                  <br />
-                                  <p>
-                                    Catatan :{" "}
-                                    <strong className="capitalize">
-                                      {admissionSteps2.note}
-                                    </strong>
-                                  </p>
-                                </>
-                              )}
-                            </>
-                          )))}
+                          )}
+                        </>
+                      )}
                     </>
                   )}
 
@@ -670,18 +515,14 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             Alhamdulillah, Ananda telah lulus test penerimaan
                             calon murid baru SAIM.
                           </p>
-                          {/* <br />
-                          <p>
-                            Catatan : <strong>{admissionSteps4.note}</strong>
-                          </p> */}
                           <br />
                           <p>
-                            Untuk proses selanjutnya, tombol persetujuan
-                            berikut:
+                            Untuk Proses Selanjutnya, Silahkan Tekan Tombol
+                            Persetujuan Berikut:
                           </p>
                           <br />
                           <Link
-                            onClick={daftarUlangAgreement}
+                            onClick={() => daftarUlangAgreement(path2)}
                             className="mt-3 btn-merah"
                           >
                             Persetujuan Daftar Ulang

@@ -48,8 +48,8 @@ const ListCalonSiswa = () => {
         home="PMB"
         // prev="Bank"
         // navePrev={path}
-        at="List Calon Siswa"
-        title="List Calon Siswa"
+        at="List Anak"
+        title="List Anak"
       />
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <button
