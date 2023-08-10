@@ -461,6 +461,22 @@
     padding: 10px 20px;
   }
 
+  .btn-rows-per-page {
+    padding: 7px;
+    border-radius: 5px;
+    color: #6b7280;
+  }
+  .btn-rows-per-page:hover {
+    background-color: #f8f8f8;
+  }
+
+  .btn-rows-per-page-active {
+    padding: 7px;
+    border-radius: 5px;
+    background-color: #8f0d1e;
+    color: white;
+  }
+
   .btn-modal-merah {
     display: flex;
     width: 100px;
@@ -642,8 +658,8 @@
   }
 
   .btn-action-merah {
-    font-size: 14px;
     padding: 5px;
+    @apply font-medium;
     @apply rounded;
     @apply shadow-md;
     @apply bg-merah;

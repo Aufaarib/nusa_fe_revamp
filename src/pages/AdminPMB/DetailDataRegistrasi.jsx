@@ -224,7 +224,7 @@ const DetailDataRegistrasi = () => {
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit"> Ubah </i>
+          <i className="fa fa-edit" /> Ubah
         </button>
       ),
       ignoreRowClick: true,
@@ -274,7 +274,7 @@ const DetailDataRegistrasi = () => {
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit"> Ubah </i>
+          <i className="fa fa-edit" /> Ubah
         </button>
       ),
       ignoreRowClick: true,
@@ -335,7 +335,7 @@ const DetailDataRegistrasi = () => {
         prev="Data Registrasi"
         navePrev={path}
         at={code}
-        title={data.childName + " - " + code}
+        title={code + " - " + data.childName}
       />
 
       <div style={{ marginTop: "20px" }}>
@@ -355,7 +355,7 @@ const DetailDataRegistrasi = () => {
         <div style={{ display: "inline-block", float: "right" }}>
           <div style={{ display: "flex" }}>
             <button
-              // style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
+              style={{ fontSize: "14px", width: "auto", padding: "2px 10px" }}
               className={
                 dataStep1?.status !== "valid" ||
                 dataStep2?.status !== "valid" ||
@@ -367,10 +367,14 @@ const DetailDataRegistrasi = () => {
               onClick={() => ApproveRegistrasi()}
             >
               {data.status === "inreview" ? (
-                <i className="fa fa-check-circle-o"> Verifikasi </i>
+                <>
+                  <i className="fa fa-check-circle-o" /> Verifikasi
+                </>
               ) : (
                 data.status === "valid" && (
-                  <i className="fa fa-times-circle-o"> Batalkan Verifikasi </i>
+                  <>
+                    <i className="fa fa-times-circle-o" /> Batalkan Verifikasi
+                  </>
                 )
               )}
             </button>
@@ -640,7 +644,7 @@ const DetailDataRegistrasi = () => {
                       ? "Terverifikasi"
                       : dataStep2?.status === "inreview"
                       ? "Sedang Di Tinjau"
-                      : dataStep2?.status === "invalid" && "Tidak Terverifikasi"
+                      : dataStep2?.status === "invalid" && "Belum Terverifikasi"
                   }
                   disable={true}
                 />

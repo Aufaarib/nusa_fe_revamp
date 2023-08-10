@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAdmissionRegistration } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesPMBWithoutButton } from "../../components/DataTables";
+import moment from "moment";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -11,21 +12,45 @@ const DataRegistrasi = () => {
   const navigate = useNavigate();
 
   const [validationFilter, setValidationFilter] = useState("inreview");
+  const [stepsFilter, setStepsFilter] = useState("inreview");
 
-  const handleFilterValidate = (event) => {
-    setValidationFilter(event.target.value);
+  const handleValidationFilter = (event) => {
+    const val = event.target.value;
+    setValidationFilter(val);
+    if (val === "valid") {
+      setStepsFilter("");
+    } else {
+      setStepsFilter("inreview");
+    }
   };
 
-  console.log("DATA === ", data);
+  const handleStepsFilter = (event) => {
+    setStepsFilter(event.target.value);
+  };
 
-  let filteredItems = data;
+  let filteredItems = null;
+  let filteredStatus = null;
 
   if (data !== null) {
     const filteredValidation = data.filter((data) =>
       data.status.includes(validationFilter)
     );
 
-    filteredItems = filteredValidation.filter(
+    const filteredStep5 = filteredValidation.filter((data) =>
+      data.steps[data.steps.length - 1].step.includes("5")
+    );
+
+    if (stepsFilter === "valid") {
+      filteredStatus = filteredStep5.filter(
+        (data) => data.steps[data.steps.length - 1].status === stepsFilter
+      );
+    } else {
+      filteredStatus = filteredValidation.filter((data) =>
+        data.steps[data.steps.length - 1].status.includes(stepsFilter)
+      );
+    }
+
+    filteredItems = filteredStatus.filter(
       (data) =>
         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
         data.childName.toLowerCase().includes(filterText.toLowerCase())
@@ -51,13 +76,7 @@ const DataRegistrasi = () => {
       name: <div>Nomor Registrasi</div>,
       selector: (data) => data.regNumber,
       cell: (data) => <div>{data.regNumber}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Nama Anak</div>,
-      selector: (data) => data.childName,
-      cell: (data) => <div className="capitalize">{data.childName}</div>,
-      width: "auto",
+      width: "125px",
     },
     {
       name: <div>Tahun Ajaran</div>,
@@ -65,11 +84,10 @@ const DataRegistrasi = () => {
       cell: (data) => (
         <div>{data.admissionPhase.admission.academicYear.name}</div>
       ),
-      width: "auto",
+      width: "115px",
     },
     {
       name: <div>Status Pendaftaran</div>,
-      selector: (data) => data.status,
       cell: (data) => (
         <div
           className={
@@ -81,41 +99,97 @@ const DataRegistrasi = () => {
           {data.status === "valid" ? "Terverifikasi" : "Belum Terverifikasi"}
         </div>
       ),
-      width: "auto",
+      width: "160px",
     },
-    // {
-    //   name: <div>Status Tahapan</div>,
-    //   selector: (data) => data.status,
-    //   cell: (data) => (
-    //     <div
-    //       className={
-    //         data.status === "valid"
-    //           ? "capitalize text-hijau"
-    //           : "capitalize text-merah"
-    //       }
-    //     >
-    //       {data.status}
-    //     </div>
-    //   ),
-    //   width: "auto",
-    // },
+    {
+      name: <div>Status Tahapan</div>,
+      cell: (data) => (
+        <div
+          className={
+            data.steps[data.steps.length - 1].status !== "valid"
+              ? "capitalize text-kuning"
+              : "capitalize text-hijau"
+          }
+        >
+          {data.steps[data.steps.length - 1].step === "1" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Pembayaran Pendaftaran Terverifikasi"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Pembayaran Pendaftaran"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Pembayaran Pendaftaran Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "2" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Berkas Pendaftaran Terverifikasi"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Berkas Pendaftaran"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Berkas Pendaftaran Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "3" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Hasil Tes Terupload"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Hasil Tes"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Hasil Tes Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "4" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Pendaftaran Ulang Tersetujui"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Pendaftaran Ulang"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Pendaftaran Ulang Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "5" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Data Sudah Lengkap"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Pembayaran Pendidikan"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Pembayaran Pendidikan Tidak Sesuai"}
+            </>
+          )}
+        </div>
+      ),
+      width: "250px",
+    },
+    {
+      name: <div>Aktifitas Terakhir</div>,
+      // selector: (data) => data.childName,
+      cell: (data) =>
+        moment(data.steps[data.steps.length - 1].updatedAt).format(
+          "DD-MM-YYYY"
+        ),
+      width: "125px",
+    },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
+          style={{ width: "auto", padding: "2px 10px" }}
           className="btn-action-merah"
           onClick={() => navigateRegistrationDetails(data.regNumber)}
         >
-          <i className="fa fa-eye"> Detail </i>
+          <i className="fa fa-eye" /> Detail
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "180px",
     },
   ];
-
-  console.log("LAOS === ", validationFilter);
 
   return (
     <>
@@ -133,8 +207,10 @@ const DataRegistrasi = () => {
           data={filteredItems}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          onChangeValidation={handleFilterValidate}
+          onChangeValidation={handleValidationFilter}
           valueValidation={validationFilter}
+          onChangeSteps={handleStepsFilter}
+          valueSteps={stepsFilter}
         />
       </div>
     </>

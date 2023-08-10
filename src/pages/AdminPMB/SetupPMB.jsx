@@ -65,10 +65,11 @@ const SetupPMB = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
+          style={{ width: "auto", padding: "2px 10px" }}
           className="btn-action-merah"
           onClick={() => navigateAdmissionDetails(data.code, data.status)}
         >
-          <i className="fa fa-eye"> Detail </i>
+          <i className="fa fa-eye" /> Detail
         </button>
       ),
       ignoreRowClick: true,

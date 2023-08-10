@@ -33,7 +33,6 @@ export const TextInputModal = ({
           color: "#999CA0",
           fontWeight: "normal",
         }}
-        // className="px-3 py-2 text-sm font-normal text-gray-700 transition ease-in-out bg-gray border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
         type={type}
         id={id}
         name={name}
