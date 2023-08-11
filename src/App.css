@@ -25,7 +25,8 @@
   column-gap: 10px;
   grid-template-columns: 168px 18px 484px;
   justify-content: left;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .drop-container {
