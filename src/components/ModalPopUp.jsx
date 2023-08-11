@@ -215,7 +215,7 @@ const styledSweetAlert = Swal.mixin({
     cancelButton: "btn-putih",
   },
   padding: "30px",
-  width: "auto",
+  maxWidth: "auto",
   buttonsStyling: false,
 });
 
@@ -368,8 +368,18 @@ export const AlertPaymentProof = (url) => {
   styledSweetAlert.fire({
     title: "Bukti Pembayaran",
     imageUrl: domain + url, // Replace with the path to your image
-    imageWidth: 400, // Adjust the width of the image as needed
-    imageHeight: 200, // Adjust the height of the image as needed
+    imageWidth: "100%", // Adjust the width of the image as needed
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
+export const AlertFiles = (url) => {
+  const domain = process.env.REACT_APP_BASE_STATIC_FILE;
+  styledSweetAlert.fire({
+    width: "700px",
+    imageUrl: domain + url, // Replace with the path to your image
+    imageWidth: "100%", // Adjust the width of the image as needed
     showConfirmButton: true,
     confirmButtonText: "Tutup",
   });

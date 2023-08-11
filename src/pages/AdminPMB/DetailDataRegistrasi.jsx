@@ -12,6 +12,7 @@ import { Header } from "../../components";
 import { DataTablesRegistrationDetail } from "../../components/DataTables";
 import {
   AlertConfirmation,
+  AlertFiles,
   AlertMessage,
   AlertPaymentProof,
   AlertStatusSuccess,
@@ -206,12 +207,12 @@ const DetailDataRegistrasi = () => {
               ? "Terverifikasi"
               : dataStep1.status === "inreview"
               ? "Sedang Di Tinjau"
-              : dataStep1.status === "invalid" && "Tidak Terverifikasi"
+              : dataStep1.status === "invalid" && "Gagal Terverifikasi"
             : dataStep5.status === "valid"
             ? "Terverifikasi"
             : dataStep5.status === "inreview"
             ? "Sedang Di Tinjau"
-            : dataStep5.status === "invalid" && "Tidak Terverifikasi"}
+            : dataStep5.status === "invalid" && "Gagal Terverifikasi"}
         </div>
       ),
       width: "auto",
@@ -261,7 +262,7 @@ const DetailDataRegistrasi = () => {
             ? "Terverifikasi"
             : dataStep3.status === "inreview"
             ? "Sedang Di Tinjau"
-            : dataStep3.status === "invalid" && "Tidak Terverifikasi"}
+            : dataStep3.status === "invalid" && "Gagal Terverifikasi"}
         </div>
       ),
       width: "200px",
@@ -355,21 +356,6 @@ const DetailDataRegistrasi = () => {
     },
   ];
 
-  const cardBerkas = [
-    {
-      card: "Pernyataan",
-      // nama: data.statements.answer,
-      // hp: anak?.identityNumber,
-      // alamat: anak?.birthPlace,
-    },
-    {
-      card: "Berkas",
-      nama: ayah?.fullName,
-      hp: ayah?.phoneNumber_2,
-      alamat: ayah?.address,
-    },
-  ];
-
   return (
     <>
       <Header
@@ -388,7 +374,7 @@ const DetailDataRegistrasi = () => {
               <h4 className="text-hijau">Terverifikasi</h4>
             ) : (
               data.status === "inreview" && (
-                <h4 className="text-merah">Tidak Terverifikasi</h4>
+                <h4 className="text-kuning">Belum Terverifikasi</h4>
               )
             )}
           </div>
@@ -616,17 +602,19 @@ const DetailDataRegistrasi = () => {
                   <h4 className="text-hitam">Status :</h4>
                   {dataStep2 !== null ? (
                     <>
-                      {dataStep2?.status === "valid" ? (
+                      {dataStep2.status === "valid" ? (
                         <h4 className="text-hijau">Terverifikasi</h4>
+                      ) : dataStep2.status === "inreview" ? (
+                        <h4 className="text-kuning">Sedang Ditinjau</h4>
                       ) : (
-                        dataStep2?.status === "inreview" && (
-                          <h4 className="text-merah">Tidak Terverifikasi</h4>
+                        dataStep2.status === "invalid" && (
+                          <h4 className="text-merah">Gagal Ditinjau</h4>
                         )
                       )}
                     </>
                   ) : (
                     <>
-                      <h4 className="text-kuning">Belum Mengisi</h4>
+                      <h4 className="text-kuning">Belum Lengkap</h4>
                     </>
                   )}
                 </div>
@@ -640,7 +628,12 @@ const DetailDataRegistrasi = () => {
                       width: "auto",
                       padding: "2px 10px",
                     }}
-                    className="btn-action-merah"
+                    className={
+                      dataStep2 !== null
+                        ? "btn-action-merah"
+                        : "btn-action-disabled"
+                    }
+                    disabled={dataStep2 !== null ? false : true}
                     onClick={() => navigateUbahStatus()}
                   >
                     <i className="fa fa-edit" /> Ubah
@@ -689,62 +682,144 @@ const DetailDataRegistrasi = () => {
               </div>
             ))}
             <hr />
-            {cardBerkas.map((e) => (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+                backgroundColor: "white",
+                width: "100%",
+                borderRadius: "6px",
+                border: "1px solid #E5E7EB",
+              }}
+            >
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "5px",
-                  backgroundColor: "white",
-                  width: "100%",
-                  borderRadius: "6px",
-                  border: "1px solid #E5E7EB",
+                  padding: "15px",
+                  // flexDirection: "column",
                 }}
               >
+                <label style={{ fontWeight: "bold" }} className="text-abu">
+                  Pernyataan
+                </label>
                 <div
                   style={{
-                    padding: "15px",
-                    display: "flex",
-                    flexDirection: "column",
+                    display: "grid",
+                    gridTemplateColumns: "auto auto",
+                    padding: "20px",
                   }}
                 >
-                  <label style={{ fontWeight: "bold" }} className="text-abu">
-                    {e.card}
-                  </label>
-                  {data.statements.map((data) => (
-                    <div>
-                      <form className="grid-container">
-                        <label style={{ fontWeight: "bold" }} className="mt-1">
-                          {data.statement.question}
-                        </label>
+                  {data.statements?.map((data) => (
+                    <div
+                      style={{
+                        display: "grid",
+                        columnGap: "10px",
+                        gridTemplateColumns: "186px auto auto",
+                        justifyContent: "left",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
+                      }}
+                    >
+                      <label style={{ fontWeight: "bold" }} className="mt-1">
+                        {data.statement.question}
+                      </label>
 
-                        <span className="mt-1">:</span>
+                      <span className="mt-1">:</span>
 
-                        <div
-                          style={{
-                            display: "flex",
-                          }}
-                        >
-                          <label className="mt-1">{data.answer}</label>
-                        </div>
-                      </form>
+                      {/* <div
+                        style={{
+                          display: "flex",
+                        }}
+                      > */}
+                      <label className="mt-1">{data.answer}</label>
+                      {/* </div> */}
                     </div>
                   ))}
                 </div>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#F9FAFB",
+                  padding: "15px",
+                  width: "100%",
+                  borderRadius: "0px 0px 6px 6px",
+                }}
+              ></div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+                backgroundColor: "white",
+                width: "100%",
+                borderRadius: "6px",
+                border: "1px solid #E5E7EB",
+              }}
+            >
+              <div
+                style={{
+                  padding: "15px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <label style={{ fontWeight: "bold" }} className="text-abu">
+                  Berkas
+                </label>
                 <div
                   style={{
-                    backgroundColor: "#F9FAFB",
-                    padding: "15px",
-                    width: "100%",
-                    borderRadius: "0px 0px 6px 6px",
+                    display: "grid",
+                    gridTemplateColumns: "auto auto",
+                    padding: "20px",
                   }}
                 >
-                  {/* <button style={{ fontWeight: "bold" }} className="text-merah">
-                    Detail
-                  </button> */}
+                  {data.additionalFiles?.map((data) => (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "auto",
+                        textAlign: "center",
+                        padding: "20px",
+                      }}
+                    >
+                      <div>
+                        <button
+                          title="Tampil Bukti Pembayaran"
+                          onClick={() => {
+                            AlertFiles(data.file);
+                          }}
+                        >
+                          <img
+                            src={
+                              process.env.REACT_APP_BASE_STATIC_FILE + data.file
+                            }
+                            alt="Girl in a jacket"
+                            width="200px"
+                            height="200px"
+                          ></img>
+                        </button>
+                      </div>
+                      <label
+                        style={{ fontWeight: "bold" }}
+                        className="capitalize"
+                      >
+                        {data.label}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+              <div
+                style={{
+                  backgroundColor: "#F9FAFB",
+                  padding: "15px",
+                  width: "100%",
+                  borderRadius: "0px 0px 6px 6px",
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
