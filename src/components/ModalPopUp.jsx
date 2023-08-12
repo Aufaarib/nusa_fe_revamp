@@ -13,7 +13,6 @@ export const CustomStylesStatus = {
     right: "auto",
     bottom: "auto",
     borderRadius: "8px",
-    marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     border: "none",
     cursor: "auto",

@@ -82,7 +82,7 @@ const UpdateStatusStepPage = () => {
       <div className="flex justify-start w-full">
         <button
           onClick={() => navigateRegistrationDetails()}
-          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
+          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
           <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
         </button>

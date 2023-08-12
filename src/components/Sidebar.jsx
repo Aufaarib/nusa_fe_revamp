@@ -7,6 +7,24 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { sidebarMenus, sidebarMenusAdmin } from "../data/initData";
 import { useStateContext } from "../contexts/ContextProvider";
 import logoSaim from "../data/logo-saim.png";
+import { AiOutlineMenu } from "react-icons/ai";
+
+const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
+  <TooltipComponent content={title} position="BottomCenter">
+    <button
+      type="button"
+      onClick={() => customFunc()}
+      style={{ color, float: "right", padding: "23px" }}
+      className="relative text-xl rounded-full hover:bg-soft"
+    >
+      <span
+        style={{ background: dotColor }}
+        className="absolute inline-flex w-2 h-2 rounded-full right-2 top-2"
+      />
+      {icon}
+    </button>
+  </TooltipComponent>
+);
 
 const Sidebar = () => {
   const {
@@ -41,6 +59,8 @@ const Sidebar = () => {
     }
   };
 
+  const handleActiveMenu = () => setActiveMenu(!activeMenu);
+
   useEffect(() => {
     if (role === "ADMIN") {
       setCurrentSidebarMenus(sidebarMenusAdmin);
@@ -54,11 +74,19 @@ const Sidebar = () => {
     <div className="h-screen pb-10 overflow-auto md:overflow-hidden md:hover:overflow-auto w-72">
       {activeMenu && (
         <>
-          <div className="flex items-center justify-center w-72 ">
+          {activeMenu == true && screenSize <= 900 && (
+            <NavButton
+              title="Menu"
+              customFunc={handleActiveMenu}
+              color={currentColor}
+              icon={<AiOutlineMenu />}
+            />
+          )}
+          <div className="flex items-center justify-center mt-6 w-72 ">
             <Link
               // to="/"
               onClick={handleCloseSideBar}
-              className="flex items-center gap-3 text-xl font-extrabold tracking-tight mt-7 dark:text-white text-slate-900"
+              className="flex items-center gap-3 text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <img className="w-32 h-32" src={logoSaim} alt="SAIM" />
             </Link>

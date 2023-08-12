@@ -69,10 +69,6 @@ const Login = () => {
     <div className="justify-end lg:flex">
       <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
         <img className="logo-login" src={logoSaim} alt="SAIM" />
-
-        <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-          Copyright 2023 PT. Nafisha Universal Network
-        </p>
       </section>
 
       <section className="line-separator">
@@ -169,6 +165,9 @@ const Login = () => {
               Daftar
             </Link>
           </div>
+          <p className="text-sm text-center mt-9 text-merah">
+            Copyright 2023 PT. Nafisha Universal Network
+          </p>
         </form>
       </section>
     </div>

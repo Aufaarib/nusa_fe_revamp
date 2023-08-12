@@ -1,27 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
-import {
-  FaCheckCircle,
-  FaEye,
-  FaInfoCircle,
-  FaLowVision,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import assalamualaikum from "../../data/assalamualaikum.png";
 import logoSaim from "../../data/logo-saim.png";
 
 import { useStateContext } from "../../contexts/ContextProvider";
 
-import { IconButton, Input, InputAdornment } from "@mui/material";
-import { validateEmail } from "../../api/Registrasi";
 import axios from "../../api/axios";
-import {
-  AlertLoginFailed,
-  AlertNetwork,
-  AlertRegisterFailed,
-  AlertStatusFailed,
-} from "../../components/ModalPopUp";
+import { AlertStatusFailed } from "../../components/ModalPopUp";
 import { TextInputPassword } from "../../components/TextInput";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -148,18 +134,14 @@ const Register = () => {
       <div className="justify-end lg:flex">
         <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
           <img className="logo-login" src={logoSaim} alt="SAIM" />
-
-          <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2023 PT. Nafisha Universal Network
-          </p>
         </section>
 
         <section className="line-separator">
           <div className="line" />
         </section>
 
-        <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block mt-1 mb-7 px-7">
+        <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
+          <form onSubmit={handleSubmit} className="block mt-1 mb-7">
             <div className="relative block xl:w-480">
               <div
                 style={{
@@ -466,6 +448,9 @@ const Register = () => {
                 Login
               </Link>
             </div>
+            <p className="text-sm text-center mt-9 text-merah">
+              Copyright 2023 PT. Nafisha Universal Network
+            </p>
           </form>
         </section>
       </div>

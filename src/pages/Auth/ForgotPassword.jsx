@@ -60,14 +60,22 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="justify-end min-h-screen lg:flex">
-        <section className="flex flex-wrap justify-center lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block">
+      <div className="justify-end lg:flex">
+        <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
+          <img className="logo-login" src={logoSaim} alt="SAIM" />
+        </section>
+
+        <section className="line-separator">
+          <div className="line" />
+        </section>
+
+        <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
+          <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                marginBottom: "15px",
+                marginBottom: "20px",
               }}
             >
               <label
@@ -173,26 +181,10 @@ const ForgotPassword = () => {
                 Login
               </Link>
             </div>
+            <p className="text-sm text-center mt-9 text-merah">
+              Copyright 2023 PT. Nafisha Universal Network
+            </p>
           </form>
-        </section>
-
-        <section className="top-0 left-0 flex items-center justify-center min-h-full lg:fixed lg:w-1/2">
-          <img
-            className="lg:h-96 lg:w-96 sm:w-56 sm:h-56 xs:w-1/3 xs:h-1/3"
-            src={logoSaim}
-            alt="SAIM"
-          />
-
-          <p className="absolute text-sm text-center xs:invisible lg:visible bottom-7 mt-7 text-merah">
-            Copyright 2023 PT. Nafisha Universal Network
-          </p>
-        </section>
-
-        <section
-          style={{ left: "678px" }}
-          className="top-0 flex items-center justify-center min-h-full lg:fixed"
-        >
-          <div style={{ borderRight: "1px solid #8F8F8F", height: "500px" }} />
         </section>
       </div>
     </>
