@@ -502,7 +502,7 @@ export function DataTablesAdmissionDetail({
   // console.log("KOLLAAOOOO === ", descSort);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("20");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -583,9 +583,9 @@ export function DataTablesAdmissionDetail({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage("20")}
+                  onClick={() => setItemsPerPage(20)}
                   className={
-                    itemsPerPage === "20"
+                    itemsPerPage === 20
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -593,9 +593,9 @@ export function DataTablesAdmissionDetail({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("50")}
+                  onClick={() => setItemsPerPage(50)}
                   className={
-                    itemsPerPage === "50"
+                    itemsPerPage === 50
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -603,9 +603,9 @@ export function DataTablesAdmissionDetail({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("100")}
+                  onClick={() => setItemsPerPage(100)}
                   className={
-                    itemsPerPage === "100"
+                    itemsPerPage === 100
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -865,10 +865,10 @@ export function DataTablesPMBWithoutButton({
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("20");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
-    setItemsPerPage(event.target.value);
+    setItemsPerPage(event);
     setCurrentPage(0);
   };
 
@@ -884,7 +884,7 @@ export function DataTablesPMBWithoutButton({
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
-    // console.log("PAAD", itemsPerPage);
+    console.log("PAAD", itemsPerPage);
     setItemsPerPage(itemsPerPage);
   };
 
@@ -957,9 +957,9 @@ export function DataTablesPMBWithoutButton({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage("20")}
+                  onClick={() => handleItemsPerPageChange(20)}
                   className={
-                    itemsPerPage === "20"
+                    itemsPerPage === 20
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -967,9 +967,9 @@ export function DataTablesPMBWithoutButton({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("50")}
+                  onClick={() => handleItemsPerPageChange(50)}
                   className={
-                    itemsPerPage === "50"
+                    itemsPerPage === 50
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -977,9 +977,9 @@ export function DataTablesPMBWithoutButton({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("100")}
+                  onClick={() => handleItemsPerPageChange(100)}
                   className={
-                    itemsPerPage === "100"
+                    itemsPerPage === 100
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1149,7 +1149,7 @@ export function DataTablesPMB({
   // console.log("KOLLAAOOOO === ", descSort);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("20");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -1229,9 +1229,9 @@ export function DataTablesPMB({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage("20")}
+                  onClick={() => setItemsPerPage(20)}
                   className={
-                    itemsPerPage === "20"
+                    itemsPerPage === 20
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1239,9 +1239,9 @@ export function DataTablesPMB({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("50")}
+                  onClick={() => setItemsPerPage(50)}
                   className={
-                    itemsPerPage === "50"
+                    itemsPerPage === 50
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1249,9 +1249,9 @@ export function DataTablesPMB({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("100")}
+                  onClick={() => setItemsPerPage(100)}
                   className={
-                    itemsPerPage === "100"
+                    itemsPerPage === 100
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1414,7 +1414,7 @@ export function DataTables({
         `;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("20");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
@@ -1494,9 +1494,9 @@ export function DataTables({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage("20")}
+                  onClick={() => setItemsPerPage(20)}
                   className={
-                    itemsPerPage === "20"
+                    itemsPerPage === 20
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1504,9 +1504,9 @@ export function DataTables({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("50")}
+                  onClick={() => setItemsPerPage(50)}
                   className={
-                    itemsPerPage === "50"
+                    itemsPerPage === 50
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1514,9 +1514,9 @@ export function DataTables({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("100")}
+                  onClick={() => setItemsPerPage(100)}
                   className={
-                    itemsPerPage === "100"
+                    itemsPerPage === 100
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1757,9 +1757,9 @@ export function DataTablesSaring({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage("20")}
+                  onClick={() => setItemsPerPage(20)}
                   className={
-                    itemsPerPage === "20"
+                    itemsPerPage === 20
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1767,9 +1767,9 @@ export function DataTablesSaring({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("50")}
+                  onClick={() => setItemsPerPage(50)}
                   className={
-                    itemsPerPage === "50"
+                    itemsPerPage === 50
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
@@ -1777,9 +1777,9 @@ export function DataTablesSaring({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage("100")}
+                  onClick={() => setItemsPerPage(100)}
                   className={
-                    itemsPerPage === "100"
+                    itemsPerPage === 100
                       ? "btn-rows-per-page-active"
                       : "btn-rows-per-page"
                   }
