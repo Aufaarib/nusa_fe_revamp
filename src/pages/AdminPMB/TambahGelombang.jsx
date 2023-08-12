@@ -109,12 +109,11 @@ export default function TambahGelombang() {
           title="Tambah Gelombang"
         />
       </div>
-      <div style={{ marginLeft: "60px" }}>
+      <div style={{ padding: "44px 154px 0" }}>
         <p
           style={{
             fontSize: "24px",
             marginBottom: "50px",
-            marginTop: "50px",
           }}
           className="ml-1 font-bold text-merah"
         >

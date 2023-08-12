@@ -48,7 +48,7 @@ const UpdateStatusStepPage = () => {
         at={code}
         title={code}
       />
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ padding: "44px 154px 0" }}>
         <section>
           <>
             <DropdownValidasiStep

@@ -139,25 +139,45 @@ export function getAdmissionAnswer(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
+
 export function getAdmissionRegistration(setData, setSts) {
+  const page = 1;
+  const data = [];
   axios
     .get(
-      process.env.REACT_APP_BASE_URL + "/admission/registration?pageSize=100",
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration?pageSize=100&page=${page}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }
     )
     .then((res) => {
-      let data = [];
       res.data.body.forEach((element) => {
         if (element.steps.length > 0) {
           data.push(element);
         }
       });
-
-      console.log("DAFKAS === ", data);
-
-      setData(data);
+      if (res.data.body.length === 100) {
+        axios
+          .get(
+            process.env.REACT_APP_BASE_URL +
+              `/admission/registration?pageSize=100&page=${page + 1}`,
+            {
+              headers: { authorization: localStorage.getItem("TOKEN") },
+            }
+          )
+          .then((res) => {
+            if (res.data.body !== null) {
+              res.data.body.forEach((element) => {
+                if (element.steps.length > 0) {
+                  data.push(element);
+                }
+              });
+            }
+            setData(data);
+            console.log("DAFKAS === ", data);
+          });
+      }
       setSts({ type: "success" });
     })
     .catch((error) => {

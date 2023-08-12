@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { getAdmissionRegistration } from "../api/Registrasi";
 
 //Filter Components
 const Input = styled.input.attrs((props) => ({
@@ -761,6 +762,8 @@ export function DataTablesPMBWithoutButton({
   valueValidation,
   onChangeSteps,
   valueSteps,
+  setData,
+  setSts,
 }) {
   const CustomStylesTable = {
     table: {
@@ -884,19 +887,21 @@ export function DataTablesPMBWithoutButton({
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
-    console.log("PAAD", itemsPerPage);
+    console.log("PAAD", selected);
     setItemsPerPage(itemsPerPage);
   };
 
   const offset = currentPage * itemsPerPage;
   let currentPageData = [];
-  let pageCount = 0;
+  let pageCount = 1;
 
   if (data !== null) {
     currentPageData =
       itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
     pageCount = Math.ceil(data.length / itemsPerPage);
   }
+
+  // console.log("DATA === ", data);
 
   return (
     <>

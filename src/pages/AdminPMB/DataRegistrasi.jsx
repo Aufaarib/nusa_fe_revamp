@@ -1,9 +1,9 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAdmissionRegistration } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesPMBWithoutButton } from "../../components/DataTables";
-import moment from "moment";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -13,6 +13,10 @@ const DataRegistrasi = () => {
 
   const [validationFilter, setValidationFilter] = useState("inreview");
   const [stepsFilter, setStepsFilter] = useState("inreview");
+
+  useEffect(() => {
+    getAdmissionRegistration(setData, setSts);
+  }, []);
 
   const handleValidationFilter = (event) => {
     const val = event.target.value;
@@ -56,10 +60,6 @@ const DataRegistrasi = () => {
         data.childName.toLowerCase().includes(filterText.toLowerCase())
     );
   }
-
-  useEffect(() => {
-    getAdmissionRegistration(setData, setSts);
-  }, []);
 
   const navigateRegistrationDetails = (code) => {
     localStorage.setItem("REG_NUMBER", code);
@@ -211,6 +211,8 @@ const DataRegistrasi = () => {
           valueValidation={validationFilter}
           onChangeSteps={handleStepsFilter}
           valueSteps={stepsFilter}
+          setData={setData}
+          setSts={setSts}
         />
       </div>
     </>

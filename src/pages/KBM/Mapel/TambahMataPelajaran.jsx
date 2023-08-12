@@ -85,8 +85,14 @@ export default function TambahMataPelajaran() {
           title="Tambah Mata Pelajaran"
         />
       </div>
-      <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
+      <div style={{ padding: "44px 154px 0" }}>
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Tambah Mata Pelajaran
         </p>
         <article>

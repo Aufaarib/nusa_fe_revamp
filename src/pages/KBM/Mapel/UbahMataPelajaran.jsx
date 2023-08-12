@@ -74,8 +74,14 @@ export default function UbahMataPelajaran() {
           title="Ubah Mata Pelajaran"
         />
       </div>
-      <div style={{ marginLeft: "60px" }}>
-        <p className="text-3xl mb-16 mt-5 font-bold">
+      <div style={{ padding: "44px 154px 0" }}>
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Ubah Mata Pelajaran
         </p>
         <article>

@@ -62,16 +62,6 @@ const Sidebar = () => {
             >
               <img className="w-32 h-32" src={logoSaim} alt="SAIM" />
             </Link>
-            {/* <TooltipComponent content="Menu" position="BottomCenter">
-              <button
-                type="button"
-                onClick={() => setActiveMenu(!activeMenu)}
-                style={{ color: currentColor }}
-                className="absolute top-0 block p-3 mt-4 text-xl rounded-full right-3 hover:bg-soft md:hidden"
-              >
-                <MdOutlineCancel />
-              </button>
-            </TooltipComponent> */}
           </div>
           <div className="p-3 mt-7 w-72">
             {currentSidebarMenus.map((item, index) => (
