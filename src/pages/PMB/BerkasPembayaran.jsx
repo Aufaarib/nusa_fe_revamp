@@ -75,7 +75,7 @@ const BerkasPembayaran = () => {
       .then(() => {
         AlertStatusSuccess(
           navigateListSteps,
-          "Bukti Transfer Biaya Pendaftaran Berhasil Terupload",
+          "Upload Berhasil",
           "Kembali Ke Halaman Tahapan PMB"
         );
       })

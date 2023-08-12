@@ -30,8 +30,9 @@ export const TextInputModal = ({
           height: "40px",
           fontSize: "14px",
           padding: "10px",
-          color: "#999CA0",
+          color: "black",
           fontWeight: "normal",
+          outline: "none",
         }}
         type={type}
         id={id}

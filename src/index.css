@@ -39,10 +39,10 @@
     @apply text-sm;
   }
 
-  a:hover {
+  /* a:hover {
     @apply text-pink;
     cursor: pointer;
-  }
+  } */
 
   ol {
     list-style: decimal;

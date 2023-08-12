@@ -239,7 +239,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           </p>
                           <br />
                           <p>
-                            Nama Lengkap : {""}
+                            Nama Akun : {""}
                             <strong className="capitalize">{Nama}</strong>
                             <br />
                             <hr />
