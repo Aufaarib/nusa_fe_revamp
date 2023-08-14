@@ -10,7 +10,9 @@ import axios from "./axios";
 
 export function getKelompokMapel(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_NUSA + "/group-course/fetch")
+    .get(process.env.REACT_APP_BASE_URL + "/subject/group", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
       setData(res.data.data);
       setSts({ type: "success" });

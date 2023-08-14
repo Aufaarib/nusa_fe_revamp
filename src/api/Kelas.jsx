@@ -10,13 +10,13 @@ import axios from "./axios";
 
 export function getKelas(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/classes")
+    .get(process.env.REACT_APP_BASE_URL + "/classes", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
-      for (const i of res.data.body) {
-        setData(i);
-        console.log(i);
-        setSts({ type: "success" });
-      }
+      console.log(res.data.body);
+      setData(res.data.body);
+      setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -33,12 +33,19 @@ export function getKelas(setData, setSts) {
   //     });
 }
 
-export function updateKelas(setSts, path, name, description, id) {
+export function updateKelas(setSts, path, grade, name, description, id) {
   axios
-    .post(process.env.REACT_APP_NUSA + `/class/update/${id}`, {
-      name,
-      description,
-    })
+    .put(
+      process.env.REACT_APP_BASE_URL + `/classes/${id}`,
+      {
+        grade,
+        name,
+        description,
+      },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setSts({ type: "success" });
       AlertStatusUpdateDataSuccess(path);
@@ -49,12 +56,19 @@ export function updateKelas(setSts, path, name, description, id) {
     });
 }
 
-export function postKelas(setSts, path, name, description) {
+export function postKelas(setSts, path, grade, name, description) {
   axios
-    .post(process.env.REACT_APP_NUSA + "/class/create", {
-      name,
-      description,
-    })
+    .post(
+      process.env.REACT_APP_BASE_URL + "/classes",
+      {
+        grade,
+        name,
+        description,
+      },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setSts({ type: "success" });
       AlertStatusTambahSuccess(path);

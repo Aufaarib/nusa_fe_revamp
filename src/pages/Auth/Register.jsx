@@ -141,7 +141,7 @@ const Register = () => {
         </section>
 
         <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block mt-1 mb-7">
+          <form onSubmit={handleSubmit} className="block mt-1 mb-7 px-7">
             <div className="relative block xl:w-480">
               <div
                 style={{
@@ -162,7 +162,7 @@ const Register = () => {
               </div>
             </div>
             {/* NAMA LENGKAP */}
-            <div className="relative block w-full lg:w-480">
+            <div className="relative block w-full xl:w-480">
               <label htmlFor="username" className="flex mt-1 mb-1 form-label">
                 Nama Lengkap
               </label>

@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -5,10 +6,10 @@ import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import TextInput from "./TextInput";
-import moment from "moment/moment";
 
 import { useStateContext } from "../contexts/ContextProvider";
 
+import { getAdmissionRegistrationParentsIbu } from "../api/Registrasi";
 import {
   DropdownDatePickers,
   DropdownRadioInputBiological,
@@ -16,14 +17,8 @@ import {
 } from "./Dropdown";
 import Header from "./Header";
 import {
-  getAdmissionRegistrationParents,
-  getAdmissionRegistrationParentsIbu,
-} from "../api/Registrasi";
-import {
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
 
 // const PARENTS_URL = "/api/pmb/parent";
@@ -93,6 +88,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
     setIsLoading(true);
 
     const fullName = parent.fullName;
+    const religion = parent.religion;
     const familyIdentityNumber = parent.familyIdentityNumber;
     const identityNumber = parent.identityNumber;
     const gender = "female";
@@ -119,6 +115,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
         process.env.REACT_APP_BASE_URL + "/user/parent",
         {
           fullName,
+          religion,
           familyIdentityNumber,
           identityNumber,
           gender,
@@ -160,6 +157,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
 
     const code = admissionParentsData.code;
     const fullName = parent.fullName;
+    const religion = parent.religion;
     const familyIdentityNumber = parent.familyIdentityNumber;
     const identityNumber = parent.identityNumber;
     const gender = "female";
@@ -186,6 +184,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
         process.env.REACT_APP_BASE_URL + `/user/parent/${code}`,
         {
           fullName,
+          religion,
           familyIdentityNumber,
           identityNumber,
           gender,
@@ -253,6 +252,16 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
                 onChange={updateParents}
                 value={parent.fullName}
                 placeholder={admissionParentsData.fullName}
+                disable={false}
+                required={true}
+              />
+              <TextInput
+                label="Agama"
+                type="text"
+                id="religion"
+                onChange={updateParents}
+                value={parent.religion}
+                placeholder={admissionParentsData.religion}
                 disable={false}
                 required={true}
               />
@@ -459,6 +468,15 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
                 onChange={updateParents}
                 value={parent.fullName}
                 // placeholder={admissionParentsData.fullName}
+                disable={false}
+                required={true}
+              />
+              <TextInput
+                label="Agama"
+                type="text"
+                id="religion"
+                onChange={updateParents}
+                value={parent.religion}
                 disable={false}
                 required={true}
               />

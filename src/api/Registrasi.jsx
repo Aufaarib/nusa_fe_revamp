@@ -247,17 +247,19 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       setDataAnak(res.data.body.applicant);
       setAmount(res.data.body.admissionPhase);
       setData(res.data.body);
-      for (const i of res.data.body.user.parents) {
-        switch (i.relationship) {
-          case "ayah":
-            setDataAyah(i);
-          case "ibu":
-            setDataIbu(i);
-          case "perwalian":
-            setDataWali(i);
-          // setSts(res.data.code);
-        }
-      }
+      const ayahData = res.data.body.user.parents.find(
+        (item) => item.relationship === "ayah"
+      );
+      const ibuData = res.data.body.user.parents.find(
+        (item) => item.relationship === "ibu"
+      );
+      const waliData = res.data.body.user.parents.find(
+        (item) => item.relationship === "perwalian"
+      );
+      setDataAyah(ayahData);
+      setDataIbu(ibuData);
+      setDataWali(waliData);
+      // setSts(res.data.code);
       for (const i of res.data.body.payments) {
         setEdu(i);
       }
@@ -270,83 +272,6 @@ export function getAdmissionRegistrationByRegNumberAdmin(
           setDataStep3(i);
         } else if (i.step === "5") {
           setDataStep5(i);
-        }
-      }
-    })
-    .catch((error) => {});
-}
-
-export function getAdmissionRegistrationByRegNumberAdminAnak(setDataAnak) {
-  const regNumber = localStorage.getItem("REG_NUMBER");
-  axios
-    .get(
-      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then((res) => {
-      setDataAnak(res.data.body.applicant);
-      console.log("ANAK === ", res.data.body.applicant);
-    })
-    .catch((error) => {});
-}
-
-export function getAdmissionRegistrationByRegNumberAdminAyah(setDataAyah) {
-  const regNumber = localStorage.getItem("REG_NUMBER");
-  axios
-    .get(
-      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then((res) => {
-      for (const i of res.data.body.user.parents) {
-        switch (i.relationship) {
-          case "ayah":
-            setDataAyah(i);
-          // setSts(res.data.code);
-        }
-      }
-    })
-    .catch((error) => {});
-}
-export function getAdmissionRegistrationByRegNumberAdminIbu(setDataIbu) {
-  const regNumber = localStorage.getItem("REG_NUMBER");
-  axios
-    .get(
-      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then((res) => {
-      for (const i of res.data.body.user.parents) {
-        switch (i.relationship) {
-          case "ibu":
-            setDataIbu(i);
-          // setSts(res.data.code);
-        }
-      }
-    })
-    .catch((error) => {});
-}
-export function getAdmissionRegistrationByRegNumberAdminWali(setDataWali) {
-  const regNumber = localStorage.getItem("REG_NUMBER");
-  axios
-    .get(
-      process.env.REACT_APP_BASE_URL + `/admission/registration/${regNumber}`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then((res) => {
-      for (const i of res.data.body.user.parents) {
-        switch (i.relationship) {
-          case "perwalian":
-            setDataWali(i);
-          // setSts(res.data.code);
         }
       }
     })

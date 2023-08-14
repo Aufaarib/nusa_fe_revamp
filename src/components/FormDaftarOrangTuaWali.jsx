@@ -99,6 +99,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
     setIsLoading(true);
 
     const fullName = parent.fullName;
+    const religion = parent.religion;
     const familyIdentityNumber = parent.familyIdentityNumber;
     const identityNumber = parent.identityNumber;
     const gender = parent.gender;
@@ -127,6 +128,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
         process.env.REACT_APP_BASE_URL + "/user/parent",
         {
           fullName,
+          religion,
           familyIdentityNumber,
           identityNumber,
           gender,
@@ -167,6 +169,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
 
     const code = admissionParentsData.code;
     const fullName = parent.fullName;
+    const religion = parent.religion;
     const familyIdentityNumber = parent.familyIdentityNumber;
     const identityNumber = parent.identityNumber;
     const gender = parent.gender;
@@ -195,6 +198,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
         process.env.REACT_APP_BASE_URL + `/user/parent/${code}`,
         {
           fullName,
+          religion,
           familyIdentityNumber,
           identityNumber,
           gender,
@@ -264,7 +268,17 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 placeholder={admissionParentsData.fullName}
                 disable={false}
                 required={true}
-              />{" "}
+              />
+              <TextInput
+                label="Agama"
+                type="text"
+                id="religion"
+                onChange={updateParents}
+                value={parent.religion}
+                placeholder={admissionParentsData.religion}
+                disable={false}
+                required={true}
+              />
               <br />
               <DropdownRadioInputGender
                 required={true}
@@ -517,7 +531,15 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="fullName"
                 onChange={updateParents}
                 value={parent.fullName}
-                // placeholder={admissionParentsData.fullName}
+                disable={false}
+                required={true}
+              />
+              <TextInput
+                label="Agama"
+                type="text"
+                id="religion"
+                onChange={updateParents}
+                value={parent.religion}
                 disable={false}
                 required={true}
               />

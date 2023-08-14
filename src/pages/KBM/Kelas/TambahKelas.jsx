@@ -1,45 +1,29 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { postKelas } from "../../../api/Kelas";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import { postKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahKelas() {
+  const [grade, setGrade] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [status, setStatus] = useState(undefined);
-  const created_by = localStorage.getItem("NAMA");
+  // const created_by = localStorage.getItem("NAMA");
   const navigate = useNavigate();
   const path = "/admin/list-kelas";
 
   const postData = (e) => {
     e.preventDefault();
 
-    if (name.length === 0 || description.length === 0) {
+    if (grade.length === 0 || name.length === 0 || description.length === 0) {
       AlertEmpty();
     } else {
-      postKelas(setStatus, path, name, description, created_by);
+      postKelas(setStatus, path, grade, name, description);
       // setisOpenStatus(true);
     }
   };
-
-  // const closeModalEmpty = () => {
-  //   setisOpenEmpty(false);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setStatus("");
-  // };
 
   const navigateKelas = () => {
     navigate(path);
@@ -68,7 +52,14 @@ export default function TambahKelas() {
         </p>
         <article>
           <TextInput
-            label="Nama"
+            label="Kelas"
+            type="text"
+            name="code"
+            onChange={(e) => setGrade(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Nama Kelas"
             type="text"
             name="code"
             onChange={(e) => setName(e.target.value)}

@@ -6,7 +6,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   approvedRegistration,
   getAdmissionRegistrationByRegNumberAdmin,
-  updateAdmissionSteps,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesRegistrationDetail } from "../../components/DataTables";
@@ -15,10 +14,8 @@ import {
   AlertFiles,
   AlertMessage,
   AlertPaymentProof,
-  AlertStatusSuccess,
-  AlertValidateRegistration,
+  ModalDetail,
 } from "../../components/ModalPopUp";
-import TextInput from "../../components/TextInput";
 
 const DetailDataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -40,16 +37,9 @@ const DetailDataRegistrasi = () => {
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
 
-  // console.log("DATA === ", data);
-  // console.log("STEP1 === ", dataStep1);
-  // console.log("STEP2 === ", dataStep2);
-  // console.log("STEP3 === ", dataStep3);
-  // console.log("STEP5 === ", dataStep5);
-  // console.log("PEMBAYARAN === ", amount);
-  // console.log("ANAK === ", anak);
-  // console.log("AYAH === ", ayah);
-  // console.log("IBU === ", ibu);
-  // console.log("WALI === ", wali);
+  const [isOpenDetail, setisOpenDetail] = useState(false);
+  const [cardOpened, setisCardOpened] = useState("");
+  const [detailData, setDetailData] = useState("");
 
   const fetchEducationPayment = () => {
     setFetched("5");
@@ -87,26 +77,6 @@ const DetailDataRegistrasi = () => {
     );
   };
 
-  const fetchAnak = () => {
-    setFetchedRegData("fetchAnak");
-    fetchAdmissionRegistration();
-  };
-
-  const fetchAyah = () => {
-    setFetchedRegData("fetchAyah");
-    fetchAdmissionRegistration();
-  };
-
-  const fetchIbu = () => {
-    setFetchedRegData("fetchIbu");
-    fetchAdmissionRegistration();
-  };
-
-  const fetchWali = () => {
-    setFetchedRegData("fetchWali");
-    fetchAdmissionRegistration();
-  };
-
   useEffect(() => {
     if (updatedFetched === undefined) {
       setFetched("1");
@@ -138,14 +108,14 @@ const DetailDataRegistrasi = () => {
   };
 
   const columnsPayments = [
-    {
-      cell: (data) => (
-        <div>
-          <Checkbox></Checkbox>
-        </div>
-      ),
-      width: "60px",
-    },
+    // {
+    //   cell: (data) => (
+    //     <div>
+    //       <Checkbox></Checkbox>
+    //     </div>
+    //   ),
+    //   width: "60px",
+    // },
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -235,14 +205,14 @@ const DetailDataRegistrasi = () => {
   ];
 
   const columnTestResult = [
-    {
-      cell: (data) => (
-        <div>
-          <Checkbox></Checkbox>
-        </div>
-      ),
-      width: "60px",
-    },
+    // {
+    //   cell: (data) => (
+    //     <div>
+    //       <Checkbox></Checkbox>
+    //     </div>
+    //   ),
+    //   width: "60px",
+    // },
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -355,6 +325,27 @@ const DetailDataRegistrasi = () => {
       alamat: wali?.address,
     },
   ];
+
+  // console.log("OOOOO === ", data.statements);
+
+  const handleModalDetail = (card) => {
+    console.log("PUNYA === ", card);
+    setisCardOpened(card);
+    if (card === "Anak") {
+      setDetailData(anak);
+    } else if (card === "Ayah") {
+      setDetailData(ayah);
+    } else if (card === "Ibu") {
+      setDetailData(ibu);
+    } else if (card === "Wali") {
+      setDetailData(wali);
+    }
+    setisOpenDetail(true);
+  };
+
+  const closeModal = () => {
+    setisOpenDetail(false);
+  };
 
   return (
     <>
@@ -548,7 +539,7 @@ const DetailDataRegistrasi = () => {
                   textAlign: "center",
                 }}
               >
-                <h1>Data Tidak Ditemukan</h1>
+                <h1>Hasil Tes Belum Di Upload</h1>
                 <button
                   onClick={() => navigateUploadHasilTes()}
                   className="btn-merah"
@@ -675,9 +666,23 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  <button style={{ fontWeight: "bold" }} className="text-merah">
-                    Detail
-                  </button>
+                  {data.nama !== undefined ? (
+                    <button
+                      onClick={() => handleModalDetail(data.card)}
+                      style={{ fontWeight: "bold" }}
+                      className="text-merah"
+                    >
+                      Detail
+                    </button>
+                  ) : (
+                    <button
+                      style={{ fontWeight: "bold" }}
+                      className="text-abu"
+                      disabled
+                    >
+                      Belum Mengisi
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -696,7 +701,6 @@ const DetailDataRegistrasi = () => {
               <div
                 style={{
                   padding: "15px",
-                  // flexDirection: "column",
                 }}
               >
                 <label style={{ fontWeight: "bold" }} className="text-abu">
@@ -725,14 +729,7 @@ const DetailDataRegistrasi = () => {
                       </label>
 
                       <span className="mt-1">:</span>
-
-                      {/* <div
-                        style={{
-                          display: "flex",
-                        }}
-                      > */}
                       <label className="mt-1">{data.answer}</label>
-                      {/* </div> */}
                     </div>
                   ))}
                 </div>
@@ -744,7 +741,26 @@ const DetailDataRegistrasi = () => {
                   width: "100%",
                   borderRadius: "0px 0px 6px 6px",
                 }}
-              ></div>
+              >
+                {data.statements?.length !== 0 ? (
+                  <button
+                    // onClick={() => handleModalDetail(data.card)}
+                    style={{ fontWeight: "bold" }}
+                    className="text-hijau"
+                    disabled
+                  >
+                    Lengkap
+                  </button>
+                ) : (
+                  <button
+                    style={{ fontWeight: "bold" }}
+                    className="text-abu"
+                    disabled
+                  >
+                    Belum Mengisi
+                  </button>
+                )}
+              </div>
             </div>
             <div
               style={{
@@ -818,7 +834,26 @@ const DetailDataRegistrasi = () => {
                   width: "100%",
                   borderRadius: "0px 0px 6px 6px",
                 }}
-              />
+              >
+                {data.additionalFiles?.length !== 0 ? (
+                  <button
+                    // onClick={() => handleModalDetail(data.card)}
+                    style={{ fontWeight: "bold" }}
+                    className="text-hijau"
+                    disabled
+                  >
+                    Lengkap
+                  </button>
+                ) : (
+                  <button
+                    style={{ fontWeight: "bold" }}
+                    className="text-abu"
+                    disabled
+                  >
+                    Belum Mengisi
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -831,6 +866,12 @@ const DetailDataRegistrasi = () => {
           <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
         </Link>
       </div>
+      <ModalDetail
+        isOpenCostCenter={isOpenDetail}
+        closeModalCostCenter={closeModal}
+        card={cardOpened}
+        data={detailData}
+      />
     </>
   );
 };

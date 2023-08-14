@@ -42,7 +42,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
   const [sts, setSts] = useState(false);
   const [namaDepan, setFirstName] = useState("");
   const [namaTengah, setMiddleName] = useState("");
-  const [agama, setReligion] = useState("");
+  // const [agama, setReligion] = useState("");
   const [namaAkhir, setLastName] = useState("");
   const [statusAnak, setChildStatus] = useState("");
   const [anakKe, setChildNumber] = useState("");
@@ -79,7 +79,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
     setIsLoading(true);
     const firstName = namaDepan;
     const middleName = namaTengah;
-    const religion = agama;
+    const religion = "Islam";
     const lastName = namaAkhir;
     const childStatus = statusAnak;
     const childNumber = parseInt(anakKe);
@@ -171,7 +171,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
     setIsLoading(true);
     const firstName = namaDepan;
     const middleName = namaTengah;
-    const religion = agama;
+    const religion = "Islam";
     const lastName = namaAkhir;
     const childStatus = statusAnak;
     const childNumber = parseInt(anakKe);
@@ -293,7 +293,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 disable={false}
                 required={true}
               />
-              <TextInput
+              {/* <TextInput
                 label="Agama"
                 type="text"
                 id="religion"
@@ -303,7 +303,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 // defaultValue={admissionApplicantData.religion}
                 disable={false}
                 required={true}
-              />
+              /> */}
               <TextInput
                 label="Nama Tengah"
                 type="text"
@@ -575,7 +575,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 disable={false}
                 required={true}
               />
-              <TextInput
+              {/* <TextInput
                 label="Agama"
                 type="text"
                 id="religion"
@@ -584,7 +584,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 // placeholder={admissionApplicantData.religion}
                 disable={false}
                 required={true}
-              />
+              /> */}
               <TextInput
                 label="Nama Tengah"
                 type="text"

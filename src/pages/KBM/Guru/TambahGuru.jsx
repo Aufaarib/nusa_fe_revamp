@@ -116,14 +116,6 @@ export default function TambahGuru() {
             checked={gender}
           />
           <br />
-          {/* <TextInput
-            label="Jenis Kelamin"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setGender(e.target.value)}
-            required={true}
-          /> */}
 
           <TextInput
             label="Religion"
@@ -139,7 +131,7 @@ export default function TambahGuru() {
             type="text"
             id="group"
             name="code"
-            onChange={(e) => setBirthPlace(e.element.value)}
+            onChange={(e) => setBirthPlace(e.target.value)}
             required={true}
           />
 
@@ -149,15 +141,6 @@ export default function TambahGuru() {
             // value={parent.birthDate}
             change={(e) => setBirthDate(e.element.value)}
           />
-
-          {/* <TextInput
-            label="Tanggal Lahir"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setBirthDate(e.target.value)}
-            required={true}
-          /> */}
 
           <div className="btn-form">
             <button

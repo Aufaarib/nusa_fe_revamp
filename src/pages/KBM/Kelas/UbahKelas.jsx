@@ -11,10 +11,9 @@ import { useState } from "react";
 import { Header } from "../../../components";
 
 export default function UbahKelas() {
+  const [grade, setGrade] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,22 +24,12 @@ export default function UbahKelas() {
     e.preventDefault();
     const id = location.state.id;
 
-    if (name.trim().length === 0 || description.trim().length === 0) {
+    if (grade === "" || name === "" || description === "") {
       AlertEmpty();
     } else {
-      updateKelas(setSts, path, name, description, id);
-      // setisOpenStatus(true);
+      updateKelas(setSts, path, grade, name, description, id);
     }
   };
-
-  // const closeModalEmpty = () => {
-  //   setisOpenEmpty(false);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
 
   const navigateKelas = () => {
     navigate(path);
@@ -71,16 +60,23 @@ export default function UbahKelas() {
           {/* COL 1 */}
           <section>
             <TextInput
-              label="Nama"
+              label="Kelas"
               type="text"
-              placeholder={location.state.name}
+              defaultValue={location.state.grade}
+              onChange={(e) => setGrade(e.target.value)}
+              required={true}
+            />
+            <TextInput
+              label="Nama Kelas"
+              type="text"
+              defaultValue={location.state.name}
               onChange={(e) => setName(e.target.value)}
               required={true}
             />
             <TextInput
               label="Deskripsi"
               type="text"
-              placeholder={location.state.description}
+              defaultValue={location.state.description}
               onChange={(e) => setDescription(e.target.value)}
               required={true}
             />

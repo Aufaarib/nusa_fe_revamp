@@ -4,6 +4,7 @@ import TextInput, { TextInputModal } from "./TextInput";
 import { DropdownDebitKredit, DropdownGroup } from "./Dropdown";
 import { FilterDate } from "./DataTables";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 export const CustomStylesStatus = {
   content: {
@@ -198,6 +199,293 @@ export const ModalTambahCalonMurid = ({
         <button
           type="button"
           className="btn-modal-putih"
+          onClick={closeModalCostCenter}
+        >
+          Tutup
+        </button>
+      </div>
+    </Modal>
+  );
+};
+
+export const ModalDetail = ({
+  isOpenCostCenter,
+  closeModalCostCenter,
+  card,
+  data,
+}) => {
+  return (
+    <Modal
+      isOpen={isOpenCostCenter}
+      onRequestClose={closeModalCostCenter}
+      style={CustomStylesStatus}
+      contentLabel="Modal Status"
+      ariaHideApp={false}
+    >
+      <div className="div-wrapper">
+        <div className="text-wrapper-3">Detail {card}</div>
+      </div>
+      <div
+        style={{
+          padding: "80px 30px 20px 30px",
+          fontSize: "14px",
+          fontWeight: "bold",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+          {card !== "Anak" ? (
+            <>
+              <section>
+                <TextInputModal
+                  label="Nama Lengkap"
+                  type="text"
+                  value={data.fullName}
+                />
+                <br />
+                <TextInputModal
+                  label="Agama"
+                  type="text"
+                  value={data.religion}
+                />
+                <br />
+                <TextInputModal
+                  label="Nomor Kartu Keluarga"
+                  type="text"
+                  value={data.familyIdentityNumber}
+                />
+                <br />
+                <TextInputModal
+                  label="Nomor KTP"
+                  type="text"
+                  value={data.identityNumber}
+                />
+                <br />
+                <TextInputModal
+                  label="Hubungan"
+                  type="text"
+                  value={data.isBiological == 1 ? "Kandung" : "Tiri"}
+                />
+              </section>
+              <section>
+                <TextInputModal
+                  label="Tinggal Bersama"
+                  type="text"
+                  value={data.isBiological == 1 ? "Ya" : "Tidak"}
+                />
+                <br />
+                <TextInputModal
+                  label="No Ponsel 1"
+                  type="text"
+                  value={data.phoneNumber_1}
+                />
+                <br />
+                <TextInputModal
+                  label="No Ponsel 2"
+                  type="text"
+                  value={data.phoneNumber_2}
+                />
+                <br />
+                <TextInputModal
+                  label="Provinsi"
+                  type="text"
+                  value={data.province}
+                />
+                <br />
+                <TextInputModal label="Kota" type="text" value={data.city} />
+              </section>
+              <section>
+                <TextInputModal
+                  label="Kecamatan"
+                  type="text"
+                  value={data.subDistrict}
+                />
+                <br />
+                <TextInputModal
+                  label="Kelurahan"
+                  type="text"
+                  value={data.village}
+                />
+                <br />
+                <TextInputModal
+                  label="Alamat"
+                  type="text"
+                  value={data.address}
+                />
+                <br />
+                <TextInputModal
+                  label="Kode Pos"
+                  type="text"
+                  value={data.postalCode}
+                />
+                <br />
+                <TextInputModal
+                  label="Tempat Lahir"
+                  type="text"
+                  value={data.birthPlace}
+                />
+              </section>
+              <section>
+                <TextInputModal
+                  label="Tanggal Lahir"
+                  type="text"
+                  value={moment(data.birthDate).format("DD-MM-YYYY")}
+                />
+                <br />
+                <TextInputModal
+                  label="Pendidikan Terakhir"
+                  type="text"
+                  value={data.lastEducation}
+                />
+                <br />
+                <TextInputModal
+                  label="Perusahaan Tempat Bekerja"
+                  type="text"
+                  value={data.placeOfWork}
+                />
+                <br />
+                <TextInputModal
+                  label="Posisi/Jabatan"
+                  type="text"
+                  value={data.occupation}
+                />
+                <br />
+                <TextInputModal
+                  label="Penghasilan Tiap Bulan"
+                  type="text"
+                  value={data.incomeGrade}
+                />
+              </section>
+            </>
+          ) : (
+            <>
+              <section>
+                <TextInputModal
+                  label="Nama Depan"
+                  type="text"
+                  value={data.firstName}
+                />
+                <br />
+                <TextInputModal
+                  label="Nama Tengah"
+                  type="text"
+                  value={data.middleName}
+                />
+                <br />
+                <TextInputModal
+                  label="Nama Akhir"
+                  type="text"
+                  value={data.lastName}
+                />
+                <br />
+                <TextInputModal
+                  label="Tempat Lahir"
+                  type="text"
+                  value={data.birthPlace}
+                />
+                <br />
+                <TextInputModal
+                  label="Tanggal Lahir"
+                  type="text"
+                  value={moment(data.birthDate).format("DD-MM-YYYY")}
+                />
+              </section>
+              <section>
+                <TextInputModal
+                  label="Jenis Kelamin"
+                  type="text"
+                  value={data.gender == "male" ? "Laki-Laki" : "Perempuan"}
+                />
+                <br />
+                <TextInputModal
+                  label="Hubungan"
+                  type="text"
+                  value={data.childStatus == 1 ? "Kandung" : "Tiri"}
+                />
+                <br />
+                <TextInputModal
+                  label="Golongan Darah"
+                  type="text"
+                  value={data.bloodType}
+                />
+                <br />
+                <TextInputModal
+                  label="Penyakit Berat Yang Pernah Diderita"
+                  type="text"
+                  value={data.healthRecord}
+                />
+                <br />
+                <TextInputModal
+                  label="Anak Ke"
+                  type="text"
+                  value={data.childNumber}
+                />
+              </section>
+              <section>
+                <TextInputModal label="Hobi" type="text" value={data.hobby} />
+                <br />
+                <TextInputModal
+                  label="Sifat Dominan"
+                  type="text"
+                  value={data.characteristic}
+                />
+                <br />
+                <TextInputModal
+                  label="Berat Badan"
+                  type="text"
+                  value={data.weight}
+                />
+                <br />
+                <TextInputModal
+                  label="Tinggi Badan"
+                  type="text"
+                  value={data.height}
+                />
+                <br />
+                <TextInputModal
+                  label="Asal Sekolah"
+                  type="text"
+                  value={data.schoolOriginName}
+                />
+              </section>
+              <section>
+                <TextInputModal
+                  label="Jarak Ke Rumah"
+                  type="text"
+                  value={data.distanceFromHome}
+                />
+                <br />
+                <TextInputModal
+                  label="Transportasi Ke Sekolah"
+                  type="text"
+                  value={data.transportation}
+                />
+                <br />
+                <TextInputModal
+                  label="Kelas Pada Saat Mendaftar"
+                  type="text"
+                  value={data.schoolOriginClass}
+                />
+                <br />
+                <TextInputModal
+                  label="Nomor KK"
+                  type="text"
+                  value={data.familyIdentityNumber}
+                />
+                <br />
+                <TextInputModal
+                  label="Nomor Akta Lahir"
+                  type="text"
+                  value={data.identityNumber}
+                />
+              </section>
+            </>
+          )}
+        </div>
+      </div>
+      <div className="buttonModalWrapper">
+        <button
+          type="button"
+          className="btn-modal-merah"
           onClick={closeModalCostCenter}
         >
           Tutup

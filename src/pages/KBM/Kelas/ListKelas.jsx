@@ -28,12 +28,12 @@ export default function ListKelas() {
     getKelas(setData, setSts);
   }, []);
 
-  const openModalHapus = (id, name) => {
-    // setisOpenDelete(true);
-    setDesc_nama(name);
-    setDeleteId(id);
-    AlertDelete(name, id, onDelete);
-  };
+  // const openModalHapus = (id, name) => {
+  //   // setisOpenDelete(true);
+  //   setDesc_nama(name);
+  //   setDeleteId(id);
+  //   AlertDelete(name, id, onDelete);
+  // };
 
   // const closeModalHapus = () => {
   //   setisOpenDelete(false);
@@ -41,15 +41,7 @@ export default function ListKelas() {
 
   const onDelete = (id) => {
     deleteKelas(setSts, id, setData);
-    // closeModalHapus();
-    // setisOpenStatus(true);
   };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   getKelas(setData, setSts);
-  //   setSts("");
-  // };
 
   const columns = [
     {
@@ -58,9 +50,15 @@ export default function ListKelas() {
       width: "55px",
     },
     {
-      name: <div>Nama</div>,
+      name: <div>Kelas</div>,
       selector: (data) => data.grade,
       cell: (data) => <div>{data.grade}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Nama Kelas</div>,
+      selector: (data) => data.name,
+      cell: (data) => <div>{data.name}</div>,
       width: "auto",
     },
     {
@@ -74,20 +72,18 @@ export default function ListKelas() {
       cell: (data) => (
         <div>
           <button
-            style={{ fontSize: "14px" }}
+            className="btn-action-merah"
+            title="Edit"
             onClick={() =>
-              navigateUbahKelas(data.id, data.name, data.description)
+              navigateUbahKelas(
+                data.id,
+                data.grade,
+                data.name,
+                data.description
+              )
             }
-            className="btn-mrh"
           >
-            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
-          </button>
-          <button
-            style={{ fontSize: "14px" }}
-            onClick={() => openModalHapus(data.id, data.name)}
-            className="btn-mrh ml-3"
-          >
-            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
+            <i className="fa fa-edit" /> Ubah
           </button>
         </div>
       ),
@@ -103,10 +99,11 @@ export default function ListKelas() {
     navigate("/admin/tambah-kelas");
   };
 
-  const navigateUbahKelas = (id, name, description) => {
+  const navigateUbahKelas = (id, grade, name, description) => {
     navigate("/admin/ubah-kelas", {
       state: {
         id: id,
+        grade: grade,
         name: name,
         description: description,
       },
