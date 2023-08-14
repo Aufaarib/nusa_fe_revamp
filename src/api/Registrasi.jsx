@@ -233,6 +233,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
   setDataStep1,
   setDataStep2,
   setDataStep3,
+  setDataStep4,
   setDataStep5
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
@@ -270,6 +271,8 @@ export function getAdmissionRegistrationByRegNumberAdmin(
           setDataStep2(i);
         } else if (i.step === "3") {
           setDataStep3(i);
+        } else if (i.step === "4") {
+          setDataStep4(i);
         } else if (i.step === "5") {
           setDataStep5(i);
         }

@@ -14,13 +14,12 @@ export function getKelompokMapel(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setData(res.data.data);
+      setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
   // axios
   //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
   //     .then((res) => {

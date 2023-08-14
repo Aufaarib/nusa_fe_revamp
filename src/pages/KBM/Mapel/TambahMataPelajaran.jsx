@@ -1,19 +1,9 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
-import { postMapel } from "../../../api/MataPelajaran";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import { postMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
-import {
-  DropdownStatus,
-  DropdownJenisTransaksi,
-} from "../../../components/Dropdown";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahMataPelajaran() {
   const [name, setName] = useState("");

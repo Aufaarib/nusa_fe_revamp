@@ -79,12 +79,18 @@ const DataRegistrasi = () => {
       width: "125px",
     },
     {
+      name: <div>Nama Anak</div>,
+      selector: (data) => data.childName,
+      cell: (data) => <div>{data.childName}</div>,
+      width: "130px",
+    },
+    {
       name: <div>Tahun Ajaran</div>,
       selector: (data) => data.admissionPhase.admission.academicYear.name,
       cell: (data) => (
         <div>{data.admissionPhase.admission.academicYear.name}</div>
       ),
-      width: "115px",
+      width: "110px",
     },
     {
       name: <div>Status Pendaftaran</div>,
@@ -114,56 +120,56 @@ const DataRegistrasi = () => {
           {data.steps[data.steps.length - 1].step === "1" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Pembayaran Pendaftaran Terverifikasi"}
+                "Tahap 1 Terverifikasi"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
-                "Verifikasi Pembayaran Pendaftaran"}
+                "Verifikasi Tahap 1"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
-                "Pembayaran Pendaftaran Tidak Sesuai"}
+                "Tahap 1 Tidak Sesuai"}
             </>
           )}
           {data.steps[data.steps.length - 1].step === "2" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Berkas Pendaftaran Terverifikasi"}
+                "Tahap 2 Terverifikasi"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
-                "Verifikasi Berkas Pendaftaran"}
+                "Verifikasi Tahap 2"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
-                "Berkas Pendaftaran Tidak Sesuai"}
+                "Tahap 2 Tidak Sesuai"}
             </>
           )}
           {data.steps[data.steps.length - 1].step === "3" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Hasil Tes Terupload"}
+                "Tahap 3 Terupload"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
-                "Verifikasi Hasil Tes"}
+                "Verifikasi Tahap 3"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
-                "Hasil Tes Tidak Sesuai"}
+                "Tahap 3 Tidak Sesuai"}
             </>
           )}
           {data.steps[data.steps.length - 1].step === "4" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Pendaftaran Ulang Tersetujui"}
+                "Tahap 4 Tersetujui"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
-                "Verifikasi Pendaftaran Ulang"}
+                "Verifikasi Tahap 4"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
-                "Pendaftaran Ulang Tidak Sesuai"}
+                "Tahap 4 Tidak Sesuai"}
             </>
           )}
           {data.steps[data.steps.length - 1].step === "5" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Data Sudah Lengkap"}
+                "Tahap Selesai"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
-                "Verifikasi Pembayaran Pendidikan"}
+                "Verifikasi Tahap 5"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
-                "Pembayaran Pendidikan Tidak Sesuai"}
+                "Tahap 5 Tidak Sesuai"}
             </>
           )}
         </div>
       ),
-      width: "250px",
+      width: "150px",
     },
     {
       name: <div>Aktifitas Terakhir</div>,
@@ -187,7 +193,7 @@ const DataRegistrasi = () => {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "180px",
+      width: "150px",
     },
   ];
 

@@ -26,6 +26,7 @@ const DetailDataRegistrasi = () => {
   const [dataStep1, setDataStep1] = useState(null);
   const [dataStep2, setDataStep2] = useState(null);
   const [dataStep3, setDataStep3] = useState(null);
+  const [dataStep4, setDataStep4] = useState(null);
   const [dataStep5, setDataStep5] = useState(null);
   const [edu, setEdu] = useState([]);
   const [amount, setAmount] = useState("");
@@ -41,6 +42,8 @@ const DetailDataRegistrasi = () => {
   const [cardOpened, setisCardOpened] = useState("");
   const [detailData, setDetailData] = useState("");
 
+  console.log("TAHAP === ", dataStep4);
+
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
@@ -53,6 +56,10 @@ const DetailDataRegistrasi = () => {
 
   const fetchTestResult = () => {
     setFetched("3");
+  };
+
+  const fetchReRegister = () => {
+    setFetched("4");
   };
 
   const fetchRegistrationData = () => {
@@ -73,6 +80,7 @@ const DetailDataRegistrasi = () => {
       setDataStep1,
       setDataStep2,
       setDataStep3,
+      setDataStep4,
       setDataStep5
     );
   };
@@ -195,12 +203,12 @@ const DetailDataRegistrasi = () => {
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit" /> Ubah
+          <i className="fa fa-edit" /> Ubah Status
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "100px",
+      width: "200px",
     },
   ];
 
@@ -221,7 +229,7 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Tanggal</div>,
       cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
-      width: "250px",
+      width: "auto",
     },
     {
       name: <div>Status</div>,
@@ -235,7 +243,7 @@ const DetailDataRegistrasi = () => {
             : dataStep3.status === "invalid" && "Gagal Terverifikasi"}
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
     {
       name: <div>Aksi</div>,
@@ -245,12 +253,12 @@ const DetailDataRegistrasi = () => {
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit" /> Ubah
+          <i className="fa fa-edit" /> Ubah Status
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "350px",
+      width: "320px",
     },
   ];
 
@@ -303,7 +311,7 @@ const DetailDataRegistrasi = () => {
     {
       card: "Anak",
       nama: anak?.firstName,
-      hp: anak?.identityNumber,
+      // hp: anak?.identityNumber,
       alamat: anak?.birthPlace,
     },
     {
@@ -477,11 +485,40 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "5" && "#8F0D1E",
+              backgroundColor: fetched === "4" && "#8F0D1E",
               color:
                 dataStep1?.status === "valid" &&
                 dataStep2?.status === "valid" &&
                 dataStep3?.status === "valid"
+                  ? // ? dataStep3 === null
+                    fetched === "4" && "white"
+                  : // : "grey"
+                    "grey",
+            }}
+            onClick={() => fetchReRegister()}
+            disabled={
+              dataStep1?.status === "valid" &&
+              dataStep2?.status === "valid" &&
+              dataStep3?.status === "valid"
+                ? // ? dataStep3 === null
+                  false
+                : // : true
+                  true
+            }
+          >
+            <i className="fa fa-refresh" /> Daftar Ulang
+          </button>
+          <button
+            style={{
+              borderRadius: "6px",
+              padding: "20px 20px",
+              width: "200px",
+              backgroundColor: fetched === "5" && "#8F0D1E",
+              color:
+                dataStep1?.status === "valid" &&
+                dataStep2?.status === "valid" &&
+                dataStep3?.status === "valid" &&
+                dataStep4?.status === "valid"
                   ? dataStep5 !== null
                     ? fetched === "5" && "white"
                     : "grey"
@@ -491,7 +528,8 @@ const DetailDataRegistrasi = () => {
             disabled={
               dataStep1?.status === "valid" &&
               dataStep2?.status === "valid" &&
-              dataStep3?.status === "valid"
+              dataStep3?.status === "valid" &&
+              dataStep4?.status === "valid"
                 ? dataStep5 !== null
                   ? false
                   : true
@@ -523,55 +561,6 @@ const DetailDataRegistrasi = () => {
             )}
           </>
         )}
-        {fetched === "3" && (
-          <>
-            {dataStep3 !== null ? (
-              <DataTablesRegistrationDetail
-                columns={columnTestResult}
-                data={[data]}
-              />
-            ) : (
-              <div
-                style={{
-                  borderRadius: "6px",
-                  backgroundColor: "#F3F4F6",
-                  padding: "30px 30px 30px",
-                  textAlign: "center",
-                }}
-              >
-                <h1>Hasil Tes Belum Di Upload</h1>
-                <button
-                  onClick={() => navigateUploadHasilTes()}
-                  className="btn-merah"
-                >
-                  Kirim Hasil Test
-                </button>
-              </div>
-            )}
-          </>
-        )}
-        {fetched === "5" && (
-          <>
-            {dataStep5 !== null ? (
-              <DataTablesRegistrationDetail
-                columns={columnsPayments}
-                data={[data]}
-              />
-            ) : (
-              <div
-                style={{
-                  borderRadius: "6px",
-                  backgroundColor: "#F3F4F6",
-                  padding: "30px 30px 30px",
-                  textAlign: "center",
-                }}
-              >
-                <h1>Data Tidak Ditemukan</h1>
-              </div>
-            )}
-          </>
-        )}
-
         {fetched === "2" && (
           <div
             style={{
@@ -627,7 +616,7 @@ const DetailDataRegistrasi = () => {
                     disabled={dataStep2 !== null ? false : true}
                     onClick={() => navigateUbahStatus()}
                   >
-                    <i className="fa fa-edit" /> Ubah
+                    <i className="fa fa-edit" /> Ubah Status
                   </button>
                 </div>
               </div>
@@ -856,6 +845,110 @@ const DetailDataRegistrasi = () => {
               </div>
             </div>
           </div>
+        )}
+        {fetched === "3" && (
+          <>
+            {dataStep3 !== null ? (
+              <DataTablesRegistrationDetail
+                columns={columnTestResult}
+                data={[data]}
+              />
+            ) : (
+              <div
+                style={{
+                  borderRadius: "6px",
+                  backgroundColor: "#F3F4F6",
+                  padding: "30px 30px 30px",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Hasil Tes Belum Di Upload</h1>
+                <button
+                  onClick={() => navigateUploadHasilTes()}
+                  className="btn-merah"
+                >
+                  Kirim Hasil Test
+                </button>
+              </div>
+            )}
+          </>
+        )}
+        {fetched === "4" && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              marginBottom: "20px",
+              backgroundColor: "#F3F4F6",
+              justifyContent: "space-between",
+              padding: "20px",
+              borderRadius: "6px",
+            }}
+          >
+            <>
+              {dataStep4 !== null ? (
+                <div
+                  style={{
+                    borderRadius: "6px",
+                    backgroundColor: "#F3F4F6",
+                    padding: "30px 30px 30px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h1 className="text-hijau">
+                    Orang Tua Telah Mempersetujui Pendaftaran Ulang
+                  </h1>
+                  {/* <button
+                  onClick={() => navigateUbahStatus()}
+                  className="btn-merah"
+                >
+                  Kirim Hasil Test
+                </button> */}
+                </div>
+              ) : (
+                <div
+                  style={{
+                    borderRadius: "6px",
+                    backgroundColor: "#F3F4F6",
+                    padding: "30px 30px 30px",
+                    textAlign: "center",
+                  }}
+                >
+                  <h1 className="text-merah">
+                    Orang Tua Belum Mempersetujui Pendaftaran Ulang
+                  </h1>
+                  {/* <button
+                  onClick={() => navigateUbahStatus()}
+                  className="btn-merah"
+                >
+                  Ubah Status
+                </button> */}
+                </div>
+              )}
+            </>
+          </div>
+        )}
+        {fetched === "5" && (
+          <>
+            {dataStep5 !== null ? (
+              <DataTablesRegistrationDetail
+                columns={columnsPayments}
+                data={[data]}
+              />
+            ) : (
+              <div
+                style={{
+                  borderRadius: "6px",
+                  backgroundColor: "#F3F4F6",
+                  padding: "30px 30px 30px",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Data Tidak Ditemukan</h1>
+              </div>
+            )}
+          </>
         )}
       </div>
       <div className="flex justify-start w-full">

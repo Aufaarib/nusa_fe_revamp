@@ -5,7 +5,10 @@ import { Header } from "../../components";
 import { DropdownValidasiStep } from "../../components/Dropdown";
 import TextInput from "../../components/TextInput";
 import { updateAdmissionSteps, uploadHasilTest } from "../../api/Registrasi";
-import { AlertStatusValidatePayment } from "../../components/ModalPopUp";
+import {
+  AlertEmpty,
+  AlertStatusValidatePayment,
+} from "../../components/ModalPopUp";
 
 const UploadHasilTes = () => {
   const [status, setStatus] = useState("");
@@ -15,6 +18,8 @@ const UploadHasilTes = () => {
   const location = useLocation();
   const code = localStorage.getItem("REG_NUMBER");
   const fetched = location?.state?.fetched;
+
+  console.log(nilai);
 
   console.log("FETCHED === ", fetched);
 
@@ -32,8 +37,12 @@ const UploadHasilTes = () => {
   };
 
   const uploadTestResults = () => {
-    const score = parseInt(nilai);
-    uploadHasilTest(score, navigateRegistrationDetails());
+    if (nilai === undefined) {
+      AlertEmpty();
+    } else {
+      const score = parseInt(nilai);
+      uploadHasilTest(score, navigateRegistrationDetails());
+    }
   };
 
   return (

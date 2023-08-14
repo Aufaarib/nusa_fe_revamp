@@ -17,7 +17,7 @@ export default function TambahKelas() {
   const postData = (e) => {
     e.preventDefault();
 
-    if (grade.length === 0 || name.length === 0 || description.length === 0) {
+    if (grade === "" || name === "" || description === "") {
       AlertEmpty();
     } else {
       postKelas(setStatus, path, grade, name, description);

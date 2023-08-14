@@ -11,12 +11,12 @@ import { useState } from "react";
 import { Header } from "../../../components";
 
 export default function UbahKelas() {
-  const [grade, setGrade] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
+  const [grade, setGrade] = useState(location.state.grade);
+  const [name, setName] = useState(location.state.name);
+  const [description, setDescription] = useState(location.state.description);
+  const [sts, setSts] = useState(undefined);
 
   const path = "/admin/list-kelas";
 

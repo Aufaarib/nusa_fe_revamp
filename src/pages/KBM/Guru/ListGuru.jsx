@@ -96,6 +96,7 @@ const HasilTes = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
+          className="btn-action-merah"
           title="Edit"
           onClick={() =>
             navigateUbahGuru(
@@ -108,7 +109,7 @@ const HasilTes = () => {
             )
           }
         >
-          <i style={{ fontSize: "21px" }} className="fa fa-edit" />
+          <i className="fa fa-edit" /> Ubah
         </button>
       ),
       ignoreRowClick: true,

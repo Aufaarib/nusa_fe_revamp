@@ -141,7 +141,7 @@ const Register = () => {
         </section>
 
         <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block mt-1 mb-7 px-7">
+          <form onSubmit={handleSubmit} className="block">
             <div className="relative block xl:w-480">
               <div
                 style={{
@@ -163,7 +163,7 @@ const Register = () => {
             </div>
             {/* NAMA LENGKAP */}
             <div className="relative block w-full xl:w-480">
-              <label htmlFor="username" className="flex mt-1 mb-1 form-label">
+              <label htmlFor="username" className="flex form-label">
                 Nama Lengkap
               </label>
               <div
@@ -225,7 +225,7 @@ const Register = () => {
 
             {/* NOMOR TELEPON */}
             <div className="relative block xl:w-480">
-              <label htmlFor="phone" className="flex mt-4 mb-1 form-label">
+              <label htmlFor="phone" className="flex form-label">
                 No. Telepon
               </label>
               <div
@@ -250,10 +250,11 @@ const Register = () => {
                   ref={phoneRef}
                   autoComplete="on"
                   onChange={(e) => setPhone(e.target.value)}
+                  placeholder="081234567890"
                   value={phone}
                   required
-                  aria-invalid={validPhone ? "false" : "true"}
-                  aria-describedby="phonenote"
+                  // aria-invalid={validPhone ? "false" : "true"}
+                  // aria-describedby="phonenote"
                   onFocus={() => setPhoneFocus(true)}
                   onBlur={() => setPhoneFocus(false)}
                 />
@@ -287,7 +288,7 @@ const Register = () => {
 
             {/* EMAIL */}
             <div className="relative block xl:w-480">
-              <label htmlFor="email" className="flex mt-4 mb-1 form-label">
+              <label htmlFor="email" className="flex form-label">
                 E-mail
               </label>
               <div
@@ -314,8 +315,9 @@ const Register = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   required
-                  aria-invalid={validEmail ? "false" : "true"}
-                  aria-describedby="emailnote"
+                  placeholder="contoh@gmail.com"
+                  // aria-invalid={validEmail ? "false" : "true"}
+                  // aria-describedby="emailnote"
                   onFocus={() => setEmailFocus(true)}
                   onBlur={() => setEmailFocus(false)}
                 />
@@ -347,11 +349,15 @@ const Register = () => {
               </p>
             </div>
 
+            {/* PASSWORD */}
             <div className="relative block xl:w-480">
               <TextInputPassword
                 label="Kata Sandi"
                 setPwd={(e) => setPwd(e.target.value)}
                 pwd={pwd}
+                placeholder="Contoh123!"
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
               />
               <FaCheckCircle
                 className={
@@ -388,6 +394,8 @@ const Register = () => {
                 label="Ulangi Kata Sandi"
                 setPwd={(e) => setMatchPwd(e.target.value)}
                 pwd={matchPwd}
+                onFocus={() => setMatchFocus(true)}
+                onBlur={() => setMatchFocus(false)}
               />
               <FaCheckCircle
                 className={
@@ -426,7 +434,7 @@ const Register = () => {
                   ? true
                   : false
               }
-              className="flex justify-center w-full py-3 my-6 mr-3 mt-11 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
+              className="flex justify-center w-full py-3 my-6 mr-3 mt-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
             >
               Daftar{" "}
               {isLoading ? (

@@ -1418,6 +1418,10 @@ export function DataTables({
         // }
         `;
 
+  data.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
@@ -1681,6 +1685,10 @@ export function DataTablesSaring({
         //     color: grey;
         // }
         `;
+
+  data.sort(function (a, b) {
+    return b.id - a.id;
+  });
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);

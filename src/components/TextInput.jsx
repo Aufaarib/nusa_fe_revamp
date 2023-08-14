@@ -119,7 +119,14 @@ export const TextInput = ({
   );
 };
 
-export const TextInputPassword = ({ pwd, setPwd, label }) => {
+export const TextInputPassword = ({
+  pwd,
+  setPwd,
+  label,
+  onFocus,
+  onBlur,
+  placeholder,
+}) => {
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
@@ -156,7 +163,10 @@ export const TextInputPassword = ({ pwd, setPwd, label }) => {
             type={values.showPassword ? "text" : "password"}
             autoComplete="off"
             onChange={setPwd}
+            placeholder={placeholder}
             value={pwd}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
           <i
             style={{

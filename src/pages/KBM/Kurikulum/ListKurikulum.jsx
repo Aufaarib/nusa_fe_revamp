@@ -1,21 +1,13 @@
-import { DataTables } from "../../../components/DataTables";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
-  AlertDelete,
-  AlertUbahStatus,
-  AlertUpdateStatusAktif,
-  AlertUpdateStatusNonAktif,
-  CustomStylesStatus,
-} from "../../../components/ModalPopUp";
-import {
+  deleteKurikulum,
   getKurikulum,
   updateStatusKurikulum,
-  deleteKurikulum,
 } from "../../../api/Kurikulum";
-import { useState, useEffect } from "react";
 import { Header } from "../../../components";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import { ModalStatusList } from "../../../components/ModalPopUp";
+import { DataTables } from "../../../components/DataTables";
+import { AlertUbahStatus } from "../../../components/ModalPopUp";
 
 export default function ListKurikulum() {
   const [data, setData] = useState([]);
@@ -153,13 +145,13 @@ export default function ListKurikulum() {
                 data.semester_id
               )
             }
-            className="btn-mrh"
+            className="btn-action-merah"
           >
-            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
+            <i className="fa fa-edit mt-1 mr-1"></i> Ubah
           </button>
           {data?.status === 1 && (
             <button
-              className="btn-mrh ml-3 w-auto px-2"
+              className="btn-action-merah ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
               <i className="fa fa-play mt-1 mr-1"></i> Aktif
@@ -167,7 +159,7 @@ export default function ListKurikulum() {
           )}
           {data?.status === 0 && (
             <button
-              className="btn-mrh ml-3 w-auto px-2"
+              className="btn-action-merah ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
               <i className="fa fa-pause mt-1 mr-1"></i> Tidak Aktif

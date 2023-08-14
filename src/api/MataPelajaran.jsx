@@ -11,7 +11,9 @@ import axios from "./axios";
 
 export function getMapel(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/subject")
+    .get(process.env.REACT_APP_BASE_URL + "/subject", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
       setData(res.data.body);
       setSts({ type: "success" });

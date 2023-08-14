@@ -1,30 +1,23 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  deleteKelompokMapel,
+  getKelompokMapel,
+  updateStatusKelompokMapel,
+} from "../../../api/KelompokMataPelajaran";
+import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import {
   AlertDelete,
   AlertUpdateStatusAktif,
   AlertUpdateStatusNonAktif,
-  CustomStylesStatus,
 } from "../../../components/ModalPopUp";
-import {
-  getKelompokMapel,
-  updateStatusKelompokMapel,
-  deleteKelompokMapel,
-} from "../../../api/KelompokMataPelajaran";
-import { useState, useEffect } from "react";
-import { Header } from "../../../components";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListKelompokMapel() {
   const [data, setData] = useState([]);
   // const [status, setStatus] = useState("");
   const statusAktif = "Aktif";
   const statusNonAktif = "Tidak Aktif";
-  const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
-  const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
@@ -36,7 +29,7 @@ export default function ListKelompokMapel() {
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.name.toLowerCase().includes(filterText.toLowerCase())
+      data.subject.name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
@@ -106,8 +99,8 @@ export default function ListKelompokMapel() {
     },
     {
       name: <div>Nama</div>,
-      selector: (data) => data.name,
-      cell: (data) => <div>{data.name}</div>,
+      selector: (data) => data.subject.name,
+      cell: (data) => <div>{data.subject.name}</div>,
       width: "auto",
     },
     {
@@ -122,7 +115,9 @@ export default function ListKelompokMapel() {
         <div>
           <button
             style={{ fontSize: "14px" }}
-            onClick={() => navigateUbahKelompokMapel(data.id, data.name)}
+            onClick={() =>
+              navigateUbahKelompokMapel(data.id, data.subject.name)
+            }
             className="btn-mrh"
           >
             <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
@@ -130,7 +125,7 @@ export default function ListKelompokMapel() {
           {data?.status === "Aktif" && (
             <button
               className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleActiveStatus(data.id, data.name)}
+              onClick={() => handleActiveStatus(data.id, data.subject.name)}
             >
               <i className="fa fa-play mt-1 mr-1"></i> {data.status}
             </button>
@@ -138,14 +133,14 @@ export default function ListKelompokMapel() {
           {data?.status === "Tidak Aktif" && (
             <button
               className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleNonActiveStatus(data.id, data.name)}
+              onClick={() => handleNonActiveStatus(data.id, data.subject.name)}
             >
               <i className="fa fa-pause mt-1 mr-1"></i> {data.status}
             </button>
           )}
           <button
             style={{ fontSize: "14px" }}
-            onClick={() => openModalHapus(data.id, data.name)}
+            onClick={() => openModalHapus(data.id, data.subject.name)}
             className="btn-mrh ml-3"
           >
             <i className="fa fa-trash mt-1 mr-1"></i> Hapus
