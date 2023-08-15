@@ -6,7 +6,7 @@ import { DataTablesPMB } from "../../../components/DataTables";
 import { getMurid } from "../../../api/Murid";
 import { getClassRoom } from "../../../api/RuanganKelas";
 
-const ListMurid = () => {
+const ListRuanganKelas = () => {
   const [data, setData] = useState([]);
   const [isOpenStatus, setisOpenStatus] = useState(false);
   const [isOpenDelete, setisOpenDelete] = useState(false);
@@ -116,4 +116,4 @@ const ListMurid = () => {
     </>
   );
 };
-export default ListMurid;
+export default ListRuanganKelas;

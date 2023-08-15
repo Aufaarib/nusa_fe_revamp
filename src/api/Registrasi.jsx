@@ -148,7 +148,7 @@ export function getAdmissionRegistration(setData, setSts) {
     })
     .then((res) => {
       res.data.body.forEach((element) => {
-        if (element.steps.length > 0) {
+        if (element.steps.length > 0 && element.isStudent != 1) {
           data.push(element);
         }
       });

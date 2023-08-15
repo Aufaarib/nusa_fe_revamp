@@ -31,25 +31,35 @@ export function getMurid(setData, setSts) {
   //     });
 }
 
-export function updateGuru(
+export function updateMurid(
   setSts,
   path,
   code,
-  Fullname,
-  Gender,
-  Religion,
-  BirthPlace,
-  BirthDate
+  religion,
+  firstName,
+  middleName,
+  lastName,
+  birthPlace,
+  birthDate,
+  gender,
+  bloodType,
+  distanceFromHome,
+  status
 ) {
   axios
     .put(
-      process.env.REACT_APP_BASE_URL + `/teacher/${code}`,
+      process.env.REACT_APP_BASE_URL + `/student/${code}`,
       {
-        Fullname,
-        Gender,
-        Religion,
-        BirthPlace,
-        BirthDate,
+        religion,
+        firstName,
+        middleName,
+        lastName,
+        birthPlace,
+        birthDate,
+        gender,
+        bloodType,
+        distanceFromHome,
+        status,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
@@ -92,6 +102,7 @@ export function postGuru(
   birthPlace,
   birthDate
 ) {
+  const code = localStorage.getItem("CODE");
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/teacher",

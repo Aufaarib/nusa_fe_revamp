@@ -215,11 +215,6 @@ export const sidebarMenusAdmin = [
         path: `admin/list-data-registrasi`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Pembagian Kelas",
-        path: `admin/list-murid`,
-        icon: <FaWpforms />,
-      },
       // {
       //   name: "Hasil Tes",
       //   path: `admin/hasil-tes`,
@@ -265,23 +260,18 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
+        name: "Murid",
+        path: `admin/list-murid`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Guru",
         path: `admin/list-guru`,
         icon: <FaWpforms />,
       },
       {
-        name: "Kelompok Mapel",
-        path: `admin/list-kelompok-mapel`,
-        icon: <FaWpforms />,
-      },
-      {
         name: "Kelas",
         path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Semester",
-        path: `admin/list-semester`,
         icon: <FaWpforms />,
       },
       {
@@ -295,10 +285,20 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
-        name: "Jadwal Mapel",
-        path: `admin/list-jadwal-mata-pelajaran`,
+        name: "Kelompok Mapel",
+        path: `admin/list-kelompok-mapel`,
         icon: <FaWpforms />,
       },
+      {
+        name: "Pembagian Kelas",
+        path: `admin/list-ruang-kelas`,
+        icon: <FaWpforms />,
+      },
+      // {
+      //   name: "Jadwal Mapel",
+      //   path: `admin/list-jadwal-mata-pelajaran`,
+      //   icon: <FaWpforms />,
+      // },
     ],
   },
 ];

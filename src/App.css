@@ -23,7 +23,7 @@
 .grid-container {
   display: grid;
   column-gap: 10px;
-  grid-template-columns: 168px 18px 484px;
+  grid-template-columns: 240px 65px 435px;
   justify-content: left;
   padding-top: 5px;
   padding-bottom: 5px;

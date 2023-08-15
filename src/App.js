@@ -72,7 +72,9 @@ import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
 import ProfilepPage from "./components/ProfilePage";
 import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
 import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
-import ListMurid from "./pages/AdminPMB/PembagianKelas/ListMurid";
+import ListMurid from "./pages/KBM/Murid/ListMurid";
+import ListRuanganKelas from "./pages/AdminPMB/PembagianKelas/ListRuanganKelas";
+import UbahMurid from "./pages/KBM/Murid/UbahMurid";
 
 const App = () => {
   return (
@@ -144,6 +146,10 @@ const App = () => {
             element={<ListBiayaPendidikan />}
           />
           <Route path="/admin/list-murid" element={<ListMurid />} />
+          <Route
+            path="/admin/list-ruang-kelas"
+            element={<ListRuanganKelas />}
+          />
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
@@ -171,6 +177,7 @@ const App = () => {
             path="/admin/ubah-status-step"
             element={<UpdateStatusStepPage />}
           />
+          <Route path="/admin/ubah-murid" element={<UbahMurid />} />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />

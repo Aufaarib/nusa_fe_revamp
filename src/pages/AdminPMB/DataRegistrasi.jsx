@@ -79,7 +79,7 @@ const DataRegistrasi = () => {
   const isAllRowsSelected = selectedRows.length === data.length;
 
   const handleSelectAll = () => {
-    const allRowIds = data.map((row) => row.regNumber);
+    const allRowIds = filteredItems.map((row) => row.regNumber);
     setSelectedRows(allRowIds);
     handleSubmit();
   };
