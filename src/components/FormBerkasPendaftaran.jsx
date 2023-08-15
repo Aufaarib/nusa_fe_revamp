@@ -300,32 +300,21 @@ const FormBerkasPendaftaran = ({ id, indexMurid }) => {
         </section>
       </div>
 
-      <section className="flex mt-12">
-        <button
-          type="button"
-          className="w-auto btn-merah"
-          onClick={handleSubmit}
+      <button type="button" className="btn-merah" onClick={handleSubmit}>
+        {isLoading ? (
+          <CgSpinner className="mr-2 text-xl animate-spin" />
+        ) : (
+          <AiOutlineSave className="mr-2 text-2xl" />
+        )}
+        Simpan
+      </button>
+      <section className="flex mt-1 gap-5 justify-center">
+        <Link
+          to={"/pmb/form-pernyataan"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
-          {isLoading ? (
-            <CgSpinner className="mr-2 text-xl animate-spin" />
-          ) : (
-            <AiOutlineSave className="mr-2 text-2xl" />
-          )}
-          Simpan
-        </button>
-
-        <div className="flex justify-end w-full">
-          <Link
-            to={"/pmb/form-pernyataan"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
-          >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
-          </Link>
-
-          {/* <Link to={"/berkas-pendaftaran"} className="w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap">
-              Selanjutnya <BsChevronRight className='text-xl ml-2 mt-0.5' />
-            </Link> */}
-        </div>
+          <BsChevronLeft className="text-xl mr-7 mt-0.5" /> Halaman Pernyataan
+        </Link>
       </section>
     </article>
   );

@@ -22,9 +22,10 @@ const BerkasPembayaran = () => {
   const uploaderRef = useRef(null);
   const [filesData, setFilesData] = useState(null);
   const navigate = useNavigate();
+  const path = "/pmb/tahapan-pmb";
 
   const navigateListSteps = () => {
-    window.location.href = "/pmb/tahapan-pmb";
+    window.location.href = path;
   };
 
   // Define your asyncSettings for the UploaderComponent (modify this as needed)
@@ -88,12 +89,18 @@ const BerkasPembayaran = () => {
     <article>
       <Header
         home="PMB"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Tahapan"
+        navePrev={path}
         at="Bukti Pembayaran"
         title="Form Bukti Pembayaran"
       />
-      <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          marginBottom: "70px",
+        }}
+      >
         {/* COL 1 */}
         <section>
           <label htmlFor="invoice" className="block mt-4 mb-1">
@@ -123,29 +130,26 @@ const BerkasPembayaran = () => {
         </section>
       </div>
 
-      <section className="flex mt-12">
-        <button
-          type="button"
-          className="w-auto btn-merah"
-          onClick={handleFileUpload}
-        >
-          {isLoading ? (
-            <CgSpinner className="mr-2 text-xl animate-spin" />
-          ) : (
-            <AiOutlineSave className="mr-2 text-2xl" />
-          )}
-          Simpan
-        </button>
-      </section>
-      <div className="flex justify-start w-full mt-8">
+      <button
+        type="button"
+        className="w-auto btn-merah"
+        onClick={handleFileUpload}
+      >
+        {isLoading ? (
+          <CgSpinner className="mr-2 text-xl animate-spin" />
+        ) : (
+          <AiOutlineSave className="mr-2 text-2xl" />
+        )}
+        Simpan
+      </button>
+      <section className="flex mt-1 justify-start">
         <Link
-          to={"/pmb/tahapan-pmb"}
-          className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+          to={path}
+          className="bg-transparent shadow-none w-auto btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
-          <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali Ke
-          Halaman Tahapan PMB
+          <BsChevronLeft className="text-xl mr-7 mt-0.5" /> Halaman Tahapan PMB
         </Link>
-      </div>
+      </section>
     </article>
   );
 };

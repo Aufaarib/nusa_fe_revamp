@@ -1,15 +1,11 @@
-import { IconButton, Input, InputAdornment } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
-import { FaEye, FaLowVision } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { AlertLoginFailed, AlertNetwork } from "../../components/ModalPopUp";
-import { useStateContext } from "../../contexts/ContextProvider";
-import assalamualaikum from "../../data/assalamualaikum.png";
-import logoSaim from "../../data/logo-saim.png";
-import styled from "styled-components";
 import { TextInputPassword } from "../../components/TextInput";
+import { useStateContext } from "../../contexts/ContextProvider";
+import logoSaim from "../../data/logo-saim.png";
 
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
@@ -75,8 +71,11 @@ const Login = () => {
         <div className="line" />
       </section>
 
-      <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
-        <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
+      <section
+        style={{ display: "flex", flexDirection: "column" }}
+        className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih"
+      >
+        <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7 py-0">
           <div className="relative block xl:w-480">
             <div
               style={{
@@ -99,7 +98,7 @@ const Login = () => {
 
           {/* USER */}
           <div className="relative block xl:w-480">
-            <label htmlFor="user" className="flex mt-4 mb-1 form-label">
+            <label htmlFor="user" className="flex mt-2 mb-1 form-label">
               E-mail
             </label>
             <div
@@ -139,7 +138,7 @@ const Login = () => {
             <div className="flex justify-end">
               <Link
                 to={"/forgot"}
-                className="flex mt-2 mb-1 w-auto text-merah underline"
+                className="flex mt-2 mb-1 w-auto text-merah underline font-bold"
               >
                 Lupa Kata Sandi?
               </Link>
@@ -154,21 +153,18 @@ const Login = () => {
             )}
           </button>
           <div className="flex mt-7 justify-center">
-            <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
-              Belum Punya Akun?
-            </label>
             <Link
               to={"/register"}
               style={{ fontSize: "14px" }}
-              className="text-merah underline"
+              className="text-merah underline font-bold"
             >
-              Daftar
+              Daftar Akun Baru
             </Link>
           </div>
-          <p className="text-sm text-center mt-9 text-merah">
-            Copyright 2023 PT. Nafisha Universal Network
-          </p>
         </form>
+        <p className="text-sm text-center py-4 text-merah">
+          Copyright 2023 PT. Nafisha Universal Network
+        </p>
       </section>
     </div>
   );

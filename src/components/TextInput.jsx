@@ -139,7 +139,7 @@ export const TextInputPassword = ({
   return (
     <>
       <div>
-        <label htmlFor="password" className="flex mt-4 mb-1 form-label">
+        <label htmlFor="password" className="flex mt-2 mb-1 form-label">
           {label}
         </label>
         <div

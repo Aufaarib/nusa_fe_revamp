@@ -1,25 +1,18 @@
-import { useState, useEffect } from "react";
-import { useImmer } from "use-immer";
-import { Link, useNavigate } from "react-router-dom";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import { useEffect, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-import TextInput from "./TextInput";
-import RadioInput from "./RadioInput";
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
+import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import TextInput, { TextInputModal } from "./TextInput";
 
 import { useStateContext } from "../contexts/ContextProvider";
 
-import { dropdownData } from "../data/initData";
-import { DropdownListComponents, DropdownRadioInputGender } from "./Dropdown";
 import { getAdmissionAnswer, getAdmissionStatement } from "../api/Registrasi";
 import Header from "./Header";
 import {
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
 } from "./ModalPopUp";
 
 const FormPernyataan = ({ indexMurid }) => {
@@ -114,9 +107,9 @@ const FormPernyataan = ({ indexMurid }) => {
         at="Pernyataan Orang Tua"
         title="Form Pernyataan Orang Tua"
       />
-      <div style={{ maxWidth: "140vh", overflow: "auto" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <form
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "20px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
@@ -130,8 +123,8 @@ const FormPernyataan = ({ indexMurid }) => {
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
             {admissionAnswerData.length === 0
               ? admissionStatementData.map((item) => (
-                  <div key={item.id}>
-                    <TextInput
+                  <div className="mt-7" key={item.id}>
+                    <TextInputModal
                       label={item.question}
                       type="textarea"
                       name="answers"
@@ -144,68 +137,53 @@ const FormPernyataan = ({ indexMurid }) => {
                       }
                       onChange={(e) => handleInputChange(e, item.id)}
                       required={true}
-                      rows="4"
                     />
                   </div>
                 ))
               : admissionAnswerData.map((item) => (
-                  <div key={item.id}>
-                    <TextInput
+                  <div className="mt-7" key={item.id}>
+                    <TextInputModal
                       label={item.statement.question}
                       type="textarea"
                       name="answers"
-                      placeholder={item.answer}
-                      // value={item.answer}
-                      // onChange={(e) => handleInputChange(e, item.id)}
+                      // placeholder={item.answer}
+                      defaultValue={item.answer}
                       disable={true}
                       required={true}
-                      rows="4"
                     />
                   </div>
                 ))}
           </section>
         </form>
       </div>
-      <section className="flex mt-12">
-        {admissionAnswerData.length === 0 && (
-          <button
-            type="button"
-            className="w-auto btn-merah"
-            onClick={handleSubmit}
-          >
-            {isLoading ? (
-              <CgSpinner className="mr-2 text-xl animate-spin" />
-            ) : (
-              <AiOutlineSave className="mr-2 text-2xl" />
-            )}
-            Simpan
-          </button>
-        )}
-        {admissionAnswerData.length !== 0 && (
-          <button type="button" className="w-auto btn-disabled" disabled={true}>
-            Data Sudah Tersimpan
-          </button>
-        )}
+      {admissionAnswerData !== null && (
+        <button className="btn-disabled">Pernyataan Telah Tersimpan</button>
+      )}
+      {admissionAnswerData === null && (
+        <button className="btn-merah" onClick={handleSubmit}>
+          Simpan
+          {isLoading ? (
+            <CgSpinner className="mr-2 text-xl animate-spin" />
+          ) : (
+            <AiOutlineSave className="mr-2 text-2xl" />
+          )}
+        </button>
+      )}
+      <section className="flex mt-1 gap-5 justify-center">
+        <Link
+          to={"/pmb/form-data-orang-tua-wali"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+        >
+          <BsChevronLeft className="text-xl mr-7 mt-0.5" /> Pendataan Wali
+        </Link>
 
-        <div className="flex justify-end w-full">
-          <Link
-            to={"/pmb/form-data-orang-tua-wali"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
-          >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan Wali
-          </Link>
-
-          <Link
-            to={"/pmb/berkas-pendaftaran"}
-            className={`${
-              openForm == "form_ortu_pernyataan" &&
-              "pointer-events-none text-gray-300"
-            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap`}
-          >
-            Berkas Pendaftaran
-            <BsChevronRight className="text-xl ml-2 mt-0.5" />
-          </Link>
-        </div>
+        <Link
+          to={"/pmb/berkas-pendaftaran"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+        >
+          Berkas Pendaftaran{" "}
+          <BsChevronRight className="text-xl sm:ml-3 lg:ml-7 mt-0.5" />
+        </Link>
       </section>
     </article>
   );

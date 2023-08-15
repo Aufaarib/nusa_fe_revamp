@@ -1,9 +1,14 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAdmissionRegistration } from "../../api/Registrasi";
+import {
+  getAdmissionRegistration,
+  moveApplicantToStudent,
+} from "../../api/Registrasi";
 import { Header } from "../../components";
 import { DataTablesPMBWithoutButton } from "../../components/DataTables";
+import { Checkbox } from "@mui/material";
+import { AlertConfirmation } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -65,12 +70,61 @@ const DataRegistrasi = () => {
     localStorage.setItem("REG_NUMBER", code);
     navigate("/admin/list-detail-data-registrasi");
   };
+  const navigateListStudent = () => {
+    navigate("/admin/list-detail-data-registrasi");
+  };
+
+  const [selectedRows, setSelectedRows] = useState([]);
+  const isAllRowsSelected = selectedRows.length === data.length;
+
+  const handleSelectAll = () => {
+    const allRowIds = data.map((row) => row.regNumber);
+    setSelectedRows(allRowIds);
+    handleSubmit();
+  };
+
+  const handleRowSelect = (rowId) => {
+    if (selectedRows.includes(rowId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+    } else {
+      setSelectedRows([...selectedRows, rowId]);
+    }
+  };
+
+  const handlePindahSemua = () => {
+    AlertConfirmation(
+      handleSelectAll,
+      "Pindahkan Semua Pendaftar?",
+      "Pindahkan"
+    );
+  };
+
+  const handleSubmit = () => {
+    moveApplicantToStudent(navigateListStudent, selectedRows[0]);
+  };
+
+  console.log("SELECTED === ", selectedRows[0]);
 
   const columns = [
     {
+      // name: (
+      //   <div onClick={handleSelectAll}>
+      //     {isAllRowsSelected ? "Cancel" : "All"}
+      //   </div>
+      // ),
+      selector: (data) => (
+        <input
+          type="checkbox"
+          checked={selectedRows.includes(data.regNumber)}
+          onChange={() => handleRowSelect(data.regNumber)}
+        />
+      ),
+      width: "50px",
+    },
+    {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
-      width: "55px",
+      width: "45px",
     },
     {
       name: <div>Nomor Registrasi</div>,
@@ -169,7 +223,7 @@ const DataRegistrasi = () => {
           )}
         </div>
       ),
-      width: "150px",
+      width: "130px",
     },
     {
       name: <div>Aktifitas Terakhir</div>,
@@ -193,7 +247,7 @@ const DataRegistrasi = () => {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "150px",
+      width: "130px",
     },
   ];
 
@@ -219,6 +273,11 @@ const DataRegistrasi = () => {
           valueSteps={stepsFilter}
           setData={setData}
           setSts={setSts}
+          selectableRows
+          selectableRowsComponent={Checkbox}
+          setSelected={handleSubmit}
+          setAllSelected={handlePindahSemua}
+          selectedRows={selectedRows}
         />
       </div>
     </>

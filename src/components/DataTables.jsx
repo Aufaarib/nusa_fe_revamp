@@ -284,6 +284,9 @@ export function FilterComponentWithoutButton({
   valueValidation,
   valueSteps,
   onChangeSteps,
+  setSelected,
+  setAllSelected,
+  selectedRows,
 }) {
   return (
     <>
@@ -337,6 +340,44 @@ export function FilterComponentWithoutButton({
               <option value="valid">Terverifikasi</option>
               <option value="inreview">Belum Terverifikasi</option>
             </select>
+            {valueValidation === "valid" && (
+              <div
+                style={{
+                  display: "inline-block",
+                  float: "right",
+                  marginBottom: "20px",
+                }}
+              >
+                <div style={{ display: "flex", gap: "5px" }}>
+                  {selectedRows.length == 0 && (
+                    <button
+                      style={{
+                        fontSize: "12px",
+                        width: "auto",
+                        padding: "2px 10px",
+                      }}
+                      className="btn-mrh"
+                      onClick={() => setAllSelected()}
+                    >
+                      Pindahkan Semua
+                    </button>
+                  )}
+                  {selectedRows.length != 0 && (
+                    <button
+                      style={{
+                        fontSize: "12px",
+                        width: "auto",
+                        padding: "2px 10px",
+                      }}
+                      className="btn-mrh"
+                      onClick={() => setSelected()}
+                    >
+                      Pindahkan Terpilih
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
             {valueValidation === "inreview" && (
               <select
                 style={{
@@ -762,8 +803,9 @@ export function DataTablesPMBWithoutButton({
   valueValidation,
   onChangeSteps,
   valueSteps,
-  setData,
-  setSts,
+  setSelected,
+  setAllSelected,
+  selectedRows,
 }) {
   const CustomStylesTable = {
     table: {
@@ -914,6 +956,9 @@ export function DataTablesPMBWithoutButton({
         valueSteps={valueSteps}
         onChangeSteps={handleFilterStatusSteps}
         dataLength={data.length}
+        setSelected={setSelected}
+        setAllSelected={setAllSelected}
+        selectedRows={selectedRows}
       />
       {data ? (
         <div>

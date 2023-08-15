@@ -69,8 +69,11 @@ const ForgotPassword = () => {
           <div className="line" />
         </section>
 
-        <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
+        <section
+          style={{ display: "flex", flexDirection: "column" }}
+          className="justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih"
+        >
+          <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-12">
             <div
               style={{
                 display: "flex",
@@ -157,10 +160,7 @@ const ForgotPassword = () => {
                 <span>Format Email.</span>
               </p>
             </div>
-            <button
-              disabled={!validEmail ? true : false}
-              className="flex justify-center w-full py-3 my-6 mr-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
-            >
+            <button disabled={!validEmail ? true : false} className="btn-merah">
               Kirim{" "}
               {isLoading ? (
                 <CgSpinner className="ml-2 text-lg animate-spin" />
@@ -168,23 +168,19 @@ const ForgotPassword = () => {
                 ""
               )}
             </button>
-
-            <div className="flex mt-9 justify-center">
-              <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
-                Sudah Punya Akun?
-              </label>
+            <div className="flex mt-7 justify-center">
               <Link
                 to={"/login"}
                 style={{ fontSize: "14px" }}
-                className="text-merah underline"
+                className="text-merah underline font-bold"
               >
-                Login
+                Kembali Ke Login
               </Link>
             </div>
-            <p className="text-sm text-center mt-9 text-merah">
-              Copyright 2023 PT. Nafisha Universal Network
-            </p>
           </form>
+          <p className="text-sm text-center py-4 text-merah">
+            Copyright 2023 PT. Nafisha Universal Network
+          </p>
         </section>
       </div>
     </>

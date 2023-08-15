@@ -111,7 +111,10 @@ const ResetPassword = () => {
           <div className="line" />
         </section>
 
-        <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
+        <section
+          style={{ display: "flex", flexDirection: "column" }}
+          className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih"
+        >
           <form onSubmit={handleSubmit} className="block mt-7 mb-7 px-7">
             <div className="relative block xl:w-480">
               <div
@@ -137,6 +140,8 @@ const ResetPassword = () => {
                 label="Kata Sandi"
                 setPwd={(e) => setPwd(e.target.value)}
                 pwd={pwd}
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
               />
               <FaCheckCircle
                 className={
@@ -173,6 +178,8 @@ const ResetPassword = () => {
                 label="Ulangi Kata Sandi"
                 setPwd={(e) => setMatchPwd(e.target.value)}
                 pwd={matchPwd}
+                onFocus={() => setMatchFocus(true)}
+                onBlur={() => setMatchFocus(false)}
               />
               <FaCheckCircle
                 className={
@@ -197,13 +204,13 @@ const ResetPassword = () => {
                 }
               >
                 <FaInfoCircle className="mr-1" />
-                <span>Harus cocok dengan password sebelumnya.</span>
+                <span>Harus sesuai dengan kata sandi sebelumnya.</span>
               </p>
             </div>
 
             <button
               disabled={!validPwd || !validMatch ? true : false}
-              className="flex justify-center w-full py-3 my-6 mr-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
+              className="btn-merah"
             >
               Kirim{" "}
               {isLoading ? (
@@ -213,22 +220,19 @@ const ResetPassword = () => {
               )}
             </button>
 
-            <div className="flex mt-9 justify-center">
-              <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
-                Sudah Punya Akun?
-              </label>
+            <div className="flex mt-7 justify-center">
               <Link
                 to={"/login"}
                 style={{ fontSize: "14px" }}
-                className="text-merah underline"
+                className="text-merah underline font-bold"
               >
-                Login
+                Kembali Ke Login
               </Link>
             </div>
-            <p className="text-sm text-center mt-9 text-merah">
-              Copyright 2023 PT. Nafisha Universal Network
-            </p>
           </form>
+          <p className="text-sm text-center py-4 text-merah">
+            Copyright 2023 PT. Nafisha Universal Network
+          </p>
         </section>
       </div>
     </>

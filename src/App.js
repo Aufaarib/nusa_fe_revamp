@@ -72,6 +72,7 @@ import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
 import ProfilepPage from "./components/ProfilePage";
 import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
 import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
+import ListMurid from "./pages/AdminPMB/PembagianKelas/ListMurid";
 
 const App = () => {
   return (
@@ -142,6 +143,7 @@ const App = () => {
             path="/admin/list-biaya-pendidikan"
             element={<ListBiayaPendidikan />}
           />
+          <Route path="/admin/list-murid" element={<ListMurid />} />
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route

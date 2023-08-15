@@ -141,12 +141,10 @@ export function getAdmissionAnswer(setData, setSts) {
 }
 
 export function getAdmissionRegistration(setData, setSts) {
-  const page = 1;
   const data = [];
   axios
     .get(
-      process.env.REACT_APP_BASE_URL +
-        `/admission/registration?pageSize=100&page=${page}`,
+      process.env.REACT_APP_BASE_URL + `/admission/registration?pageSize=10000`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }
@@ -157,27 +155,27 @@ export function getAdmissionRegistration(setData, setSts) {
           data.push(element);
         }
       });
-      if (res.data.body.length === 100) {
-        axios
-          .get(
-            process.env.REACT_APP_BASE_URL +
-              `/admission/registration?pageSize=100&page=${page + 1}`,
-            {
-              headers: { authorization: localStorage.getItem("TOKEN") },
-            }
-          )
-          .then((res) => {
-            if (res.data.body !== null) {
-              res.data.body.forEach((element) => {
-                if (element.steps.length > 0) {
-                  data.push(element);
-                }
-              });
-            }
-            setData(data);
-            console.log("DAFKAS === ", data);
-          });
-      }
+      setData(data);
+      // if (res.data.body.length === 100) {
+      //   axios
+      //     .get(
+      //       process.env.REACT_APP_BASE_URL +
+      //         `/admission/registration?pageSize=100&page=${page + 1}`,
+      //       {
+      //         headers: { authorization: localStorage.getItem("TOKEN") },
+      //       }
+      //     )
+      //     .then((res) => {
+      //       if (res.data.body !== null) {
+      //         res.data.body.forEach((element) => {
+      //           if (element.steps.length > 0) {
+      //             data.push(element);
+      //           }
+      //         });
+      //       }
+      //       console.log("DAFKAS === ", data);
+      //     });
+      // }
       setSts({ type: "success" });
     })
     .catch((error) => {
@@ -567,5 +565,24 @@ export function approvedRegistration(code, status, onReload) {
     .catch((error) => {
       // setSts({ type: "error", error });
       AlertStatusFailed("Gagal", "Tutup");
+    });
+}
+
+export function moveApplicantToStudent(navigate, regNumber) {
+  axios
+    .post(
+      process.env.REACT_APP_BASE_URL + `/student/registration/${regNumber}`,
+      null,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then(() => {
+      AlertStatusSuccess(navigate, "Pendaftar Berhasil Dipindahkan", "Tutup");
+      // setSts({ type: "success" });
+      // setData();
+    })
+    .catch((error) => {
+      // setSts({ type: "error", error });
     });
 }

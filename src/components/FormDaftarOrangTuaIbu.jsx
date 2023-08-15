@@ -229,13 +229,13 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
         at="Pendataan Ibu"
         title="Form Pendataan Orang Tua"
       />
-      <div style={{ maxWidth: "140vh", overflow: "auto" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <form
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendaftaran Ibu</h1>
+            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -675,55 +675,42 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
         </form>
       </div>
 
-      <section className="flex mt-12">
-        {admissionParentsData.length !== 0 && (
-          <button
-            type="button"
-            className="w-auto btn-merah"
-            onClick={handleSubmitUpdate}
-          >
-            {isLoading ? (
-              <CgSpinner className="mr-2 text-xl animate-spin" />
-            ) : (
-              <AiOutlineEdit className="mr-2 text-2xl" />
-            )}
-            Edit
-          </button>
-        )}
-        {admissionParentsData.length === 0 && (
-          <button
-            type="button"
-            className="w-auto btn-merah"
-            onClick={handleSubmit}
-          >
-            {isLoading ? (
-              <CgSpinner className="mr-2 text-xl animate-spin" />
-            ) : (
-              <AiOutlineSave className="mr-2 text-2xl" />
-            )}
-            Simpan
-          </button>
-        )}
+      {admissionParentsData !== null && (
+        <button className="btn-merah" onClick={handleSubmitUpdate}>
+          {isLoading ? (
+            <CgSpinner className="mr-2 text-xl animate-spin" />
+          ) : (
+            <AiOutlineEdit className="mr-2 text-2xl" />
+          )}
+          Ubah
+        </button>
+      )}
+      {admissionParentsData === null && (
+        <button className="btn-merah" onClick={handleSubmit}>
+          Simpan
+          {isLoading ? (
+            <CgSpinner className="mr-2 text-xl animate-spin" />
+          ) : (
+            <AiOutlineSave className="mr-2 text-2xl" />
+          )}
+        </button>
+      )}
+      <section className="flex mt-1 gap-5 justify-center">
+        <Link
+          to={"/pmb/form-data-orang-tua-ayah"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+        >
+          <BsChevronLeft className="text-xl mr-7 mt-0.5" /> Halaman Pendataan
+          Ayah
+        </Link>
 
-        <div className="flex justify-end w-full">
-          <Link
-            to={"/pmb/form-data-orang-tua-ayah"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
-          >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendaftaran
-            Ayah
-          </Link>
-
-          <Link
-            to={"/pmb/form-data-orang-tua-wali"}
-            className={`${
-              openForm == "form_ortu_identitas" &&
-              "pointer-events-none text-gray-300"
-            } w-auto pr-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap`}
-          >
-            Pendaftaran Wali <BsChevronRight className="text-xl ml-2 mt-0.5" />
-          </Link>
-        </div>
+        <Link
+          to={"/pmb/form-data-orang-tua-wali"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+        >
+          Halaman Pendataan Wali{" "}
+          <BsChevronRight className="text-xl sm:ml-3 lg:ml-7 mt-0.5" />
+        </Link>
       </section>
     </article>
   );

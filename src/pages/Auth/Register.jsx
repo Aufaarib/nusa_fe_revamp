@@ -140,8 +140,11 @@ const Register = () => {
           <div className="line" />
         </section>
 
-        <section className="flex justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih">
-          <form onSubmit={handleSubmit} className="block">
+        <section
+          style={{ display: "flex", flexDirection: "column" }}
+          className="justify-center lg:min-h-screen lg:items-center lg:w-1/2 bg-putih"
+        >
+          <form onSubmit={handleSubmit} className="block px-12">
             <div className="relative block xl:w-480">
               <div
                 style={{
@@ -163,7 +166,7 @@ const Register = () => {
             </div>
             {/* NAMA LENGKAP */}
             <div className="relative block w-full xl:w-480">
-              <label htmlFor="username" className="flex form-label">
+              <label htmlFor="username" className="flex mt-2 mb-1 form-label">
                 Nama Lengkap
               </label>
               <div
@@ -225,7 +228,7 @@ const Register = () => {
 
             {/* NOMOR TELEPON */}
             <div className="relative block xl:w-480">
-              <label htmlFor="phone" className="flex form-label">
+              <label htmlFor="phone" className="flex mt-2 mb-1 form-label">
                 No. Telepon
               </label>
               <div
@@ -288,7 +291,7 @@ const Register = () => {
 
             {/* EMAIL */}
             <div className="relative block xl:w-480">
-              <label htmlFor="email" className="flex form-label">
+              <label htmlFor="email" className="flex mt-2 mb-1 form-label">
                 E-mail
               </label>
               <div
@@ -420,7 +423,7 @@ const Register = () => {
                 }
               >
                 <FaInfoCircle className="mr-1" />
-                <span>Harus cocok dengan password sebelumnya.</span>
+                <span>Harus sesuai dengan kata sandi sebelumnya.</span>
               </p>
             </div>
 
@@ -434,7 +437,7 @@ const Register = () => {
                   ? true
                   : false
               }
-              className="flex justify-center w-full py-3 my-6 mr-3 mt-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg"
+              className="btn-merah"
             >
               Daftar{" "}
               {isLoading ? (
@@ -444,22 +447,19 @@ const Register = () => {
               )}
             </button>
 
-            <div className="flex mt-9 justify-center">
-              <label className="text-hitam mr-1" style={{ fontSize: "14px" }}>
-                Sudah Punya Akun?
-              </label>
+            <div className="flex mt-7 justify-center">
               <Link
                 to={"/login"}
                 style={{ fontSize: "14px" }}
-                className="text-merah underline"
+                className="text-merah underline font-bold"
               >
-                Login
+                Kembali Ke Login
               </Link>
             </div>
-            <p className="text-sm text-center mt-9 text-merah">
-              Copyright 2023 PT. Nafisha Universal Network
-            </p>
           </form>
+          <p className="text-sm text-center py-4 text-merah">
+            Copyright 2023 PT. Nafisha Universal Network
+          </p>
         </section>
       </div>
     </>

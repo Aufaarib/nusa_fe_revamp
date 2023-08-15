@@ -215,11 +215,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-data-registrasi`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: "Data Pembayaran",
-      //   path: `admin/konfirmasi-pembayaran`,
-      //   icon: <FaWpforms />,
-      // },
+      {
+        name: "Pembagian Kelas",
+        path: `admin/list-murid`,
+        icon: <FaWpforms />,
+      },
       // {
       //   name: "Hasil Tes",
       //   path: `admin/hasil-tes`,
