@@ -143,12 +143,9 @@ export function getAdmissionAnswer(setData, setSts) {
 export function getAdmissionRegistration(setData, setSts) {
   const data = [];
   axios
-    .get(
-      process.env.REACT_APP_BASE_URL + `/admission/registration?pageSize=10000`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
+    .get(process.env.REACT_APP_BASE_URL + `/admission/registration`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
       res.data.body.forEach((element) => {
         if (element.steps.length > 0) {
@@ -568,11 +565,11 @@ export function approvedRegistration(code, status, onReload) {
     });
 }
 
-export function moveApplicantToStudent(navigate, regNumber) {
+export function moveApplicantToStudent(navigate, registrationNumbers) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + `/student/registration/${regNumber}`,
-      null,
+      process.env.REACT_APP_BASE_URL + `/student`,
+      { registrationNumbers },
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }

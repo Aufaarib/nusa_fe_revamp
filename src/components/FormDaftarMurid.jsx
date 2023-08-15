@@ -293,17 +293,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
                 disable={false}
                 required={true}
               />
-              {/* <TextInput
-                label="Agama"
-                type="text"
-                id="religion"
-                onChange={(e) => setReligion(e.target.value)}
-                value={agama}
-                placeholder={admissionApplicantData.religion}
-                // defaultValue={admissionApplicantData.religion}
-                disable={false}
-                required={true}
-              /> */}
               <TextInput
                 label="Nama Tengah"
                 type="text"

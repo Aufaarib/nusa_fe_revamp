@@ -70,8 +70,9 @@ const DataRegistrasi = () => {
     localStorage.setItem("REG_NUMBER", code);
     navigate("/admin/list-detail-data-registrasi");
   };
+
   const navigateListStudent = () => {
-    navigate("/admin/list-detail-data-registrasi");
+    navigate("/admin/list-murid");
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
@@ -100,18 +101,144 @@ const DataRegistrasi = () => {
   };
 
   const handleSubmit = () => {
-    moveApplicantToStudent(navigateListStudent, selectedRows[0]);
+    moveApplicantToStudent(navigateListStudent, selectedRows);
   };
 
-  console.log("SELECTED === ", selectedRows[0]);
+  console.log("SELECTED === ", selectedRows);
 
   const columns = [
     {
-      // name: (
-      //   <div onClick={handleSelectAll}>
-      //     {isAllRowsSelected ? "Cancel" : "All"}
-      //   </div>
-      // ),
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Nomor Registrasi</div>,
+      selector: (data) => data.regNumber,
+      cell: (data) => <div>{data.regNumber}</div>,
+      width: "125px",
+    },
+    {
+      name: <div>Nama Anak</div>,
+      selector: (data) => data.childName,
+      cell: (data) => <div>{data.childName}</div>,
+      width: "140px",
+    },
+    {
+      name: <div>Tahun Ajaran</div>,
+      selector: (data) => data.admissionPhase.admission.academicYear.name,
+      cell: (data) => (
+        <div>{data.admissionPhase.admission.academicYear.name}</div>
+      ),
+      width: "110px",
+    },
+    {
+      name: <div>Status Pendaftaran</div>,
+      cell: (data) => (
+        <div
+          className={
+            data.status === "valid"
+              ? "capitalize text-hijau"
+              : "capitalize text-merah"
+          }
+        >
+          {data.status === "valid" ? "Terverifikasi" : "Belum Terverifikasi"}
+        </div>
+      ),
+      width: "160px",
+    },
+    {
+      name: <div>Status Tahapan</div>,
+      cell: (data) => (
+        <div
+          className={
+            data.steps[data.steps.length - 1].status !== "valid"
+              ? "capitalize text-kuning"
+              : "capitalize text-hijau"
+          }
+        >
+          {data.steps[data.steps.length - 1].step === "1" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Tahap 1 Terverifikasi"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Tahap 1"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Tahap 1 Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "2" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Tahap 2 Terverifikasi"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Tahap 2"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Tahap 2 Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "3" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Tahap 3 Terupload"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Tahap 3"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Tahap 3 Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "4" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Tahap 4 Tersetujui"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Tahap 4"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Tahap 4 Tidak Sesuai"}
+            </>
+          )}
+          {data.steps[data.steps.length - 1].step === "5" && (
+            <>
+              {data.steps[data.steps.length - 1].status === "valid" &&
+                "Tahap Selesai"}
+              {data.steps[data.steps.length - 1].status === "inreview" &&
+                "Verifikasi Tahap 5"}
+              {data.steps[data.steps.length - 1].status === "invalid" &&
+                "Tahap 5 Tidak Sesuai"}
+            </>
+          )}
+        </div>
+      ),
+      width: "150px",
+    },
+    {
+      name: <div>Aktifitas Terakhir</div>,
+      // selector: (data) => data.childName,
+      cell: (data) =>
+        moment(data.steps[data.steps.length - 1].updatedAt).format(
+          "DD-MM-YYYY"
+        ),
+      width: "125px",
+    },
+    {
+      name: <div>Aksi</div>,
+      cell: (data) => (
+        <button
+          style={{ width: "auto", padding: "2px 10px" }}
+          className="btn-action-merah"
+          onClick={() => navigateRegistrationDetails(data.regNumber)}
+        >
+          <i className="fa fa-eye" /> Detail
+        </button>
+      ),
+      ignoreRowClick: true,
+      button: true,
+      width: "130px",
+    },
+  ];
+
+  const columnsCheckbox = [
+    {
       selector: (data) => (
         <input
           type="checkbox"
@@ -263,7 +390,7 @@ const DataRegistrasi = () => {
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesPMBWithoutButton
-          columns={columns}
+          columns={validationFilter === "valid" ? columnsCheckbox : columns}
           data={filteredItems}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
