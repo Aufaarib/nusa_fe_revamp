@@ -17,7 +17,7 @@ export default function TambahKelompokMapel() {
   const [classRoomData, setClassRoomData] = useState([]);
   const [academicPeriodeId, setacademicPeriodeId] = useState("");
   const [subjectId, setacSubjectId] = useState("");
-  const [classRoomId, setClassRoomId] = useState("");
+  const [roomClassId, setClassRoomId] = useState("");
   const [day, setDay] = useState(0);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -52,7 +52,7 @@ export default function TambahKelompokMapel() {
     if (
       academicPeriodeId === "" ||
       subjectId === "" ||
-      classRoomId === "" ||
+      roomClassId === "" ||
       day === "" ||
       startTime === "" ||
       endTime === ""
@@ -64,7 +64,7 @@ export default function TambahKelompokMapel() {
         path,
         academicPeriodeId,
         subjectId,
-        classRoomId,
+        roomClassId,
         day,
         startTime,
         endTime
@@ -149,7 +149,7 @@ export default function TambahKelompokMapel() {
           <DropdownSiswa
             label="Ruangan Kelas"
             required={true}
-            defaultValue={classRoomId}
+            defaultValue={roomClassId}
             isClearable={false}
             options={classRoomOptions}
             isSearchable={false}

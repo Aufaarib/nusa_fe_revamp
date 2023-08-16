@@ -140,11 +140,11 @@ const HasilTes = () => {
   return (
     <>
       <Header
-        home="Admin PMB"
-        // prev="Bank"
+        home="Admin KBM"
+        // prev="Guru"
         // navePrev={path}
-        at="Guru"
-        title="List Guru"
+        at="Daftar Guru"
+        title="Daftar Guru"
       />
 
       <div style={{ marginTop: "50px" }}>

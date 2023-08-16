@@ -99,8 +99,8 @@ const ListRuanganKelas = () => {
         home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Ruangan Kelas"
-        title="Ruangan Kelas"
+        at="Daftar Ruangan Kelas"
+        title="Daftar Ruangan Kelas"
       />
 
       <div style={{ marginTop: "50px" }}>

@@ -116,8 +116,8 @@ export default function ListKelas() {
         home="Admin KBM"
         // prev="Bank"
         // navePrev={path}
-        at="Kelas"
-        title="List Kelas"
+        at="Daftar Kelas"
+        title="Daftar Kelas"
       />
 
       <div style={{ marginTop: "50px" }}>

@@ -55,28 +55,11 @@ export default function ListKurikulum() {
     // setisOpenStatus(true);
   };
 
-  // const openModalHapus = (id, name) => {
-  //   // setisOpenDelete(true);
-  //   setDesc_nama(name);
-  //   setDeleteId(id);
-  //   AlertDelete(name, id, onDelete);
-  // };
-
-  // const closeModalHapus = () => {
-  //   setisOpenDelete(false);
-  // };
-
   const onDelete = (id) => {
     deleteKurikulum(setSts, id, setData);
     // closeModalHapus();
     // setisOpenStatus(true);
   };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   getKurikulum(setData, setSts);
-  //   setSts("");
-  // };
 
   const columns = [
     {
@@ -183,10 +166,10 @@ export default function ListKurikulum() {
     <>
       <Header
         home="Admin KBM"
-        // prev="Bank"
+        // prev="Kelompok Mapel"
         // navePrev={path}
-        at="Kurikulum"
-        title="List Kurikulum"
+        at="Daftar Kurikulum"
+        title="Daftar Kurikulum"
       />
 
       <div style={{ marginTop: "50px" }}>
@@ -197,86 +180,6 @@ export default function ListKurikulum() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        {/* <ModalStatusList
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          status={sts}
-        />
-        <Modal
-          isOpen={isOpenUpdateTidakAktif}
-          onRequestClose={closeModalUpdateTidakAktif}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Aktifkan</h2>
-            <h4 className="mb-3 text-merah">{desc}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onUpdateStatus}>
-              Aktifkan
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalUpdateTidakAktif}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal>
-        <Modal
-          isOpen={isOpenUpdateAktif}
-          onRequestClose={closeModalUpdateAktif}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 style={{ marginBottom: "10px" }}>Non-Aktifkan</h2>
-            <h4 className="text-merah" style={{ marginBottom: "10px" }}>
-              {desc}?
-            </h4>
-            <button
-              style={{ padding: "0 5px", marginBottom: "10px", width: "auto" }}
-              className="btn-action-hijau"
-              onClick={onUpdateStatus}
-            >
-              Non-Aktifkan
-            </button>
-            <button
-              style={{
-                padding: "0 5px",
-                marginBottom: "10px",
-                width: "auto",
-                marginLeft: "10px",
-              }}
-              className="btn-action-pink"
-              onClick={closeModalUpdateAktif}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
-        {/* <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Hapus Kurikulum</h2>
-            <h4 className="mb-3 text-merah">{desc_nama}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onDelete}>
-              Hapus
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalHapus}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
       </div>
     </>
   );

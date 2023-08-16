@@ -202,8 +202,8 @@ export default function ListMataPelajaran() {
         home="Admin KBM"
         // prev="Bank"
         // navePrev={path}
-        at="Mata Pelajaran"
-        title="List Mata Pelajaran"
+        at="Daftar Mata Pelajaran"
+        title="Daftar Mata Pelajaran"
       />
 
       <div style={{ marginTop: "50px" }}>

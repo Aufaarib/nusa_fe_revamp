@@ -2,6 +2,7 @@ import Select from "react-select";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import RadioInput from "./RadioInput";
+import { useState } from "react";
 
 export const DropdownKurikulum = ({
   label,
@@ -65,7 +66,7 @@ export const DropdownStatus = ({
   required,
   defaultValue,
   isClearable,
-  handleOnClick,
+  placeholder,
 }) => {
   const options = [
     { value: "Aktif", label: "Aktif" },
@@ -97,22 +98,11 @@ export const DropdownStatus = ({
             isSearchable={isSearchable}
             isClearable={isClearable}
             defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
+            placeholder={placeholder}
             options={options}
             onChange={onChange}
           />
         </div>
-        {/* <div>
-          <Select
-            className="ml-20"
-            isSearchable={isSearchable}
-            isClearable={isClearable}
-            defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
-            options={options}
-            onChange={onChange}
-          />
-        </div> */}
       </form>
     </div>
   );
@@ -253,17 +243,13 @@ export const DropdownCostCenter = ({
 
 export const DropdownSiswa = ({
   label,
-  type,
-  id,
   name,
-  ref,
-  autoComplete,
   onChange,
   options,
   required,
-  rows,
   isClearable,
   defaultValue,
+  placeholder,
 }) => {
   return (
     <div>
@@ -289,19 +275,12 @@ export const DropdownSiswa = ({
             className="w-full"
             isClearable={isClearable}
             defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
+            placeholder={placeholder}
             options={options}
             onChange={onChange}
+            isSearchable={false}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );

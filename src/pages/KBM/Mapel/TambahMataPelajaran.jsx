@@ -70,7 +70,10 @@ export default function TambahMataPelajaran() {
   return (
     <div>
       <Header
-        category="Admin KBM / Mata Pelajaran / Tambah Mata Pelajaran"
+        home="Admin KBM"
+        prev="Mata Pelajaran"
+        navePrev={path}
+        at="Tambah Mata Pelajaran"
         title="Tambah Mata Pelajaran"
       />
       <div style={{ padding: "44px 104px 0" }}>

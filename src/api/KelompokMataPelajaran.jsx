@@ -25,7 +25,7 @@ export function getKelompokMapel(setData, setSts) {
 
 export function updateStatusKelompokMapel(setSts, status, id, setData) {
   axios
-    .post(process.env.REACT_APP_NUSA + `/group-course/update/${id}`, {
+    .post(process.env.REACT_APP_BASE_URL + `/group-course/update/${id}`, {
       status,
     })
     .then(() => {
@@ -41,18 +41,30 @@ export function updateStatusKelompokMapel(setSts, status, id, setData) {
 
 export function updateKelompokMapel(
   setStatus,
-  path,
-  name,
-  status,
   id,
-  created_by
+  path,
+  academicPeriodeId,
+  subjectId,
+  roomClassId,
+  day,
+  startTime,
+  endTime
 ) {
   axios
-    .post(process.env.REACT_APP_NUSA + `/group-course/update/${id}`, {
-      name,
-      status,
-      created_by,
-    })
+    .put(
+      process.env.REACT_APP_BASE_URL + `/subject/group/${id}`,
+      {
+        academicPeriodeId,
+        subjectId,
+        roomClassId,
+        day,
+        startTime,
+        endTime,
+      },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setStatus({ type: "success" });
       AlertStatusUpdateDataSuccess(path);
@@ -68,7 +80,7 @@ export function postKelompokMapel(
   path,
   academicPeriodeId,
   subjectId,
-  classRoomId,
+  roomClassId,
   day,
   startTime,
   endTime
@@ -79,7 +91,7 @@ export function postKelompokMapel(
       {
         academicPeriodeId,
         subjectId,
-        classRoomId,
+        roomClassId,
         day,
         startTime,
         endTime,

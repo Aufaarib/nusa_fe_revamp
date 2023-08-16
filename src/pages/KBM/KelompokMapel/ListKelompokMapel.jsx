@@ -68,12 +68,12 @@ export default function ListKelompokMapel() {
     // setisOpenStatus(true);
   };
 
-  const openModalHapus = (id, name) => {
-    // setisOpenDelete(true);
-    setDesc_nama(name);
-    setDeleteId(id);
-    AlertDelete(name, id, onDelete);
-  };
+  // const openModalHapus = (id, name) => {
+  //   // setisOpenDelete(true);
+  //   setDesc_nama(name);
+  //   setDeleteId(id);
+  //   AlertDelete(name, id, onDelete);
+  // };
 
   // const closeModalHapus = () => {
   //   setisOpenDelete(false);
@@ -90,6 +90,12 @@ export default function ListKelompokMapel() {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
       width: "55px",
+    },
+    {
+      name: <div>Semester</div>,
+      selector: (data) => data.academicPeriode?.increment,
+      cell: (data) => <div>{`Sm ${data.academicPeriode?.increment}`}</div>,
+      width: "auto",
     },
     {
       name: <div>Hari</div>,
@@ -140,7 +146,19 @@ export default function ListKelompokMapel() {
         <div>
           <button
             onClick={() =>
-              navigateUbahKelompokMapel(data.id, data.subject.name)
+              navigateUbahKelompokMapel(
+                data.id,
+                data.academicPeriode.id,
+                data.subject.id,
+                data.roomClasses?.id,
+                data.academicPeriode.increment,
+                data.schedule.day,
+                data.subject.name,
+                data.roomClasses?.room?.name,
+                data.schedule.startTime,
+                data.schedule.endTime,
+                data.status
+              )
             }
             className="btn-action-merah ml-3 w-auto px-2"
           >
@@ -160,11 +178,32 @@ export default function ListKelompokMapel() {
     navigate("/admin/tambah-kelompok-mapel");
   };
 
-  const navigateUbahKelompokMapel = (id, name) => {
+  const navigateUbahKelompokMapel = (
+    id,
+    academicPeriodeId,
+    subjectId,
+    roomId,
+    academicPeriode,
+    schedule,
+    subject,
+    room,
+    startTime,
+    endTime,
+    status
+  ) => {
     navigate("/admin/ubah-kelompok-mapel", {
       state: {
         id: id,
-        name: name,
+        academicPeriodeId: academicPeriodeId,
+        subjectId: subjectId,
+        roomId: roomId,
+        academicPeriode: academicPeriode,
+        day: schedule,
+        subject: subject,
+        room: room,
+        startTime: startTime,
+        endTime: endTime,
+        status: status,
       },
     });
   };
@@ -175,8 +214,8 @@ export default function ListKelompokMapel() {
         home="Admin KBM"
         // prev="Bank"
         // navePrev={path}
-        at="Kelompok Mapel"
-        title="List Kelompok Mata Pelajaran"
+        at="Daftar Kelompok Mapel"
+        title="Daftar Kelompok Mata Pelajaran"
       />
       <div style={{ marginTop: "50px" }}>
         <DataTables
