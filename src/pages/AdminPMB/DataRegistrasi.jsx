@@ -6,7 +6,10 @@ import {
   moveApplicantToStudent,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
-import { DataTablesPMBWithoutButton } from "../../components/DataTables";
+import {
+  DataTablesPMBWithoutButton,
+  DataTablesRegistrations,
+} from "../../components/DataTables";
 import { Checkbox } from "@mui/material";
 import { AlertConfirmation } from "../../components/ModalPopUp";
 
@@ -389,7 +392,7 @@ const DataRegistrasi = () => {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesPMBWithoutButton
+        <DataTablesRegistrations
           columns={validationFilter === "valid" ? columnsCheckbox : columns}
           data={filteredItems}
           onFilter={(e) => setFilterText(e.target.value)}

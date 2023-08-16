@@ -65,7 +65,7 @@ export default function ListKelas() {
       name: <div>Deskripsi</div>,
       selector: (data) => data.description,
       cell: (data) => <div>{data.description}</div>,
-      width: "auto",
+      width: "320px",
     },
     {
       name: <div>Aksi</div>,
@@ -89,7 +89,7 @@ export default function ListKelas() {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "360px",
+      width: "200px",
     },
   ];
 

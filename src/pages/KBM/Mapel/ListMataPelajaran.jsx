@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteMapel,
-  getMapel,
-  updateStatusMapel,
-} from "../../../api/MataPelajaran";
+import { getMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
-import {
-  AlertDelete,
-  AlertUpdateStatusAktif,
-  AlertUpdateStatusNonAktif,
-} from "../../../components/ModalPopUp";
 
 export default function ListMataPelajaran() {
   const [data, setData] = useState([]);
@@ -118,7 +109,9 @@ export default function ListMataPelajaran() {
     {
       name: <div>Tipe</div>,
       selector: (data) => data.type,
-      cell: (data) => <div>{data.type}</div>,
+      cell: (data) => (
+        <div>{data.type === "academic" ? "Akademik" : "Non-Akademik"}</div>
+      ),
       width: "auto",
     },
     // {
@@ -138,7 +131,6 @@ export default function ListMataPelajaran() {
       cell: (data) => (
         <div>
           <button
-            style={{ fontSize: "14px" }}
             onClick={() =>
               navigateUbahMapel(
                 data.code,
@@ -147,9 +139,9 @@ export default function ListMataPelajaran() {
                 data.type
               )
             }
-            className="btn-mrh"
+            className="btn-action-merah ml-3 w-auto px-2"
           >
-            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
+            <i className="fa fa-edit mt-1 mr-1"></i> Ubah
           </button>
           {/* {data?.status === "Aktif" && (
             <button
@@ -178,7 +170,7 @@ export default function ListMataPelajaran() {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "360px",
+      width: "200px",
     },
   ];
 

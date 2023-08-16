@@ -69,13 +69,11 @@ export default function TambahMataPelajaran() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
-        <Header
-          category="Admin KBM / Mata Pelajaran / Tambah Mata Pelajaran"
-          title="Tambah Mata Pelajaran"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        category="Admin KBM / Mata Pelajaran / Tambah Mata Pelajaran"
+        title="Tambah Mata Pelajaran"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -104,23 +102,6 @@ export default function TambahMataPelajaran() {
             onChange={(e) => setType(e.target.value)}
             required={true}
           />
-          {/* <DropdownJenisTransaksi
-            label="Kelompok Mata Pelajaran"
-            required={true}
-            defaultValue={group_course_id}
-            isClearable={false}
-            options={groupCourseOptions}
-            isSearchable={false}
-            onChange={(e) => setGroupCourseId(e.value)}
-          /> */}
-          {/* <DropdownStatus
-            label="Status"
-            required={true}
-            isClearable={true}
-            defaultValue={statusVal}
-            isSearchable={false}
-            onChange={setStatus}
-          /> */}
 
           <div className="btn-form">
             <button
@@ -138,17 +119,6 @@ export default function TambahMataPelajaran() {
               Batal
             </button>
           </div>
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateSemester}
-          />
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

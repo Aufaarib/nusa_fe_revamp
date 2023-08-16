@@ -1,67 +1,61 @@
 import {
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
-export function getSemester(setData, setSts) {
+export function getRoom(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/academic/year", {
+    .get(process.env.REACT_APP_BASE_URL + "/room", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      for (const i of res.data.body) {
-        setData(i.periode);
-      }
-      setSts({ type: "success" });
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-    });
-}
-
-export function getTahunAjaran(setData, setSts) {
-  axios
-    .get(process.env.REACT_APP_BASE_URL + "/academic/year", {
-      headers: { authorization: localStorage.getItem("TOKEN") },
-    })
-    .then((res) => {
+      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
     });
+
+  // axios
+  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+  //     .then((res) => {
+  //     setData(res.data);
+  //     setSts({ type: 'success' });
+  //     })
+  //     .catch((error) => {
+  //     setSts({ type: 'error', error });
+  //     });
 }
 
-export function updateTahunAjaran(
+export function updateGuru(
   setSts,
   path,
-  year,
-  name,
-  status,
-  curriculumId,
-  code
+  code,
+  Fullname,
+  Gender,
+  Religion,
+  BirthPlace,
+  BirthDate
 ) {
   axios
     .put(
-      process.env.REACT_APP_BASE_URL + `/academic/year/${code}`,
+      process.env.REACT_APP_BASE_URL + `/teacher/${code}`,
       {
-        year,
-        name,
-        status,
-        curriculumId,
+        Fullname,
+        Gender,
+        Religion,
+        BirthPlace,
+        BirthDate,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusUpdateSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -89,22 +83,24 @@ export function updateTahunAjaran(
 //     });
 // }
 
-export function postTahunAjaran(
+export function postGuru(
   setSts,
   path,
-  year,
-  name,
-  status,
-  curriculumId
+  fullname,
+  gender,
+  religion,
+  birthPlace,
+  birthDate
 ) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + "/academic/year",
+      process.env.REACT_APP_BASE_URL + "/teacher",
       {
-        year,
-        name,
-        status,
-        curriculumId,
+        fullname,
+        gender,
+        religion,
+        birthPlace,
+        birthDate,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )

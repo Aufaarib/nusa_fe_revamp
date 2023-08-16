@@ -48,15 +48,6 @@ export default function UbahMataPelajaran() {
     }
   };
 
-  // const closeModalEmpty = () => {
-  //   setisOpenEmpty(false);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
-
   const navigateMapel = () => {
     navigate(path);
   };
@@ -68,13 +59,14 @@ export default function UbahMataPelajaran() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
-        <Header
-          category="Admin KBM / Mata Pelajaran / Ubah Mata Pelajaran"
-          title="Ubah Mata Pelajaran"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="Mata Pelajaran"
+        navePrev={path}
+        at="Ubah Mata Pelajaran"
+        title="Ubah Mata Pelajaran"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

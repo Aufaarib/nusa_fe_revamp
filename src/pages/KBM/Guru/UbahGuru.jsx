@@ -71,16 +71,14 @@ export default function UbahGuru() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="Guru"
-          navePrev={path}
-          at="Ubah Guru"
-          title="Ubah Guru"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="Guru"
+        navePrev={path}
+        at="Ubah Guru"
+        title="Ubah Guru"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -151,19 +149,6 @@ export default function UbahGuru() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateKelas}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

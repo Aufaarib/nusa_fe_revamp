@@ -1,6 +1,7 @@
 import {
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -65,7 +66,7 @@ export function updateMurid(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess(path);
+      AlertStatusUpdateDataSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });

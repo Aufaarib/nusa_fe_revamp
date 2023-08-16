@@ -75,16 +75,14 @@ export default function TambahGuru() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="List Guru"
-          navePrev={path}
-          at="Tambah Guru"
-          title="Tambah Guru"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="List Guru"
+        navePrev={path}
+        at="Tambah Guru"
+        title="Tambah Guru"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

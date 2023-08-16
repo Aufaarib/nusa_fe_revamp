@@ -1,6 +1,7 @@
 import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
@@ -20,15 +21,6 @@ export function getKelompokMapel(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
 export function updateStatusKelompokMapel(setSts, status, id, setData) {
@@ -71,20 +63,38 @@ export function updateKelompokMapel(
     });
 }
 
-export function postKelompokMapel(setStatus, path, name, status, created_by) {
+export function postKelompokMapel(
+  setStatus,
+  path,
+  academicPeriodeId,
+  subjectId,
+  classRoomId,
+  day,
+  startTime,
+  endTime
+) {
   axios
-    .post(process.env.REACT_APP_NUSA + "/group-course/create", {
-      name,
-      status,
-      created_by,
-    })
+    .post(
+      process.env.REACT_APP_BASE_URL + "/subject/group",
+      {
+        academicPeriodeId,
+        subjectId,
+        classRoomId,
+        day,
+        startTime,
+        endTime,
+      },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setStatus({ type: "success" });
       AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      AlertStatusHapusFailed();
+      AlertStatusTambahFailed();
     });
 }
 

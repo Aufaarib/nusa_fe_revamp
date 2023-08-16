@@ -37,16 +37,14 @@ export default function UbahKelas() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="Kelas"
-          navePrev={path}
-          at="Ubah Kelas"
-          title="Ubah Kelas"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="Kelas"
+        navePrev={path}
+        at="Ubah Kelas"
+        title="Ubah Kelas"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

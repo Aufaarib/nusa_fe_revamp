@@ -100,16 +100,14 @@ export default function TambahGelombang() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin PMB"
-          prev="Setup PMB"
-          navePrev={path}
-          at="Gelombang"
-          title="Tambah Gelombang"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin PMB"
+        prev="Setup PMB"
+        navePrev={path}
+        at="Gelombang"
+        title="Tambah Gelombang"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

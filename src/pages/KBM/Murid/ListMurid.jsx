@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
-import { DataTablesPMB } from "../../../components/DataTables";
+import {
+  DataTables,
+  DataTablesPMB,
+  DataTablesWithoutButton,
+} from "../../../components/DataTables";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
 import { updateStatusKurikulum } from "../../../api/Kurikulum";
 import moment from "moment";
@@ -61,6 +65,11 @@ const ListMurid = () => {
       width: "55px",
     },
     {
+      name: <div>Kode</div>,
+      cell: (data) => <div>{data.code}</div>,
+      width: "120px",
+    },
+    {
       name: <div>Nama Lengkap</div>,
       cell: (data) => (
         <div>{`${data.firstName} ${data.middleName} ${data.lastName}`}</div>
@@ -91,14 +100,14 @@ const ListMurid = () => {
       name: <div>Golongan Darah</div>,
       selector: (data) => data.bloodType,
       cell: (data) => data.bloodType,
-      width: "90px",
+      width: "120px",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
-      width: "90px",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   width: "90px",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
@@ -159,13 +168,12 @@ const ListMurid = () => {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesPMB
+        <DataTablesWithoutButton
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahGuru}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          buttontxt=""
         />
       </div>
     </>

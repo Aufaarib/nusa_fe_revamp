@@ -35,12 +35,6 @@ export default function UbahMurid() {
     e.preventDefault();
     const code = location.state.code;
 
-    // console.log(fullname);
-    // console.log(gender);
-    // console.log(religion);
-    // console.log(birthPlace);
-    // console.log(birthDate);
-
     if (
       firstName === "" ||
       middleName === "" ||
@@ -77,15 +71,13 @@ export default function UbahMurid() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="Murid"
-          navePrev={path}
-          at="Ubah Murid"
-          title="Ubah Murid"
-        />
-      </div>
+      <Header
+        home="Admin KBM"
+        prev="Murid"
+        navePrev={path}
+        at="Ubah Murid"
+        title="Ubah Murid"
+      />
       <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{

@@ -46,16 +46,14 @@ export default function UbahKelompokMapel() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="Kelompok Mapel"
-          navePrev={path}
-          at="Ubah Kelompok Mata Pelajaran"
-          title="Ubah Kelompok Mata Pelajaran"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="Kelompok Mapel"
+        navePrev={path}
+        at="Ubah Kelompok Mata Pelajaran"
+        title="Ubah Kelompok Mata Pelajaran"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

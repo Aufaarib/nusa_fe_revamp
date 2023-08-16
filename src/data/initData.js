@@ -260,6 +260,11 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
+        name: "Kurikulum",
+        path: `admin/list-kurikulum`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Murid",
         path: `admin/list-murid`,
         icon: <FaWpforms />,
@@ -275,25 +280,25 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
-      {
         name: "Mata Pelajaran",
         path: `admin/list-mata-pelajaran`,
         icon: <FaWpforms />,
       },
       {
-        name: "Kelompok Mapel",
+        name: "Kelompok Mata Pelajaran",
         path: `admin/list-kelompok-mapel`,
         icon: <FaWpforms />,
       },
       {
-        name: "Pembagian Kelas",
+        name: "Ruangan Kelas",
         path: `admin/list-ruang-kelas`,
         icon: <FaWpforms />,
       },
+      // {
+      //   name: "Pembagian Kelas",
+      //   path: `admin/list-ruang-kelas`,
+      //   icon: <FaWpforms />,
+      // },
       // {
       //   name: "Jadwal Mapel",
       //   path: `admin/list-jadwal-mata-pelajaran`,

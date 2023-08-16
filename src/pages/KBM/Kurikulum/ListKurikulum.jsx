@@ -48,22 +48,6 @@ export default function ListKurikulum() {
     // setUpdateId(id);
   };
 
-  // const closeModalUpdateTidakAktif = () => {
-  //   setisOpenUpdateTidakAktif(false);
-  // };
-
-  // const handleActiveStatus = (id, description) => {
-  //   // setisOpenUpdateAktif(true);
-  //   // setStatus("Tidak Aktif");
-  //   // setDesc(description);
-  //   // setUpdateId(id);
-  //   AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
-  // };
-
-  // const closeModalUpdateAktif = () => {
-  //   setisOpenUpdateAktif(false);
-  // };
-
   const onUpdateStatus = (code) => {
     updateStatusKurikulum(setSts, code, setData);
     // closeModalUpdateAktif();
@@ -110,7 +94,7 @@ export default function ListKurikulum() {
       name: <div>Nama</div>,
       selector: (data) => data.name,
       cell: (data) => <div>{data.name}</div>,
-      width: "auto",
+      width: "230px",
     },
     {
       name: <div>Deskripsi</div>,
@@ -135,7 +119,6 @@ export default function ListKurikulum() {
       cell: (data) => (
         <div>
           <button
-            style={{ fontSize: "14px" }}
             onClick={() =>
               navigateUbahKurikulum(
                 data.id,
@@ -145,7 +128,7 @@ export default function ListKurikulum() {
                 data.semester_id
               )
             }
-            className="btn-action-merah"
+            className="btn-action-merah ml-3 w-auto px-2"
           >
             <i className="fa fa-edit mt-1 mr-1"></i> Ubah
           </button>
@@ -176,7 +159,7 @@ export default function ListKurikulum() {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "360px",
+      width: "200px",
     },
   ];
 

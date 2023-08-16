@@ -54,7 +54,7 @@ const UploadHasilTes = () => {
         at={code}
         title={code}
       />
-      <div style={{ padding: "44px 154px 0" }}>
+      <div style={{ padding: "44px 104px 0" }}>
         <section>
           <>
             <TextInput

@@ -3,6 +3,7 @@ import {
   AlertStatusHapusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -57,7 +58,7 @@ export function updateGuru(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess(path);
+      AlertStatusUpdateDataSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });

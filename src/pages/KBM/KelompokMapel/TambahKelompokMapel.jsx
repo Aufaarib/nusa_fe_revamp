@@ -1,68 +1,114 @@
 import React from "react";
 import TextInput from "../../../components/TextInput";
-import { DropdownStatus } from "../../../components/Dropdown";
+import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
 import { postKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {
-  AlertEmpty,
-  // ModalEmpty,
-  // ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import { AlertEmpty } from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
+import { useEffect } from "react";
+import { getMapel } from "../../../api/MataPelajaran";
+import { getClassRoom } from "../../../api/RuanganKelas";
+import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
 
 export default function TambahKelompokMapel() {
-  const [name, setName] = useState("");
+  const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
+  const [classRoomData, setClassRoomData] = useState([]);
+  const [academicPeriodeId, setacademicPeriodeId] = useState("");
+  const [subjectId, setacSubjectId] = useState("");
+  const [classRoomId, setClassRoomId] = useState("");
+  const [day, setDay] = useState(0);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [statusVal, setStatus] = useState("");
-
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const created_by = localStorage.getItem("NAMA");
   const navigate = useNavigate();
-
   const path = "/admin/list-kelompok-mapel";
 
-  console.log(created_by);
+  const fetchAcademicPeriode = () => {
+    getSemester(setAcademicPeriodeData, setSts);
+  };
+
+  console.log("TESSSSSSSS === ", academicPeriodeData);
+
+  const fetchSubject = () => {
+    getMapel(setSubjectData, setSts);
+  };
+
+  const fetchClassRoom = () => {
+    getClassRoom(setClassRoomData, setSts);
+  };
+
+  useEffect(() => {
+    fetchAcademicPeriode();
+    fetchSubject();
+    fetchClassRoom();
+  }, []);
 
   const postData = (e) => {
     e.preventDefault();
 
-    const status = statusVal.value;
-
-    if (name.length === 0 || statusVal.length === 0) {
+    if (
+      academicPeriodeId === "" ||
+      subjectId === "" ||
+      classRoomId === "" ||
+      day === "" ||
+      startTime === "" ||
+      endTime === ""
+    ) {
       AlertEmpty();
     } else {
-      postKelompokMapel(setSts, path, name, status, created_by);
-      // setisOpenStatus(true);
+      postKelompokMapel(
+        setSts,
+        path,
+        academicPeriodeId,
+        subjectId,
+        classRoomId,
+        day,
+        startTime,
+        endTime
+      );
     }
   };
-
-  // const closeModalEmpty = () => {
-  //   setisOpenEmpty(false);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
 
   const navigateKelompokMapel = () => {
     navigate(path);
   };
 
+  const academicYearOptions = academicPeriodeData.map((c) => ({
+    label: `Semester : ${c.increment}`,
+    value: c.id,
+  }));
+
+  const subjectOptions = subjectData.map((c) => ({
+    label: `${c.code} : ${c.name}`,
+    value: c.id,
+  }));
+
+  const classRoomOptions = classRoomData.map((c) => ({
+    label: `${c.room.name}`,
+    value: c.id,
+  }));
+
+  const dayOptions = [
+    { value: 1, label: "Senin" },
+    { value: 2, label: "Selasa" },
+    { value: 3, label: "Rabu" },
+    { value: 4, label: "Kamis" },
+    { value: 5, label: "Jumat" },
+  ];
+
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin KBM"
-          prev="Kelompok Mapel"
-          navePrev={path}
-          at="Tambah Kelompok Mata Pelajaran"
-          title="Tambah Kelompok Mata Pelajaran"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin KBM"
+        prev="Kelompok Mapel"
+        navePrev={path}
+        at="Tambah Kelompok Mata Pelajaran"
+        title="Tambah Kelompok Mata Pelajaran"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -73,11 +119,54 @@ export default function TambahKelompokMapel() {
           Form Tambah Kelompok Mata Pelajaran
         </p>
         <article>
+          <DropdownSiswa
+            label="Semester"
+            required={true}
+            defaultValue={academicPeriodeId}
+            isClearable={false}
+            options={academicYearOptions}
+            isSearchable={false}
+            onChange={(e) => setacademicPeriodeId(e.value)}
+          />
+          <DropdownSiswa
+            label="Hari"
+            required={true}
+            defaultValue={day}
+            isClearable={false}
+            options={dayOptions}
+            isSearchable={false}
+            onChange={(e) => setDay(e.value)}
+          />
+          <DropdownSiswa
+            label="Mata Pelajaran"
+            required={true}
+            defaultValue={subjectId}
+            isClearable={false}
+            options={subjectOptions}
+            isSearchable={false}
+            onChange={(e) => setacSubjectId(e.value)}
+          />
+          <DropdownSiswa
+            label="Ruangan Kelas"
+            required={true}
+            defaultValue={classRoomId}
+            isClearable={false}
+            options={classRoomOptions}
+            isSearchable={false}
+            onChange={(e) => setClassRoomId(e.value)}
+          />
           <TextInput
-            label="Nama"
+            label="Jam Mulai"
             type="text"
-            name="code"
-            onChange={(e) => setName(e.target.value)}
+            placeholder={"07:20"}
+            onChange={(e) => setStartTime(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Jam Selesai"
+            type="text"
+            placeholder={"08:20"}
+            onChange={(e) => setEndTime(e.target.value)}
             required={true}
           />
           <DropdownStatus
@@ -105,19 +194,6 @@ export default function TambahKelompokMapel() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateKelompokMapel}
-          /> */}
-
-          {/* <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

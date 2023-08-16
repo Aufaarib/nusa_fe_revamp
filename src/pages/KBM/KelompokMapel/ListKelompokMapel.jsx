@@ -85,12 +85,6 @@ export default function ListKelompokMapel() {
     // setisOpenStatus(true);
   };
 
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   getKelompokMapel(setData, setSts);
-  //   setSts("");
-  // };
-
   const columns = [
     {
       name: <div>No</div>,
@@ -98,58 +92,65 @@ export default function ListKelompokMapel() {
       width: "55px",
     },
     {
-      name: <div>Nama</div>,
+      name: <div>Hari</div>,
+      cell: (data) => (
+        <div>
+          {(data.schedule.day == 1 && "Senin") ||
+            (data.schedule.day == 2 && "Selasa") ||
+            (data.schedule.day == 3 && "Rabu") ||
+            (data.schedule.day == 4 && "Kamis") ||
+            (data.schedule.day == 5 && "Jumat")}
+        </div>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Mapel</div>,
       selector: (data) => data.subject.name,
       cell: (data) => <div>{data.subject.name}</div>,
       width: "auto",
     },
     {
+      name: <div>Ruangan Kelas</div>,
+      selector: (data) => data.roomClasses?.room?.name,
+      cell: (data) => <div>{data.roomClasses?.room?.name}</div>,
+      width: "220px",
+    },
+    {
+      name: <div>Jam Mulai</div>,
+      selector: (data) => data.schedule.startTime,
+      cell: (data) => <div>{data.schedule.startTime}</div>,
+      width: "100px",
+    },
+    {
+      name: <div>Jam Selesai</div>,
+      selector: (data) => data.schedule.endTime,
+      cell: (data) => <div>{data.schedule.endTime}</div>,
+      width: "100px",
+    },
+    {
       name: <div>Status</div>,
       selector: (data) => data.status,
-      cell: (data) => <div>{data.status}</div>,
-      width: "auto",
+      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+      width: "90px",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <div>
           <button
-            style={{ fontSize: "14px" }}
             onClick={() =>
               navigateUbahKelompokMapel(data.id, data.subject.name)
             }
-            className="btn-mrh"
+            className="btn-action-merah ml-3 w-auto px-2"
           >
             <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
-          </button>
-          {data?.status === "Aktif" && (
-            <button
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleActiveStatus(data.id, data.subject.name)}
-            >
-              <i className="fa fa-play mt-1 mr-1"></i> {data.status}
-            </button>
-          )}
-          {data?.status === "Tidak Aktif" && (
-            <button
-              className="btn-mrh ml-3 w-auto px-2"
-              onClick={() => handleNonActiveStatus(data.id, data.subject.name)}
-            >
-              <i className="fa fa-pause mt-1 mr-1"></i> {data.status}
-            </button>
-          )}
-          <button
-            style={{ fontSize: "14px" }}
-            onClick={() => openModalHapus(data.id, data.subject.name)}
-            className="btn-mrh ml-3"
-          >
-            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
           </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "360px",
+      width: "160px",
     },
   ];
 
@@ -185,86 +186,6 @@ export default function ListKelompokMapel() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        {/* <ModalStatusList
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          status={sts}
-        /> */}
-        {/* <Modal
-          isOpen={isOpenUpdateTidakAktif}
-          onRequestClose={closeModalUpdateTidakAktif}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Aktifkan</h2>
-            <h4 className="mb-3 text-merah">{desc}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onUpdateStatus}>
-              Aktifkan
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalUpdateTidakAktif}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal>
-        <Modal
-          isOpen={isOpenUpdateAktif}
-          onRequestClose={closeModalUpdateAktif}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 style={{ marginBottom: "10px" }}>Non-Aktifkan</h2>
-            <h4 className="text-merah" style={{ marginBottom: "10px" }}>
-              {desc}?
-            </h4>
-            <button
-              style={{ padding: "0 5px", marginBottom: "10px", width: "auto" }}
-              className="btn-action-hijau"
-              onClick={onUpdateStatus}
-            >
-              Non-Aktifkan
-            </button>
-            <button
-              style={{
-                padding: "0 5px",
-                marginBottom: "10px",
-                width: "auto",
-                marginLeft: "10px",
-              }}
-              className="btn-action-pink"
-              onClick={closeModalUpdateAktif}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
-        {/* <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesStatus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Hapus Kelompok</h2>
-            <h4 className="mb-3 text-merah">{desc_nama}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onDelete}>
-              Hapus
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalHapus}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
       </div>
     </>
   );

@@ -89,8 +89,8 @@ const ListRuanganKelas = () => {
     });
   };
 
-  const navigateTambahPendaftaran = () => {
-    navigate("/admin/tambah-pendaftaran");
+  const navigateTambahRuangKelas = () => {
+    navigate("/admin/tambah-ruang-kelas");
   };
 
   return (
@@ -99,15 +99,15 @@ const ListRuanganKelas = () => {
         home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Pembagian Kelas"
-        title="Pembagian Kelas"
+        at="Ruangan Kelas"
+        title="Ruangan Kelas"
       />
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesPMB
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahPendaftaran}
+          onClick={navigateTambahRuangKelas}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           buttontxt="Tambah Pendaftaran"

@@ -27,10 +27,6 @@ export default function TambahPendaftaran() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [amount, setAmount] = useState("");
-  // const [academicYear, setAcademicYear] = useState("");
-
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
-  // const created_by = localStorage.getItem("NAMA");
 
   const navigate = useNavigate();
 
@@ -38,41 +34,9 @@ export default function TambahPendaftaran() {
     getTahunAjaran(setAcademicYearData, setSts);
   };
 
-  console.log("KAKAAAAAAAA", formFields);
-
   useEffect(() => {
     fetchAcademicYear();
   }, []);
-
-  // const handleChange = (index, field, value) => {
-  //   const updatedFields = [...formFields];
-  //   const intFields = ["increment", "amount"];
-
-  //   if (intFields.includes(field)) {
-  //     updatedFields[index][field] = parseInt(value, 0);
-  //   } else {
-  //     updatedFields[index][field] = value;
-  //   }
-  //   setFormFields(updatedFields);
-  // };
-
-  // const addField = () => {
-  //   setFormFields([
-  //     ...formFields,
-  //     {
-  //       name: "",
-  //       increment: 0,
-  //       startDate: "",
-  //       endDate: "",
-  //       amount: 0,
-  //     },
-  //   ]);
-  // };
-
-  // const removeField = (index) => {
-  //   const updatedFields = formFields.filter((field, i) => i !== index);
-  //   setFormFields(updatedFields);
-  // };
 
   const academicYearOptions = academicYearData.map((c) => ({
     label: `${c.name} : ${c.curriculum.code}`,
@@ -125,20 +89,6 @@ export default function TambahPendaftaran() {
     navigate(path);
   };
 
-  // const handleAmountChange = (e) => {
-  //   const value = parseInt(e.target.value);
-  //   setAmount(value);
-  // };
-
-  // const handleIncrementChange = (e) => {
-  //   const value = parseInt(e.target.value);
-  //   setIncrement(value);
-  // };
-
-  // const onAcademicYearChange = (index, e) => {
-  //   setAcademicYear(e.value);
-  // };
-
   const handleInputChange = (event) => {
     let inputVal = event.target.value;
     inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
@@ -148,16 +98,14 @@ export default function TambahPendaftaran() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Header
-          home="Admin PMB"
-          prev="Setup PMB"
-          navePrev={path}
-          at="Pendaftaran"
-          title="Tambah Pendaftaran"
-        />
-      </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <Header
+        home="Admin PMB"
+        prev="Setup PMB"
+        navePrev={path}
+        at="Pendaftaran"
+        title="Tambah Pendaftaran"
+      />
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -177,7 +125,6 @@ export default function TambahPendaftaran() {
             isSearchable={false}
             onChange={(e) => setacAdemicYearId(e.value)}
           />
-
           <TextInput
             label="Gelombang Ke"
             type="number"

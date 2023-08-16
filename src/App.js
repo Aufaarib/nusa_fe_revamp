@@ -73,8 +73,9 @@ import ProfilepPage from "./components/ProfilePage";
 import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
 import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
 import ListMurid from "./pages/KBM/Murid/ListMurid";
-import ListRuanganKelas from "./pages/AdminPMB/PembagianKelas/ListRuanganKelas";
 import UbahMurid from "./pages/KBM/Murid/UbahMurid";
+import ListRuanganKelas from "./pages/KBM/PembagianKelas/ListRuanganKelas";
+import TambahRuanganKelas from "./pages/KBM/PembagianKelas/TambahRuanganKelas";
 
 const App = () => {
   return (
@@ -224,6 +225,10 @@ const App = () => {
           <Route
             path="/admin/tambah-tipe-transaksi"
             element={<TambahTipeTransaksi />}
+          />
+          <Route
+            path="/admin/tambah-ruang-kelas"
+            element={<TambahRuanganKelas />}
           />
         </Route>
 
