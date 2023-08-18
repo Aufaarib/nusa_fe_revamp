@@ -2,7 +2,11 @@ import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import { AlertLoginFailed, AlertNetwork } from "../../components/ModalPopUp";
+import {
+  AlertLoginFailed,
+  AlertNetwork,
+  AlertStatusFailed,
+} from "../../components/ModalPopUp";
 import { TextInputPassword } from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
 import logoSaim from "../../data/logo-saim.png";
@@ -51,11 +55,14 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log("ERRR === ", error.code);
         if (error.code === "ERR_NETWORK") {
-          AlertNetwork();
+          AlertStatusFailed("Koneksi Bermasalah", "Tutup", "error");
         } else {
-          AlertLoginFailed();
+          AlertStatusFailed(
+            "Email atau Password Tidak Sesuai",
+            "Coba Lagi",
+            "warning"
+          );
         }
         setIsLoading(false);
       });

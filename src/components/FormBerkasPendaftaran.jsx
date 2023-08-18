@@ -102,15 +102,7 @@ const FormBerkasPendaftaran = ({ id, indexMurid }) => {
         },
       });
       setIsLoading(false);
-      setSuccessMsg("Data berhasil disimpan");
-      setErrMsg("");
-      console.log("RESPONSE ==== " + JSON.stringify(response?.data));
-      getFormCheck();
-      console.log("getFormCheck === ", formCheck);
     } catch (err) {
-      const errors = err?.response?.data.errors;
-      console.error("ERROR === ", errors);
-      setErrMsg(errors);
       setIsLoading(false);
     }
   };
@@ -306,7 +298,7 @@ const FormBerkasPendaftaran = ({ id, indexMurid }) => {
         ) : (
           <AiOutlineSave className="mr-2 text-2xl" />
         )}
-        Simpan
+        Kirim
       </button>
       <section className="flex mt-1 gap-5 justify-center">
         <Link

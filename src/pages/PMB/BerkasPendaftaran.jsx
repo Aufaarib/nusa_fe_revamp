@@ -1,28 +1,13 @@
-import { useState, useEffect } from "react";
-import {
-  TabComponent,
-  TabItemDirective,
-  TabItemsDirective,
-} from "@syncfusion/ej2-react-navigations";
-import { FiAlertTriangle } from "react-icons/fi";
-import { AiFillFileText, AiOutlineSave } from "react-icons/ai";
-import FormBerkasPendaftaran from "../../components/FormBerkasPendaftaran";
-import { Header } from "../../components";
-import { useStateContext } from "../../contexts/ContextProvider";
-import { FileUpload } from "../../components/FileUpload";
-import { MdVerified } from "react-icons/md";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-import axios from "../../api/axios";
-import { Link, useNavigate } from "react-router-dom";
-import { CgSpinner } from "react-icons/cg";
+import { useRef, useState } from "react";
+import { AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
-import {
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../../components/ModalPopUp";
-import { useRef } from "react";
+import { CgSpinner } from "react-icons/cg";
+import { Link } from "react-router-dom";
+import axios from "../../api/axios";
+import { Header } from "../../components";
+import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
+import { useStateContext } from "../../contexts/ContextProvider";
 // import { L10n } from "@syncfusion/ej2-base";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -32,18 +17,7 @@ const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/additionalFile`;
-  const domain = process.env.REACT_APP_BASE_URL;
-  const [isLoading, setIsLoading] = useState(false);
-  const {
-    documents,
-    setDocuments,
-    getDocumentsData,
-    errMsg,
-    setErrMsg,
-    setSuccessMsg,
-    formCheck,
-    getFormCheck,
-  } = useStateContext();
+  const { isLoading, setIsLoading } = useStateContext();
 
   const [fileInvoice, setFileInvoice] = useState(null);
   const uploaderRef = useRef(null);
@@ -53,29 +27,23 @@ const BerkasPendaftaran = () => {
   const [fileRapor, setFileRapor] = useState(null);
   const path = "/pmb/tahapan-pmb";
 
-  // Define your asyncSettings for the UploaderComponent (modify this as needed)
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
     removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
   };
 
-  // Define your minFileSize and maxFileSize (modify these as needed)
   const minFileSize = 0;
-  const maxFileSize = 5000000; // 5 MB (you can modify this value)
+  const maxFileSize = 5000000;
 
-  // Function to handle removing a file
   const onRemoveFile = (args) => {
     // setFileInvoice(null);
   };
 
-  // Function to handle uploading a file
   const onFileUpload = (args) => {
     // You can perform any custom actions before the file upload starts if needed
   };
 
-  // Function to handle upload success
   const onAkte = (args) => {
-    // You can perform any custom actions after a successful upload if needed
     console.log("File uploaded successfully!", args);
     setFileAkte(args);
   };
@@ -100,46 +68,58 @@ const BerkasPendaftaran = () => {
 
   // Function to handle file upload to the API using Axios
   const handleFileUpload = () => {
-    // Replace 'your_api_base_url' with the base URL of your API
-    // const formData = new FormData();
-    // formData.append("file", filesData.file.rawFile);
-    const rapor = fileRapor.file.rawFile;
-    const akte = fileAkte.file.rawFile;
-    const kk = fileKk.file.rawFile;
-    const pasPhoto = filePasPhoto.file.rawFile;
-
-    console.log("FilesData:", rapor);
-
-    // const formData = new FormData();
-    // formData.append("invoice", file);
-    // console.log("GG === ", formData);
-
-    axios
-      .post(
-        SUBMIT_URL,
-        {
-          rapor,
-          akte,
-          kk,
-          pasPhoto,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: token,
+    if (
+      fileRapor !== null ||
+      fileAkte !== null ||
+      fileKk !== null ||
+      filePasPhoto !== null
+    ) {
+      setIsLoading(true);
+      const rapor = fileRapor.file.rawFile;
+      const akte = fileAkte.file.rawFile;
+      const kk = fileKk.file.rawFile;
+      const pasPhoto = filePasPhoto.file.rawFile;
+      axios
+        .post(
+          SUBMIT_URL,
+          {
+            rapor,
+            akte,
+            kk,
+            pasPhoto,
           },
-        }
-      )
-      .then((response) => {
-        // Handle success response if needed
-        console.log("File uploaded successfully!", response);
-        AlertStatusTambahSuccess("/pmb/berkas-pendaftaran");
-      })
-      .catch((error) => {
-        // Handle error response if needed
-        console.error("Error uploading file:", error);
-        AlertStatusTambahFailed();
-      });
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: token,
+            },
+          }
+        )
+        .then((response) => {
+          // Handle success response if needed
+          setIsLoading(false);
+          AlertStatusSuccess(
+            "/pmb/berkas-pendaftaran",
+            "Berhasil",
+            "Tutup",
+            "success",
+            "Upload Berkas Pendaftaran Berhasil"
+          );
+        })
+        .catch((error) => {
+          // Handle error response if needed
+          setIsLoading(false);
+          AlertMessage("Gagal", "Silahkan Coba Lagi", "Coba Lagi", "error");
+        });
+    } else {
+      setIsLoading(false);
+      AlertMessage(
+        "Gagal",
+        "Berkas Pendaftaran Tidak Lengkap",
+        "Coba Lagi",
+        "warning"
+      );
+    }
   };
 
   return (
@@ -148,8 +128,8 @@ const BerkasPendaftaran = () => {
         home="PMB"
         prev="Tahapan"
         navePrev={path}
-        at="Berkas Pembayaran"
-        title="Form Berkas Pembayaran"
+        at="Berkas Pendaftaran"
+        title="Form Berkas Pendaftaran"
       />
       <article>
         <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
@@ -158,9 +138,6 @@ const BerkasPendaftaran = () => {
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
               Akte Kelahiran{" "}
             </label>
-            {/* <div className="flex items-center justify-center e-upload e-control-wrapper e-lib e-keyboard h-14">
-              THUMBNAIL
-            </div> */}
             <UploaderComponent
               id="invoice"
               type="file"
@@ -275,7 +252,7 @@ const BerkasPendaftaran = () => {
           ) : (
             <AiOutlineSave className="mr-2 text-2xl" />
           )}
-          Simpan
+          Kirim
         </button>
         <section className="flex justify-start">
           <Link

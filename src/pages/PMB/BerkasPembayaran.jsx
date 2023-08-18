@@ -24,10 +24,6 @@ const BerkasPembayaran = () => {
   const navigate = useNavigate();
   const path = "/pmb/tahapan-pmb";
 
-  const navigateListSteps = () => {
-    window.location.href = path;
-  };
-
   // Define your asyncSettings for the UploaderComponent (modify this as needed)
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
@@ -75,13 +71,20 @@ const BerkasPembayaran = () => {
       )
       .then(() => {
         AlertStatusSuccess(
-          navigateListSteps,
-          "Upload Berhasil",
-          "Kembali Ke Halaman Tahapan PMB"
+          path,
+          "Berhasil",
+          "Kembali Ke Halaman Tahapan PMB",
+          "success",
+          "Unggah Bukti Pembayaran Pendaftaran Berhasil"
         );
       })
       .catch(() => {
-        AlertStatusFailed("Upload Gagal", "Tutup");
+        AlertStatusFailed(
+          "Gagal",
+          "Coba Lagi",
+          "error",
+          "Unggah Bukti Pembayaran Gagal"
+        );
       });
   };
 
@@ -121,7 +124,7 @@ const BerkasPembayaran = () => {
             maxFileSize={maxFileSize}
             multiple={false}
             buttons={{
-              browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+              browse: !fileInvoice ? "Pilih File" : "Ganti Berkas",
             }}
           />
           <small className=" text-gray-400">
@@ -140,7 +143,7 @@ const BerkasPembayaran = () => {
         ) : (
           <AiOutlineSave className="mr-2 text-2xl" />
         )}
-        Simpan
+        Unggah
       </button>
       <section className="flex mt-1 justify-start">
         <Link

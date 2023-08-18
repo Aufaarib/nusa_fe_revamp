@@ -160,7 +160,10 @@ const ForgotPassword = () => {
                 <span>Format Email.</span>
               </p>
             </div>
-            <button disabled={!validEmail ? true : false} className="btn-merah">
+            <button
+              disabled={!validEmail ? true : false}
+              className={!validEmail ? "btn-disabled" : "btn-merah"}
+            >
               Kirim{" "}
               {isLoading ? (
                 <CgSpinner className="ml-2 text-lg animate-spin" />

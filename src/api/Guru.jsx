@@ -15,7 +15,6 @@ export function getGuru(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })

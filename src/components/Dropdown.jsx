@@ -736,15 +736,6 @@ export const DropdownDatePickers = ({
             placeholder="Pilih Tanggal (YYYY-MM-DD)"
           />
         </div>
-        {/* <div>
-          <DatePickerComponent
-            id={id}
-            value={value}
-            change={change}
-            format="yyy-MM-dd"
-            placeholder="Pilih Tanggal (YYYY-MM-DD)"
-          />
-        </div> */}
       </form>
     </div>
   );
@@ -802,22 +793,6 @@ export const DropdownRadioInputisOneHouse = ({
             checked={checked}
           />
         </div>
-        {/* <div className="flex gap-5 w-full ml-20">
-          <RadioInput
-            value={value1}
-            label={label2}
-            name="isOneHouse"
-            onChange={onChange}
-            checked={checked}
-          />
-          <RadioInput
-            value={value2}
-            label={label3}
-            name="isOneHouse"
-            onChange={onChange}
-            checked={checked}
-          />
-        </div> */}
       </form>
     </div>
   );

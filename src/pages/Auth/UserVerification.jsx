@@ -17,14 +17,10 @@ const UserVerification = () => {
   // console.log("OTP === ", otp);
 
   const verifiedEmail = () => {
-    validateOTP(setSts, otp, navigates, directTo);
-  };
-
-  const navigates = () => {
     if (directTo === "Reset Password") {
-      navigate("/reset-pwd");
+      validateOTP(setSts, otp, "/reset-pwd", directTo);
     } else if (directTo === "Login") {
-      navigate("/login");
+      validateOTP(setSts, otp, "/login", directTo);
     }
   };
 
@@ -134,10 +130,29 @@ const UserVerification = () => {
                   atau :
                 </p>
               </div>
-              <button className="w-auto btn-merah" onClick={reverifiedEmail}>
-                {" "}
-                Kirim Ulang Kode
-              </button>
+              <div className="flex">
+                <button className="w-auto btn-merah" onClick={reverifiedEmail}>
+                  {" "}
+                  Kirim Ulang Kode
+                </button>
+                <button
+                  className="w-auto btn-merah"
+                  onClick={() =>
+                    navigate("/register", {
+                      state: {
+                        fullname: location.state.fullname,
+                        email: location.state.email,
+                        phone: location.state.phone,
+                        password: location.state.password,
+                        matchPwd: location.state.matchPwd,
+                      },
+                    })
+                  }
+                >
+                  {" "}
+                  Ganti Email
+                </button>
+              </div>
               <p className="text-sm text-center mt-9 text-merah">
                 Copyright 2023 PT. Nafisha Universal Network
               </p>

@@ -134,7 +134,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
         at="Bukti Pembayaran Biaya Pendidikan"
         title="Form Bukti Pembayaran Biaya Pendidikan"
       />
-      <div className="grid mt-3 xs:grid-cols-1 gap-7">
+      <div style={{ padding: "44px 110px 0" }}>
         {/* COL 1 */}
         <section>
           <TextInput
@@ -168,9 +168,11 @@ const BerkasPembayaranBiayaPendidikan = () => {
 
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
               marginTop: "20px",
-              marginLeft: "290px",
-              marginRight: "316px",
+              width: "auto",
             }}
           >
             <UploaderComponent
@@ -197,33 +199,21 @@ const BerkasPembayaranBiayaPendidikan = () => {
         </section>
       </div>
 
-      <section className="flex mt-12">
-        <button
-          type="button"
-          className="w-auto btn-merah"
-          onClick={handleFileUpload}
+      <button className="btn-merah" onClick={handleFileUpload}>
+        {isLoading ? (
+          <CgSpinner className="mr-2 text-xl animate-spin" />
+        ) : (
+          <AiOutlineSave className="mr-2 text-2xl" />
+        )}
+        Kirim
+      </button>
+      <section className="flex mt-1 gap-5 justify-left">
+        <Link
+          to={"/pmb/tahapan-pmb"}
+          className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >
-          {isLoading ? (
-            <CgSpinner className="mr-2 text-xl animate-spin" />
-          ) : (
-            <CgAirplane className="mr-2 text-2xl" />
-          )}
-          Kirim
-        </button>
-
-        <div className="flex justify-end w-full">
-          <Link
-            to={"/pmb/tahapan-pmb"}
-            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
-          >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali Ke
-            Halaman Tahapan PMB
-          </Link>
-
-          {/* <Link to={"/berkas-pendaftaran"} className="w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap">
-              Selanjutnya <BsChevronRight className='text-xl ml-2 mt-0.5' />
-            </Link> */}
-        </div>
+          <BsChevronLeft className="text-xl mr-7 mt-0.5" /> Halaman Tahapan PMB
+        </Link>
       </section>
     </article>
   );

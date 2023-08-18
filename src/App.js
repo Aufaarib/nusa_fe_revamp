@@ -76,6 +76,9 @@ import ListMurid from "./pages/KBM/Murid/ListMurid";
 import UbahMurid from "./pages/KBM/Murid/UbahMurid";
 import ListRuanganKelas from "./pages/KBM/PembagianKelas/ListRuanganKelas";
 import TambahRuanganKelas from "./pages/KBM/PembagianKelas/TambahRuanganKelas";
+import FormUbahDataMurid from "./components/FormUbahDataMurid";
+import FormUbahDaftarOrangTua from "./components/FormUbahDataOrangTua";
+import FormUbahDataOrangTua from "./components/FormUbahDataOrangTua";
 
 const App = () => {
   return (
@@ -239,8 +242,16 @@ const App = () => {
           <Route path="/pmb" element={<TahapanPMB />} />
           <Route path="/pmb/list-calon-siswa" element={<ListCalonSiswa />} />
           <Route path="/pmb/tahapan-pmb" element={<TahapanPMB />} />
-          <Route path="/pmb/form-data-murid" element={<FormMurid />} />
           <Route path="/profile" element={<ProfilepPage />} />
+          <Route path="/pmb/form-data-murid" element={<FormMurid />} />
+          <Route
+            path="/pmb/form-ubah-data-murid"
+            element={<FormUbahDataMurid />}
+          />
+          <Route
+            path="/pmb/form-ubah-data-orang-tua"
+            element={<FormUbahDataOrangTua />}
+          />
           <Route
             path="/pmb/form-data-orang-tua-ayah"
             element={<FormOrangTua />}

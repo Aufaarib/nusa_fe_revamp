@@ -114,14 +114,14 @@ const FormPernyataan = ({ indexMurid }) => {
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">Pernyataan</h1>
-            <p className="text-xs">
+            {/* <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
-            </p>
+            </p> */}
           </section>
           {/* COL 1 */}
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
-            {admissionAnswerData.length === 0
+            {admissionAnswerData?.length == 0
               ? admissionStatementData.map((item) => (
                   <div className="mt-7" key={item.id}>
                     <TextInputModal
@@ -156,17 +156,17 @@ const FormPernyataan = ({ indexMurid }) => {
           </section>
         </form>
       </div>
-      {admissionAnswerData !== null && (
+      {admissionAnswerData.length !== 0 && (
         <button className="btn-disabled">Pernyataan Telah Tersimpan</button>
       )}
-      {admissionAnswerData === null && (
+      {admissionAnswerData.length == 0 && (
         <button className="btn-merah" onClick={handleSubmit}>
-          Simpan
           {isLoading ? (
             <CgSpinner className="mr-2 text-xl animate-spin" />
           ) : (
             <AiOutlineSave className="mr-2 text-2xl" />
           )}
+          Kirim
         </button>
       )}
       <section className="flex mt-1 gap-5 justify-center">

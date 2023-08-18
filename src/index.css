@@ -159,29 +159,23 @@
   }
 
   .div-wrapper {
+    display: block;
+    /* flex-direction: column; */
     background-color: #8f0d1e;
-    /* border: 1px solid; */
-    /* border-color: #bdbcbc; */
+    padding: 12px;
     border-radius: 8px 8px 0px 0px;
     height: 52px;
-    left: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
   }
 
   .text-wrapper-3 {
+    display: inline-block;
     color: #ffffff;
-    /* font-family: "Roboto", Helvetica; */
+    padding: 3px;
     font-size: 18px;
     font-weight: 700;
     height: 20px;
-    left: 30px;
-    letter-spacing: 0;
     line-height: 20px;
-    position: absolute;
-    top: 14px;
-    white-space: nowrap;
   }
 
   .frame-2 {
@@ -202,9 +196,9 @@
     letter-spacing: 0;
     line-height: 20px;
     margin-top: -1px;
-    position: relative;
-    white-space: nowrap;
-    width: auto;
+    /* position: relative;
+    white-space: nowrap; */
+    max-width: auto;
   }
 
   .text-wrapper-5 {
@@ -246,9 +240,8 @@
   .child-card {
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     gap: 22px;
   }
 
@@ -305,6 +298,10 @@
 
     .overlap-group {
       width: 290px;
+    }
+
+    .text-wrapper-4 {
+      max-width: 100px;
     }
 
     .frame-3 {

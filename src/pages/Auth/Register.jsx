@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoSaim from "../../data/logo-saim.png";
 
 import { useStateContext } from "../../contexts/ContextProvider";
@@ -19,51 +19,42 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
   const { isLoading, setIsLoading } = useStateContext();
+  const location = useLocation();
 
   const userRef = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(location.state?.fullname);
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(location.state?.phone);
   const [validPhone, setValidPhone] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
 
   const [jumlahanak, setJumlahAnak] = useState("");
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(location.state?.email);
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
+  const [pwd, setPwd] = useState(location.state?.password);
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
+  const [matchPwd, setMatchPwd] = useState(location.state?.matchPwd);
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [otp, setOtp] = useState(false);
-  const [sts, setSts] = useState("");
+  console.log(location.state?.password);
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
   });
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const navigateLogin = () => {
-    navigate("/login");
-  };
 
   useEffect(() => {
     userRef.current.focus();
@@ -115,15 +106,24 @@ const Register = () => {
       setIsLoading(false);
       navigate("/verify", {
         state: {
+          fullname: user,
           email: email,
+          phone: phone,
+          password: pwd,
+          matchPwd: matchPwd,
           direct: directTo,
         },
       });
     } catch (error) {
       if (error.code === "ERR_NETWORK") {
-        AlertStatusFailed("Koneksi Bermasalah", "Tutup");
+        AlertStatusFailed("Koneksi Bermasalah", "Tutup", "error");
       } else {
-        AlertStatusFailed("Gagal", "Tutup");
+        AlertStatusFailed(
+          "Email Atau No.Telp Sudah Terdaftar",
+          "Coba Lagi",
+          "warning",
+          "Silahkan Login"
+        );
       }
       setIsLoading(false);
     }
@@ -437,7 +437,15 @@ const Register = () => {
                   ? true
                   : false
               }
-              className="btn-merah"
+              className={
+                !validName ||
+                !validPhone ||
+                !validEmail ||
+                !validPwd ||
+                !validMatch
+                  ? "btn-disabled"
+                  : "btn-merah"
+              }
             >
               Daftar{" "}
               {isLoading ? (

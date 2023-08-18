@@ -65,14 +65,16 @@ const ListCalonSiswa = () => {
             setisOpenCostCenter(true);
           }}
         >
-          Daftar Baru
+          <i className="fa fa-plus" /> Daftar Anak
         </button>
       </div>
       {dataMyAdmission.length !== 0 ? (
         <>
           {Object.entries(groupedCandidates).map(([year, candidates]) => (
             <>
-              <div className="text-wrapper-2 mt-5">Tahun Ajaran {year}</div>
+              <div className="text-wrapper-2 mt-5 underline">
+                Tahun Ajaran {year}
+              </div>
               <br />
               <div key={year} className="child-card">
                 {candidates.map(({ childName, regNumber, status }) => (
@@ -80,6 +82,21 @@ const ListCalonSiswa = () => {
                     <div className="overlap-group">
                       <div className="div-wrapper">
                         <div className="text-wrapper-3">PMB</div>
+                        <div
+                          style={{ display: "inline-block", float: "right" }}
+                        >
+                          <button
+                            style={{
+                              backgroundColor: "white",
+                              color: "#8f0d1e",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                            }}
+                            className="btn-action-merah"
+                          >
+                            <i className="fa fa-edit" /> Ubah Nama Anak
+                          </button>
+                        </div>
                       </div>
                       <div className="frame-2" style={{ flex: 1 }}>
                         <div className="text-wrapper-4 capitalize">
@@ -89,9 +106,9 @@ const ListCalonSiswa = () => {
                         <div>
                           <button
                             onClick={() => setRegNumbers(regNumber)}
-                            className="btn-modal-merah"
+                            className="w-auto btn-action-merah"
                           >
-                            Lihat
+                            <i className="fa fa-eye" /> Lihat
                           </button>
                         </div>
                       </div>

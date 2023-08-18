@@ -65,10 +65,6 @@ const ResetPassword = () => {
 
   const path = "/login";
 
-  const navigateLogin = () => {
-    navigate(path);
-  };
-
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
@@ -90,13 +86,14 @@ const ResetPassword = () => {
       localStorage.setItem("TOKEN", response?.headers?.authorization);
       setIsLoading(false);
       AlertStatusSuccess(
-        navigateLogin,
+        path,
         "Password Berhasil Diubah",
-        "Kembali Ke Halaman Login"
+        "Kembali Ke Halaman Login",
+        "success"
       );
     } catch (err) {
       setIsLoading(false);
-      AlertStatusFailed("Ubah Status Gagal", "Coba Lagi");
+      AlertStatusFailed("Ubah Password Gagal", "Coba Lagi", "error");
     }
   };
 
@@ -210,7 +207,9 @@ const ResetPassword = () => {
 
             <button
               disabled={!validPwd || !validMatch ? true : false}
-              className="btn-merah"
+              className={
+                !validPwd || !validMatch ? "btn-disabled" : "btn-merah"
+              }
             >
               Kirim{" "}
               {isLoading ? (

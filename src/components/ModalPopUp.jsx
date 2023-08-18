@@ -178,14 +178,14 @@ export const ModalTambahCalonMurid = ({
       </div>
       <div
         style={{
-          padding: "90px 35px 50px 30px",
+          padding: "50px 35px 50px 30px",
           width: "400px",
           fontSize: "22px",
           fontWeight: "bold",
         }}
       >
         <TextInputModal
-          label="Nama Anak"
+          label="Nama Depan Anak"
           type="text"
           onChange={onChange}
           required={true}
@@ -507,12 +507,13 @@ const styledSweetAlert = Swal.mixin({
 });
 
 //Dynamic Text
-export const AlertMessage = (title, text, buttonText) => {
+export const AlertMessage = (title, text, buttonText, icon) => {
   styledSweetAlert.fire({
     title: title,
     text: text,
     showConfirmButton: true,
     confirmButtonText: buttonText,
+    icon: icon,
   });
 };
 
@@ -532,24 +533,28 @@ export const AlertConfirmation = (onConfirm, title, confirmButtonText) => {
     });
 };
 
-export const AlertStatusSuccess = (navigate, title, buttonText) => {
+export const AlertStatusSuccess = (path, title, buttonText, icon, text) => {
   styledSweetAlert
     .fire({
+      icon: icon,
       title: title,
+      text: text,
       showConfirmButton: true,
       confirmButtonText: buttonText,
     })
     .then((result) => {
       if (result.isConfirmed) {
         // Redirect to another page
-        navigate(navigate);
+        window.location.href = path;
       }
     });
 };
 
-export const AlertStatusFailed = (title, buttonText) => {
+export const AlertStatusFailed = (title, buttonText, icon, text) => {
   styledSweetAlert.fire({
+    icon: icon,
     title: title,
+    text: text,
     showConfirmButton: true,
     confirmButtonText: buttonText,
   });
@@ -706,14 +711,16 @@ export const AlertStatusUpdateFailed = () => {
 
 export const AlertLoginFailed = () => {
   styledSweetAlert.fire({
+    icon: "warning",
     title: "Email atau Password Tidak Sesuai",
     showConfirmButton: true,
-    confirmButtonText: "Tutup",
+    confirmButtonText: "Coba Lagi",
   });
 };
 
 export const AlertNetwork = () => {
   styledSweetAlert.fire({
+    icon: "error",
     title: "Koneksi Bermasalah",
     showConfirmButton: true,
     confirmButtonText: "Tutup",
@@ -722,9 +729,10 @@ export const AlertNetwork = () => {
 
 export const AlertRegisterFailed = () => {
   styledSweetAlert.fire({
-    title: "Email Sudah Terdaftar",
+    icon: "warning",
+    text: "Email atau No.Telp Sudah Terdaftar",
     showConfirmButton: true,
-    confirmButtonText: "Tutup",
+    confirmButtonText: "Coba Lagi",
   });
 };
 

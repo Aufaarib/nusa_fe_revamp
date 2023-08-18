@@ -69,7 +69,8 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
       AlertMessage(
         "Penambahan Anak Berhasil",
         "Silahkan Klik Lihat Untuk Memulai Proses PMB",
-        "Tutup"
+        "Tutup",
+        "success"
       );
       getMyAdmission(setData, setSts);
       setSts({ type: "success" });

@@ -1,20 +1,14 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { updateKelas } from "../../../api/Kelas";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import moment from "moment";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Header } from "../../../components";
 import { updateGuru } from "../../../api/Guru";
+import { Header } from "../../../components";
 import {
   DropdownDatePickers,
   DropdownRadioInputGender,
 } from "../../../components/Dropdown";
-import moment from "moment";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function UbahGuru() {
   const location = useLocation();
@@ -25,8 +19,6 @@ export default function UbahGuru() {
   const [birthDate, setBirthDate] = useState(
     moment(location.state.birthDate).format("YYYY-MM-DD")
   );
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
 
@@ -36,11 +28,11 @@ export default function UbahGuru() {
     e.preventDefault();
     const code = location.state.code;
 
-    console.log(fullname);
-    console.log(gender);
-    console.log(religion);
-    console.log(birthPlace);
-    console.log(birthDate);
+    // console.log(fullname);
+    // console.log(gender);
+    // console.log(religion);
+    // console.log(birthPlace);
+    // console.log(birthDate);
 
     if (
       fullname === "" ||
@@ -92,7 +84,7 @@ export default function UbahGuru() {
           <TextInput
             label="Nama Lengkap"
             type="text"
-            defaultValue={location.state.fullname}
+            value={fullname}
             onChange={(e) => setFullname(e.target.value)}
             required={true}
           />
@@ -105,7 +97,7 @@ export default function UbahGuru() {
             label2="Perempuan"
             label3="Laki-Laki"
             onChange={(e) => setGender(e.target.value)}
-            defaultValue={location.state.gender}
+            // value={gender}
             checked={gender}
           />
           <br />
@@ -114,7 +106,7 @@ export default function UbahGuru() {
             label="Religion"
             type="text"
             onChange={(e) => setReligion(e.target.value)}
-            defaultValue={location.state.religion}
+            value={religion}
             required={true}
           />
 
@@ -122,7 +114,7 @@ export default function UbahGuru() {
             label="Tempat Lahir"
             type="text"
             onChange={(e) => setBirthPlace(e.target.value)}
-            defaultValue={location.state.birthPlace}
+            value={birthPlace}
             required={true}
           />
 

@@ -45,19 +45,27 @@ export function validateOTP(setSts, otp, navigateLogin, directTo) {
         AlertStatusSuccess(
           navigateLogin,
           "Kode Reset Password Sesuai",
-          "Reset Password"
+          "Reset Password",
+          "success"
         );
       } else if (directTo === "Login") {
         AlertStatusSuccess(
           navigateLogin,
           "Akun Berhasil Ter-Verifikasi",
-          "Kembali Ke Halaman Login"
+          "Kembali Ke Halaman Login",
+          "success",
+          "Silahkan Login"
         );
       }
       setSts(res.code);
     })
     .catch((res) => {
-      AlertStatusFailed("Verifikasi Akun Gagal", "Tutup");
+      AlertStatusFailed(
+        "Kode Verifikasi Tidak Sesuai",
+        "Coba Lagi",
+        "warning",
+        "Coba Lagi, Atau Kirim Ulang Kode"
+      );
       setSts(res.code);
     });
 }
@@ -96,7 +104,8 @@ export function revalidateEmail(setSts) {
       AlertMessage(
         "Kode Verifikasi Telah Terkirim",
         "Silahkan Cek Kembali Email Anda",
-        "Tutup"
+        "Tutup",
+        "success"
       );
     })
     .catch((error) => {
@@ -377,7 +386,6 @@ export function getAdmissionRegistrationApplicant(setData, setSts) {
       }
     )
     .then((res) => {
-      console.log("REGISTRATION APLICANT === ", res.data.body.applicant);
       setData(res.data.body.applicant);
       setSts(res.data.code);
     });
@@ -514,7 +522,6 @@ export function getPaymentInvoice(setData, setSts, code) {
     )
     .then((res) => {
       for (const i of res.data.body) {
-        console.log("OAAAAAAA === ", i);
         setData(i);
         setSts({ type: "success" });
       }
