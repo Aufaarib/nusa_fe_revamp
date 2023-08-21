@@ -54,10 +54,16 @@ const TahapanPMB = () => {
           display: "flex",
         }}
       >
-        <p className="ml-1 font-bold text-merah capitalize">
-          {dataAdmissionRegistration.childName} -{" "}
-          {dataAdmissionRegistration.regNumber}
-        </p>
+        <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
+          <p className="font-bold text-merah capitalize">
+            {dataAdmissionRegistration.childName} -{" "}
+            {dataAdmissionRegistration.regNumber}
+          </p>
+          <p className="text-xs">
+            Catatan : Refresh Halaman Ini Untuk Pengecekan Perubahan Status
+            Setiap Tahapan
+          </p>
+        </section>
       </div>
       <div>
         <article className="grid grid-rows-3 gap-6 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">

@@ -132,11 +132,18 @@ const BerkasPendaftaran = () => {
         title="Form Berkas Pendaftaran"
       />
       <article>
+        <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
+          <h1 className="mt-3 text-merah">Pendataan Berkas Pendaftaran</h1>
+          <p className="text-xs">
+            Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+            <span className="text-merah">*</span>) wajib diisi.
+          </p>
+        </section>
         <div className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
           {/* COL 1 */}
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-              Akte Kelahiran{" "}
+              Akte Kelahiran <span className="text-merah">*</span>
             </label>
             <UploaderComponent
               id="invoice"
@@ -164,7 +171,7 @@ const BerkasPendaftaran = () => {
           {/* COL 2 */}
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-              Kartu Keluarga{" "}
+              Kartu Keluarga <span className="text-merah">*</span>
             </label>
             <UploaderComponent
               id="invoice"
@@ -192,7 +199,7 @@ const BerkasPendaftaran = () => {
           {/* COL 3 */}
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-              Rapor{" "}
+              Rapor <span className="text-merah">*</span>
             </label>
             <UploaderComponent
               id="invoice"
@@ -220,7 +227,7 @@ const BerkasPendaftaran = () => {
           {/* COL 4 */}
           <section>
             <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-              Pas Foto 3x4{" "}
+              Pas Foto 3x4 <span className="text-merah">*</span>
             </label>
             <UploaderComponent
               id="invoice"

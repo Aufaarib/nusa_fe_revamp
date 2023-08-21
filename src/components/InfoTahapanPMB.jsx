@@ -1,36 +1,21 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  FaRegCheckCircle,
-  FaRegUserCircle,
-  FaRegTimesCircle,
-  FaRegPauseCircle,
-  FaRegArrowAltCircleRight,
-} from "react-icons/fa";
-import {
-  MdOutlinePayments,
-  MdPayment,
-  MdOutlineFactCheck,
-} from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
+import {
+  FaRegArrowAltCircleRight,
+  FaRegCheckCircle,
+  FaRegClock,
+  FaRegPauseCircle,
+  FaRegTimesCircle,
+  FaRegUserCircle,
+} from "react-icons/fa";
 import { GoChecklist } from "react-icons/go";
+import { MdOutlineFactCheck, MdPayment } from "react-icons/md";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
-  const {
-    dataAdmissionRegistration,
-    admissionSteps1,
-    admissionSteps2,
-    admissionSteps3,
-    admissionSteps4,
-    admissionSteps5,
-    isLoading,
-    setIsLoading,
-  } = useStateContext();
+  const { dataAdmissionRegistration, isLoading, setIsLoading } =
+    useStateContext();
   const user = dataAdmissionRegistration.user;
-
-  console.log("FOR YOUU === ", user?.parents?.length);
-  console.log("FOR YOUURRRR === ", dataAdmissionRegistration.applicant);
 
   return (
     <div
@@ -143,15 +128,17 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
               </>
             )}
             {status == "Belum Mulai" && (
-              <FaRegPauseCircle className="ml-2 text-xl" />
+              <FaRegPauseCircle className="mt-1 ml-1 text-sm" />
             )}
             {status == "Dalam Proses" && (
-              <FaRegArrowAltCircleRight className="ml-2 text-xl" />
+              <FaRegClock className="mt-1 ml-1 text-sm" />
             )}
             {status == "Berhasil" && (
-              <FaRegCheckCircle className="ml-2 text-xl" />
+              <FaRegCheckCircle className="mt-1 ml-1 text-sm" />
             )}
-            {status == "Gagal" && <FaRegTimesCircle className="ml-2 text-xl" />}
+            {status == "Gagal" && (
+              <FaRegTimesCircle className="mt-1 ml-1 text-sm" />
+            )}
           </p>
         </div>
       </motion.div>

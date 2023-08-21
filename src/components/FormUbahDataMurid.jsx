@@ -173,8 +173,8 @@ const FormUbahDataMurid = () => {
         home="PMB"
         prev="Tahapan"
         navePrev={path}
-        at="Pendataan Anak"
-        title="Form Pendaftaran Anak"
+        at="Ubah Data Anak"
+        title="Form Ubah Data Anak"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <form
@@ -182,7 +182,7 @@ const FormUbahDataMurid = () => {
           style={{ display: "block", gap: "20px", padding: "20px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Murid</h1>
+            <h1 className="mt-3 text-merah">Pengubahan Data Anak</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -263,6 +263,7 @@ const FormUbahDataMurid = () => {
                   id="birthDate"
                   value={tanggalLahir}
                   change={(e) => setBirthDate(e.element.value)}
+                  required={true}
                 />
                 <br />
                 <DropdownRadioInputGender

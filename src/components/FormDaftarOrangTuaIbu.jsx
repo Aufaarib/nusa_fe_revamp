@@ -17,6 +17,8 @@ import {
 } from "./Dropdown";
 import Header from "./Header";
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
 } from "./ModalPopUp";
@@ -161,80 +163,22 @@ const FormDaftarOrangTuaIbu = () => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ibu");
+        AlertStatusSuccess(
+          "/pmb/form-data-orang-tua-ibu",
+          "Berhasil",
+          "Tutup",
+          "success",
+          "Pendataan Ibu Berhasil Terupload"
+        );
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusTambahFailed();
-      });
-  };
-
-  const handleSubmitUpdate = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const code = admissionParentsData.code;
-    const fullName = parent.fullName;
-    const religion = parent.religion;
-    const familyIdentityNumber = parent.familyIdentityNumber;
-    const identityNumber = parent.identityNumber;
-    const gender = "female";
-    const relationship = "ibu";
-    const isBiological = parseInt(parent.isBiological);
-    const isOneHouse = parseInt(parent.isOneHouse);
-    const phoneNumber1 = parent.phoneNumber1;
-    const phoneNumber2 = parent.phoneNumber2;
-    const province = parent.province;
-    const city = parent.city;
-    const subDistrict = parent.subDistrict;
-    const village = parent.village;
-    const address = parent.address;
-    const postalCode = parent.postalCode;
-    const birthPlace = parent.birthPlace;
-    const birthDate = parent.birthDate;
-    const lastEducation = parent.lastEducation;
-    const placeOfWork = parent.placeOfWork;
-    const occupation = parent.occupation;
-    const incomeGrade = parseInt(parent.incomeGrade);
-
-    axios
-      .put(
-        process.env.REACT_APP_BASE_URL + `/user/parent/${code}`,
-        {
-          fullName,
-          religion,
-          familyIdentityNumber,
-          identityNumber,
-          gender,
-          relationship,
-          isBiological,
-          isOneHouse,
-          phoneNumber1,
-          phoneNumber2,
-          province,
-          city,
-          subDistrict,
-          village,
-          address,
-          postalCode,
-          birthPlace,
-          birthDate,
-          lastEducation,
-          occupation,
-          incomeGrade,
-          placeOfWork,
-        },
-        {
-          headers: { authorization: token },
-        }
-      )
-      .then(() => {
-        setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-ibu");
-      })
-      .catch(() => {
-        setIsLoading(false);
-        AlertStatusTambahFailed();
+        AlertMessage(
+          "Gagal",
+          "Gagal Mengupload Data Ibu",
+          "Coba Lagi",
+          "error"
+        );
       });
   };
 
@@ -253,11 +197,20 @@ const FormDaftarOrangTuaIbu = () => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
-            <p className="text-xs">
-              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-              <span className="text-merah">*</span>) wajib diisi.
-            </p>
+            <h1 className="mt-3 text-merah">
+              {admissionParentsData == null ? "Pendataan Ibu" : "Data Ibu"}
+            </h1>
+            {admissionParentsData == null ? (
+              <p className="text-xs">
+                Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+                <span className="text-merah">*</span>) wajib diisi.
+              </p>
+            ) : (
+              <p className="text-xs">
+                Catatan : Mohon Untuk Melakukan Pengecekan Ulang Kesesuaian
+                Data. Anda Dapat Merubah Data Dengan Menekan Tombol Ubah
+              </p>
+            )}
           </section>
           {admissionParentsData == null ? (
             <section className="xs:col-span-3 lg:col-span-1 mt-5">
@@ -267,7 +220,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="fullName"
                 onChange={updateParents}
                 value={parent.fullName}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -276,7 +229,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="religion"
                 onChange={updateParents}
                 value={parent.religion}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -285,7 +238,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="familyIdentityNumber"
                 onChange={updateParents}
                 value={parent.familyIdentityNumber}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -294,7 +247,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="identityNumber"
                 onChange={updateParents}
                 value={parent.identityNumber}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <br />
@@ -326,7 +279,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="phoneNumber1"
                 onChange={updateParents}
                 value={parent.phoneNumber1}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -335,7 +288,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="phoneNumber2"
                 onChange={updateParents}
                 value={parent.phoneNumber2}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -344,7 +297,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="province"
                 onChange={updateParents}
                 value={parent.province}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -353,7 +306,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="city"
                 onChange={updateParents}
                 value={parent.city}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -362,7 +315,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="subDistrict"
                 onChange={updateParents}
                 value={parent.subDistrict}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -371,7 +324,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="village"
                 onChange={updateParents}
                 value={parent.village}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -380,7 +333,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="address"
                 onChange={updateParents}
                 value={parent.address}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -389,7 +342,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="postalCode"
                 onChange={updateParents}
                 value={parent.postalCode}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -398,7 +351,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="birthPlace"
                 onChange={updateParents}
                 value={parent.birthPlace}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <DropdownDatePickers
@@ -406,6 +359,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="birthDate"
                 value={parent.birthDate}
                 change={updateParentsCal.bind(this)}
+                required={true}
               />
               <TextInput
                 label="Pendidikan Terakhir"
@@ -413,7 +367,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="lastEducation"
                 onChange={updateParents}
                 value={parent.lastEducation}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -422,7 +376,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="placeOfWork"
                 onChange={updateParents}
                 value={parent.placeOfWork}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -431,7 +385,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="occupation"
                 onChange={updateParents}
                 value={parent.occupation}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -440,7 +394,7 @@ const FormDaftarOrangTuaIbu = () => {
                 id="incomeGrade"
                 onChange={updateParents}
                 value={parent.incomeGrade}
-                disable={true}
+                disable={false}
                 required={true}
                 min="1"
               />

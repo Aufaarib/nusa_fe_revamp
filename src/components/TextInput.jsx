@@ -20,7 +20,11 @@ export const TextInputModal = ({
 }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label className="mt-5" htmlFor={name}>
+          {label}
+        </label>
+      )}
 
       <input
         style={{

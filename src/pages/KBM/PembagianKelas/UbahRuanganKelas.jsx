@@ -1,29 +1,30 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postMapel } from "../../../api/MataPelajaran";
-import { Header } from "../../../components";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
-import TextInput from "../../../components/TextInput";
-import { DropdownSiswa } from "../../../components/Dropdown";
-import { getTahunAjaran } from "../../../api/TahunAjaran";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getGuru } from "../../../api/Guru";
 import { getKelas } from "../../../api/Kelas";
 import { getRoom } from "../../../api/Ruangan";
-import { getGuru } from "../../../api/Guru";
-import { postClassRoom } from "../../../api/RuanganKelas";
+import { getTahunAjaran } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { DropdownSiswa } from "../../../components/Dropdown";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
+import { updateClassRoom } from "../../../api/RuanganKelas";
 
-export default function TambahRuanganKelas() {
+export default function UbahRuanganKelas() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [academicYearData, setAcademicYearData] = useState([]);
   const [classData, setClassData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
   const [roomData, setRoomData] = useState([]);
-  const [academicYearId, setacAdemicYearId] = useState("");
-  const [classId, setClassId] = useState("");
-  const [teacherId, setTeacherId] = useState("");
-  const [roomId, setRoomId] = useState("");
-  const [capacitys, setCapacity] = useState("");
+  const [academicYearId, setacAdemicYearId] = useState(
+    location.state.tahunAjaran
+  );
+  const [classId, setClassId] = useState(location.state.ruangan);
+  const [teacherId, setTeacherId] = useState(location.state.waliKelas);
+  const [roomId, setRoomId] = useState(location.state.kelas);
+  const [capacitys, setCapacity] = useState(location.state.kapasitas);
   const [sts, setSts] = useState(undefined);
-  const navigate = useNavigate();
 
   const path = "/admin/list-ruang-kelas";
 
@@ -58,6 +59,7 @@ export default function TambahRuanganKelas() {
     e.preventDefault();
 
     const capacity = parseInt(capacitys);
+    const id = location.state.id;
 
     if (
       academicYearId === "" ||
@@ -68,8 +70,9 @@ export default function TambahRuanganKelas() {
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postClassRoom(
+      updateClassRoom(
         setSts,
+        id,
         path,
         academicYearId,
         classId,
@@ -107,8 +110,8 @@ export default function TambahRuanganKelas() {
         home="Admin KBM"
         // prev="Bank"
         // navePrev={path}
-        at="Tambah Ruangan Kelas"
-        title="Tambah Ruangan Kelas"
+        at="Ubah Ruangan Kelas"
+        title="Ubah Ruangan Kelas"
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -118,7 +121,7 @@ export default function TambahRuanganKelas() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Ruang Kelas
+          Form Ubah Ruang Kelas
         </p>
         <article>
           <DropdownSiswa
@@ -171,7 +174,7 @@ export default function TambahRuanganKelas() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"

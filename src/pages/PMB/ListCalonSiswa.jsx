@@ -82,7 +82,7 @@ const ListCalonSiswa = () => {
                     <div className="overlap-group">
                       <div className="div-wrapper">
                         <div className="text-wrapper-3">PMB</div>
-                        <div
+                        {/* <div
                           style={{ display: "inline-block", float: "right" }}
                         >
                           <button
@@ -96,7 +96,7 @@ const ListCalonSiswa = () => {
                           >
                             <i className="fa fa-edit" /> Ubah Nama Anak
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="frame-2" style={{ flex: 1 }}>
                         <div className="text-wrapper-4 capitalize">

@@ -1,3 +1,4 @@
+import { Checkbox } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +7,7 @@ import {
   moveApplicantToStudent,
 } from "../../api/Registrasi";
 import { Header } from "../../components";
-import {
-  DataTablesPMBWithoutButton,
-  DataTablesRegistrations,
-} from "../../components/DataTables";
-import { Checkbox } from "@mui/material";
+import { DataTablesRegistrations } from "../../components/DataTables";
 import { AlertConfirmation } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
@@ -106,8 +103,6 @@ const DataRegistrasi = () => {
   const handleSubmit = () => {
     moveApplicantToStudent(navigateListStudent, selectedRows);
   };
-
-  console.log("SELECTED === ", selectedRows);
 
   const columns = [
     {
@@ -403,8 +398,8 @@ const DataRegistrasi = () => {
           valueSteps={stepsFilter}
           setData={setData}
           setSts={setSts}
-          selectableRows
-          selectableRowsComponent={Checkbox}
+          // selectableRows
+          // selectableRowsComponent={Checkbox}
           setSelected={handleSubmit}
           setAllSelected={handlePindahSemua}
           selectedRows={selectedRows}

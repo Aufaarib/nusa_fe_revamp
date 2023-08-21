@@ -79,6 +79,9 @@ import TambahRuanganKelas from "./pages/KBM/PembagianKelas/TambahRuanganKelas";
 import FormUbahDataMurid from "./components/FormUbahDataMurid";
 import FormUbahDaftarOrangTua from "./components/FormUbahDataOrangTua";
 import FormUbahDataOrangTua from "./components/FormUbahDataOrangTua";
+import DetailRuanganKelas from "./pages/KBM/PembagianKelas/DetailRuanganKelas";
+import TambahMuridKeKelas from "./pages/KBM/PembagianKelas/TambahMuridKeKelas";
+import UbahRuanganKelas from "./pages/KBM/PembagianKelas/UbahRuanganKelas";
 
 const App = () => {
   return (
@@ -182,6 +185,10 @@ const App = () => {
             element={<UpdateStatusStepPage />}
           />
           <Route path="/admin/ubah-murid" element={<UbahMurid />} />
+          <Route
+            path="/admin/ubah-ruang-kelas"
+            element={<UbahRuanganKelas />}
+          />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
@@ -232,6 +239,14 @@ const App = () => {
           <Route
             path="/admin/tambah-ruang-kelas"
             element={<TambahRuanganKelas />}
+          />
+          <Route
+            path="/admin/tambah-murid-ke-kelas"
+            element={<TambahMuridKeKelas />}
+          />
+          <Route
+            path="/admin/detail-ruang-kelas"
+            element={<DetailRuanganKelas />}
           />
         </Route>
 

@@ -337,7 +337,6 @@ const DetailDataRegistrasi = () => {
   // console.log("OOOOO === ", data.statements);
 
   const handleModalDetail = (card) => {
-    console.log("PUNYA === ", card);
     setisCardOpened(card);
     if (card === "Anak") {
       setDetailData(anak);
@@ -899,12 +898,6 @@ const DetailDataRegistrasi = () => {
                   <h1 className="text-hijau">
                     Orang Tua Telah Mempersetujui Pendaftaran Ulang
                   </h1>
-                  {/* <button
-                  onClick={() => navigateUbahStatus()}
-                  className="btn-merah"
-                >
-                  Kirim Hasil Test
-                </button> */}
                 </div>
               ) : (
                 <div
@@ -918,12 +911,6 @@ const DetailDataRegistrasi = () => {
                   <h1 className="text-merah">
                     Orang Tua Belum Mempersetujui Pendaftaran Ulang
                   </h1>
-                  {/* <button
-                  onClick={() => navigateUbahStatus()}
-                  className="btn-merah"
-                >
-                  Ubah Status
-                </button> */}
                 </div>
               )}
             </>

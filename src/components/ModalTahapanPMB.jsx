@@ -9,6 +9,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 import {
   FaRegArrowAltCircleRight,
   FaRegCheckCircle,
+  FaRegClock,
   FaRegPauseCircle,
   FaRegTimesCircle,
   FaRegUserCircle,
@@ -26,9 +27,6 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
     setIsLoading,
   } = useStateContext();
   const user = dataAdmissionRegistration.user;
-
-  // console.log("FOR YOUU === ", user?.parents?.length);
-  console.log("FOR YOUURRRR === ", dataAdmissionRegistration.additionalFiles);
 
   const navigate = useNavigate();
   const Nama = localStorage.getItem("NAMA");
@@ -175,16 +173,16 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                       </>
                     )}
                     {status == "Belum Mulai" && (
-                      <FaRegPauseCircle className="ml-2 text-xl" />
+                      <FaRegPauseCircle className="mt-1 ml-1 text-sm" />
                     )}
                     {status == "Dalam Proses" && (
-                      <FaRegArrowAltCircleRight className="ml-2 text-xl" />
+                      <FaRegClock className="mt-1 ml-1 text-sm" />
                     )}
                     {status == "Berhasil" && (
-                      <FaRegCheckCircle className="ml-2 text-xl" />
+                      <FaRegCheckCircle className="mt-1 ml-1 text-sm" />
                     )}
                     {status == "Gagal" && (
-                      <FaRegTimesCircle className="ml-2 text-xl" />
+                      <FaRegTimesCircle className="mt-1 ml-1 text-sm" />
                     )}
                   </p>
                 </motion.div>
@@ -262,13 +260,6 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             </strong>
                             <hr />
                             <br />
-                            {/* <p>
-                              Catatan :{" "}
-                              <strong className="capitalize">
-                                {admissionSteps1.note}
-                              </strong>
-                            </p>
-                            <br /> */}
                           </p>
                           Silahkan lakukan transfer sebesar{" "}
                           <strong>Total Tagihan</strong> ke rekening berikut :
@@ -362,15 +353,15 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           <p>Silahkan Lengkapi Pengisian Form.</p>
                           <br />
                           {dataAdmissionRegistration.applicant === null && (
-                            <p>- Data Anak Blm Lengkap</p>
+                            <p>- Belum Mengisi Form Data Anak</p>
                           )}
                           {user?.parents?.length !== 3 && (
-                            <p>- Data Ortu Blm Lengkap</p>
+                            <p>- Form Data Orang Tua Belum Lengkap</p>
                           )}
                           {dataAdmissionRegistration.statements?.length ===
-                            0 && <p>- Data Pernyataan Blm Lengkap</p>}
+                            0 && <p>- Belum Mengisi Form Pernyataan</p>}
                           {dataAdmissionRegistration.additionalFiles?.length ===
-                            0 && <p>- Data Berkas Pendaftaran Blm Lengkap</p>}
+                            0 && <p>- Belum Mengisi Form Upload Berkas</p>}
                           <br />
                           <button
                             className="btn-mrh"

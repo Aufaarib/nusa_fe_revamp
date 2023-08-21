@@ -11,15 +11,18 @@ import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
 import {
   DropdownDatePickers,
   DropdownRadioInputBiological,
+  DropdownRadioInputGender,
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
 } from "./ModalPopUp";
 
-const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
+const FormDaftarOrangTuaWali = () => {
   const token = localStorage.getItem("TOKEN");
   const navigate = useNavigate();
   const path = "/pmb/tahapan-pmb";
@@ -96,16 +99,6 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
     }));
   };
 
-  const updateParentsDropDownCal = (e) => {
-    const fieldName = e.element.id;
-    setParent((existingValues) => ({
-      // Retain the existing values
-      ...existingValues,
-      // update the current field
-      [fieldName]: e.value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -168,81 +161,22 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-wali");
+        AlertStatusSuccess(
+          "/pmb/form-data-orang-tua-wali",
+          "Berhasil",
+          "Tutup",
+          "success",
+          "Pendataan Wali Berhasil Terupload"
+        );
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusTambahFailed();
-      });
-  };
-  const handleSubmitUpdate = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const code = admissionParentsData.code;
-    const fullName = parent.fullName;
-    const religion = parent.religion;
-    const familyIdentityNumber = parent.familyIdentityNumber;
-    const identityNumber = parent.identityNumber;
-    const gender = parent.gender;
-    const relationship = "perwalian";
-    const isBiological = parseInt(parent.isBiological);
-    const isOneHouse = parseInt(parent.isOneHouse);
-    const phoneNumber1 = parent.phoneNumber1;
-    const phoneNumber2 = parent.phoneNumber2;
-    const province = parent.province;
-    const city = parent.city;
-    const subDistrict = parent.subDistrict;
-    const village = parent.village;
-    const address = parent.address;
-    const postalCode = parent.postalCode;
-    const birthPlace = parent.birthPlace;
-    const birthDate = parent.birthDate;
-    const lastEducation = parent.lastEducation;
-    const placeOfWork = parent.placeOfWork;
-    const occupation = parent.occupation;
-    const incomeGrade = parseInt(parent.incomeGrade);
-
-    console.log("PARENT === ", parent);
-
-    axios
-      .put(
-        process.env.REACT_APP_BASE_URL + `/user/parent/${code}`,
-        {
-          fullName,
-          religion,
-          familyIdentityNumber,
-          identityNumber,
-          gender,
-          relationship,
-          isBiological,
-          isOneHouse,
-          phoneNumber1,
-          phoneNumber2,
-          province,
-          city,
-          subDistrict,
-          village,
-          address,
-          postalCode,
-          birthPlace,
-          birthDate,
-          lastEducation,
-          occupation,
-          incomeGrade,
-          placeOfWork,
-        },
-        {
-          headers: { authorization: token },
-        }
-      )
-      .then(() => {
-        setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-data-orang-tua-wali");
-      })
-      .catch(() => {
-        setIsLoading(false);
-        AlertStatusTambahFailed();
+        AlertMessage(
+          "Gagal",
+          "Gagal Mengupload Data Wali",
+          "Coba Lagi",
+          "error"
+        );
       });
   };
 
@@ -261,11 +195,20 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Wali</h1>
-            <p className="text-xs">
-              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-              <span className="text-merah">*</span>) wajib diisi.
-            </p>
+            <h1 className="mt-3 text-merah">
+              {admissionParentsData == null ? "Pendataan Wali" : "Data Wali"}
+            </h1>
+            {admissionParentsData == null ? (
+              <p className="text-xs">
+                Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+                <span className="text-merah">*</span>) wajib diisi.
+              </p>
+            ) : (
+              <p className="text-xs">
+                Catatan : Mohon Untuk Melakukan Pengecekan Ulang Kesesuaian
+                Data. Anda Dapat Merubah Data Dengan Menekan Tombol Ubah
+              </p>
+            )}
           </section>
           {admissionParentsData == null ? (
             <section className="xs:col-span-3 lg:col-span-1 mt-5">
@@ -275,16 +218,28 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="fullName"
                 onChange={updateParents}
                 value={parent.fullName}
-                disable={true}
+                disable={false}
                 required={true}
               />
+              <br />
+              <DropdownRadioInputGender
+                required={true}
+                label="Jenis Kelamin"
+                value1="male"
+                value2="female"
+                label2="Laki-Laki"
+                label3="Perempuan"
+                onChange={updateParentsRadio}
+                checked={parent.gender}
+              />
+              <br />
               <TextInput
                 label="Agama"
                 type="text"
                 id="religion"
                 onChange={updateParents}
                 value={parent.religion}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -293,7 +248,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="familyIdentityNumber"
                 onChange={updateParents}
                 value={parent.familyIdentityNumber}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -302,7 +257,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="identityNumber"
                 onChange={updateParents}
                 value={parent.identityNumber}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <br />
@@ -334,7 +289,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="phoneNumber1"
                 onChange={updateParents}
                 value={parent.phoneNumber1}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -343,7 +298,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="phoneNumber2"
                 onChange={updateParents}
                 value={parent.phoneNumber2}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -352,7 +307,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="province"
                 onChange={updateParents}
                 value={parent.province}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -361,7 +316,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="city"
                 onChange={updateParents}
                 value={parent.city}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -370,7 +325,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="subDistrict"
                 onChange={updateParents}
                 value={parent.subDistrict}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -379,7 +334,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="village"
                 onChange={updateParents}
                 value={parent.village}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -388,7 +343,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="address"
                 onChange={updateParents}
                 value={parent.address}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -397,7 +352,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="postalCode"
                 onChange={updateParents}
                 value={parent.postalCode}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -406,7 +361,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="birthPlace"
                 onChange={updateParents}
                 value={parent.birthPlace}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <DropdownDatePickers
@@ -414,6 +369,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="birthDate"
                 value={parent.birthDate}
                 change={updateParentsCal.bind(this)}
+                required={true}
               />
               <TextInput
                 label="Pendidikan Terakhir"
@@ -421,7 +377,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="lastEducation"
                 onChange={updateParents}
                 value={parent.lastEducation}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -430,7 +386,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="placeOfWork"
                 onChange={updateParents}
                 value={parent.placeOfWork}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -439,7 +395,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="occupation"
                 onChange={updateParents}
                 value={parent.occupation}
-                disable={true}
+                disable={false}
                 required={true}
               />
               <TextInput
@@ -448,7 +404,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                 id="incomeGrade"
                 onChange={updateParents}
                 value={parent.incomeGrade}
-                disable={true}
+                disable={false}
                 required={true}
                 min="1"
               />

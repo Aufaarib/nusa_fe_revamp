@@ -195,7 +195,7 @@ const FormDaftarMurid = () => {
         home="PMB"
         prev="Tahapan"
         navePrev={path}
-        at="Penndataan Anak"
+        at="Pendataan Anak"
         title="Form Pendataan Anak"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -204,11 +204,20 @@ const FormDaftarMurid = () => {
           style={{ display: "block", gap: "20px", padding: "20px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Anak</h1>
-            <p className="text-xs">
-              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-              <span className="text-merah">*</span>) wajib diisi.
-            </p>
+            <h1 className="mt-3 text-merah">
+              {admissionApplicantData == null ? "Pendataan Anak" : "Data Anak"}
+            </h1>
+            {admissionApplicantData == null ? (
+              <p className="text-xs">
+                Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+                <span className="text-merah">*</span>) wajib diisi.
+              </p>
+            ) : (
+              <p className="text-xs">
+                Catatan : Mohon Untuk Melakukan Pengecekan Ulang Kesesuaian
+                Data. Anda Dapat Merubah Data Dengan Menekan Tombol Ubah
+              </p>
+            )}
           </section>
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
             {admissionApplicantData == null ? (
@@ -458,13 +467,19 @@ const FormDaftarMurid = () => {
                   <TextInputModal
                     label="Tanggal Lahir"
                     type="text"
-                    value={admissionApplicantData.birthDate}
+                    value={moment(admissionApplicantData.birthDate).format(
+                      "YYYY-MM-DD"
+                    )}
                     disable={true}
                   />
                   <TextInputModal
                     label="Jenis Kelamin"
                     type="text"
-                    value={admissionApplicantData.gender}
+                    value={
+                      admissionApplicantData.gender === "male"
+                        ? "Laki-Laki"
+                        : "Perempuan"
+                    }
                     disable={true}
                   />
                   <TextInputModal

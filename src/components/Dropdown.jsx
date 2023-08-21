@@ -681,17 +681,6 @@ export const DropdownListComponents = ({
             // popupHeight="auto"
           />
         </div>
-        {/* <div className="ml-20">
-          <DropDownListComponent
-            placeholder={placeholder}
-            id={id}
-            dataSource={dataSource}
-            fields={fields}
-            value={value}
-            change={change}
-            // popupHeight="auto"
-          />
-        </div> */}
       </form>
     </div>
   );
@@ -922,22 +911,6 @@ export const DropdownRadioInputGender = ({
             checked={checked}
           />
         </div>
-        {/* <div className="flex gap-5 w-full ml-20">
-          <RadioInput
-            value={value1}
-            label={label2}
-            name="gender"
-            onChange={onChange}
-            checked={checked}
-          />
-          <RadioInput
-            value={value2}
-            label={label3}
-            name="gender"
-            onChange={onChange}
-            checked={checked}
-          />
-        </div> */}
       </form>
     </div>
   );

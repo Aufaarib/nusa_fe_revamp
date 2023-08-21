@@ -142,20 +142,20 @@ const ListMurid = () => {
     navigate("/admin/tambah-guru");
   };
 
-  const handleStatus = (code, description, status) => {
-    AlertUbahStatus(description, code, status, onUpdateStatus);
-    // setisOpenUpdateTidakAktif(true);
-    // setStatus("Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
-  };
+  // const handleStatus = (code, description, status) => {
+  //   AlertUbahStatus(description, code, status, onUpdateStatus);
+  //   // setisOpenUpdateTidakAktif(true);
+  //   // setStatus("Aktif");
+  //   // setDesc(description);
+  //   // setUpdateId(id);
+  // };
 
-  const onUpdateStatus = (code) => {
-    updateStatusKurikulum(setSts, code, setData);
-    // closeModalUpdateAktif();
-    // closeModalUpdateTidakAktif();
-    // setisOpenStatus(true);
-  };
+  // const onUpdateStatus = (code) => {
+  //   updateStatusKurikulum(setSts, code, setData);
+  //   // closeModalUpdateAktif();
+  //   // closeModalUpdateTidakAktif();
+  //   // setisOpenStatus(true);
+  // };
 
   return (
     <>
