@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -51,18 +53,35 @@ export function updateStatusMapel(setSts, status, id, setData) {
 
 export function updateMapel(setSts, code, path, name, description, type) {
   axios
-    .post(process.env.REACT_APP_BASE_URL + `/subject/${code}`, {
-      name,
-      description,
-      type,
-    })
+    .put(
+      process.env.REACT_APP_BASE_URL + `/subject/${code}`,
+      {
+        name,
+        description,
+        type,
+      },
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Mata Pelajaran Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage(
+        "Gagal",
+        "Ubah Mata Pelajaran Berhasil",
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
@@ -79,11 +98,22 @@ export function postMapel(setSts, path, name, description, type) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Mata Pelajaran Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage(
+        "Gagal",
+        "Tambah Mata Pelajaran Gagal",
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 

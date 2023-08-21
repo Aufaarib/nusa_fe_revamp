@@ -135,8 +135,8 @@ export default function ListMataPelajaran() {
               navigateUbahMapel(
                 data.code,
                 data.name,
-                data.description,
-                data.type
+                data.type,
+                data.description
               )
             }
             className="btn-action-merah ml-3 w-auto px-2"
@@ -178,19 +178,12 @@ export default function ListMataPelajaran() {
     navigate(path);
   };
 
-  const navigateUbahMapel = (
-    id,
-    course_name,
-    code,
-    group_course_id,
-    description
-  ) => {
+  const navigateUbahMapel = (code, course_name, type, description) => {
     navigate("/admin/ubah-mata-pelajaran", {
       state: {
-        id: id,
-        course_name: course_name,
         code: code,
-        group_course_id: group_course_id,
+        course_name: course_name,
+        type: type,
         description: description,
       },
     });

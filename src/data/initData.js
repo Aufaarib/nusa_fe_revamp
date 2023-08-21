@@ -285,6 +285,11 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
+        name: "Ruangan",
+        path: `admin/list-ruangan`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Kelompok Mata Pelajaran",
         path: `admin/list-kelompok-mapel`,
         icon: <FaWpforms />,

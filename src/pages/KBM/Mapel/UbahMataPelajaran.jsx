@@ -5,6 +5,7 @@ import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { updateMapel } from "../../../api/MataPelajaran";
 import {
   AlertEmpty,
+  AlertMessage,
   ModalEmpty,
   ModalStatusTambah,
 } from "../../../components/ModalPopUp";
@@ -40,11 +41,12 @@ export default function UbahMataPelajaran() {
     e.preventDefault();
     const code = location.state.code;
 
+    console.log("njnjwnfj ===", code);
+
     if (name.length === 0 || description.length === 0 || type.length === 0) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateMapel(setSts, code, path, name, description, type);
-      // setisOpenStatus(true);
     }
   };
 
@@ -82,14 +84,14 @@ export default function UbahMataPelajaran() {
             <TextInput
               label="Name"
               type="text"
-              placeholder={location.state.code}
+              placeholder={location.state.course_name}
               onChange={(e) => setName(e.target.value)}
               required={true}
             />
             <TextInput
               label="Deskripsi"
               type="text"
-              placeholder={location.state.course_name}
+              placeholder={location.state.description}
               onChange={(e) => setDescription(e.target.value)}
               required={true}
             />

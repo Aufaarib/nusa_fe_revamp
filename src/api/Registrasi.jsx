@@ -1,15 +1,11 @@
 import {
   AlertMessage,
   AlertStatusFailed,
-  AlertStatusReVerified,
-  AlertStatusReVerifiedFailed,
   AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
-  AlertStatusVerified,
-  AlertStatusVerifiedFailed,
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
@@ -120,7 +116,6 @@ export function getAdmissionStatement(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      // console.log("ADMISSION STATEMENT === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })

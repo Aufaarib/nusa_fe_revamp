@@ -1,41 +1,40 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postKelas } from "../../../api/Kelas";
+import { postRoom } from "../../../api/Ruangan";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
-export default function TambahKelas() {
-  const [grade, setGrade] = useState("");
+export default function TambahRuangan() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState(undefined);
-  // const created_by = localStorage.getItem("NAMA");
+  const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
-  const path = "/admin/list-kelas";
+
+  const path = "/admin/list-ruangan";
+
+  const navigateRuangKelas = () => {
+    navigate(path);
+  };
 
   const postData = (e) => {
     e.preventDefault();
 
-    if (grade === "" || name === "" || description === "") {
-      AlertEmpty();
+    if (name === "" || description === "") {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postKelas(setStatus, path, grade, name, description);
+      postRoom(setSts, path, name, description);
     }
-  };
-
-  const navigateKelas = () => {
-    navigate(path);
   };
 
   return (
     <div>
       <Header
         home="Admin KBM"
-        prev="Kelas"
+        prev="Daftar Ruangan"
         navePrev={path}
-        at="Tambah Kelas"
-        title="Tambah Kelas"
+        at="Tambah Ruangan"
+        title="Tambah Ruangan "
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -45,27 +44,18 @@ export default function TambahKelas() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Kelas
+          Form Tambah Ruangan
         </p>
         <article>
           <TextInput
-            label="Kelas"
+            label="Nama Ruangan"
             type="text"
-            name="code"
-            onChange={(e) => setGrade(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Nama Kelas"
-            type="text"
-            name="code"
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
           <TextInput
             label="Deskripsi"
             type="text"
-            name="code"
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
@@ -81,24 +71,11 @@ export default function TambahKelas() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateKelas}
+              onClick={navigateRuangKelas}
             >
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={status}
-            navigate={navigateKelas}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

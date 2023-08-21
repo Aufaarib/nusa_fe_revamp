@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getClassRoom, getStudentListRoom } from "../../../api/RuanganKelas";
+import {
+  getClassRoom,
+  getKelompokMapelRoom,
+  getStudentListRoom,
+} from "../../../api/RuanganKelas";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
 import moment from "moment/moment";
@@ -8,21 +12,42 @@ import { BsChevronBarLeft } from "react-icons/bs";
 
 const DetailRuanganKelas = () => {
   const [data, setData] = useState([]);
+  const [fetched, setFetched] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const path = "/admin/list-ruang-kelas";
 
-  let filteredItems = data;
+  let filteredStudents = data;
+  let filteredSubjects = data;
 
   if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.firstName.toLowerCase().includes(filterText.toLowerCase())
-    );
+    {
+      fetched === "1"
+        ? (filteredStudents = data.filter((data) =>
+            data.firstName?.toLowerCase().includes(filterText.toLowerCase())
+          ))
+        : (filteredSubjects = data.filter((data) =>
+            data.subject?.name.toLowerCase().includes(filterText.toLowerCase())
+          ));
+    }
   }
 
+  const fetchStudents = () => {
+    setFetched("1");
+    getStudentListRoom(setData, setSts, location.state.id);
+  };
+
+  const fetchSubjects = () => {
+    setFetched("2");
+    getKelompokMapelRoom(setData, setSts, location.state.id);
+  };
+
+  console.log("IJAIWJIWJIFJW === ", data);
+
   useEffect(() => {
+    setFetched("1");
     getStudentListRoom(setData, setSts, location.state.id);
   }, []);
 
@@ -34,8 +59,11 @@ const DetailRuanganKelas = () => {
       },
     });
   };
+  const navigateTambahKelompokMapel = () => {
+    navigate("/admin/tambah-kelompok-mapel");
+  };
 
-  const columns = [
+  const columnsStudents = [
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -55,7 +83,6 @@ const DetailRuanganKelas = () => {
     },
     {
       name: <div>Jenis Kelamin</div>,
-      selector: (data) => data.gender,
       cell: (data) => (
         <div>{data.gender === "male" ? "Laki-Laki" : "Perempuan"}</div>
       ),
@@ -63,20 +90,91 @@ const DetailRuanganKelas = () => {
     },
     {
       name: <div>Tempat Lahir</div>,
-      selector: (data) => data.birthPlace,
       cell: (data) => <div>{data.birthPlace}</div>,
       width: "auto",
     },
     {
       name: <div>Tanggal Lahir</div>,
-      selector: (data) => data.birthDate,
       cell: (data) => moment(data.birthDate).format("DD/MM/YYYY"),
       width: "auto",
     },
     {
       name: <div>Golongan Darah</div>,
-      selector: (data) => data.bloodType,
       cell: (data) => data.bloodType,
+      width: "auto",
+    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   width: "90px",
+    // },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+    //     <button
+    //       className="btn-action-merah"
+    //       title="Edit"
+    //       //   onClick={() =>
+    //       //     navigateUbahMurid(
+    //       //       data.code,
+    //       //       data.firstName,
+    //       //       data.middleName,
+    //       //       data.lastName,
+    //       //       data.gender,
+    //       //       data.religion,
+    //       //       data.birthPlace,
+    //       //       data.birthDate,
+    //       //       data.bloodType,
+    //       //       data.distanceFromHome
+    //       //     )
+    //       //   }
+    //     >
+    //       <i className="fa fa-edit" /> Ubah
+    //     </button>
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "90px",
+    // },
+  ];
+  const columnsSubjects = [
+    {
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Hari</div>,
+      cell: (data) => (
+        <div>
+          {(data.schedule?.day == 1 && "Senin") ||
+            (data.schedule?.day == 2 && "Selasa") ||
+            (data.schedule?.day == 3 && "Rabu") ||
+            (data.schedule?.day == 4 && "Kamis") ||
+            (data.schedule?.day == 5 && "Jumat")}
+        </div>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Mata Pelajaran</div>,
+      cell: (data) => <div>{data.subject?.name}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Jam Mulai</div>,
+      cell: (data) => <div>{data.schedule?.startTime}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Jam Selesai</div>,
+      cell: (data) => <div>{data.schedule?.endTime}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Guru</div>,
+      cell: (data) => <div>{data.teacher?.fullname}</div>,
       width: "auto",
     },
     // {
@@ -126,16 +224,70 @@ const DetailRuanganKelas = () => {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesPMB
-          columns={columns}
-          data={filteredItems}
-          onClick={() =>
-            navigateTambahMurid(location.state.id, location.state.namaRuangan)
-          }
-          onFilter={(e) => setFilterText(e.target.value)}
-          filterText={filterText}
-          buttontxt="Tambahkan Murid Ke Kelas"
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginBottom: "20px",
+            backgroundColor: "#F3F4F6",
+            justifyContent: "space-evenly",
+            borderRadius: "6px",
+          }}
+        >
+          <button
+            style={{
+              borderRadius: "6px",
+              padding: "20px 20px",
+              width: "100%",
+              backgroundColor: fetched === "1" ? "#8F0D1E" : "",
+              color: fetched === "1" ? "white" : "black",
+            }}
+            onClick={() => fetchStudents()}
+            // disabled={dataStep1 !== null ? false : true}
+          >
+            <i className="fa fa-bank" /> Daftar Murid
+          </button>
+          <button
+            style={{
+              borderRadius: "6px",
+              padding: "20px 20px",
+              width: "100%",
+              backgroundColor: fetched === "2" ? "#8F0D1E" : "",
+              color: fetched === "2" ? "white" : "black",
+            }}
+            onClick={() => fetchSubjects()}
+            // disabled={
+            //   dataStep1 !== null
+            //     ? dataStep1?.status !== "valid"
+            //       ? true
+            //       : false
+            //     : true
+            // }
+          >
+            <i className="fa fa-user" /> Daftar Jadwal Pelajaran
+          </button>
+        </div>
+        {fetched === "1" ? (
+          <DataTablesPMB
+            columns={columnsStudents}
+            data={filteredStudents}
+            onClick={() =>
+              navigateTambahMurid(location.state.id, location.state.namaRuangan)
+            }
+            onFilter={(e) => setFilterText(e.target.value)}
+            filterText={filterText}
+            buttontxt="Tambahkan Murid Ke Kelas"
+          />
+        ) : (
+          <DataTablesPMB
+            columns={columnsSubjects}
+            data={filteredSubjects}
+            onClick={() => navigateTambahKelompokMapel()}
+            onFilter={(e) => setFilterText(e.target.value)}
+            filterText={filterText}
+            buttontxt="Tambahkan Jadwal Pelajaran"
+          />
+        )}
       </div>
       <div className="flex justify-start w-full">
         <Link

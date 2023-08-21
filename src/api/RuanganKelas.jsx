@@ -33,6 +33,27 @@ export function getStudentListRoom(setData, setSts, id) {
     });
 }
 
+export function getKelompokMapelRoom(setData, setSts, roomClassesId) {
+  const data = [];
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/subject/group", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      res.data.body.forEach((element) => {
+        if (element.roomClasses.id === roomClassesId) {
+          data.push(element);
+        }
+      });
+      console.log("kkkkmk === ", data);
+      setData(data);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
 export function postClassRoom(
   setSts,
   path,

@@ -5,14 +5,11 @@ import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
 import { getMurid } from "../../../api/Murid";
 import { getClassRoom } from "../../../api/RuanganKelas";
+import { getRoom } from "../../../api/Ruangan";
 
 const ListRuangan = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const path = "/admin/list-bank";
@@ -21,12 +18,12 @@ const ListRuangan = () => {
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.room?.name.toLowerCase().includes(filterText.toLowerCase())
+      data.name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
   useEffect(() => {
-    getClassRoom(setData, setSts);
+    getRoom(setData, setSts);
   }, []);
 
   const columns = [
@@ -36,27 +33,21 @@ const ListRuangan = () => {
       width: "55px",
     },
     {
-      name: <div>Tahum Ajaran</div>,
-      selector: (data) => data.academicYear?.name,
-      cell: (data) => <div>{data.academicYear?.name}</div>,
+      name: <div>Kode</div>,
+      selector: (data) => data.code,
+      cell: (data) => <div>{data.code}</div>,
       width: "auto",
     },
     {
-      name: <div>Ruangan</div>,
-      selector: (data) => data.room?.name,
-      cell: (data) => <div>{data.room?.name}</div>,
+      name: <div>Nama Ruangan</div>,
+      selector: (data) => data.name,
+      cell: (data) => <div>{data.name}</div>,
       width: "auto",
     },
     {
-      name: <div>Wali Kelas</div>,
-      selector: (data) => data.teachers[0].fullname,
-      cell: (data) => <div>{data.teachers[0].fullname}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Kapasitas</div>,
-      selector: (data) => data.capacity,
-      cell: (data) => <div>{data.capacity}</div>,
+      name: <div>Deskripsi</div>,
+      selector: (data) => data.description,
+      cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
     {
@@ -81,23 +72,9 @@ const ListRuangan = () => {
         <>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-action-merah mr-3"
-            onClick={() => navigateClassRoomDetails(data.id, data.room?.name)}
-          >
-            <i className="fa fa-eye" /> Detail
-          </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
             className="btn-action-merah"
             onClick={() =>
-              navigateUpdateClassRoom(
-                data.id,
-                data.academicYear?.id,
-                data.classes?.id,
-                data.room?.id,
-                data.teachers[0].id,
-                data.capacity
-              )
+              navigateUpdateClassRoom(data.code, data.name, data.description)
             }
           >
             <i className="fa fa-edit" /> Ubah
@@ -109,37 +86,18 @@ const ListRuangan = () => {
       width: "220px",
     },
   ];
-
-  const navigateClassRoomDetails = (id, namaRuangan) => {
-    navigate("/admin/detail-ruang-kelas", {
+  const navigateUpdateClassRoom = (code, name, description) => {
+    navigate("/admin/ubah-ruangan", {
       state: {
-        id: id,
-        namaRuangan: namaRuangan,
-      },
-    });
-  };
-  const navigateUpdateClassRoom = (
-    id,
-    tahunAjaran,
-    kelas,
-    Ruangan,
-    waliKelas,
-    kapasitas
-  ) => {
-    navigate("/admin/ubah-ruang-kelas", {
-      state: {
-        id: id,
-        tahunAjaran: tahunAjaran,
-        kelas: kelas,
-        Ruangan: Ruangan,
-        waliKelas: waliKelas,
-        kapasitas: kapasitas,
+        code: code,
+        name: name,
+        description: description,
       },
     });
   };
 
   const navigateTambahRuangKelas = () => {
-    navigate("/admin/tambah-ruang-kelas");
+    navigate("/admin/tambah-ruangan");
   };
 
   return (
@@ -148,8 +106,8 @@ const ListRuangan = () => {
         home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Daftar Ruangan Kelas"
-        title="Daftar Ruangan Kelas"
+        at="Daftar Ruangan"
+        title="Daftar Ruangan"
       />
 
       <div style={{ marginTop: "50px" }}>

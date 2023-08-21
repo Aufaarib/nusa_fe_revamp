@@ -1,41 +1,42 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postMapel } from "../../../api/MataPelajaran";
+import { useLocation, useNavigate } from "react-router-dom";
+import { updateClassRoom } from "../../../api/RuanganKelas";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { updateRoom } from "../../../api/Ruangan";
 
-export default function TambahMataPelajaran() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  const [sts, setSts] = useState(undefined);
+export default function UbahRuangan() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [name, setName] = useState(location.state.name);
+  const [description, setDescription] = useState(location.state.description);
+  const [sts, setSts] = useState(undefined);
 
-  const path = "/admin/list-mata-pelajaran";
+  const path = "/admin/list-ruangan";
+
+  const navigateRuangKelas = () => {
+    navigate(path);
+  };
 
   const postData = (e) => {
     e.preventDefault();
 
-    if (name.length === 0 || description.length === 0 || type.length === 0) {
-      AlertEmpty();
+    if (name === "" || description === "") {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postMapel(setSts, path, name, description, type);
+      updateRoom(setSts, path, location.state.code, name, description);
     }
-  };
-
-  const navigateSemester = () => {
-    navigate(path);
   };
 
   return (
     <div>
       <Header
         home="Admin KBM"
-        prev="Mata Pelajaran"
+        prev="Daftar Ruangan"
         navePrev={path}
-        at="Tambah Mata Pelajaran"
-        title="Tambah Mata Pelajaran"
+        at="Ubah Ruangan"
+        title="Ubah Ruangan"
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -45,26 +46,22 @@ export default function TambahMataPelajaran() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Mata Pelajaran
+          Form Ubah Ruang Kelas
         </p>
         <article>
           <TextInput
-            label="Nama"
+            label="Nama Ruangan"
             type="text"
+            value={name}
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
           <TextInput
             label="Deskripsi"
             type="text"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Tipe"
-            type="text"
-            onChange={(e) => setType(e.target.value)}
-            required={true}
+            require
           />
 
           <div className="btn-form">
@@ -73,12 +70,12 @@ export default function TambahMataPelajaran() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSemester}
+              onClick={navigateRuangKelas}
             >
               Batal
             </button>

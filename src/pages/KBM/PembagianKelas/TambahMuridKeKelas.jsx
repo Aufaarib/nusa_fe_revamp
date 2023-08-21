@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { postMapel } from "../../../api/MataPelajaran";
-import { getMurid } from "../../../api/Murid";
+import { getMurid, getMuridNotRegisteredToClass } from "../../../api/Murid";
 import { Header } from "../../../components";
 import { DropdownSiswa } from "../../../components/Dropdown";
 import { AlertConfirmation, AlertEmpty } from "../../../components/ModalPopUp";
@@ -51,7 +51,7 @@ export default function TambahMuridKeKelas() {
   };
 
   const fetchStudent = () => {
-    getMurid(setStudentData, setSts);
+    getMuridNotRegisteredToClass(setStudentData, setSts);
   };
 
   useEffect(() => {

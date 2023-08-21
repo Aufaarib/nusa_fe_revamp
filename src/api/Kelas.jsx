@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -71,11 +73,17 @@ export function postKelas(setSts, path, grade, name, description) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Kelas Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Kelas Gagal", "Coba Lagi", "error");
     });
 }
 

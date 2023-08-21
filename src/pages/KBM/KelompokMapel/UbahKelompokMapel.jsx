@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { getMapel } from "../../../api/MataPelajaran";
 import { getClassRoom } from "../../../api/RuanganKelas";
 import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
+import { getGuru } from "../../../api/Guru";
 
 export default function UbahKelompokMapel() {
   const location = useLocation();
@@ -32,12 +33,14 @@ export default function UbahKelompokMapel() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [classRoomData, setClassRoomData] = useState([]);
+  const [teacherData, setTeacherData] = useState([]);
   const [academicPeriodeId, setacademicPeriodeId] = useState(smesterId);
   const [subjectId, setacSubjectId] = useState(MapelId);
   const [roomClassId, setClassRoomId] = useState(roomId);
   const [day, setDay] = useState(hari);
   const [startTime, setStartTime] = useState(start);
   const [endTime, setEndTime] = useState(end);
+  const [teacherId, setTeacherId] = useState("");
   const [status, setStatus] = useState(stats);
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
@@ -55,37 +58,44 @@ export default function UbahKelompokMapel() {
     getClassRoom(setClassRoomData, setSts);
   };
 
+  const fetchTeacher = () => {
+    getGuru(setTeacherData, setSts);
+  };
+
   useEffect(() => {
     fetchAcademicPeriode();
     fetchSubject();
     fetchClassRoom();
+    fetchTeacher();
   }, []);
 
   const postData = (e) => {
     e.preventDefault();
 
-    // if (
-    //   academicPeriodeId === "" ||
-    //   subjectId === "" ||
-    //   roomClassId === "" ||
-    //   day === "" ||
-    //   startTime === "" ||
-    //   endTime === ""
-    // ) {
-    //   AlertEmpty();
-    // } else {
-    updateKelompokMapel(
-      setSts,
-      id,
-      path,
-      academicPeriodeId,
-      subjectId,
-      roomClassId,
-      day,
-      startTime,
-      endTime
-    );
-    // }
+    if (
+      academicPeriodeId === "" ||
+      subjectId === "" ||
+      roomClassId === "" ||
+      day === "" ||
+      teacherId === "" ||
+      startTime === "" ||
+      endTime === ""
+    ) {
+      AlertEmpty();
+    } else {
+      updateKelompokMapel(
+        setSts,
+        id,
+        path,
+        academicPeriodeId,
+        subjectId,
+        roomClassId,
+        day,
+        teacherId,
+        startTime,
+        endTime
+      );
+    }
   };
 
   const navigateKelompokMapel = () => {
@@ -104,6 +114,11 @@ export default function UbahKelompokMapel() {
 
   const classRoomOptions = classRoomData.map((c) => ({
     label: `${c.room.name}`,
+    value: c.id,
+  }));
+
+  const teacherOptions = teacherData.map((c) => ({
+    label: c.fullname,
     value: c.id,
   }));
 
@@ -196,6 +211,15 @@ export default function UbahKelompokMapel() {
             placeholder={"08:20"}
             onChange={(e) => setEndTime(e.target.value)}
             required={true}
+          />
+          <DropdownSiswa
+            label="Guru"
+            required={true}
+            defaultValue={teacherId}
+            isClearable={false}
+            options={teacherOptions}
+            isSearchable={false}
+            onChange={(e) => setTeacherId(e.value)}
           />
           <DropdownStatus
             label="Status"

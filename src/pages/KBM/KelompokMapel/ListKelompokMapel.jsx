@@ -91,12 +91,12 @@ export default function ListKelompokMapel() {
       selector: (_row, i) => i + 1,
       width: "55px",
     },
-    {
-      name: <div>Semester</div>,
-      selector: (data) => data.academicPeriode?.increment,
-      cell: (data) => <div>{`Sm ${data.academicPeriode?.increment}`}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Semester</div>,
+    //   selector: (data) => data.academicPeriode?.increment,
+    //   cell: (data) => <div>{`Sm ${data.academicPeriode?.increment}`}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Hari</div>,
       cell: (data) => (
@@ -114,31 +114,37 @@ export default function ListKelompokMapel() {
       name: <div>Mapel</div>,
       selector: (data) => data.subject.name,
       cell: (data) => <div>{data.subject.name}</div>,
-      width: "auto",
+      width: "150px",
     },
     {
       name: <div>Ruangan Kelas</div>,
       selector: (data) => data.roomClasses?.room?.name,
       cell: (data) => <div>{data.roomClasses?.room?.name}</div>,
-      width: "220px",
+      width: "150px",
     },
     {
       name: <div>Jam Mulai</div>,
       selector: (data) => data.schedule.startTime,
       cell: (data) => <div>{data.schedule.startTime}</div>,
-      width: "100px",
+      width: "auto",
     },
     {
       name: <div>Jam Selesai</div>,
       selector: (data) => data.schedule.endTime,
       cell: (data) => <div>{data.schedule.endTime}</div>,
-      width: "100px",
+      width: "auto",
+    },
+    {
+      name: <div>Guru</div>,
+      selector: (data) => data.teacher?.fullname,
+      cell: (data) => <div>{data.teacher?.fullname}</div>,
+      width: "120px",
     },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
-      width: "90px",
+      width: "auto",
     },
     {
       name: <div>Aksi</div>,

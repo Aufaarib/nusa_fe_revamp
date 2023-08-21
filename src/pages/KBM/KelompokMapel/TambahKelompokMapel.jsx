@@ -10,14 +10,17 @@ import { useEffect } from "react";
 import { getMapel } from "../../../api/MataPelajaran";
 import { getClassRoom } from "../../../api/RuanganKelas";
 import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
+import { getGuru } from "../../../api/Guru";
 
 export default function TambahKelompokMapel() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   const [classRoomData, setClassRoomData] = useState([]);
+  const [teacherData, setTeacherData] = useState([]);
   const [academicPeriodeId, setacademicPeriodeId] = useState("");
   const [subjectId, setacSubjectId] = useState("");
   const [roomClassId, setClassRoomId] = useState("");
+  const [teacherId, setTeacherId] = useState("");
   const [day, setDay] = useState(0);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -30,8 +33,6 @@ export default function TambahKelompokMapel() {
     getSemester(setAcademicPeriodeData, setSts);
   };
 
-  console.log("TESSSSSSSS === ", academicPeriodeData);
-
   const fetchSubject = () => {
     getMapel(setSubjectData, setSts);
   };
@@ -40,10 +41,15 @@ export default function TambahKelompokMapel() {
     getClassRoom(setClassRoomData, setSts);
   };
 
+  const fetchTeacher = () => {
+    getGuru(setTeacherData, setSts);
+  };
+
   useEffect(() => {
     fetchAcademicPeriode();
     fetchSubject();
     fetchClassRoom();
+    fetchTeacher();
   }, []);
 
   const postData = (e) => {
@@ -54,6 +60,7 @@ export default function TambahKelompokMapel() {
       subjectId === "" ||
       roomClassId === "" ||
       day === "" ||
+      teacherId === "" ||
       startTime === "" ||
       endTime === ""
     ) {
@@ -65,6 +72,7 @@ export default function TambahKelompokMapel() {
         academicPeriodeId,
         subjectId,
         roomClassId,
+        teacherId,
         day,
         startTime,
         endTime
@@ -88,6 +96,11 @@ export default function TambahKelompokMapel() {
 
   const classRoomOptions = classRoomData.map((c) => ({
     label: `${c.room.name}`,
+    value: c.id,
+  }));
+
+  const teacherOptions = teacherData.map((c) => ({
+    label: c.fullname,
     value: c.id,
   }));
 
@@ -158,16 +171,25 @@ export default function TambahKelompokMapel() {
           <TextInput
             label="Jam Mulai"
             type="text"
-            placeholder={"07:20"}
+            placeholder={"07:20:00"}
             onChange={(e) => setStartTime(e.target.value)}
             required={true}
           />
           <TextInput
             label="Jam Selesai"
             type="text"
-            placeholder={"08:20"}
+            placeholder={"08:20:00"}
             onChange={(e) => setEndTime(e.target.value)}
             required={true}
+          />
+          <DropdownSiswa
+            label="Guru"
+            required={true}
+            defaultValue={teacherId}
+            isClearable={false}
+            options={teacherOptions}
+            isSearchable={false}
+            onChange={(e) => setTeacherId(e.value)}
           />
           <DropdownStatus
             label="Status"

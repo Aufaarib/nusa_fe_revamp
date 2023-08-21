@@ -1,4 +1,6 @@
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
@@ -12,118 +14,62 @@ export function getRoom(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
-export function updateGuru(
-  setSts,
-  path,
-  code,
-  Fullname,
-  Gender,
-  Religion,
-  BirthPlace,
-  BirthDate
-) {
+export function updateRoom(setSts, path, code, name, description) {
   axios
     .put(
-      process.env.REACT_APP_BASE_URL + `/teacher/${code}`,
+      process.env.REACT_APP_BASE_URL + `/room/${code}`,
       {
-        Fullname,
-        Gender,
-        Religion,
-        BirthPlace,
-        BirthDate,
+        name,
+        description,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Ruangan Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Ruangan Gagal", "Coba Lagi", "error");
     });
 }
 
-// export function updateStatusKurikulum(setSts, code, setData) {
-//   axios
-//     .put(
-//       process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-//       null,
-//       {
-//         headers: { authorization: localStorage.getItem("TOKEN") },
-//       }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusUpdateSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusUpdateFailed();
-//     });
-// }
-
-export function postGuru(
-  setSts,
-  path,
-  fullname,
-  gender,
-  religion,
-  birthPlace,
-  birthDate
-) {
+export function postRoom(setSts, path, name, description) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + "/teacher",
+      process.env.REACT_APP_BASE_URL + "/room",
       {
-        fullname,
-        gender,
-        religion,
-        birthPlace,
-        birthDate,
+        name,
+        description,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Ruangan Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Ruangan Gagal", "Coba Lagi", "error");
     });
 }
-
-// export function deleteKurikulum(setSts, deleteId, setData) {
-//   axios
-//     .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusHapusSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusHapusFailed();
-//     });
-// }

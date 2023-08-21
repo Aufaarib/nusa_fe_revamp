@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -47,6 +49,7 @@ export function updateKelompokMapel(
   subjectId,
   roomClassId,
   day,
+  teacherId,
   startTime,
   endTime
 ) {
@@ -58,6 +61,7 @@ export function updateKelompokMapel(
         subjectId,
         roomClassId,
         day,
+        teacherId,
         startTime,
         endTime,
       },
@@ -67,11 +71,22 @@ export function updateKelompokMapel(
     )
     .then(() => {
       setStatus({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Kelompok Mata Pelajaran Berhasil"
+      );
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage(
+        "Gagal",
+        "Ubah Kelompok Mata Pelajaran Gagal",
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
@@ -81,6 +96,7 @@ export function postKelompokMapel(
   academicPeriodeId,
   subjectId,
   roomClassId,
+  teacherId,
   day,
   startTime,
   endTime
@@ -92,6 +108,7 @@ export function postKelompokMapel(
         academicPeriodeId,
         subjectId,
         roomClassId,
+        teacherId,
         day,
         startTime,
         endTime,
@@ -102,11 +119,22 @@ export function postKelompokMapel(
     )
     .then(() => {
       setStatus({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Kelompok Mata Pelajaran Berhasil"
+      );
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage(
+        "Gagal",
+        "Tambah Kelompok Mata Pelajaran Gagal",
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 

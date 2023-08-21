@@ -20,16 +20,27 @@ export function getMurid(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
+}
 
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
+export function getMuridNotRegisteredToClass(setData, setSts) {
+  const data = [];
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/student", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      res.data.body.forEach((element) => {
+        if (element.inRoomClasses == 0) {
+          data.push(element);
+        }
+      });
+      // setData(data);
+      setData(data);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
 }
 
 export function updateMurid(
