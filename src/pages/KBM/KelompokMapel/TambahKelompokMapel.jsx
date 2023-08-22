@@ -4,7 +4,7 @@ import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
 import { postKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
 import { useEffect } from "react";
 import { getMapel } from "../../../api/MataPelajaran";
@@ -64,7 +64,7 @@ export default function TambahKelompokMapel() {
       startTime === "" ||
       endTime === ""
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postKelompokMapel(
         setSts,

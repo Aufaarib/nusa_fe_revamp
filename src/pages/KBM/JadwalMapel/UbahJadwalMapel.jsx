@@ -1,17 +1,12 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { DropdownJenisTransaksi } from "../../../components/Dropdown";
-import { getMapel } from "../../../api/MataPelajaran";
-import { getKelas } from "../../../api/Kelas";
-import { updateJadwalMapel } from "../../../api/JadwalMataPelajaran";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { updateJadwalMapel } from "../../../api/JadwalMataPelajaran";
+import { getKelas } from "../../../api/Kelas";
+import { getMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
+import { DropdownJenisTransaksi } from "../../../components/Dropdown";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 const moment = require("moment-timezone");
 
 export default function UbahJadwalMapel() {
@@ -20,10 +15,7 @@ export default function UbahJadwalMapel() {
   const [day, setDay] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  //   const created_by = localStorage.getItem("NAMA");
   const location = useLocation();
   const date = moment(new Date()).format("yyyy-MM-DD");
 

@@ -1,47 +1,27 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { DropdownJenisTransaksi } from "../../../components/Dropdown";
-import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
-import { updateMapel } from "../../../api/MataPelajaran";
-import {
-  AlertEmpty,
-  AlertMessage,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { updateMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
+import { DropdownKurikulum } from "../../../components/Dropdown";
 
 export default function UbahMataPelajaran() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
-  const [sts, setSts] = useState(undefined);
   const location = useLocation();
-
   const navigate = useNavigate();
-
+  const [name, setName] = useState(location.state.course_name);
+  const [types, setType] = useState({
+    value: location.state.type,
+    label: location.state.type,
+  });
+  const [description, setDescription] = useState(location.state.description);
+  const [sts, setSts] = useState(undefined);
   const path = "/admin/list-mata-pelajaran";
-
-  // const [groupcourseData, setGroupCourseData] = useState([]);
-
-  // fetch function
-  // const fetchGroupCourse = async () => {
-  //   getKelompokMapel(setGroupCourseData, setSts);
-  // };
-
-  // useEffect(() => {
-  //   fetchGroupCourse();
-  // }, []);
 
   const postData = (e) => {
     e.preventDefault();
     const code = location.state.code;
-
-    console.log("njnjwnfj ===", code);
+    const type = types.value;
 
     if (name.length === 0 || description.length === 0 || type.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
@@ -54,10 +34,11 @@ export default function UbahMataPelajaran() {
     navigate(path);
   };
 
-  // const groupCourseOptions = groupcourseData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
+  const typeOptions = [
+    { value: "academic", label: "Akademik" },
+    { value: "non-academic", label: "Non-Akademik" },
+    { value: "personality", label: "Akhlaq" },
+  ];
 
   return (
     <div>
@@ -84,33 +65,33 @@ export default function UbahMataPelajaran() {
             <TextInput
               label="Name"
               type="text"
-              placeholder={location.state.course_name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
               required={true}
             />
             <TextInput
               label="Deskripsi"
               type="text"
-              placeholder={location.state.description}
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
               required={true}
             />
-            {/* <DropdownJenisTransaksi
-              label="Kelompok Mata Pelajaran"
+            <DropdownKurikulum
+              label="Tipe"
               required={true}
-              defaultValue={group_course_id}
-              isClearable={false}
-              options={groupCourseOptions}
+              isClearable={true}
+              defaultValue={types}
               isSearchable={false}
-              onChange={(e) => setGroupCourseId(e.value)}
-            /> */}
-            <TextInput
+              options={typeOptions}
+              onChange={setType}
+            />
+            {/* <TextInput
               label="Tipe"
               type="text"
-              placeholder={location.state.type}
+              value={type}
               onChange={(e) => setType(e.target.value)}
               required={true}
-            />
+            /> */}
           </section>
 
           <div className="btn-form">
@@ -129,19 +110,6 @@ export default function UbahMataPelajaran() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateMapel}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

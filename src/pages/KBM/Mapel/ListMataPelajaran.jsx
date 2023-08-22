@@ -110,7 +110,11 @@ export default function ListMataPelajaran() {
       name: <div>Tipe</div>,
       selector: (data) => data.type,
       cell: (data) => (
-        <div>{data.type === "academic" ? "Akademik" : "Non-Akademik"}</div>
+        <div>
+          {(data.type === "academic" && "Akademik") ||
+            (data.type === "non-academic" && "Non-Akademik") ||
+            (data.type === "personality" && "Akhlaq")}
+        </div>
       ),
       width: "auto",
     },

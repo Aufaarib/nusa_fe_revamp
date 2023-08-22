@@ -7,7 +7,7 @@ import {
 } from "../../../api/KelompokMataPelajaran";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
 import { useEffect } from "react";
 import { getMapel } from "../../../api/MataPelajaran";
@@ -34,13 +34,25 @@ export default function UbahKelompokMapel() {
   const [subjectData, setSubjectData] = useState([]);
   const [classRoomData, setClassRoomData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
-  const [academicPeriodeId, setacademicPeriodeId] = useState(smesterId);
-  const [subjectId, setacSubjectId] = useState(MapelId);
-  const [roomClassId, setClassRoomId] = useState(roomId);
+  const [academicPeriodeId, setacademicPeriodeId] = useState({
+    value: smesterId,
+    label: smester,
+  });
+  const [subjectId, setacSubjectId] = useState({
+    value: MapelId,
+    label: mapel,
+  });
+  const [roomClassId, setClassRoomId] = useState({
+    value: roomId,
+    label: room,
+  });
   const [day, setDay] = useState(hari);
-  const [startTime, setStartTime] = useState(start);
-  const [endTime, setEndTime] = useState(end);
-  const [teacherId, setTeacherId] = useState("");
+  const [startTime, setStartTime] = useState({
+    value: start,
+    label: start,
+  });
+  const [endTime, setEndTime] = useState({ value: end, label: end });
+  const [teacherId, setTeacherId] = useState();
   const [status, setStatus] = useState(stats);
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
@@ -81,7 +93,7 @@ export default function UbahKelompokMapel() {
       startTime === "" ||
       endTime === ""
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateKelompokMapel(
         setSts,
@@ -158,7 +170,7 @@ export default function UbahKelompokMapel() {
             options={academicYearOptions}
             isSearchable={false}
             onChange={(e) => setacademicPeriodeId(e.value)}
-            placeholder={`Sm ${smester}`}
+            // placeholder={`Sm ${smester}`}
           />
           <DropdownSiswa
             label="Hari"
@@ -168,13 +180,13 @@ export default function UbahKelompokMapel() {
             options={dayOptions}
             isSearchable={false}
             onChange={(e) => setDay(e.value)}
-            placeholder={
-              (hari == 1 && "Senin") ||
-              (hari == 2 && "Selasa") ||
-              (hari == 3 && "Rabu") ||
-              (hari == 4 && "Kamis") ||
-              (hari == 5 && "Jumat")
-            }
+            // placeholder={
+            //   (hari == 1 && "Senin") ||
+            //   (hari == 2 && "Selasa") ||
+            //   (hari == 3 && "Rabu") ||
+            //   (hari == 4 && "Kamis") ||
+            //   (hari == 5 && "Jumat")
+            // }
           />
           <DropdownSiswa
             label="Mata Pelajaran"
@@ -184,7 +196,7 @@ export default function UbahKelompokMapel() {
             options={subjectOptions}
             isSearchable={false}
             onChange={(e) => setacSubjectId(e.value)}
-            placeholder={mapel}
+            // placeholder={mapel}
           />
           <DropdownSiswa
             label="Ruangan Kelas"
@@ -194,13 +206,13 @@ export default function UbahKelompokMapel() {
             options={classRoomOptions}
             isSearchable={false}
             onChange={(e) => setClassRoomId(e.value)}
-            placeholder={room}
+            // placeholder={room}
           />
           <TextInput
             label="Jam Mulai"
             type="text"
             defaultValue={startTime}
-            placeholder={"07:20"}
+            // placeholder={"07:20"}
             onChange={(e) => setStartTime(e.target.value)}
             required={true}
           />
@@ -208,7 +220,7 @@ export default function UbahKelompokMapel() {
             label="Jam Selesai"
             type="text"
             defaultValue={endTime}
-            placeholder={"08:20"}
+            // placeholder={"08:20"}
             onChange={(e) => setEndTime(e.target.value)}
             required={true}
           />
@@ -228,7 +240,7 @@ export default function UbahKelompokMapel() {
             defaultValue={status}
             isSearchable={false}
             onChange={setStatus}
-            placeholder={status == 1 ? "Aktif" : "Non-Aktif"}
+            // placeholder={status == 1 ? "Aktif" : "Non-Aktif"}
           />
 
           <div className="btn-form">

@@ -1,17 +1,12 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { postJadwalMapel } from "../../../api/JadwalMataPelajaran";
 import { getKelas } from "../../../api/Kelas";
 import { getMapel } from "../../../api/MataPelajaran";
-import { postJadwalMapel } from "../../../api/JadwalMataPelajaran";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
 import { DropdownJenisTransaksi } from "../../../components/Dropdown";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 const moment = require("moment-timezone");
 
@@ -21,12 +16,8 @@ export default function TambahJadwalMataPelajaran() {
   const [day, setDay] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-
   const [classData, setClassData] = useState([]);
   const [courseData, setCourseData] = useState([]);
-
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
   const date = moment(new Date()).format("yyyy-MM-DD");
@@ -68,7 +59,7 @@ export default function TambahJadwalMataPelajaran() {
       start_time.length === 0 ||
       end_time.length === 0
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postJadwalMapel(
         setSts,

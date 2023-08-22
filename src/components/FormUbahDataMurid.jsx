@@ -64,6 +64,8 @@ const FormUbahDataMurid = () => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log("ajikjwida === ", transportasi);
+
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     setIsLoading(true);

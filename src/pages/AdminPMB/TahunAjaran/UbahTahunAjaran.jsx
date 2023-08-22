@@ -1,68 +1,67 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { updateBank } from "../../../api/Bank";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Header } from "../../../components";
 import { updateTahunAjaran } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
+import { getKurikulum } from "../../../api/Kurikulum";
+import { useEffect } from "react";
+import { DropdownKurikulum } from "../../../components/Dropdown";
 
 export default function UbahTahunAjaran() {
-  const [year, setYear] = useState("");
-  const [name, setName] = useState("");
-  const [status, setStatus] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
+  const [year, setYear] = useState(location.state.year);
+  const [name, setName] = useState(location.state.name);
+  const [curriculums, setCurriculum] = useState({
+    label: location.state.curriculumName,
+    value: location.state.curriculumId,
+  });
+  const [curriculumData, setCurriculumData] = useState([]);
+  const [status, setStatus] = useState(undefined);
   const path = "/admin/list-tahun-ajaran";
+
+  console.log("okokwokkwf === ", curriculums.value);
+
+  const fetchCurriculum = async () => {
+    getKurikulum(setCurriculumData, setStatus);
+  };
+
+  useEffect(() => {
+    fetchCurriculum();
+  }, []);
 
   const postData = (e) => {
     e.preventDefault();
     const code = location.state.code;
     const status = location.state.status;
-    const curriculumId = location.state.curriculumId;
+    const curriculum = curriculums.value;
 
-    if (year.length === 0 || name.length === 0) {
-      AlertEmpty();
+    if (year === "" || name === "" || curriculum === "") {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateTahunAjaran(
-        setStatus,
-        path,
-        year,
-        name,
-        status,
-        curriculumId,
-        code
-      );
+      updateTahunAjaran(setStatus, path, year, name, status, curriculum, code);
     }
   };
 
-  //   const closeModalEmpty = () => {
-  //     setisOpenEmpty(false);
-  //   };
-
-  //   const closeModalStatus = () => {
-  //     setisOpenStatus(false);
-  //     setStatus("");
-  //   };
-
   const navigateListBank = () => {
-    // 👇️ navigate to /contacts
     navigate(path);
   };
+
+  const curriculumOptions = curriculumData.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }));
 
   return (
     <div>
       <div style={{ marginBottom: "20px" }}>
         <Header
-          home="Admin Keuangan"
-          prev="List Bank"
+          home="Admin PMB"
+          prev="Daftar Tahun Ajaran"
           navePrev={path}
-          at="Ubah List Bank"
-          title="Ubah List Bank"
+          at="Ubah Tahun Ajaran"
+          title="Ubah Tahun Ajaran"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
@@ -74,12 +73,11 @@ export default function UbahTahunAjaran() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Ubah List Bank
+          Form Ubah Tahun Ajaran
         </p>
         <article>
           <form
-            className="grid mt-3 xs:grid-cols-1 
-                    md:grid-cols-2 lg:grid-cols-3 gap-7"
+            className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
             style={{ zIndex: -1 }}
           >
             {/* COL 1 */}
@@ -87,23 +85,25 @@ export default function UbahTahunAjaran() {
               <TextInput
                 label="Tahun"
                 type="number"
-                placeholder={location.state.year}
+                value={year}
                 onChange={(e) => setYear(e.target.value)}
                 required={true}
               />
               <TextInput
                 label="Nama"
                 type="text"
-                placeholder={location.state.name}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 required={true}
               />
-              <TextInput
-                label="Id Kurikulum"
-                type="text"
-                placeholder={location.state.curriculumId}
-                // onChange={(e) => set(e.target.value)}
-                // required={true}
+              <DropdownKurikulum
+                label="Kurikulum"
+                required={true}
+                isClearable={true}
+                defaultValue={curriculums}
+                isSearchable={false}
+                options={curriculumOptions}
+                onChange={setCurriculum}
               />
             </section>
           </form>
@@ -124,19 +124,6 @@ export default function UbahTahunAjaran() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={status}
-            navigate={navigateListBank}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

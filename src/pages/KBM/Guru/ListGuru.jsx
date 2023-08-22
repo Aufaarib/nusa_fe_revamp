@@ -9,11 +9,7 @@ import moment from "moment";
 
 const HasilTes = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const path = "/admin/list-bank";
@@ -60,32 +56,14 @@ const HasilTes = () => {
       name: <div>Nama</div>,
       selector: (data) => data.fullname,
       cell: (data) => <div>{data.fullname}</div>,
-      width: "200px",
+      width: "auto",
     },
-    // {
-    //   name: <div>Jenis Kelamin</div>,
-    //   selector: (data) => data.gender,
-    //   cell: (data) => <div>{data.gender}</div>,
-    //   width: "auto",
-    // },
     {
       name: <div>Agama</div>,
       selector: (data) => data.religion,
       cell: (data) => <div>{data.religion}</div>,
       width: "auto",
     },
-    // {
-    //   name: <div>Tempat Lahir</div>,
-    //   selector: (data) => data.birthPlace,
-    //   cell: (data) => <div>{data.birthPlace}</div>,
-    //   width: "auto",
-    // },
-    // {
-    //   name: <div>Tanggal Lahir</div>,
-    //   selector: (data) => data.birthDate,
-    //   cell: (data) => moment(data.birthDate).format("DD/MM/YYYY"),
-    //   width: "auto",
-    // },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
@@ -95,26 +73,48 @@ const HasilTes = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button
-          className="btn-action-merah"
-          title="Edit"
-          onClick={() =>
-            navigateUbahGuru(
-              data.code,
-              data.fullname,
-              data.gender,
-              data.religion,
-              data.birthPlace,
-              data.birthDate
-            )
-          }
-        >
-          <i className="fa fa-edit" /> Ubah
-        </button>
+        <>
+          <button
+            className="btn-action-merah"
+            title="Edit"
+            onClick={() =>
+              navigateUbahGuru(
+                data.code,
+                data.fullname,
+                data.gender,
+                data.religion,
+                data.birthPlace,
+                data.birthDate
+              )
+            }
+          >
+            <i className="fa fa-edit" /> Ubah
+          </button>
+          {data?.status === 1 && (
+            <button
+              className="btn-action-merah ml-3 w-auto px-2"
+              onClick={() =>
+                handleStatus(data.code, data.fullname, data.status)
+              }
+            >
+              <i className="fa fa-pause mt-1 mr-1"></i> Non-Aktifkan
+            </button>
+          )}
+          {data?.status === 0 && (
+            <button
+              className="btn-action-merah ml-3 w-auto px-2"
+              onClick={() =>
+                handleStatus(data.code, data.fullname, data.status)
+              }
+            >
+              <i className="fa fa-play mt-1 mr-1"></i> Aktifkan
+            </button>
+          )}
+        </>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "150px",
+      width: "250px",
     },
   ];
 
@@ -123,6 +123,7 @@ const HasilTes = () => {
   };
 
   const handleStatus = (code, description, status) => {
+    console.log("sdasd");
     AlertUbahStatus(description, code, status, onUpdateStatus);
     // setisOpenUpdateTidakAktif(true);
     // setStatus("Aktif");

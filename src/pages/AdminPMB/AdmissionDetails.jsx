@@ -23,11 +23,11 @@ const AdmissionDetails = () => {
 
   let filteredItems = data;
 
-  //   if (data !== null) {
-  //     filteredItems = data.filter((data) =>
-  //       data.code.toLowerCase().includes(filterText.toLowerCase())
-  //     );
-  //   }
+  if (data !== null) {
+    filteredItems = data.filter((data) =>
+      data.name.toLowerCase().includes(filterText.toLowerCase())
+    );
+  }
 
   useEffect(() => {
     getAdmissionDetails(setData, setSts, code);
@@ -126,8 +126,8 @@ const AdmissionDetails = () => {
         code: code,
         increment: increment,
         name: name,
-        startDate: moment(startDate).format("DD-MM-YYYY"),
-        endDate: moment(endDate).format("DD-MM-YYYY"),
+        startDate: moment(startDate).format("YYYY-MM-DD"),
+        endDate: moment(endDate).format("YYYY-MM-DD"),
         amount: amount,
       },
     });

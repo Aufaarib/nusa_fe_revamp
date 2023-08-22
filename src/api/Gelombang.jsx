@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -91,11 +93,17 @@ export function updateAdmissionPhase(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Gelombang Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Gelombang Gagal", "Coba Lagi", "error");
     });
 }
 

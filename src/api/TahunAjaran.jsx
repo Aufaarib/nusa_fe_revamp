@@ -1,11 +1,10 @@
 import {
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
@@ -61,33 +60,19 @@ export function updateTahunAjaran(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Tahun Ajaran Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Tahun Ajaran Gagal", "Coba Lagi", "error");
     });
 }
-
-// export function updateStatusKurikulum(setSts, code, setData) {
-//   axios
-//     .put(
-//       process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-//       null,
-//       {
-//         headers: { authorization: localStorage.getItem("TOKEN") },
-//       }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusUpdateSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusUpdateFailed();
-//     });
-// }
 
 export function postTahunAjaran(
   setSts,
@@ -110,11 +95,17 @@ export function postTahunAjaran(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Tahun Ajaran Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Tahun Ajaran Gagal", "Coba Lagi", "error");
     });
 }
 

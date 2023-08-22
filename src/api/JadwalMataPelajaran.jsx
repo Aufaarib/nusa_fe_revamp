@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -79,11 +81,17 @@ export function postJadwalMapel(
     })
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Guru Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Guru Gagal", "Coba Lagi", "error");
     });
 }
 

@@ -1,14 +1,9 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { updateKelas } from "../../../api/Kelas";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { updateKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function UbahKelas() {
   const location = useLocation();
@@ -25,7 +20,7 @@ export default function UbahKelas() {
     const id = location.state.id;
 
     if (grade === "" || name === "" || description === "") {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateKelas(setSts, path, grade, name, description, id);
     }
@@ -96,19 +91,6 @@ export default function UbahKelas() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={sts}
-            navigate={navigateKelas}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

@@ -1,4 +1,6 @@
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -34,7 +36,6 @@ export function getMuridNotRegisteredToClass(setData, setSts) {
           data.push(element);
         }
       });
-      // setData(data);
       setData(data);
       setSts({ type: "success" });
     })
@@ -77,11 +78,17 @@ export function updateMurid(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Murid Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Murid Gagal", "Coba Lagi", "error");
     });
 }
 

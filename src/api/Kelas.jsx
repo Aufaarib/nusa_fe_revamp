@@ -50,11 +50,11 @@ export function updateKelas(setSts, path, grade, name, description, id) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(path, "Berhasil", "Tutup", "success", "Ubah Kelas");
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Kelas Gagal", "Coba Lagi", "error");
     });
 }
 

@@ -801,9 +801,10 @@ export const AlertValidateRegistration = (
 };
 
 export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
-  if (status === 1) {
+  if (status == 1) {
     styledSweetAlert
       .fire({
+        icon: "question",
         title: "Non-Aktifkan",
         text: desc + " ?",
         showConfirmButton: true,
@@ -818,6 +819,7 @@ export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
   } else {
     styledSweetAlert
       .fire({
+        icon: "question",
         title: "Aktifkan",
         text: desc + " ?",
         showConfirmButton: true,

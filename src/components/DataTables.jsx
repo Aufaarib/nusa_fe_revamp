@@ -435,8 +435,13 @@ export function FilterComponentRegistrations({
                 >
                   Filter Status Tahapan :
                 </option>
-                <option value="valid">Lengkap</option>
-                <option value="inreview">Menunggu Verifikasi</option>
+                <option value="verification">Menunggu Verifikasi</option>
+                <option value="testResult">Menunggu Hasil Tes</option>
+                <option value="reReg">Menunggu Persetujuan Daftar Ulang</option>
+                <option value="eduPayment">
+                  Menunggu Pembayaran Pendidikan
+                </option>
+                <option value="complete">Lengkap</option>
                 <option value="invalid">Tidak Sesuai</option>
               </select>
             )}

@@ -7,7 +7,7 @@ import {
   DropdownDatePickers,
   DropdownRadioInputGender,
 } from "../../../components/Dropdown";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
 export default function UbahGuru() {
@@ -21,19 +21,11 @@ export default function UbahGuru() {
   );
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
-
   const path = "/admin/list-guru";
 
   const postData = (e) => {
     e.preventDefault();
     const code = location.state.code;
-
-    // console.log(fullname);
-    // console.log(gender);
-    // console.log(religion);
-    // console.log(birthPlace);
-    // console.log(birthDate);
-
     if (
       fullname === "" ||
       gender === "" ||
@@ -41,7 +33,7 @@ export default function UbahGuru() {
       birthPlace === "" ||
       birthDate === ""
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateGuru(
         setSts,

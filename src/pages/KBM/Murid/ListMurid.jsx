@@ -1,15 +1,9 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../../../components";
-import {
-  DataTables,
-  DataTablesPMB,
-  DataTablesWithoutButton,
-} from "../../../components/DataTables";
-import { AlertUbahStatus } from "../../../components/ModalPopUp";
-import { updateStatusKurikulum } from "../../../api/Kurikulum";
-import moment from "moment";
 import { getMurid } from "../../../api/Murid";
+import { Header } from "../../../components";
+import { DataTablesWithoutButton } from "../../../components/DataTables";
 
 const ListMurid = () => {
   const [data, setData] = useState([]);
@@ -67,14 +61,14 @@ const ListMurid = () => {
     {
       name: <div>Kode</div>,
       cell: (data) => <div>{data.code}</div>,
-      width: "120px",
+      width: "auto",
     },
     {
       name: <div>Nama Lengkap</div>,
       cell: (data) => (
         <div>{`${data.firstName} ${data.middleName} ${data.lastName}`}</div>
       ),
-      width: "230px",
+      width: "auto",
     },
     {
       name: <div>Jenis Kelamin</div>,
@@ -82,7 +76,7 @@ const ListMurid = () => {
       cell: (data) => (
         <div>{data.gender === "male" ? "Laki-Laki" : "Perempuan"}</div>
       ),
-      width: "110px",
+      width: "auto",
     },
     {
       name: <div>Tempat Lahir</div>,
@@ -94,13 +88,13 @@ const ListMurid = () => {
       name: <div>Tanggal Lahir</div>,
       selector: (data) => data.birthDate,
       cell: (data) => moment(data.birthDate).format("DD/MM/YYYY"),
-      width: "120px",
+      width: "auto",
     },
     {
       name: <div>Golongan Darah</div>,
       selector: (data) => data.bloodType,
       cell: (data) => data.bloodType,
-      width: "120px",
+      width: "90px",
     },
     // {
     //   name: <div>Status</div>,
@@ -134,7 +128,7 @@ const ListMurid = () => {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "90px",
+      width: "120px",
     },
   ];
 

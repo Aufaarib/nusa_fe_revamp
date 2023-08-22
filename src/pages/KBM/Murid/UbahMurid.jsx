@@ -8,7 +8,7 @@ import {
   DropdownRadioInputBloodType,
   DropdownRadioInputGender,
 } from "../../../components/Dropdown";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
 export default function UbahMurid() {
@@ -46,7 +46,7 @@ export default function UbahMurid() {
       bloodType === "" ||
       distanceFromHome === ""
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateMurid(
         setSts,
@@ -123,14 +123,6 @@ export default function UbahMurid() {
             checked={gender}
           />
           <br />
-
-          {/* <TextInput
-            label="Religion"
-            type="text"
-            onChange={(e) => setReligion(e.target.value)}
-            defaultValue={location.state.religion}
-            required={true}
-          /> */}
 
           <TextInput
             label="Tempat Lahir"

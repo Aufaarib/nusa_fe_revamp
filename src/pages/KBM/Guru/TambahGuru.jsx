@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postGuru } from "../../../api/Guru";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import {
   DropdownDatePickers,
@@ -15,31 +15,12 @@ export default function TambahGuru() {
   const [religion, setReligion] = useState("");
   const [birthPlace, setBirthPlace] = useState("");
   const [birthDate, setBirthDate] = useState("");
-
-  const [semesterData, setSemesterData] = useState([]);
-
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  // const created_by = localStorage.getItem("NAMA");
-
   const navigate = useNavigate();
-
   const path = "/admin/list-guru";
-
-  //   const fetchSemester = async () => {
-  //     getSemester(setSemesterData, setSts);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchSemester();
-  //   }, []);
 
   const postData = (e) => {
     e.preventDefault();
-
-    // const semester_id = parseInt(semester);
-    // const status = statusVal.value;
 
     if (
       fullname.length === 0 ||
@@ -48,30 +29,15 @@ export default function TambahGuru() {
       birthPlace.length === 0 ||
       birthDate.length === 0
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postGuru(setSts, path, fullname, gender, religion, birthPlace, birthDate);
-      //   setisOpenStatus(true);
     }
   };
-
-  // const closeModalEmpty = () => {
-  //   AlertEmpty();
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
 
   const navigateKurikulum = () => {
     navigate(path);
   };
-
-  // const SemesterOptions = semesterData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
 
   return (
     <div>
@@ -110,7 +76,6 @@ export default function TambahGuru() {
             label2="Perempuan"
             label3="Laki-Laki"
             onChange={(e) => setGender(e.target.value)}
-            // placeholder={admissionApplicantData.gender}
             checked={gender}
           />
           <br />
@@ -136,7 +101,6 @@ export default function TambahGuru() {
           <DropdownDatePickers
             label="Tanggal Lahir"
             id="birthDate"
-            // value={parent.birthDate}
             change={(e) => setBirthDate(e.element.value)}
           />
 

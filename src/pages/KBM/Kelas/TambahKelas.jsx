@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
 export default function TambahKelas() {
@@ -18,7 +18,7 @@ export default function TambahKelas() {
     e.preventDefault();
 
     if (grade === "" || name === "" || description === "") {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postKelas(setStatus, path, grade, name, description);
     }

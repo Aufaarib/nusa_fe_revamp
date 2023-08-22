@@ -42,8 +42,6 @@ const DetailDataRegistrasi = () => {
   const [cardOpened, setisCardOpened] = useState("");
   const [detailData, setDetailData] = useState("");
 
-  console.log("TAHAP === ", dataStep4);
-
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();

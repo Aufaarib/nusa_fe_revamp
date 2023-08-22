@@ -1,9 +1,10 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -22,16 +23,6 @@ export function getKurikulum(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
 export function updateKurikulum(setSts, path, code, name, description) {
@@ -46,11 +37,17 @@ export function updateKurikulum(setSts, path, code, name, description) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Kurikulum Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Kurikulum Gagal", "Coba Lagi", "error");
     });
 }
 
@@ -65,45 +62,38 @@ export function updateStatusKurikulum(setSts, code, setData) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
+      AlertMessage("Berhasil", "Ubah Status Berhasil", "Tutup", "success");
       getKurikulum(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Status Gagal", "Tutup", "error");
     });
 }
 
-export function postKurikulum(
-  setSts,
-  path,
-  // code,
-  name,
-  // status,
-  description
-  // semester_id,
-  // created_by
-) {
+export function postKurikulum(setSts, path, name, description) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/curriculum",
       {
-        // code,
         name,
-        // status,
         description,
-        // semester_id,
-        // created_by,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Kurikulum Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Kurikulum Gagal", "Coba Lagi", "error");
     });
 }
 

@@ -11,13 +11,13 @@ import {
 } from "../../components/ModalPopUp";
 
 const UpdateStatusStepPage = () => {
-  const [status, setStatus] = useState("");
-  const [note, setNote] = useState("");
-  const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
   const location = useLocation();
   const code = localStorage.getItem("REG_NUMBER");
   const fetched = location?.state?.fetched;
+  const [status, setStatus] = useState("");
+  const [note, setNote] = useState("");
+  const [sts, setSts] = useState(undefined);
 
   const UpdateConfirm = () => {
     if (status === "" || note === "") {

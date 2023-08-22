@@ -1,6 +1,8 @@
 import {
+  AlertMessage,
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -57,11 +59,17 @@ export function updateGuru(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateDataSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Guru Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Guru Gagal", "Coba Lagi", "error");
     });
 }
 
@@ -108,24 +116,16 @@ export function postGuru(
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusTambahSuccess(path);
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Guru Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage("Gagal", "Tambah Guru Gagal", "Coba Lagi", "error");
     });
 }
-
-// export function deleteKurikulum(setSts, deleteId, setData) {
-//   axios
-//     .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusHapusSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusHapusFailed();
-//     });
-// }

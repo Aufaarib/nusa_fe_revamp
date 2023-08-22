@@ -1,28 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteKurikulum,
-  getKurikulum,
-  updateStatusKurikulum,
-} from "../../../api/Kurikulum";
+import { getKurikulum, updateStatusKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
 
 export default function ListKurikulum() {
   const [data, setData] = useState([]);
-  // const [status, setStatus] = useState("");
-  const statusAktif = "Aktif";
-  const statusNonAktif = "Tidak Aktif";
-  const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
-  const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
-  const [desc, setDesc] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
 
@@ -42,24 +27,17 @@ export default function ListKurikulum() {
 
   const handleStatus = (code, description, status) => {
     AlertUbahStatus(description, code, status, onUpdateStatus);
-    // setisOpenUpdateTidakAktif(true);
-    // setStatus("Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
   };
 
   const onUpdateStatus = (code) => {
     updateStatusKurikulum(setSts, code, setData);
-    // closeModalUpdateAktif();
-    // closeModalUpdateTidakAktif();
-    // setisOpenStatus(true);
   };
 
-  const onDelete = (id) => {
-    deleteKurikulum(setSts, id, setData);
-    // closeModalHapus();
-    // setisOpenStatus(true);
-  };
+  // const onDelete = (id) => {
+  //   deleteKurikulum(setSts, id, setData);
+  //   // closeModalHapus();
+  //   // setisOpenStatus(true);
+  // };
 
   const columns = [
     {
@@ -77,7 +55,7 @@ export default function ListKurikulum() {
       name: <div>Nama</div>,
       selector: (data) => data.name,
       cell: (data) => <div>{data.name}</div>,
-      width: "230px",
+      width: "auto",
     },
     {
       name: <div>Deskripsi</div>,
@@ -85,12 +63,6 @@ export default function ListKurikulum() {
       cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
-    // {
-    //   name: <div>Semester</div>,
-    //   selector: (data) => data.semester_id,
-    //   cell: (data) => <div>{data.semester_id}</div>,
-    //   width: "auto",
-    // },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
@@ -120,7 +92,7 @@ export default function ListKurikulum() {
               className="btn-action-merah ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
-              <i className="fa fa-play mt-1 mr-1"></i> Aktif
+              <i className="fa fa-pause mt-1 mr-1"></i> Non-Aktifkan
             </button>
           )}
           {data?.status === 0 && (
@@ -128,21 +100,14 @@ export default function ListKurikulum() {
               className="btn-action-merah ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
-              <i className="fa fa-pause mt-1 mr-1"></i> Tidak Aktif
+              <i className="fa fa-play mt-1 mr-1"></i> Aktifkan
             </button>
           )}
-          {/* <button
-            style={{ fontSize: "14px" }}
-            onClick={() => openModalHapus(data.id, data.name)}
-            className="btn-mrh ml-3"
-          >
-            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
-          </button> */}
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "200px",
+      width: "250px",
     },
   ];
 

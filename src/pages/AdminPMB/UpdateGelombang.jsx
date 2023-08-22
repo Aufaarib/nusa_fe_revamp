@@ -1,43 +1,42 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { postGuru } from "../../api/Guru";
+import { updateAdmissionPhase } from "../../api/Gelombang";
 import { Header } from "../../components";
-import { AlertEmpty } from "../../components/ModalPopUp";
-import TextInput from "../../components/TextInput";
 import { DropdownDatePickers } from "../../components/Dropdown";
-import DatePicker from "react-date-picker";
-import { Date } from "../../components/DataTables";
-import { postAdmissionPhase, updateAdmissionPhase } from "../../api/Gelombang";
+import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
+import TextInput from "../../components/TextInput";
+import moment from "moment/moment";
 
 export default function UbahGelombang() {
-  const [name, setName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [jumlah, setAmount] = useState("");
-  const [increment, setIncrement] = useState();
-  // const created_by = localStorage.getItem("NAMA");
-  const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
+  const [name, setName] = useState(location.state.name);
+  const [startDate, setStartDate] = useState(
+    moment(location.state.startDate).format("YYYY-MM-DD")
+  );
+  const [endDate, setEndDate] = useState(
+    moment(location.state.endDate).format("YYYY-MM-DD")
+  );
+  const [jumlah, setAmount] = useState(location.state.amount);
+  const [increment, setIncrement] = useState(location.state.increment);
+  const [sts, setSts] = useState(undefined);
   const id = location.state.id;
   const code = location.state.code;
 
   const postData = (e) => {
     e.preventDefault();
 
-    // const semester_id = parseInt(semester);
-    // const status = statusVal.value;
     const amount = parseInt(jumlah.replace(/\./g, ""), 10);
 
     if (
-      name.length === 0 ||
-      increment === 0 ||
-      startDate.length === 0 ||
-      endDate.length === 0 ||
-      amount === 0
+      name === "" ||
+      increment === "" ||
+      startDate === "" ||
+      endDate === "" ||
+      amount === ""
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateAdmissionPhase(
         setSts,
@@ -61,28 +60,28 @@ export default function UbahGelombang() {
     });
   };
 
-  const [formFields, setFormFields] = useState([]);
+  // const [formFields, setFormFields] = useState([]);
 
-  const addField = () => {
-    setFormFields([...formFields, ""]);
-  };
+  // const addField = () => {
+  //   setFormFields([...formFields, ""]);
+  // };
 
-  const removeField = (index) => {
-    const updatedFields = [...formFields];
-    updatedFields.splice(index, 1);
-    setFormFields(updatedFields);
-  };
+  // const removeField = (index) => {
+  //   const updatedFields = [...formFields];
+  //   updatedFields.splice(index, 1);
+  //   setFormFields(updatedFields);
+  // };
 
-  const handleChange = (index, value) => {
-    const updatedFields = [...formFields];
-    updatedFields[index] = value;
-    setFormFields(updatedFields);
-  };
+  // const handleChange = (index, value) => {
+  //   const updatedFields = [...formFields];
+  //   updatedFields[index] = value;
+  //   setFormFields(updatedFields);
+  // };
 
-  const handleAmountChange = (e) => {
-    const value = parseInt(e.target.value);
-    setAmount(value);
-  };
+  // const handleAmountChange = (e) => {
+  //   const value = parseInt(e.target.value);
+  //   setAmount(value);
+  // };
 
   const handleIncrementChange = (e) => {
     const value = parseInt(e.target.value);
@@ -124,7 +123,7 @@ export default function UbahGelombang() {
           <TextInput
             label="Gelombang Ke"
             type="number"
-            placeholder={location.state.increment}
+            value={increment}
             onChange={handleIncrementChange}
             required={true}
           />
@@ -132,7 +131,7 @@ export default function UbahGelombang() {
           <TextInput
             label="Nama"
             type="text"
-            placeholder={location.state.name}
+            value={name}
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
@@ -140,13 +139,12 @@ export default function UbahGelombang() {
           <DropdownDatePickers
             label="Tanggal Mulai"
             value={startDate}
-            placeholder={location.state.startDate}
             change={(e) => setStartDate(e.element.value)}
           />
+
           <DropdownDatePickers
             label="Tanggal Selesai"
             value={endDate}
-            placeholder={location.state.endDate}
             change={(e) => setEndDate(e.element.value)}
           />
 
@@ -154,7 +152,6 @@ export default function UbahGelombang() {
             label="Nominal"
             type="text"
             value={jumlah}
-            placeholder={location.state.amount}
             onChange={handleInputChange}
             required={true}
           />

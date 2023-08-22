@@ -1,52 +1,31 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { postCostCenter } from "../../../api/CostCenter";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { AlertEmpty } from "../../../components/ModalPopUp";
-import {
-  DropdownDebitKredit,
-  DropdownGroup,
-  DropdownKurikulum,
-} from "../../../components/Dropdown";
-import { Header } from "../../../components";
-import { Typography } from "@mui/material";
-import { postTahunAjaran } from "../../../api/TahunAjaran";
 import { getKurikulum } from "../../../api/Kurikulum";
-import { useEffect } from "react";
+import { postTahunAjaran } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { DropdownKurikulum } from "../../../components/Dropdown";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahTahunAjaran() {
   const [year, setYear] = useState("");
   const [name, setName] = useState("");
-  const [curriculum, setKurikulum] = useState("");
+  const [curriculumId, setKurikulum] = useState("");
   const [status] = useState(1);
   const [sts, setSts] = useState(undefined);
   const [curriculumData, setCurriculumData] = useState([]);
   const path = "/admin/list-tahun-ajaran";
+  const navigate = useNavigate();
 
   const postData = (e) => {
     e.preventDefault();
 
-    const curriculumId = curriculum.value;
-    // const group = groupVal.value;
-
     if (path.length === 0 || year.length === 0 || name.length === 0) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postTahunAjaran(setSts, path, year, name, status, curriculumId);
     }
   };
-
-  //   const closeModalEmpty = () => {
-  //     setisOpenEmpty(false);
-  //   };
-
-  //   const closeModalStatus = () => {
-  //     setisOpenStatus(false);
-  //     setStatus("");
-  //   };
-
-  const navigate = useNavigate();
 
   const navigateCostCenter = () => {
     navigate(path);
@@ -58,7 +37,6 @@ export default function TambahTahunAjaran() {
 
   useEffect(() => {
     fetchCurriculum();
-    // console.log(status);
   }, []);
 
   const curriculumOptions = curriculumData.map((c) => ({
@@ -115,10 +93,10 @@ export default function TambahTahunAjaran() {
             label="Kurikulum"
             required={true}
             isClearable={true}
-            defaultValue={curriculum}
+            defaultValue={curriculumId}
             isSearchable={false}
             options={curriculumOptions}
-            onChange={setKurikulum}
+            onChange={(e) => setKurikulum(e.value)}
           />
 
           <div className="btn-form">

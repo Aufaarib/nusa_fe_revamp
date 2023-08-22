@@ -1,4 +1,5 @@
 import {
+  AlertConfirmation,
   AlertMessage,
   AlertStatusFailed,
   AlertStatusSuccess,
@@ -538,11 +539,17 @@ export function uploadHasilTest(score, navigate) {
       }
     )
     .then(() => {
-      AlertStatusSuccess(navigate, "Upload Hasil Test Berhasil", "Tutup");
+      AlertConfirmation(
+        navigate,
+        "Upload Hasil Test Berhasil",
+        "Tutup",
+        "success"
+      );
       // setSts({ type: "success" });
       // setData();
     })
     .catch((error) => {
+      AlertMessage("Gagal", "Upload Hasil Test Gagal", "Coba Lagi", "error");
       // setSts({ type: "error", error });
     });
 }

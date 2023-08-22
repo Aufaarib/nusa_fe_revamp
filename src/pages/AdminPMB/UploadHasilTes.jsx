@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { BsChevronBarLeft } from "react-icons/bs";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { uploadHasilTest } from "../../api/Registrasi";
 import { Header } from "../../components";
-import { DropdownValidasiStep } from "../../components/Dropdown";
+import { AlertEmpty } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
-import { updateAdmissionSteps, uploadHasilTest } from "../../api/Registrasi";
-import {
-  AlertEmpty,
-  AlertStatusValidatePayment,
-} from "../../components/ModalPopUp";
 
 const UploadHasilTes = () => {
   const [status, setStatus] = useState("");
@@ -23,11 +19,6 @@ const UploadHasilTes = () => {
 
   console.log("FETCHED === ", fetched);
 
-  // const AcceptStep = (step) => {
-  //   updateAdmissionSteps(setSts, code, step, status, note);
-  //   navigateRegistrationDetails();
-  // };
-
   const navigateRegistrationDetails = () => {
     navigate("/admin/list-detail-data-registrasi", {
       state: {
@@ -41,7 +32,7 @@ const UploadHasilTes = () => {
       AlertEmpty();
     } else {
       const score = parseInt(nilai);
-      uploadHasilTest(score, navigateRegistrationDetails());
+      uploadHasilTest(score, navigateRegistrationDetails);
     }
   };
 

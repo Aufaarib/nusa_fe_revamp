@@ -17,7 +17,7 @@ const DataRegistrasi = () => {
   const navigate = useNavigate();
 
   const [validationFilter, setValidationFilter] = useState("inreview");
-  const [stepsFilter, setStepsFilter] = useState("inreview");
+  const [stepsFilter, setStepsFilter] = useState("verification");
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
@@ -26,11 +26,6 @@ const DataRegistrasi = () => {
   const handleValidationFilter = (event) => {
     const val = event.target.value;
     setValidationFilter(val);
-    if (val === "valid") {
-      setStepsFilter("");
-    } else {
-      setStepsFilter("inreview");
-    }
   };
 
   const handleStepsFilter = (event) => {
@@ -45,25 +40,56 @@ const DataRegistrasi = () => {
       data.status.includes(validationFilter)
     );
 
-    const filteredStep5 = filteredValidation.filter((data) =>
-      data.steps[data.steps.length - 1].step.includes("5")
-    );
-
-    if (stepsFilter === "valid") {
-      filteredStatus = filteredStep5.filter(
-        (data) => data.steps[data.steps.length - 1].status === stepsFilter
+    if (validationFilter === "inreview") {
+      if (stepsFilter === "complete") {
+        filteredStatus = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredStatus = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredStatus = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredStatus = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredStatus = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredStatus = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      } else {
+        filteredStatus = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      }
+      filteredItems = filteredStatus.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
     } else {
-      filteredStatus = filteredValidation.filter((data) =>
-        data.steps[data.steps.length - 1].status.includes(stepsFilter)
+      filteredItems = filteredValidation.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
     }
-
-    filteredItems = filteredStatus.filter(
-      (data) =>
-        data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-        data.childName.toLowerCase().includes(filterText.toLowerCase())
-    );
   }
 
   const navigateRegistrationDetails = (code) => {
@@ -168,7 +194,7 @@ const DataRegistrasi = () => {
           {data.steps[data.steps.length - 1].step === "2" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Tahap 2 Terverifikasi"}
+                "Menunggu Hasil Tes"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
                 "Verifikasi Tahap 2"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
@@ -178,7 +204,7 @@ const DataRegistrasi = () => {
           {data.steps[data.steps.length - 1].step === "3" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Tahap 3 Terupload"}
+                "Menunggu Persetujuan Daftar Ulang"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
                 "Verifikasi Tahap 3"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
@@ -188,7 +214,7 @@ const DataRegistrasi = () => {
           {data.steps[data.steps.length - 1].step === "4" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Tahap 4 Tersetujui"}
+                "Menunggu Pembayaran Pendidikan"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
                 "Verifikasi Tahap 4"}
               {data.steps[data.steps.length - 1].status === "invalid" &&
@@ -329,7 +355,7 @@ const DataRegistrasi = () => {
           {data.steps[data.steps.length - 1].step === "4" && (
             <>
               {data.steps[data.steps.length - 1].status === "valid" &&
-                "Tahap 4 Tersetujui"}
+                "Menunggu Pembayaran Pendidikan"}
               {data.steps[data.steps.length - 1].status === "inreview" &&
                 "Verifikasi Tahap 4"}
               {data.steps[data.steps.length - 1].status === "invalid" &&

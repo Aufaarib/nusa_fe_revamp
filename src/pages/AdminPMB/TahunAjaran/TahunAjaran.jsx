@@ -70,6 +70,7 @@ const TahunAjaran = () => {
               data.name,
               data.year,
               data.curriculumId,
+              data.curriculum.name,
               data.status
             )
           }
@@ -87,13 +88,21 @@ const TahunAjaran = () => {
     navigate("/admin/tambah-tahun-ajaran");
   };
 
-  const navigateUbahTahunAjaran = (code, name, year, curriculumId, status) => {
+  const navigateUbahTahunAjaran = (
+    code,
+    name,
+    year,
+    curriculumId,
+    curriculumName,
+    status
+  ) => {
     navigate("/admin/ubah-tahun-ajaran", {
       state: {
         code: code,
         name: name,
         year: year,
         curriculumId: curriculumId,
+        curriculumName: curriculumName,
         status: status,
       },
     });

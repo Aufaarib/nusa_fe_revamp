@@ -12,7 +12,6 @@ export const DropdownKurikulum = ({
   options,
   defaultValue,
   isClearable,
-  handleOnClick,
 }) => {
   return (
     <div>
@@ -43,16 +42,6 @@ export const DropdownKurikulum = ({
             onChange={onChange}
           />
         </div>
-        {/* <div>
-          <Select
-            className="ml-20"
-            isClearable={isClearable}
-            defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
-            options={options}
-            onChange={onChange}
-          />
-        </div> */}
       </form>
     </div>
   );
@@ -153,17 +142,6 @@ export const DropdownGroup = ({
             onChange={onChange}
           />
         </div>
-        {/* <div>
-          <Select
-            className="ml-20"
-            isSearchable={isSearchable}
-            isClearable={isClearable}
-            defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
-            options={options}
-            onChange={onChange}
-          />
-        </div> */}
       </form>
     </div>
   );
