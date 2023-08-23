@@ -518,7 +518,6 @@ export const AlertStatusSuccess = (path, title, buttonText, icon, text) => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        // Redirect to another page
         window.location.href = path;
       }
     });
@@ -654,6 +653,7 @@ export const AlertFiles = (url) => {
 export const AlertStatusValidatePayment = (onValidate, id) => {
   styledSweetAlert
     .fire({
+      icon: "question",
       title: "Konfirmasi",
       text: "Apakah anda setuju merubah status murid?",
       showConfirmButton: true,

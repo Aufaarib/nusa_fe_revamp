@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { postGuru } from "../../api/Guru";
-import { Header } from "../../components";
-import { AlertEmpty, AlertStatusFailed } from "../../components/ModalPopUp";
-import TextInput from "../../components/TextInput";
-import { DropdownDatePickers } from "../../components/Dropdown";
-import DatePicker from "react-date-picker";
-import { Date } from "../../components/DataTables";
 import { postAdmissionPhase } from "../../api/Gelombang";
-import moment from "moment/moment";
+import { Header } from "../../components";
+import { DropdownDatePickers } from "../../components/Dropdown";
+import { AlertMessage, AlertStatusFailed } from "../../components/ModalPopUp";
+import TextInput from "../../components/TextInput";
 
 export default function TambahGelombang() {
   const [name, setName] = useState("");
@@ -37,7 +33,7 @@ export default function TambahGelombang() {
       endDate.length === 0 ||
       amount === 0
     ) {
-      AlertStatusFailed("Input Tidak Lengkap", "Tutup");
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       const jumlah = parseInt(amount.replace(/\./g, ""), 10);
       postAdmissionPhase(

@@ -6,6 +6,7 @@ import { DropdownValidasiStep } from "../../components/Dropdown";
 import TextInput from "../../components/TextInput";
 import { updateAdmissionSteps } from "../../api/Registrasi";
 import {
+  AlertMessage,
   AlertStatusFailed,
   AlertStatusValidatePayment,
 } from "../../components/ModalPopUp";
@@ -21,14 +22,20 @@ const UpdateStatusStepPage = () => {
 
   const UpdateConfirm = () => {
     if (status === "" || note === "") {
-      AlertStatusFailed("Input Tidak Lengkap", "Tutup");
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       AlertStatusValidatePayment(AcceptStep, fetched);
     }
   };
   const AcceptStep = (step) => {
-    updateAdmissionSteps(setSts, code, step, status, note);
-    navigateRegistrationDetails();
+    updateAdmissionSteps(
+      setSts,
+      code,
+      step,
+      status,
+      note,
+      navigateRegistrationDetails
+    );
   };
 
   const navigateRegistrationDetails = () => {

@@ -81,13 +81,20 @@ export function daftarUlangAgreement(path) {
     )
     .then((res) => {
       AlertStatusSuccess(
-        (window.location.href = path),
-        "Persetujuan Pendaftaran Ulang Berhasil",
-        "Tutup"
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Persetujuan Pendaftaran Ulang Berhasil"
       );
     })
     .catch((error) => {
-      AlertStatusUpdateFailed();
+      AlertMessage(
+        "Gagal",
+        "Persetujuan Pendaftaran Ulang Gagal",
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
@@ -352,7 +359,7 @@ export function getAdmissionSteps(
     });
 }
 
-export function updateAdmissionSteps(setSts, code, step, status, note) {
+export function updateAdmissionSteps(setSts, code, step, status, note, path) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/registration/${code}/step`,
@@ -363,11 +370,11 @@ export function updateAdmissionSteps(setSts, code, step, status, note) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
+      AlertConfirmation(path, "Ubah Tahapan Berhasil", "Tutup", "success");
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Tahapan Gagal", "Coba Lagi", "error");
     });
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postGuru } from "../../api/Guru";
 import { Header } from "../../components";
-import { AlertEmpty } from "../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
 import { getTahunAjaran } from "../../api/TahunAjaran";
@@ -48,9 +48,6 @@ export default function TambahPendaftaran() {
   const postData = (e) => {
     e.preventDefault();
 
-    // formFields.forEach((field) => {
-    // const { name, increment, startDate, endDate, amount } = field;
-
     const gelombang_ke = parseInt(increment);
     const jumlah = parseInt(amount);
 
@@ -62,14 +59,8 @@ export default function TambahPendaftaran() {
       endDate === "" ||
       jumlah === 0
     ) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      // console.log("academicYearId:", academicYearId);
-      // console.log("name:", name);
-      // console.log("increment:", increment);
-      // console.log("startDate:", startDate);
-      // console.log("endDate:", endDate);
-      // console.log("amount:", amount);
       postAdmission(
         setSts,
         path,
