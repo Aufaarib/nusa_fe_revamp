@@ -20,11 +20,11 @@ export default function TambahMataPelajaran() {
     if (name.length === 0 || description.length === 0 || type.length === 0) {
       AlertEmpty();
     } else {
-      postMapel(setSts, path, name, description, type);
+      postMapel(setSts, navigateMapel, name, description, type);
     }
   };
 
-  const navigateSemester = () => {
+  const navigateMapel = () => {
     navigate(path);
   };
 
@@ -78,7 +78,7 @@ export default function TambahMataPelajaran() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSemester}
+              onClick={navigateMapel}
             >
               Batal
             </button>

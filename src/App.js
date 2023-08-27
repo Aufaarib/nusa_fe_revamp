@@ -85,6 +85,8 @@ import UbahRuanganKelas from "./pages/KBM/PembagianKelas/UbahRuanganKelas";
 import TambahRuangan from "./pages/KBM/Ruangan/TambahRuangan";
 import ListRuangan from "./pages/KBM/Ruangan/ListRuangan";
 import UbahRuangan from "./pages/KBM/Ruangan/UbahRuangan";
+import ListSpp from "./pages/Keuangan/Spp/ListSpp";
+import TambahSpp from "./pages/Keuangan/Spp/TambahSpp";
 
 const App = () => {
   return (
@@ -132,7 +134,7 @@ const App = () => {
             element={<ListMataPelajaran />}
           />
           <Route path="/admin/list-kurikulum" element={<ListKurikulum />} />
-          <Route path="/admin/list-semester" element={<ListSemester />} />
+          {/* <Route path="/admin/list-semester" element={<ListSemester />} /> */}
           <Route path="/admin/list-kelas" element={<ListKelas />} />
           <Route
             path="/admin/list-kelompok-mapel"
@@ -161,6 +163,7 @@ const App = () => {
             element={<ListRuanganKelas />}
           />
           <Route path="/admin/list-ruangan" element={<ListRuangan />} />
+          <Route path="/admin/list-spp" element={<ListSpp />} />
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
@@ -250,6 +253,7 @@ const App = () => {
             path="/admin/tambah-murid-ke-kelas"
             element={<TambahMuridKeKelas />}
           />
+          <Route path="/admin/tambah-spp" element={<TambahSpp />} />
           <Route
             path="/admin/detail-ruang-kelas"
             element={<DetailRuanganKelas />}

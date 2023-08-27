@@ -37,7 +37,7 @@ export default function UbahGuru() {
     } else {
       updateGuru(
         setSts,
-        path,
+        navigateGuru,
         code,
         fullname,
         gender,
@@ -45,11 +45,10 @@ export default function UbahGuru() {
         birthPlace,
         birthDate
       );
-      // setisOpenStatus(true);
     }
   };
 
-  const navigateKelas = () => {
+  const navigateGuru = () => {
     navigate(path);
   };
 
@@ -128,7 +127,7 @@ export default function UbahGuru() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateKelas}
+              onClick={navigateGuru}
             >
               Batal
             </button>

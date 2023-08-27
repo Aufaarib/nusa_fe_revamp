@@ -178,7 +178,7 @@ export const ModalTambahCalonMurid = ({
       </div>
       <div
         style={{
-          padding: "50px 35px 50px 30px",
+          padding: "28px 35px 50px 30px",
           width: "400px",
           fontSize: "22px",
           fontWeight: "bold",
@@ -488,12 +488,14 @@ export const AlertMessage = (title, text, buttonText, icon) => {
 export const AlertConfirmation = (
   onConfirm,
   title,
+  text,
   confirmButtonText,
   icon
 ) => {
   styledSweetAlert
     .fire({
       title: title,
+      text: text,
       showConfirmButton: true,
       confirmButtonText: confirmButtonText,
       showCancelButton: true,
@@ -507,7 +509,7 @@ export const AlertConfirmation = (
     });
 };
 
-export const AlertStatusSuccess = (path, title, buttonText, icon, text) => {
+export const AlertStatusSuccess = (navigate, title, buttonText, icon, text) => {
   styledSweetAlert
     .fire({
       icon: icon,
@@ -518,7 +520,7 @@ export const AlertStatusSuccess = (path, title, buttonText, icon, text) => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        window.location.href = path;
+        navigate();
       }
     });
 };

@@ -59,48 +59,52 @@ const ListRuanganKelas = () => {
       cell: (data) => <div>{data.capacity}</div>,
       width: "auto",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => (
-        <div
-          className={
-            data.status === 1
-              ? "capitalize text-hijau"
-              : "capitalize text-merah"
-          }
-        >
-          {data.status == 1 ? "Aktif" : "Tidak Aktif"}
-        </div>
-      ),
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => (
+    //     <div
+    //       className={
+    //         data.status === 1
+    //           ? "capitalize text-hijau"
+    //           : "capitalize text-merah"
+    //       }
+    //     >
+    //       {data.status == 1 ? "Aktif" : "Tidak Aktif"}
+    //     </div>
+    //   ),
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-action-merah mr-3"
+            className="btn-biru mr-3"
             onClick={() => navigateClassRoomDetails(data.id, data.room?.name)}
           >
             <i className="fa fa-eye" /> Detail
           </button>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-action-merah"
+            className="btn-biru"
             onClick={() =>
               navigateUpdateClassRoom(
                 data.id,
                 data.academicYear?.id,
+                data.academicYear?.name,
                 data.classes?.id,
+                data.classes?.name,
                 data.room?.id,
+                data.room?.name,
                 data.teachers[0].id,
+                data.teachers[0].fullname,
                 data.capacity
               )
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
         </>
       ),
@@ -118,20 +122,29 @@ const ListRuanganKelas = () => {
       },
     });
   };
+
   const navigateUpdateClassRoom = (
     id,
+    tahunAjaranId,
     tahunAjaran,
+    kelasId,
     kelas,
-    Ruangan,
+    ruanganId,
+    ruangan,
+    waliKelasId,
     waliKelas,
     kapasitas
   ) => {
     navigate("/admin/ubah-ruang-kelas", {
       state: {
         id: id,
+        tahunAjaranId: tahunAjaranId,
         tahunAjaran: tahunAjaran,
+        kelasId: kelasId,
         kelas: kelas,
-        Ruangan: Ruangan,
+        ruanganId: ruanganId,
+        ruangan: ruangan,
+        waliKelasId: waliKelasId,
         waliKelas: waliKelas,
         kapasitas: kapasitas,
       },

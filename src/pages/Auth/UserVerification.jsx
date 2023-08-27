@@ -16,11 +16,19 @@ const UserVerification = () => {
 
   // console.log("OTP === ", otp);
 
+  const navigateResetPassword = () => {
+    navigate("/reset-pwd");
+  };
+
+  const navigateLogin = () => {
+    navigate("/login");
+  };
+
   const verifiedEmail = () => {
     if (directTo === "Reset Password") {
-      validateOTP(setSts, otp, "/reset-pwd", directTo);
+      validateOTP(setSts, otp, navigateResetPassword, directTo);
     } else if (directTo === "Login") {
-      validateOTP(setSts, otp, "/login", directTo);
+      validateOTP(setSts, otp, navigateLogin, directTo);
     }
   };
 

@@ -15,7 +15,7 @@ export default function UbahRuangan() {
 
   const path = "/admin/list-ruangan";
 
-  const navigateRuangKelas = () => {
+  const navigateRuangan = () => {
     navigate(path);
   };
 
@@ -25,7 +25,13 @@ export default function UbahRuangan() {
     if (name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateRoom(setSts, path, location.state.code, name, description);
+      updateRoom(
+        setSts,
+        navigateRuangan,
+        location.state.code,
+        name,
+        description
+      );
     }
   };
 
@@ -75,7 +81,7 @@ export default function UbahRuangan() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateRuangKelas}
+              onClick={navigateRuangan}
             >
               Batal
             </button>

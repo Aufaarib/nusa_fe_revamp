@@ -17,6 +17,7 @@ import Header from "./Header";
 import {
   AlertEmpty,
   AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
 } from "./ModalPopUp";
 import TextInput, { TextInputModal } from "./TextInput";
@@ -28,6 +29,10 @@ const FormDaftarMurid = () => {
   const regNumber = localStorage.getItem("REG_NUMBER");
   const navigate = useNavigate();
   const location = useLocation();
+
+  const reload = () => {
+    window.location.href = "/pmb/form-data-murid";
+  };
 
   const [admissionApplicantData, setAdmissionApplicant] = useState(null);
 
@@ -175,16 +180,28 @@ const FormDaftarMurid = () => {
         )
         .then(() => {
           setIsLoading(false);
-          AlertMessage(
+          AlertStatusSuccess(
+            reload,
             "Berhasil",
-            "Data Anak Berhasil Tersimpan",
             "Tutup",
-            "success"
+            "success",
+            "Data Anak Berhasil Terkirim"
           );
+          // AlertMessage(
+          //   "Berhasil",
+          //   "Data Anak Berhasil Tersimpan",
+          //   "Tutup",
+          //   "success"
+          // );
         })
         .catch(() => {
           setIsLoading(false);
-          AlertStatusTambahFailed();
+          AlertMessage(
+            "Gagal",
+            "Data Anak Gagal Terkirim",
+            "Coba Lagi",
+            "error"
+          );
         });
     }
   };

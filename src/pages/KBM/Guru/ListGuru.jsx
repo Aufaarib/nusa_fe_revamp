@@ -64,18 +64,19 @@ const HasilTes = () => {
       cell: (data) => <div>{data.religion}</div>,
       width: "auto",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <>
           <button
-            className="btn-action-merah"
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             title="Edit"
             onClick={() =>
               navigateUbahGuru(
@@ -88,9 +89,9 @@ const HasilTes = () => {
               )
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
-          {data?.status === 1 && (
+          {/* {data?.status === 1 && (
             <button
               className="btn-action-merah ml-3 w-auto px-2"
               onClick={() =>
@@ -109,12 +110,12 @@ const HasilTes = () => {
             >
               <i className="fa fa-play mt-1 mr-1"></i> Aktifkan
             </button>
-          )}
+          )} */}
         </>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "250px",
+      width: "220px",
     },
   ];
 
@@ -157,33 +158,6 @@ const HasilTes = () => {
           filterText={filterText}
           buttontxt=" Tambah Guru"
         />
-        {/* <ModalStatusList
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          status={sts}
-        /> */}
-
-        {/* <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesModalHapus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h2 className="mb-2">Hapus Data Bank</h2>
-            <h4 className="mb-3 text-merah">{desc_nama}?</h4>
-            <button className="btn-action-hijau w-20" onClick={onDelete}>
-              Hapus
-            </button>
-            <button
-              className="btn-action-pink w-20 ml-2"
-              onClick={closeModalHapus}
-            >
-              Batal
-            </button>
-          </div>
-        </Modal> */}
       </div>
     </>
   );

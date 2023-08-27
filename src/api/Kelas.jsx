@@ -50,7 +50,13 @@ export function updateKelas(setSts, path, grade, name, description, id) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusSuccess(path, "Berhasil", "Tutup", "success", "Ubah Kelas");
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Kembali Ke Halaman Kelas",
+        "success",
+        "Ubah Kelas Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -76,7 +82,7 @@ export function postKelas(setSts, path, grade, name, description) {
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Kelas",
         "success",
         "Tambah Kelas Berhasil"
       );

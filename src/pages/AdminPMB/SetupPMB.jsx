@@ -66,7 +66,7 @@ const SetupPMB = () => {
       cell: (data) => (
         <button
           style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-action-merah"
+          className="btn-biru"
           onClick={() => navigateAdmissionDetails(data.code, data.status)}
         >
           <i className="fa fa-eye" /> Detail

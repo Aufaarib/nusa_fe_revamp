@@ -26,7 +26,7 @@ export default function UbahMataPelajaran() {
     if (name.length === 0 || description.length === 0 || type.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateMapel(setSts, code, path, name, description, type);
+      updateMapel(setSts, code, navigateMapel, name, description, type);
     }
   };
 

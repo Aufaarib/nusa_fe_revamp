@@ -106,7 +106,8 @@ const ListMurid = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          className="btn-action-merah"
+          style={{ width: "auto", padding: "2px 10px" }}
+          className="btn-biru"
           title="Edit"
           onClick={() =>
             navigateUbahMurid(
@@ -123,7 +124,7 @@ const ListMurid = () => {
             )
           }
         >
-          <i className="fa fa-edit" /> Ubah
+          <i className="fa fa-edit" /> Edit
         </button>
       ),
       ignoreRowClick: true,

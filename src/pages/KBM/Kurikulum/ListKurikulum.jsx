@@ -63,12 +63,12 @@ export default function ListKurikulum() {
       cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
@@ -83,11 +83,11 @@ export default function ListKurikulum() {
                 data.semester_id
               )
             }
-            className="btn-action-merah ml-3 w-auto px-2"
+            className="btn-biru ml-3 w-auto px-2"
           >
-            <i className="fa fa-edit mt-1 mr-1"></i> Ubah
+            <i className="fa fa-edit mt-1 mr-1"></i> Edit
           </button>
-          {data?.status === 1 && (
+          {/* {data?.status === 1 && (
             <button
               className="btn-action-merah ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
@@ -102,7 +102,7 @@ export default function ListKurikulum() {
             >
               <i className="fa fa-play mt-1 mr-1"></i> Aktifkan
             </button>
-          )}
+          )} */}
         </div>
       ),
       ignoreRowClick: true,

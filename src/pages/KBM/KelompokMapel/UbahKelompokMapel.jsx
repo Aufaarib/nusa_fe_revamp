@@ -1,19 +1,18 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
-import {
-  postKelompokMapel,
-  updateKelompokMapel,
-} from "../../../api/KelompokMataPelajaran";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
-import { Header } from "../../../components";
-import { useEffect } from "react";
+import { getGuru } from "../../../api/Guru";
+import { updateKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { getMapel } from "../../../api/MataPelajaran";
 import { getClassRoom } from "../../../api/RuanganKelas";
-import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
-import { getGuru } from "../../../api/Guru";
+import { getSemester } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import {
+  DropdownKurikulum,
+  DropdownSiswa,
+  DropdownStatus,
+} from "../../../components/Dropdown";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function UbahKelompokMapel() {
   const location = useLocation();
@@ -22,10 +21,12 @@ export default function UbahKelompokMapel() {
   const smesterId = location.state.academicPeriodeId;
   const MapelId = location.state.subjectId;
   const roomId = location.state.roomId;
+  const guruId = location.state.teacherId;
   const smester = location.state.academicPeriode;
   const hari = location.state.day;
   const mapel = location.state.subject;
   const room = location.state.room;
+  const guru = location.state.teacherName;
   const start = location.state.startTime;
   const end = location.state.endTime;
   const stats = location.state.status;
@@ -34,25 +35,25 @@ export default function UbahKelompokMapel() {
   const [subjectData, setSubjectData] = useState([]);
   const [classRoomData, setClassRoomData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
-  const [academicPeriodeId, setacademicPeriodeId] = useState({
+  const [academicPeriodeIds, setacademicPeriodeId] = useState({
+    label: `Semester ${smester}`,
     value: smesterId,
-    label: smester,
   });
-  const [subjectId, setacSubjectId] = useState({
-    value: MapelId,
+  const [subjectIds, setaSubjectId] = useState({
     label: mapel,
+    value: MapelId,
   });
-  const [roomClassId, setClassRoomId] = useState({
-    value: roomId,
+  const [roomClassIds, setClassRoomId] = useState({
     label: room,
+    value: roomId,
   });
-  const [day, setDay] = useState(hari);
-  const [startTime, setStartTime] = useState({
-    value: start,
-    label: start,
+  const [days, setDay] = useState({ value: hari, label: `Hari Ke ${hari}` });
+  const [startTime, setStartTime] = useState(start);
+  const [endTime, setEndTime] = useState(end);
+  const [teacherIds, setTeacherId] = useState({
+    label: guru,
+    value: guruId,
   });
-  const [endTime, setEndTime] = useState({ value: end, label: end });
-  const [teacherId, setTeacherId] = useState();
   const [status, setStatus] = useState(stats);
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
@@ -85,20 +86,26 @@ export default function UbahKelompokMapel() {
     e.preventDefault();
 
     if (
-      academicPeriodeId === "" ||
-      subjectId === "" ||
-      roomClassId === "" ||
-      day === "" ||
-      teacherId === "" ||
+      academicPeriodeIds === "" ||
+      subjectIds === "" ||
+      roomClassIds === "" ||
+      days === "" ||
+      teacherIds === "" ||
       startTime === "" ||
       endTime === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
+      const academicPeriodeId = academicPeriodeIds.value;
+      const subjectId = subjectIds.value;
+      const roomClassId = roomClassIds.value;
+      const day = days.value;
+      const teacherId = teacherIds.value;
+
       updateKelompokMapel(
         setSts,
         id,
-        path,
+        navigateKelompokMapel,
         academicPeriodeId,
         subjectId,
         roomClassId,
@@ -114,7 +121,7 @@ export default function UbahKelompokMapel() {
     navigate(path);
   };
 
-  const academicYearOptions = academicPeriodeData.map((c) => ({
+  const academicPeriodeOptions = academicPeriodeData.map((c) => ({
     label: `Semester : ${c.increment}`,
     value: c.id,
   }));
@@ -162,7 +169,16 @@ export default function UbahKelompokMapel() {
           Form Ubah Kelompok Mata Pelajaran
         </p>
         <article>
-          <DropdownSiswa
+          <DropdownKurikulum
+            label="Semester"
+            required={true}
+            isClearable={true}
+            defaultValue={academicPeriodeIds}
+            isSearchable={false}
+            options={academicPeriodeOptions}
+            onChange={setacademicPeriodeId}
+          />
+          {/* <DropdownSiswa
             label="Semester"
             required={true}
             defaultValue={smesterId}
@@ -171,8 +187,17 @@ export default function UbahKelompokMapel() {
             isSearchable={false}
             onChange={(e) => setacademicPeriodeId(e.value)}
             // placeholder={`Sm ${smester}`}
+          /> */}
+          <DropdownKurikulum
+            label="Hari"
+            required={true}
+            isClearable={true}
+            defaultValue={days}
+            isSearchable={false}
+            options={dayOptions}
+            onChange={setDay}
           />
-          <DropdownSiswa
+          {/* <DropdownSiswa
             label="Hari"
             required={true}
             defaultValue={day}
@@ -187,8 +212,17 @@ export default function UbahKelompokMapel() {
             //   (hari == 4 && "Kamis") ||
             //   (hari == 5 && "Jumat")
             // }
+          /> */}
+          <DropdownKurikulum
+            label="Mata Pelajaran"
+            required={true}
+            isClearable={true}
+            defaultValue={subjectIds}
+            isSearchable={false}
+            options={subjectOptions}
+            onChange={setaSubjectId}
           />
-          <DropdownSiswa
+          {/* <DropdownSiswa
             label="Mata Pelajaran"
             required={true}
             defaultValue={MapelId}
@@ -197,8 +231,17 @@ export default function UbahKelompokMapel() {
             isSearchable={false}
             onChange={(e) => setacSubjectId(e.value)}
             // placeholder={mapel}
+          /> */}
+          <DropdownKurikulum
+            label="Ruangan Kelas"
+            required={true}
+            isClearable={true}
+            defaultValue={roomClassIds}
+            isSearchable={false}
+            options={classRoomOptions}
+            onChange={setClassRoomId}
           />
-          <DropdownSiswa
+          {/* <DropdownSiswa
             label="Ruangan Kelas"
             required={true}
             defaultValue={roomId}
@@ -207,7 +250,7 @@ export default function UbahKelompokMapel() {
             isSearchable={false}
             onChange={(e) => setClassRoomId(e.value)}
             // placeholder={room}
-          />
+          /> */}
           <TextInput
             label="Jam Mulai"
             type="text"
@@ -224,7 +267,16 @@ export default function UbahKelompokMapel() {
             onChange={(e) => setEndTime(e.target.value)}
             required={true}
           />
-          <DropdownSiswa
+          <DropdownKurikulum
+            label="Guru"
+            required={true}
+            isClearable={true}
+            defaultValue={teacherIds}
+            isSearchable={false}
+            options={teacherOptions}
+            onChange={setTeacherId}
+          />
+          {/* <DropdownSiswa
             label="Guru"
             required={true}
             defaultValue={teacherId}
@@ -232,8 +284,8 @@ export default function UbahKelompokMapel() {
             options={teacherOptions}
             isSearchable={false}
             onChange={(e) => setTeacherId(e.value)}
-          />
-          <DropdownStatus
+          /> */}
+          {/* <DropdownStatus
             label="Status"
             required={true}
             isClearable={true}
@@ -241,7 +293,7 @@ export default function UbahKelompokMapel() {
             isSearchable={false}
             onChange={setStatus}
             // placeholder={status == 1 ? "Aktif" : "Non-Aktif"}
-          />
+          /> */}
 
           <div className="btn-form">
             <button
@@ -249,7 +301,7 @@ export default function UbahKelompokMapel() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"

@@ -41,14 +41,15 @@ export function validateOTP(setSts, otp, navigateLogin, directTo) {
       if (directTo === "Reset Password") {
         AlertStatusSuccess(
           navigateLogin,
-          "Kode Reset Password Sesuai",
-          "Reset Password",
-          "success"
+          "Berhasil",
+          "Kembali Ke Halaman Reset Password",
+          "success",
+          "Reset Password Berhasil"
         );
       } else if (directTo === "Login") {
         AlertStatusSuccess(
           navigateLogin,
-          "Akun Berhasil Ter-Verifikasi",
+          "Berhasil",
           "Kembali Ke Halaman Login",
           "success",
           "Silahkan Login"
@@ -572,7 +573,12 @@ export function approvedRegistration(code, status, onReload) {
     )
     .then(() => {
       // setSts({ type: "success" });
-      AlertMessage("Berhasil", "Status Pendaftar Berhasil Diubah", "Tutup");
+      AlertMessage(
+        "Berhasil",
+        "Status Pendaftar Berhasil Diubah",
+        "Tutup",
+        "success"
+      );
       onReload();
     })
     .catch((error) => {
@@ -591,11 +597,23 @@ export function moveApplicantToStudent(navigate, registrationNumbers) {
       }
     )
     .then(() => {
-      AlertStatusSuccess(navigate, "Pendaftar Berhasil Dipindahkan", "Tutup");
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Pendaftar Berhasil Dijadikan Menjadi Murid"
+      );
       // setSts({ type: "success" });
       // setData();
     })
     .catch((error) => {
+      AlertMessage(
+        "Gagal",
+        "Pendaftar Gagal Dijadikan Menjadi Murid",
+        "Coba Lagi",
+        "error"
+      );
       // setSts({ type: "error", error });
     });
 }

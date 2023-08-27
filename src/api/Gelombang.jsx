@@ -70,7 +70,7 @@ import axios from "./axios";
 
 export function updateAdmissionPhase(
   setSts,
-  path,
+  navigate,
   id,
   code,
   increment,
@@ -94,9 +94,9 @@ export function updateAdmissionPhase(
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Detail Pendaftaran",
         "success",
         "Ubah Gelombang Berhasil"
       );

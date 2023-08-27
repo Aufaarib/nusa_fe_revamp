@@ -8,7 +8,7 @@ import {
   DropdownRadioInputBloodType,
   DropdownRadioInputGender,
 } from "../../../components/Dropdown";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
+import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
 export default function UbahMurid() {
@@ -50,7 +50,7 @@ export default function UbahMurid() {
     } else {
       updateMurid(
         setSts,
-        path,
+        navigateMurid,
         code,
         religion,
         firstName,
@@ -65,7 +65,7 @@ export default function UbahMurid() {
     }
   };
 
-  const navigateKelas = () => {
+  const navigateMurid = () => {
     navigate(path);
   };
 
@@ -92,21 +92,21 @@ export default function UbahMurid() {
           <TextInput
             label="Nama Depan"
             type="text"
-            defaultValue={location.state.firstName}
+            defaultValue={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required={true}
           />
           <TextInput
             label="Nama Tengah"
             type="text"
-            defaultValue={location.state.middleName}
+            defaultValue={middleName}
             onChange={(e) => setMiddleName(e.target.value)}
             required={false}
           />
           <TextInput
             label="Nama Akhir"
             type="text"
-            defaultValue={location.state.lastName}
+            defaultValue={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required={false}
           />
@@ -119,7 +119,7 @@ export default function UbahMurid() {
             label2="Perempuan"
             label3="Laki-Laki"
             onChange={(e) => setGender(e.target.value)}
-            defaultValue={location.state.gender}
+            defaultValue={gender}
             checked={gender}
           />
           <br />
@@ -128,7 +128,7 @@ export default function UbahMurid() {
             label="Tempat Lahir"
             type="text"
             onChange={(e) => setBirthPlace(e.target.value)}
-            defaultValue={location.state.birthPlace}
+            defaultValue={birthPlace}
             required={true}
           />
 
@@ -136,7 +136,7 @@ export default function UbahMurid() {
             label="Tanggal Lahir"
             id="birthDate"
             change={(e) => setBirthDate(e.element.value)}
-            value={moment(location.state.birthDate).format("YYYY-MM-DD")}
+            value={moment(birthDate).format("YYYY-MM-DD")}
             required={true}
           />
           <br />
@@ -144,7 +144,7 @@ export default function UbahMurid() {
             required={true}
             label="Golongan Darah"
             onChange={(e) => setBloodType(e.target.value)}
-            defaultValue={location.state.birthPlace}
+            defaultValue={bloodType}
             checked={bloodType}
           />
           <br />
@@ -152,7 +152,7 @@ export default function UbahMurid() {
             label="Jarak Ke Sekolah"
             type="text"
             onChange={(e) => setDistanceFromHome(e.target.value)}
-            defaultValue={location.state.birthPlace}
+            defaultValue={distanceFromHome}
             required={true}
           />
 
@@ -167,7 +167,7 @@ export default function UbahMurid() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateKelas}
+              onClick={navigateMurid}
             >
               Batal
             </button>

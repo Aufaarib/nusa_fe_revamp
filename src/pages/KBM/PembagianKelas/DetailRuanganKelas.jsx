@@ -44,8 +44,6 @@ const DetailRuanganKelas = () => {
     getKelompokMapelRoom(setData, setSts, location.state.id);
   };
 
-  console.log("IJAIWJIWJIFJW === ", data);
-
   useEffect(() => {
     setFetched("1");
     getStudentListRoom(setData, setSts, location.state.id);

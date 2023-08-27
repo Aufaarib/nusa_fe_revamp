@@ -39,7 +39,7 @@ const Login = () => {
         setIsLoading(false);
         if (res.status === 200) {
           if (role === "ADMIN" && verified === 1) {
-            navigate("/admin/dashboard", { replace: true });
+            navigate("/admin/list-data-registrasi", { replace: true });
           } else if (role === "USER" && verified === 1) {
             navigate("/pmb/list-calon-siswa", { replace: true });
           } else if (verified !== 1) {

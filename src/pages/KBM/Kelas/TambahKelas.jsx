@@ -20,7 +20,7 @@ export default function TambahKelas() {
     if (grade === "" || name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postKelas(setStatus, path, grade, name, description);
+      postKelas(setStatus, navigateKelas, grade, name, description);
     }
   };
 

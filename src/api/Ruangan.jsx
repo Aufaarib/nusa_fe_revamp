@@ -37,7 +37,7 @@ export function updateRoom(setSts, path, code, name, description) {
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Ruangan",
         "success",
         "Ubah Ruangan Berhasil"
       );
@@ -63,7 +63,7 @@ export function postRoom(setSts, path, name, description) {
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Ruangan",
         "success",
         "Tambah Ruangan Berhasil"
       );

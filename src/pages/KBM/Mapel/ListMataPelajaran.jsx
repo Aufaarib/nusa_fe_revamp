@@ -6,16 +6,7 @@ import { DataTables } from "../../../components/DataTables";
 
 export default function ListMataPelajaran() {
   const [data, setData] = useState([]);
-  // const [status, setStatus] = useState("");
-  const statusAktif = "Aktif";
-  const statusNonAktif = "Tidak Aktif";
-  const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
-  const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
-  const [updateId, setUpdateId] = useState("");
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
   const [filterText, setFilterText] = useState("");
 
   const navigate = useNavigate();
@@ -33,60 +24,6 @@ export default function ListMataPelajaran() {
   useEffect(() => {
     getMapel(setData, setSts);
   }, []);
-
-  // const handleNonActiveStatus = (id, course_name) => {
-  //   // setisOpenUpdateTidakAktif(true);
-  //   // setStatus("Aktif");
-  //   // setDesc(course_name);
-  //   // setUpdateId(id);
-  //   AlertUpdateStatusNonAktif(course_name, statusAktif, id, onUpdateStatus);
-  // };
-
-  // // const closeModalUpdateTidakAktif = () => {
-  // //   setisOpenUpdateTidakAktif(false);
-  // // };
-
-  // const handleActiveStatus = (id, course_name) => {
-  //   // setisOpenUpdateAktif(true);
-  //   // setStatus("Tidak Aktif");
-  //   // setDesc(course_name);
-  //   // setUpdateId(id);
-  //   AlertUpdateStatusAktif(course_name, statusNonAktif, id, onUpdateStatus);
-  // };
-
-  // const closeModalUpdateAktif = () => {
-  //   setisOpenUpdateAktif(false);
-  // };
-
-  // const onUpdateStatus = (id, status) => {
-  //   updateStatusMapel(setSts, status, id, setData);
-  //   // closeModalUpdateAktif();
-  //   // closeModalUpdateTidakAktif();
-  //   // setisOpenStatus(true);
-  // };
-
-  // const openModalHapus = (id, course_name) => {
-  //   // setisOpenDelete(true);
-  //   setDesc_nama(course_name);
-  //   setDeleteId(id);
-  //   AlertDelete(course_name, id, onDelete);
-  // };
-
-  // const closeModalHapus = () => {
-  //   setisOpenDelete(false);
-  // };
-
-  // const onDelete = (id) => {
-  //   deleteMapel(setSts, id, setData);
-  //   // closeModalHapus();
-  //   // setisOpenStatus(true);
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   getMapel(setData, setSts);
-  //   setSts("");
-  // };
 
   const columns = [
     {
@@ -135,6 +72,8 @@ export default function ListMataPelajaran() {
       cell: (data) => (
         <div>
           <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             onClick={() =>
               navigateUbahMapel(
                 data.code,
@@ -143,9 +82,8 @@ export default function ListMataPelajaran() {
                 data.description
               )
             }
-            className="btn-action-merah ml-3 w-auto px-2"
           >
-            <i className="fa fa-edit mt-1 mr-1"></i> Ubah
+            <i className="fa fa-edit mt-1 mr-1"></i> Edit
           </button>
           {/* {data?.status === "Aktif" && (
             <button

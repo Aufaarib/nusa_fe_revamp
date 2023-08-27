@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAdmission } from "../../../api/SetupPmb";
+import { getRoom } from "../../../api/Ruangan";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
-import { getMurid } from "../../../api/Murid";
-import { getClassRoom } from "../../../api/RuanganKelas";
-import { getRoom } from "../../../api/Ruangan";
 
 const ListRuangan = () => {
   const [data, setData] = useState([]);
@@ -50,34 +47,34 @@ const ListRuangan = () => {
       cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => (
-        <div
-          className={
-            data.status === 1
-              ? "capitalize text-hijau"
-              : "capitalize text-merah"
-          }
-        >
-          {data.status == 1 ? "Aktif" : "Tidak Aktif"}
-        </div>
-      ),
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => (
+    //     <div
+    //       className={
+    //         data.status === 1
+    //           ? "capitalize text-hijau"
+    //           : "capitalize text-merah"
+    //       }
+    //     >
+    //       {data.status == 1 ? "Aktif" : "Tidak Aktif"}
+    //     </div>
+    //   ),
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-action-merah"
+            className="btn-biru"
             onClick={() =>
               navigateUpdateClassRoom(data.code, data.name, data.description)
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
         </>
       ),

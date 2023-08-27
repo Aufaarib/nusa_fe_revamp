@@ -1,22 +1,19 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
-  AlertStatusUpdateFailed,
-} from "../components/ModalPopUp";
+import moment from "moment/moment";
+import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getSemester(setData, setSts) {
+  const year = moment().format("YYYY");
+  console.log(year);
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/academic/year", {
+    .get(process.env.REACT_APP_BASE_URL + `/academic/year/AC${year}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      for (const i of res.data.body) {
-        setData(i.periode);
-      }
+      // for (const i of res.data.body) {
+      setData(res.data.body.periode);
+      // }
+      console.log(res.data.body.periode);
       setSts({ type: "success" });
     })
     .catch((error) => {
@@ -76,7 +73,7 @@ export function updateTahunAjaran(
 
 export function postTahunAjaran(
   setSts,
-  path,
+  navigate,
   year,
   name,
   status,
@@ -96,7 +93,7 @@ export function postTahunAjaran(
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Tutup",
         "success",

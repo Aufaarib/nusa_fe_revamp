@@ -74,7 +74,7 @@ export function updateKelompokMapel(
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Kelompok Mata Pelajaran",
         "success",
         "Ubah Kelompok Mata Pelajaran Berhasil"
       );
@@ -122,7 +122,7 @@ export function postKelompokMapel(
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Kelompok Mata Pelajaran",
         "success",
         "Tambah Kelompok Mata Pelajaran Berhasil"
       );

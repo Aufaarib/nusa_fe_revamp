@@ -6,85 +6,189 @@ import {
   getAdmissionRegistration,
   moveApplicantToStudent,
 } from "../../api/Registrasi";
-import { Header } from "../../components";
+import { Header, UserProfile } from "../../components";
 import { DataTablesRegistrations } from "../../components/DataTables";
 import { AlertConfirmation } from "../../components/ModalPopUp";
+import { getTahunAjaran } from "../../api/TahunAjaran";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
+  const [academicYeardata, setAcademicYeardata] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
+  const year = moment().format("YYYY");
 
   const [validationFilter, setValidationFilter] = useState("inreview");
-  const [stepsFilter, setStepsFilter] = useState("verification");
+  const [academicYearFilter, setAcademicYearFilter] = useState(year);
+  const [stepsFilter, setStepsFilter] = useState("");
+
+  const [filterValidation, SetFilterValidation] = useState("false");
+  const [filterAcademicYear, SetFilterAcademicYear] = useState("false");
+  const [filterSteps, SetFilterSteps] = useState("false");
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
+    getTahunAjaran(setAcademicYeardata, setSts);
   }, []);
 
+  const handleAcademicYearFilter = (event) => {
+    const val = event.target.value;
+    setAcademicYearFilter(val);
+  };
   const handleValidationFilter = (event) => {
     const val = event.target.value;
     setValidationFilter(val);
   };
-
   const handleStepsFilter = (event) => {
     setStepsFilter(event.target.value);
   };
 
-  let filteredItems = null;
-  let filteredStatus = null;
+  let filteredItems = data;
+  let filteredSteps = null;
+  let filteredValidation = null;
+  let filteredAcademicYear = null;
 
+  // filter logics
   if (data !== null) {
-    const filteredValidation = data.filter((data) =>
-      data.status.includes(validationFilter)
+    // showing all data
+    filteredItems = data.filter(
+      (data) =>
+        data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+        data.childName.toLowerCase().includes(filterText.toLowerCase())
     );
-
-    if (validationFilter === "inreview") {
+    // if academic year filter button is on, this will filtering data by academic year
+    if (filterAcademicYear === "true") {
+      filteredAcademicYear = data.filter(
+        (data) =>
+          data.admissionPhase?.admission?.academicYear?.year ===
+          academicYearFilter
+      );
+      // then set applicant status filtering by filtered data of academic year
+      filteredValidation = filteredAcademicYear?.filter(
+        (data) => data.status === validationFilter
+      );
+      // if academic year filter button is off, applicant status filtering will be set to default data
+    } else if (filterAcademicYear === "false") {
+      filteredValidation = data.filter(
+        (data) => data.status === validationFilter
+      );
+    }
+    // if applicant status filter button is on, this will filtering steps status by filtered applicant status
+    if (filterValidation === "true") {
+      // if (validationFilter === "inreview") {
       if (stepsFilter === "complete") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) =>
             data.steps[data.steps.length - 1].step === "5" &&
             data.steps[data.steps.length - 1].status === "valid"
         );
       } else if (stepsFilter === "verification") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) => data.steps[data.steps.length - 1].status === "inreview"
         );
       } else if (stepsFilter === "testResult") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) =>
             data.steps[data.steps.length - 1].step === "2" &&
             data.steps[data.steps.length - 1].status === "valid"
         );
       } else if (stepsFilter === "reReg") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) =>
             data.steps[data.steps.length - 1].step === "3" &&
             data.steps[data.steps.length - 1].status === "valid"
         );
       } else if (stepsFilter === "eduPayment") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) =>
             data.steps[data.steps.length - 1].step === "4" &&
             data.steps[data.steps.length - 1].status === "valid"
         );
       } else if (stepsFilter === "invalid") {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) => data.steps[data.steps.length - 1].status === "invalid"
         );
       } else {
-        filteredStatus = filteredValidation.filter(
+        filteredSteps = filteredValidation.filter(
           (data) => data.steps[data.steps.length - 1].status === "inreview"
         );
       }
-      filteredItems = filteredStatus.filter(
+      // }
+      // if applicant status filter button is off, this will filtering steps status by default data
+    } else if (filterValidation === "false") {
+      // if (validationFilter === "inreview") {
+      if (stepsFilter === "complete") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      } else {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      }
+      // }
+    }
+
+    if (filterValidation === "true") {
+      filteredItems = filteredValidation?.filter(
         (data) =>
           data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
           data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
-    } else {
-      filteredItems = filteredValidation.filter(
+      if (filterSteps === "true") {
+        // if (validationFilter === "inreview") {
+        filteredItems = filteredSteps?.filter(
+          (data) =>
+            data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+            data.childName.toLowerCase().includes(filterText.toLowerCase())
+        );
+      }
+    } else if (filterAcademicYear === "true") {
+      filteredItems = filteredAcademicYear?.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+      if (filterSteps === "true") {
+        // if (validationFilter === "inreview") {
+        filteredItems = filteredSteps?.filter(
+          (data) =>
+            data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+            data.childName.toLowerCase().includes(filterText.toLowerCase())
+        );
+        // }
+      }
+    } else if (filterSteps === "true") {
+      filteredItems = filteredSteps?.filter(
         (data) =>
           data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
           data.childName.toLowerCase().includes(filterText.toLowerCase())
@@ -102,27 +206,35 @@ const DataRegistrasi = () => {
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
-  const isAllRowsSelected = selectedRows.length === data.length;
+  const isAllRowsSelected = selectedRows.length === filteredItems.length;
 
   const handleSelectAll = () => {
-    const allRowIds = filteredItems.map((row) => row.regNumber);
-    setSelectedRows(allRowIds);
-    handleSubmit();
+    if (selectedRows.length === filteredItems.length) {
+      setSelectedRows([]);
+    } else {
+      const allRowIds = filteredItems.map((row) => row.regNumber);
+      setSelectedRows(allRowIds);
+    }
+    //   const allRowIds = filteredItems.map((row) => row.regNumber);
+    //   setSelectedRows(allRowIds);
+    //   handleSubmit();
   };
 
-  const handleRowSelect = (rowId) => {
-    if (selectedRows.includes(rowId)) {
-      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+  const handleRowSelect = (regNumber) => {
+    if (selectedRows.includes(regNumber)) {
+      setSelectedRows(selectedRows.filter((id) => id !== regNumber));
     } else {
-      setSelectedRows([...selectedRows, rowId]);
+      setSelectedRows([...selectedRows, regNumber]);
     }
   };
 
-  const handlePindahSemua = () => {
+  const handlePindah = () => {
     AlertConfirmation(
-      handleSelectAll,
-      "Pindahkan Semua Pendaftar?",
-      "Pindahkan"
+      handleSubmit,
+      "Jadikan Pendaftar Terpilih Sebagai Murid?",
+      `Jumlah Total ${selectedRows.length} Pendaftar Terpilih`,
+      "Jadikan Sebagai Murid",
+      "question"
     );
   };
 
@@ -249,7 +361,7 @@ const DataRegistrasi = () => {
       cell: (data) => (
         <button
           style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-action-merah"
+          className="btn-biru"
           onClick={() => navigateRegistrationDetails(data.regNumber)}
         >
           <i className="fa fa-eye" /> Detail
@@ -261,8 +373,20 @@ const DataRegistrasi = () => {
     },
   ];
 
+  console.log("makmdsdsad === ", selectedRows);
+
   const columnsCheckbox = [
     {
+      name: (
+        <input
+          type="checkbox"
+          checked={isAllRowsSelected}
+          onChange={handleSelectAll}
+        />
+        // <div onClick={handleSelectAll}>
+        //   {isAllRowsSelected ? "Deselect All" : "Select All"}
+        // </div>
+      ),
       selector: (data) => (
         <input
           type="checkbox"
@@ -270,7 +394,7 @@ const DataRegistrasi = () => {
           onChange={() => handleRowSelect(data.regNumber)}
         />
       ),
-      width: "50px",
+      width: "60px",
     },
     {
       name: <div>No</div>,
@@ -388,13 +512,15 @@ const DataRegistrasi = () => {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <button
-          style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-action-merah"
-          onClick={() => navigateRegistrationDetails(data.regNumber)}
-        >
-          <i className="fa fa-eye" /> Detail
-        </button>
+        <div>
+          <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            onClick={() => navigateRegistrationDetails(data.regNumber)}
+          >
+            <i className="fa fa-eye" /> Detail
+          </button>
+        </div>
       ),
       ignoreRowClick: true,
       button: true,
@@ -414,10 +540,23 @@ const DataRegistrasi = () => {
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesRegistrations
-          columns={validationFilter === "valid" ? columnsCheckbox : columns}
+          columns={
+            filterValidation === "true" && validationFilter === "valid"
+              ? columnsCheckbox
+              : columns
+          }
+          filterValidation={filterValidation}
+          SetFilterValidation={SetFilterValidation}
+          filterAcademicYear={filterAcademicYear}
+          SetFilterAcademicYear={SetFilterAcademicYear}
+          filterSteps={filterSteps}
+          SetFilterSteps={SetFilterSteps}
           data={filteredItems}
+          academicYeardata={academicYeardata}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          onChangeAcademicYear={handleAcademicYearFilter}
+          valueAcademicYear={academicYearFilter}
           onChangeValidation={handleValidationFilter}
           valueValidation={validationFilter}
           onChangeSteps={handleStepsFilter}
@@ -426,8 +565,8 @@ const DataRegistrasi = () => {
           setSts={setSts}
           // selectableRows
           // selectableRowsComponent={Checkbox}
-          setSelected={handleSubmit}
-          setAllSelected={handlePindahSemua}
+          setSelected={handlePindah}
+          // setAllSelected={handlePindahSemua}
           selectedRows={selectedRows}
         />
       </div>

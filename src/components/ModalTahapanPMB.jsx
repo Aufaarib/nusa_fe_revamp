@@ -33,6 +33,10 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
   const path = "/pmb/form-data-murid";
   const path2 = "/pmb/tahapan-pmb";
 
+  const reload = () => {
+    window.location.href = path2;
+  };
+
   const navigateFormulir = () => {
     navigate(path);
   };
@@ -512,12 +516,12 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             Persetujuan Berikut:
                           </p>
                           <br />
-                          <Link
-                            onClick={() => daftarUlangAgreement(path2)}
+                          <button
+                            onClick={() => daftarUlangAgreement(reload)}
                             className="mt-3 btn-merah"
                           >
                             Persetujuan Daftar Ulang
-                          </Link>
+                          </button>
                         </div>
                       )}
                       {status == "Berhasil" && (

@@ -9,11 +9,7 @@ import { AlertUbahStatus } from "../../components/ModalPopUp";
 
 const AdmissionDetails = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -82,7 +78,8 @@ const AdmissionDetails = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          className="btn-action-merah"
+          style={{ width: "auto", padding: "2px 10px" }}
+          className="btn-biru"
           title="Edit"
           onClick={() =>
             navigateUbahGelombang(
@@ -95,12 +92,12 @@ const AdmissionDetails = () => {
             )
           }
         >
-          <i className="fa fa-edit"> Ubah </i>
+          <i className="fa fa-edit" /> Edit
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "220px",
     },
   ];
 
@@ -110,6 +107,10 @@ const AdmissionDetails = () => {
         code: code,
       },
     });
+  };
+
+  const navigateSetupPmb = () => {
+    navigate("/admin/list-setup-pmb");
   };
 
   const navigateUbahGelombang = (
@@ -138,8 +139,7 @@ const AdmissionDetails = () => {
   };
 
   const onUpdateStatus = (code) => {
-    updateStatusAdmission(setSts, code);
-    navigate(path);
+    updateStatusAdmission(setSts, code, navigateSetupPmb);
   };
 
   return (

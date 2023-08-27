@@ -8,6 +8,8 @@ import axios from "../../api/axios";
 import { Header } from "../../components";
 import { DropdownDatePickers } from "../../components/Dropdown";
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertUploadInvoiceFailed,
   AlertUploadInvoiceSuccess,
 } from "../../components/ModalPopUp";
@@ -30,6 +32,8 @@ const BerkasPembayaranBiayaPendidikan = () => {
     formCheck,
     getFormCheck,
   } = useStateContext();
+
+  const path = "/pmb/tahapan-pmb";
 
   const [fileInvoice, setFileInvoice] = useState(null);
   const uploaderRef = useRef(null);
@@ -79,11 +83,17 @@ const BerkasPembayaranBiayaPendidikan = () => {
       )
       .then((response) => {
         console.log("File uploaded successfully!", response);
-        AlertUploadInvoiceSuccess();
+        AlertStatusSuccess(
+          path,
+          "Berhasil",
+          "Kembali Ke Halaman Tahapan PMB",
+          "success",
+          "Unggah Bukti Pembayaran Biaya Pendidikan Berhasil"
+        );
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
-        AlertUploadInvoiceFailed();
+        AlertMessage("Gagal", "Unggah Gagal", "Coba Lagi", "error");
       });
   };
 

@@ -1,15 +1,7 @@
 import React from "react";
-import { MdOutlineDashboard } from "react-icons/md";
-import { FaWpforms, FaChild, FaFileSignature } from "react-icons/fa";
-import {
-  AiOutlineBarChart,
-  AiFillFileText,
-  AiOutlineSchedule,
-} from "react-icons/ai";
-import { CgUserList } from "react-icons/cg";
-import { BsCardText, BsMailbox, BsPerson } from "react-icons/bs";
-import { RiParentFill } from "react-icons/ri";
-import { BsCurrencyDollar, BsShield, BsBarChartSteps } from "react-icons/bs";
+import { AiOutlineBarChart } from "react-icons/ai";
+import { BsPerson } from "react-icons/bs";
+import { FaWpforms } from "react-icons/fa";
 import product1 from "./product1.jpg";
 import product2 from "./product2.jpg";
 import product3 from "./product3.jpg";
@@ -215,45 +207,8 @@ export const sidebarMenusAdmin = [
         path: `admin/list-data-registrasi`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: "Hasil Tes",
-      //   path: `admin/hasil-tes`,
-      //   icon: <FaWpforms />,
-      // },
     ],
   },
-  // {
-  //   title: "Admin Keuangan",
-  //   path: `admin/keuangan`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "Cost Center",
-  //       path: `admin/list-cost-center`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Tipe Transaksi",
-  //       path: `admin/list-tipe-transaksi`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Bank",
-  //       path: `admin/list-bank`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Biaya Pendidikan",
-  //       path: `admin/list-biaya-pendidikan`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Biaya Operasional",
-  //       path: `admin/list-biaya-operasional`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
   {
     title: "Admin KBM",
     path: `admin/kbm`,
@@ -299,16 +254,23 @@ export const sidebarMenusAdmin = [
         path: `admin/list-ruang-kelas`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: "Pembagian Kelas",
-      //   path: `admin/list-ruang-kelas`,
-      //   icon: <FaWpforms />,
-      // },
-      // {
-      //   name: "Jadwal Mapel",
-      //   path: `admin/list-jadwal-mata-pelajaran`,
-      //   icon: <FaWpforms />,
-      // },
+    ],
+  },
+  {
+    title: "Admin Keuangan",
+    path: `admin/keuangan`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "SPP",
+        path: `admin/list-spp`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Pengeluaran",
+        path: `admin/list-cost-center`,
+        icon: <FaWpforms />,
+      },
     ],
   },
 ];

@@ -12,6 +12,7 @@ export default function UbahKurikulum() {
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
   const path = "/admin/list-kurikulum";
+
   const navigateKurikulum = () => {
     navigate(path);
   };
@@ -23,7 +24,7 @@ export default function UbahKurikulum() {
     if (name.length === 0 || description.length === 0) {
       AlertEmpty();
     } else {
-      updateKurikulum(setSts, path, code, name, description);
+      updateKurikulum(setSts, navigateKurikulum, code, name, description);
     }
   };
 

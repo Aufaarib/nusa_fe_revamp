@@ -23,11 +23,18 @@ export default function TambahTahunAjaran() {
     if (path.length === 0 || year.length === 0 || name.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postTahunAjaran(setSts, path, year, name, status, curriculumId);
+      postTahunAjaran(
+        setSts,
+        navigateTahunAjaran,
+        year,
+        name,
+        status,
+        curriculumId
+      );
     }
   };
 
-  const navigateCostCenter = () => {
+  const navigateTahunAjaran = () => {
     navigate(path);
   };
 
@@ -55,7 +62,7 @@ export default function TambahTahunAjaran() {
           title="Tambah Tahun Ajaran"
         />
       </div>
-      <div style={{ marginLeft: "60px" }}>
+      <div style={{ padding: "10px 104px 0" }}>
         <article>
           <p
             style={{
@@ -110,24 +117,11 @@ export default function TambahTahunAjaran() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateCostCenter}
+              onClick={navigateTahunAjaran}
             >
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-                isOpenStatus={isOpenStatus}
-                closeModalStatus={closeModalStatus}
-                status={status}
-                navigate={navigateCostCenter}
-            /> */}
-
-          {/* <ModalEmpty
-                isOpenEmpty={isOpenEmpty}
-                closeModalEmpty={closeModalEmpty}
-                onRequestCloseEmpty={closeModalEmpty}
-            /> */}
         </article>
       </div>
     </div>

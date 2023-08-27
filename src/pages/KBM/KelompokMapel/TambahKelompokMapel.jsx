@@ -1,16 +1,14 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
-import { postKelompokMapel } from "../../../api/KelompokMataPelajaran";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
-import { Header } from "../../../components";
-import { useEffect } from "react";
+import { getGuru } from "../../../api/Guru";
+import { postKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { getMapel } from "../../../api/MataPelajaran";
 import { getClassRoom } from "../../../api/RuanganKelas";
-import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
-import { getGuru } from "../../../api/Guru";
+import { getSemester } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahKelompokMapel() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
@@ -68,7 +66,7 @@ export default function TambahKelompokMapel() {
     } else {
       postKelompokMapel(
         setSts,
-        path,
+        navigateKelompokMapel,
         academicPeriodeId,
         subjectId,
         roomClassId,

@@ -226,6 +226,7 @@ export const DropdownSiswa = ({
   options,
   required,
   isClearable,
+  isSearchable,
   defaultValue,
   placeholder,
 }) => {
@@ -253,10 +254,10 @@ export const DropdownSiswa = ({
             className="w-full"
             isClearable={isClearable}
             defaultValue={defaultValue}
-            placeholder={placeholder}
+            placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
-            isSearchable={false}
+            isSearchable={isSearchable}
           />
         </div>
       </form>

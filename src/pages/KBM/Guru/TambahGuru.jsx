@@ -31,11 +31,19 @@ export default function TambahGuru() {
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postGuru(setSts, path, fullname, gender, religion, birthPlace, birthDate);
+      postGuru(
+        setSts,
+        navigateGuru,
+        fullname,
+        gender,
+        religion,
+        birthPlace,
+        birthDate
+      );
     }
   };
 
-  const navigateKurikulum = () => {
+  const navigateGuru = () => {
     navigate(path);
   };
 
@@ -115,7 +123,7 @@ export default function TambahGuru() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateKurikulum}
+              onClick={navigateGuru}
             >
               Batal
             </button>

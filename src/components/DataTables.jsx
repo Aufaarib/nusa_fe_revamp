@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { MdOutlineCancel } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 
@@ -139,7 +140,7 @@ export function FilterComponent({ filterText, onFilter, onClick, button }) {
         >
           <button
             style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-mrh"
+            className="btn-hijau"
             onClick={onClick}
           >
             <i className="fa fa-plus mr-1 mt-1"></i> {button}
@@ -291,14 +292,14 @@ export function FilterComponentActivateAdmission({
           <div style={{ display: "flex", gap: "5px" }}>
             <button
               style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-              className="btn-mrh"
+              className={buttonActivate === "Aktifkan" ? "btn-biru" : "btn-mrh"}
               onClick={onClickActivate}
             >
               {buttonActivate}
             </button>
             <button
               style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-              className="btn-mrh"
+              className="btn-hijau"
               onClick={onClickCreatePhase}
             >
               <i className="fa fa-plus mr-1 mt-1"> </i>
@@ -313,16 +314,27 @@ export function FilterComponentActivateAdmission({
 
 export function FilterComponentRegistrations({
   filterText,
+  filterValidation,
+  SetFilterValidation,
+  filterAcademicYear,
+  SetFilterAcademicYear,
+  filterSteps,
+  SetFilterSteps,
   onFilter,
   data = [],
+  academicYeardata = [],
+  onChangeAcademicYear,
+  valueAcademicYear,
   onChangeValidation,
   valueValidation,
   valueSteps,
   onChangeSteps,
   setSelected,
-  setAllSelected,
+  // setAllSelected,
   selectedRows,
 }) {
+  const [isOpenFilter, SetIsOpenFilter] = useState("false");
+
   return (
     <>
       <div
@@ -349,117 +361,273 @@ export function FilterComponentRegistrations({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        {data ? (
+        <button
+          className="btn-hijau w-auto"
+          style={{
+            display: "inline-block",
+            float: "right",
+            padding: "2px 10px",
+            fontSize: "12px",
+            width: "auto",
+          }}
+          onClick={() => SetIsOpenFilter("true")}
+        >
+          <i className="fa fa-filter mr-1"> </i> Filter
+        </button>
+        {isOpenFilter === "true" && (
           <>
-            <select
-              style={{
-                border: "1px solid grey",
-                borderRadius: "10px",
-                width: "auto",
-                height: "32px",
-                fontSize: "12px",
-                padding: "5px",
-                marginLeft: "10px",
-                outline: "none",
-              }}
-              value={valueValidation}
-              onChange={onChangeValidation}
-            >
-              <option
-                style={{ backgroundColor: "gray" }}
-                className="text-putih"
-                disabled
-              >
-                Filter Status Pendaftaran :
-              </option>
-              <option value="valid">Terverifikasi</option>
-              <option value="inreview">Belum Terverifikasi</option>
-            </select>
-            {valueValidation === "valid" && (
-              <div
-                style={{
-                  display: "inline-block",
-                  float: "right",
-                  marginBottom: "20px",
-                }}
-              >
-                <div style={{ display: "flex", gap: "5px" }}>
-                  {selectedRows.length == 0 && (
-                    <button
+            <div className="nav-item absolute right-20 mt-2 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
+              <div className="flex justify-between">
+                {data ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
                       style={{
-                        fontSize: "12px",
-                        width: "auto",
-                        padding: "2px 10px",
+                        display: "block",
+                        marginBottom: "10px",
                       }}
-                      className="btn-mrh"
-                      onClick={() => setAllSelected()}
                     >
-                      Pindahkan Semua
-                    </button>
-                  )}
-                  {selectedRows.length != 0 && (
-                    <button
+                      <div style={{ display: "inline-block" }}>
+                        <h3>Filter Data</h3>
+                      </div>
+                      <button
+                        className="text-merah"
+                        onClick={() => SetIsOpenFilter("false")}
+                        style={{
+                          display: "inline-block",
+                          float: "right",
+                          fontSize: "25px",
+                        }}
+                      >
+                        <MdOutlineCancel />
+                      </button>
+                    </div>
+                    <strong className="text-merah">
+                      Filter Data Berdasarkan :
+                    </strong>
+                    <div
                       style={{
-                        fontSize: "12px",
-                        width: "auto",
-                        padding: "2px 10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "start",
+                        gap: "5px",
                       }}
-                      className="btn-mrh"
-                      onClick={() => setSelected()}
                     >
-                      Pindahkan Terpilih
-                    </button>
-                  )}
-                </div>
+                      <button
+                        onClick={() => {
+                          if (filterAcademicYear === "false") {
+                            SetFilterAcademicYear("true");
+                          } else SetFilterAcademicYear("false");
+                        }}
+                        className={
+                          filterAcademicYear === "true"
+                            ? "btn-modal-filter-true"
+                            : "btn-modal-filter-false"
+                        }
+                      >
+                        Tahun Ajaran{" "}
+                        {filterAcademicYear === "true" ? (
+                          <i className="fa fa-check text-hijau" />
+                        ) : (
+                          <i className="fa fa-angle-down" />
+                        )}
+                      </button>
+                      {filterAcademicYear === "true" && (
+                        <select
+                          style={{
+                            border: "1px solid grey",
+                            borderRadius: "10px",
+                            width: "auto",
+                            height: "32px",
+                            fontSize: "12px",
+                            padding: "5px",
+                            marginLeft: "10px",
+                            outline: "none",
+                          }}
+                          value={valueAcademicYear}
+                          onChange={onChangeAcademicYear}
+                        >
+                          {academicYeardata.map((c) => (
+                            <>
+                              <option value={c.year}>{c.year}</option>
+                            </>
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "start",
+                        gap: "5px",
+                      }}
+                    >
+                      <button
+                        onClick={() => {
+                          if (filterValidation === "false") {
+                            SetFilterValidation("true");
+                          } else SetFilterValidation("false");
+                        }}
+                        className={
+                          filterValidation === "true"
+                            ? "btn-modal-filter-true"
+                            : "btn-modal-filter-false"
+                        }
+                      >
+                        Status Pendaftaran{" "}
+                        {filterValidation === "true" ? (
+                          <i className="fa fa-check text-hijau" />
+                        ) : (
+                          <i className="fa fa-angle-down" />
+                        )}
+                      </button>
+                      {filterValidation === "true" && (
+                        <select
+                          style={{
+                            border: "1px solid grey",
+                            borderRadius: "10px",
+                            width: "auto",
+                            height: "32px",
+                            fontSize: "12px",
+                            padding: "5px",
+                            marginLeft: "10px",
+                            outline: "none",
+                          }}
+                          value={valueValidation}
+                          onChange={onChangeValidation}
+                        >
+                          <option value="valid">Terverifikasi</option>
+                          <option value="inreview">Belum Terverifikasi</option>
+                        </select>
+                      )}
+                    </div>
+                    {/* {valueValidation === "inreview" && ( */}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "start",
+                        gap: "5px",
+                      }}
+                    >
+                      <button
+                        onClick={() => {
+                          if (filterSteps === "false") {
+                            SetFilterSteps("true");
+                          } else SetFilterSteps("false");
+                        }}
+                        className={
+                          filterSteps === "true"
+                            ? "btn-modal-filter-true"
+                            : "btn-modal-filter-false"
+                        }
+                      >
+                        Status Tahapan{" "}
+                        {filterSteps === "true" ? (
+                          <i className="fa fa-check text-hijau" />
+                        ) : (
+                          <i className="fa fa-angle-down" />
+                        )}
+                      </button>
+                      {filterSteps === "true" && (
+                        <select
+                          style={{
+                            border: "1px solid grey",
+                            borderRadius: "10px",
+                            width: "auto",
+                            height: "32px",
+                            fontSize: "12px",
+                            padding: "5px",
+                            marginLeft: "10px",
+                            outline: "none",
+                          }}
+                          value={valueSteps}
+                          onChange={onChangeSteps}
+                        >
+                          <option value="verification">
+                            Menunggu Verifikasi
+                          </option>
+                          <option value="testResult">Menunggu Hasil Tes</option>
+                          <option value="reReg">
+                            Menunggu Persetujuan Daftar Ulang
+                          </option>
+                          <option value="eduPayment">
+                            Menunggu Pembayaran Pendidikan
+                          </option>
+                          <option value="complete">Lengkap</option>
+                          <option value="invalid">Tidak Sesuai</option>
+                        </select>
+                      )}
+                    </div>
+                    {/* // )} */}
+                  </div>
+                ) : (
+                  <select
+                    style={{
+                      border: "1px solid grey",
+                      borderRadius: "10px",
+                      width: "auto",
+                      height: "30px",
+                      fontSize: "12px",
+                      padding: "5px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    <option value="null">Data Tidak Tersedia</option>
+                  </select>
+                )}
               </div>
-            )}
-            {valueValidation === "inreview" && (
-              <select
-                style={{
-                  border: "1px solid grey",
-                  borderRadius: "10px",
-                  width: "auto",
-                  height: "32px",
-                  fontSize: "12px",
-                  padding: "5px",
-                  marginLeft: "10px",
-                  outline: "none",
-                }}
-                value={valueSteps}
-                onChange={onChangeSteps}
-              >
-                <option
-                  style={{ backgroundColor: "gray" }}
-                  className="text-putih"
-                  disabled
-                >
-                  Filter Status Tahapan :
-                </option>
-                <option value="verification">Menunggu Verifikasi</option>
-                <option value="testResult">Menunggu Hasil Tes</option>
-                <option value="reReg">Menunggu Persetujuan Daftar Ulang</option>
-                <option value="eduPayment">
-                  Menunggu Pembayaran Pendidikan
-                </option>
-                <option value="complete">Lengkap</option>
-                <option value="invalid">Tidak Sesuai</option>
-              </select>
-            )}
+            </div>
           </>
-        ) : (
-          <select
+        )}
+        {valueValidation === "valid" && (
+          <div
             style={{
-              border: "1px solid grey",
-              borderRadius: "10px",
-              width: "auto",
-              height: "30px",
-              fontSize: "12px",
-              padding: "5px",
-              marginLeft: "10px",
+              display: "inline-block",
+              float: "right",
+              marginBottom: "20px",
+              marginRight: "5px",
             }}
           >
-            <option value="null">Data Tidak Tersedia</option>
-          </select>
+            <div style={{ display: "flex", gap: "5px" }}>
+              {/* {selectedRows.length == 0 && (
+                <button
+                  style={{
+                    fontSize: "12px",
+                    width: "auto",
+                    padding: "2px 10px",
+
+                    // color: "green",
+                  }}
+                  className="btn-hijau"
+                  onClick={() => setAllSelected()}
+                >
+                  <i className="fa fa-reply-all mr-1"> </i> Jadikan Semua
+                  Sebagai Murid
+                </button>
+              )} */}
+              {selectedRows.length != 0 && (
+                <button
+                  style={{
+                    fontSize: "12px",
+                    width: "auto",
+                    padding: "2px 10px",
+                  }}
+                  className="btn-hijau"
+                  onClick={() => setSelected()}
+                >
+                  <i className="fa fa-reply mr-1"> </i> Jadikan Sebagai Murid
+                </button>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </>
@@ -920,17 +1088,26 @@ export function DataTablesRegistrationDetail({
 
 export function DataTablesRegistrations({
   columns,
+  filterValidation,
+  SetFilterValidation,
+  filterAcademicYear,
+  SetFilterAcademicYear,
+  filterSteps,
+  SetFilterSteps,
   status,
+  academicYeardata,
   data,
   defaultSortFieldId,
   filterText,
   onFilter,
+  onChangeAcademicYear,
+  valueAcademicYear,
   onChangeValidation,
   valueValidation,
   onChangeSteps,
   valueSteps,
   setSelected,
-  setAllSelected,
+  // setAllSelected,
   selectedRows,
 }) {
   const CustomStylesTable = {
@@ -1035,11 +1212,20 @@ export function DataTablesRegistrations({
     return b.id - a.id;
   });
 
+  academicYeardata.sort(function (a, b) {
+    return b.year - a.year;
+  });
+
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event);
+    setCurrentPage(0);
+  };
+
+  const handleFilterAcademicYear = (e) => {
+    onChangeAcademicYear(e);
     setCurrentPage(0);
   };
 
@@ -1069,21 +1255,28 @@ export function DataTablesRegistrations({
     pageCount = Math.ceil(data.length / itemsPerPage);
   }
 
-  // console.log("DATA === ", data);
-
   return (
     <>
       <FilterComponentRegistrations
+        academicYeardata={academicYeardata}
+        filterValidation={filterValidation}
+        SetFilterValidation={SetFilterValidation}
+        filterAcademicYear={filterAcademicYear}
+        SetFilterAcademicYear={SetFilterAcademicYear}
+        filterSteps={filterSteps}
+        SetFilterSteps={SetFilterSteps}
         data={data}
         filterText={filterText}
         onFilter={onFilter}
+        onChangeAcademicYear={handleFilterAcademicYear}
+        valueAcademicYear={valueAcademicYear}
         onChangeValidation={handleFilterStatusValidation}
         valueValidation={valueValidation}
         valueSteps={valueSteps}
         onChangeSteps={handleFilterStatusSteps}
         dataLength={data.length}
         setSelected={setSelected}
-        setAllSelected={setAllSelected}
+        // setAllSelected={setAllSelected}
         selectedRows={selectedRows}
       />
       {data ? (

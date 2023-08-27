@@ -59,11 +59,13 @@ const ResetPassword = () => {
     showPassword: false,
   });
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+  const navigateLogin = () => {
+    navigate("/login");
   };
 
-  const path = "/login";
+  // const handleClickShowPassword = () => {
+  //   setValues({ ...values, showPassword: !values.showPassword });
+  // };
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -86,7 +88,8 @@ const ResetPassword = () => {
       localStorage.setItem("TOKEN", response?.headers?.authorization);
       setIsLoading(false);
       AlertStatusSuccess(
-        path,
+        navigateLogin,
+        "Berhasil",
         "Password Berhasil Diubah",
         "Kembali Ke Halaman Login",
         "success"

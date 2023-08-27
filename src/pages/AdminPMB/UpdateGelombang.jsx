@@ -1,11 +1,11 @@
+import moment from "moment/moment";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateAdmissionPhase } from "../../api/Gelombang";
 import { Header } from "../../components";
 import { DropdownDatePickers } from "../../components/Dropdown";
-import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
+import { AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
-import moment from "moment/moment";
 
 export default function UbahGelombang() {
   const location = useLocation();
@@ -40,7 +40,7 @@ export default function UbahGelombang() {
     } else {
       updateAdmissionPhase(
         setSts,
-        path,
+        navigateAdmissionDetails,
         id,
         code,
         increment,
@@ -60,29 +60,6 @@ export default function UbahGelombang() {
     });
   };
 
-  // const [formFields, setFormFields] = useState([]);
-
-  // const addField = () => {
-  //   setFormFields([...formFields, ""]);
-  // };
-
-  // const removeField = (index) => {
-  //   const updatedFields = [...formFields];
-  //   updatedFields.splice(index, 1);
-  //   setFormFields(updatedFields);
-  // };
-
-  // const handleChange = (index, value) => {
-  //   const updatedFields = [...formFields];
-  //   updatedFields[index] = value;
-  //   setFormFields(updatedFields);
-  // };
-
-  // const handleAmountChange = (e) => {
-  //   const value = parseInt(e.target.value);
-  //   setAmount(value);
-  // };
-
   const handleIncrementChange = (e) => {
     const value = parseInt(e.target.value);
     setIncrement(value);
@@ -94,11 +71,6 @@ export default function UbahGelombang() {
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
     setAmount(inputVal);
   };
-
-  // const SemesterOptions = semesterData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
 
   return (
     <div>

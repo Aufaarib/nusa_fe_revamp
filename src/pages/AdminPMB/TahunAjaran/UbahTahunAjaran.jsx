@@ -21,8 +21,6 @@ export default function UbahTahunAjaran() {
   const [status, setStatus] = useState(undefined);
   const path = "/admin/list-tahun-ajaran";
 
-  console.log("okokwokkwf === ", curriculums.value);
-
   const fetchCurriculum = async () => {
     getKurikulum(setCurriculumData, setStatus);
   };
@@ -40,11 +38,19 @@ export default function UbahTahunAjaran() {
     if (year === "" || name === "" || curriculum === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateTahunAjaran(setStatus, path, year, name, status, curriculum, code);
+      updateTahunAjaran(
+        setStatus,
+        navigateTahunAjaran,
+        year,
+        name,
+        status,
+        curriculum,
+        code
+      );
     }
   };
 
-  const navigateListBank = () => {
+  const navigateTahunAjaran = () => {
     navigate(path);
   };
 
@@ -64,7 +70,7 @@ export default function UbahTahunAjaran() {
           title="Ubah Tahun Ajaran"
         />
       </div>
-      <div style={{ marginLeft: "60px" }}>
+      <div style={{ padding: "10px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -119,7 +125,7 @@ export default function UbahTahunAjaran() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateListBank}
+              onClick={navigateTahunAjaran}
             >
               Batal
             </button>

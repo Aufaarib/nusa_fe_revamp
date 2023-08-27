@@ -22,7 +22,7 @@ export default function UbahKelas() {
     if (grade === "" || name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateKelas(setSts, path, grade, name, description, id);
+      updateKelas(setSts, navigateKelas, grade, name, description, id);
     }
   };
 

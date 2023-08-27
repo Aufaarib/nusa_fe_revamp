@@ -18,7 +18,7 @@ export default function TambahKurikulum() {
     if (name.length === 0 || description.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postKurikulum(setSts, path, name, description);
+      postKurikulum(setSts, navigateKurikulum, name, description);
     }
   };
 

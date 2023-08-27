@@ -69,7 +69,7 @@ export function updateMapel(setSts, code, path, name, description, type) {
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Mata Pelajaran",
         "success",
         "Ubah Mata Pelajaran Berhasil"
       );
@@ -101,7 +101,7 @@ export function postMapel(setSts, path, name, description, type) {
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Mata Pelajaran",
         "success",
         "Tambah Mata Pelajaran Berhasil"
       );

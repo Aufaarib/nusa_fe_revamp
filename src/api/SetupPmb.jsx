@@ -61,7 +61,7 @@ export function getAdmissionDetails(setData, setSts, code) {
 //       });
 //   }
 
-export function updateStatusAdmission(setSts, code) {
+export function updateStatusAdmission(setSts, code, path) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -72,11 +72,17 @@ export function updateStatusAdmission(setSts, code) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Kembali Ke Setup PMB",
+        "success",
+        "Ubah Status Pendaftar Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
     });
 }
 

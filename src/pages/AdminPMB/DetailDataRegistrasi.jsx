@@ -197,11 +197,11 @@ const DetailDataRegistrasi = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          className="btn-action-merah"
+          className="btn-biru"
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit" /> Ubah Status
+          <i className="fa fa-edit" /> Edit Status
         </button>
       ),
       ignoreRowClick: true,
@@ -247,11 +247,11 @@ const DetailDataRegistrasi = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          className="btn-action-merah"
+          className="btn-biru"
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit" /> Ubah Status
+          <i className="fa fa-edit" /> Edit Status
         </button>
       ),
       ignoreRowClick: true,
@@ -264,36 +264,46 @@ const DetailDataRegistrasi = () => {
     if (dataStep1?.status !== "valid") {
       AlertMessage(
         "Tidak Dapat Melakukan Verifikasi",
-        "Pembayaran Biaya Registrasi Belum Terverifikasi",
-        "Tutup"
+        "Pembayaran Biaya Registrasi Belum Terverifikasi (Tahap 1)",
+        "Tutup",
+        "warning"
       );
     } else if (dataStep2?.status !== "valid") {
       AlertMessage(
         "Tidak Dapat Melakukan Verifikasi",
-        "Data Pendaftaran Belum Terverifikasi",
-        "Tutup"
+        "Data Pendaftaran Belum Terverifikasi (Tahap 2)",
+        "Tutup",
+        "warning"
       );
     } else if (dataStep3?.status !== "valid") {
       AlertMessage(
         "Tidak Dapat Melakukan Verifikasi",
-        "Hasil Tes Belum Terupload atau Terverifikasi",
-        "Tutup"
+        "Hasil Tes Belum Terupload atau Terverifikasi (Tahap 3)",
+        "Tutup",
+        "warning"
       );
-    } else if (dataStep5?.status !== "valid") {
+    } else if (dataStep5 == null) {
       AlertMessage(
         "Tidak Dapat Melakukan Verifikasi",
-        "Pembayaran Biaya Pendidikan Belum Terverifikasi",
-        "Tutup"
+        "Pembayaran Biaya Pendidikan Kosong",
+        "Tutup",
+        "warning"
       );
     } else {
       data.status === "valid"
         ? AlertConfirmation(
             onConfirm,
-            "Non-Aktifkan Pendaftar?",
-            "Non-Aktifkan"
+            "Batalkan Verifikasi Pendaftar?",
+            "Batalkan Verifikasi",
+            "question"
           )
         : data.status === "inreview" &&
-          AlertConfirmation(onConfirm, "Aktifkan Pendaftar?", "Aktifkan");
+          AlertConfirmation(
+            onConfirm,
+            "Verifikasi Pendaftar?",
+            "Verifikasi",
+            "question"
+          );
     }
   };
 
@@ -383,10 +393,12 @@ const DetailDataRegistrasi = () => {
               className={
                 dataStep1?.status !== "valid" ||
                 dataStep2?.status !== "valid" ||
-                dataStep3?.status !== "valid" ||
-                dataStep5?.status !== "valid"
-                  ? "btn-action-disabled"
-                  : "btn-action-merah"
+                dataStep3?.status !== "valid"
+                  ? // || dataStep5?.status !== "valid"
+                    "btn-action-disabled"
+                  : data.status === "inreview"
+                  ? "btn-hijau"
+                  : "btn-mrh"
               }
               onClick={() => ApproveRegistrasi()}
             >
@@ -423,7 +435,7 @@ const DetailDataRegistrasi = () => {
               padding: "20px 20px",
               width: "200px",
               backgroundColor:
-                dataStep1 !== null ? fetched === "1" && "#8F0D1E" : "",
+                dataStep1 !== null ? fetched === "1" && "#fa5c5c" : "",
               color: dataStep1 !== null ? fetched === "1" && "white" : "grey",
             }}
             onClick={() => fetchRegistrationPayment()}
@@ -436,7 +448,7 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "2" && "#8F0D1E",
+              backgroundColor: fetched === "2" && "#fa5c5c",
               color:
                 dataStep1?.status === "valid"
                   ? fetched === "2" && "white"
@@ -458,7 +470,7 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "3" && "#8F0D1E",
+              backgroundColor: fetched === "3" && "#fa5c5c",
               color:
                 dataStep1?.status === "valid" && dataStep2?.status === "valid"
                   ? // ? dataStep3 === null
@@ -482,7 +494,7 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "4" && "#8F0D1E",
+              backgroundColor: fetched === "4" && "#fa5c5c",
               color:
                 dataStep1?.status === "valid" &&
                 dataStep2?.status === "valid" &&
@@ -510,7 +522,7 @@ const DetailDataRegistrasi = () => {
               borderRadius: "6px",
               padding: "20px 20px",
               width: "200px",
-              backgroundColor: fetched === "5" && "#8F0D1E",
+              backgroundColor: fetched === "5" && "#fa5c5c",
               color:
                 dataStep1?.status === "valid" &&
                 dataStep2?.status === "valid" &&
@@ -606,14 +618,12 @@ const DetailDataRegistrasi = () => {
                       padding: "2px 10px",
                     }}
                     className={
-                      dataStep2 !== null
-                        ? "btn-action-merah"
-                        : "btn-action-disabled"
+                      dataStep2 !== null ? "btn-biru" : "btn-action-disabled"
                     }
                     disabled={dataStep2 !== null ? false : true}
                     onClick={() => navigateUbahStatus()}
                   >
-                    <i className="fa fa-edit" /> Ubah Status
+                    <i className="fa fa-edit" /> Edit Status
                   </button>
                 </div>
               </div>

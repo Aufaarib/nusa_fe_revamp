@@ -8,21 +8,15 @@ import {
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import {
-  AlertDelete,
   AlertUpdateStatusAktif,
   AlertUpdateStatusNonAktif,
 } from "../../../components/ModalPopUp";
 
 export default function ListKelompokMapel() {
   const [data, setData] = useState([]);
-  // const [status, setStatus] = useState("");
   const statusAktif = "Aktif";
   const statusNonAktif = "Tidak Aktif";
   const [sts, setSts] = useState(undefined);
-  const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
-  const [desc, setDesc] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
 
   let filteredItems = data;
@@ -37,36 +31,36 @@ export default function ListKelompokMapel() {
     getKelompokMapel(setData, setSts);
   }, []);
 
-  const handleNonActiveStatus = (id, description) => {
-    // setisOpenUpdateTidakAktif(true);
-    // setStatus("Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
-    AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
-  };
-
-  // const closeModalUpdateTidakAktif = () => {
-  //   setisOpenUpdateTidakAktif(false);
+  // const handleNonActiveStatus = (id, description) => {
+  //   // setisOpenUpdateTidakAktif(true);
+  //   // setStatus("Aktif");
+  //   // setDesc(description);
+  //   // setUpdateId(id);
+  //   AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
   // };
 
-  const handleActiveStatus = (id, description) => {
-    // setisOpenUpdateAktif(true);
-    // setStatus("Tidak Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
-    AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
-  };
+  // // const closeModalUpdateTidakAktif = () => {
+  // //   setisOpenUpdateTidakAktif(false);
+  // // };
 
-  // const closeModalUpdateAktif = () => {
-  //   setisOpenUpdateAktif(false);
+  // const handleActiveStatus = (id, description) => {
+  //   // setisOpenUpdateAktif(true);
+  //   // setStatus("Tidak Aktif");
+  //   // setDesc(description);
+  //   // setUpdateId(id);
+  //   AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
   // };
 
-  const onUpdateStatus = (id, status) => {
-    updateStatusKelompokMapel(setSts, status, id, setData);
-    // closeModalUpdateAktif();
-    // closeModalUpdateTidakAktif();
-    // setisOpenStatus(true);
-  };
+  // // const closeModalUpdateAktif = () => {
+  // //   setisOpenUpdateAktif(false);
+  // // };
+
+  // const onUpdateStatus = (id, status) => {
+  //   updateStatusKelompokMapel(setSts, status, id, setData);
+  //   // closeModalUpdateAktif();
+  //   // closeModalUpdateTidakAktif();
+  //   // setisOpenStatus(true);
+  // };
 
   // const openModalHapus = (id, name) => {
   //   // setisOpenDelete(true);
@@ -79,11 +73,11 @@ export default function ListKelompokMapel() {
   //   setisOpenDelete(false);
   // };
 
-  const onDelete = (id) => {
-    deleteKelompokMapel(setSts, id, setData);
-    // closeModalHapus();
-    // setisOpenStatus(true);
-  };
+  // const onDelete = (id) => {
+  //   deleteKelompokMapel(setSts, id, setData);
+  //   // closeModalHapus();
+  //   // setisOpenStatus(true);
+  // };
 
   const columns = [
     {
@@ -140,17 +134,19 @@ export default function ListKelompokMapel() {
       cell: (data) => <div>{data.teacher?.fullname}</div>,
       width: "120px",
     },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <div>
           <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             onClick={() =>
               navigateUbahKelompokMapel(
                 data.id,
@@ -163,12 +159,13 @@ export default function ListKelompokMapel() {
                 data.roomClasses?.room?.name,
                 data.schedule.startTime,
                 data.schedule.endTime,
+                data.teacher?.id,
+                data.teacher?.fullname,
                 data.status
               )
             }
-            className="btn-action-merah ml-3 w-auto px-2"
           >
-            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
+            <i className="fa fa-edit"></i> Edit
           </button>
         </div>
       ),
@@ -195,6 +192,8 @@ export default function ListKelompokMapel() {
     room,
     startTime,
     endTime,
+    teacherId,
+    teacherName,
     status
   ) => {
     navigate("/admin/ubah-kelompok-mapel", {
@@ -209,6 +208,8 @@ export default function ListKelompokMapel() {
         room: room,
         startTime: startTime,
         endTime: endTime,
+        teacherId: teacherId,
+        teacherName: teacherName,
         status: status,
       },
     });

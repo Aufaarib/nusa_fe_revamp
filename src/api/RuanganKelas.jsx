@@ -117,7 +117,7 @@ export function updateClassRoom(
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Ruangan Kelas",
         "success",
         "Ubah Ruangan Kelas Berhasil"
       );

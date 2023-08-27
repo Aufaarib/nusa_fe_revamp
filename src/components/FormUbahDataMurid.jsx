@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import moment from "moment/moment";
+import React, { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BsChevronLeft } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getAdmissionRegistrationApplicant } from "../api/Registrasi";
 import axios from "../api/axios";
 import { dropdownData } from "../data/initData";
 import {
@@ -14,12 +14,7 @@ import {
   DropdownRadioInputGender,
 } from "./Dropdown";
 import Header from "./Header";
-import {
-  AlertEmpty,
-  AlertMessage,
-  AlertStatusTambahFailed,
-} from "./ModalPopUp";
-import moment from "moment/moment";
+import { AlertEmpty, AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
 import { TextInput } from "./TextInput";
 
 const FormUbahDataMurid = () => {
@@ -28,6 +23,10 @@ const FormUbahDataMurid = () => {
   const regNumber = localStorage.getItem("REG_NUMBER");
   const navigate = useNavigate();
   const location = useLocation();
+
+  const reload = () => {
+    navigate("/pmb/form-data-murid");
+  };
 
   const [sts, setSts] = useState(false);
   const [namaDepan, setFirstName] = useState(location.state.firstName);
@@ -63,8 +62,6 @@ const FormUbahDataMurid = () => {
     location.state.identityNumber
   );
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("ajikjwida === ", transportasi);
 
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
@@ -150,21 +147,23 @@ const FormUbahDataMurid = () => {
         )
         .then(() => {
           setIsLoading(false);
-          AlertMessage(
+          AlertStatusSuccess(
+            reload,
             "Berhasil",
-            "Data Anak Berhasil Terubah",
             "Tutup",
-            "success"
+            "success",
+            "Data Anak Berhasil Diubah"
           );
+          // AlertMessage(
+          //   "Berhasil",
+          //   "Data Anak Berhasil Terubah",
+          //   "Tutup",
+          //   "success"
+          // );
         })
         .catch(() => {
           setIsLoading(false);
-          AlertMessage(
-            "Gagal",
-            "Data Anak Gagal Terubah",
-            "Coba Lagi",
-            "error"
-          );
+          AlertMessage("Gagal", "Data Anak Gagal Diubah", "Coba Lagi", "error");
         });
     }
   };
@@ -397,7 +396,7 @@ const FormUbahDataMurid = () => {
         ) : (
           <AiOutlineEdit className="mr-2 text-2xl" />
         )}
-        Kirim
+        Ubah
       </button>
       <section className="flex justify-start">
         <Link

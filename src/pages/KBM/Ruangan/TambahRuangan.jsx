@@ -13,7 +13,7 @@ export default function TambahRuangan() {
 
   const path = "/admin/list-ruangan";
 
-  const navigateRuangKelas = () => {
+  const navigateRuangan = () => {
     navigate(path);
   };
 
@@ -23,7 +23,7 @@ export default function TambahRuangan() {
     if (name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postRoom(setSts, path, name, description);
+      postRoom(setSts, navigateRuangan, name, description);
     }
   };
 
@@ -71,7 +71,7 @@ export default function TambahRuangan() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateRuangKelas}
+              onClick={navigateRuangan}
             >
               Batal
             </button>

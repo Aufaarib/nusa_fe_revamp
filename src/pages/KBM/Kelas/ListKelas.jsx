@@ -1,19 +1,12 @@
-import { DataTables } from "../../../components/DataTables";
-import { CustomStylesModalHapus } from "../../../components/CustomStyles";
-import { getKelas, deleteKelas } from "../../../api/Kelas";
-import { useState, useEffect } from "react";
-import { Header } from "../../../components";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import { AlertDelete, ModalStatusList } from "../../../components/ModalPopUp";
+import { getKelas } from "../../../api/Kelas";
+import { Header } from "../../../components";
+import { DataTables } from "../../../components/DataTables";
 
 export default function ListKelas() {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
 
   let filteredItems = data;
@@ -27,21 +20,6 @@ export default function ListKelas() {
   useEffect(() => {
     getKelas(setData, setSts);
   }, []);
-
-  // const openModalHapus = (id, name) => {
-  //   // setisOpenDelete(true);
-  //   setDesc_nama(name);
-  //   setDeleteId(id);
-  //   AlertDelete(name, id, onDelete);
-  // };
-
-  // const closeModalHapus = () => {
-  //   setisOpenDelete(false);
-  // };
-
-  const onDelete = (id) => {
-    deleteKelas(setSts, id, setData);
-  };
 
   const columns = [
     {
@@ -72,7 +50,8 @@ export default function ListKelas() {
       cell: (data) => (
         <div>
           <button
-            className="btn-action-merah"
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             title="Edit"
             onClick={() =>
               navigateUbahKelas(
@@ -83,7 +62,7 @@ export default function ListKelas() {
               )
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
         </div>
       ),

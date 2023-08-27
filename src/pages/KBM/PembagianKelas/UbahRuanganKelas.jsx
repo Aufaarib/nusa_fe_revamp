@@ -17,15 +17,24 @@ export default function UbahRuanganKelas() {
   const [classData, setClassData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
   const [roomData, setRoomData] = useState([]);
-  const [academicYearId, setacAdemicYearId] = useState(
-    location.state.tahunAjaran
-  );
-  const [classId, setClassId] = useState(location.state.ruangan);
-  const [teacherId, setTeacherId] = useState(location.state.waliKelas);
-  const [roomId, setRoomId] = useState(location.state.kelas);
+  const [academicYearIds, setacAdemicYearId] = useState({
+    value: location.state.tahunAjaranId,
+    label: location.state.tahunAjaran,
+  });
+  const [classIds, setClassId] = useState({
+    value: location.state.kelasId,
+    label: location.state.kelas,
+  });
+  const [teacherIds, setTeacherId] = useState({
+    value: location.state.waliKelasId,
+    label: location.state.waliKelas,
+  });
+  const [roomIds, setRoomId] = useState({
+    value: location.state.ruanganId,
+    label: location.state.ruangan,
+  });
   const [capacitys, setCapacity] = useState(location.state.kapasitas);
   const [sts, setSts] = useState(undefined);
-
   const path = "/admin/list-ruang-kelas";
 
   const navigateRuangKelas = () => {
@@ -62,25 +71,29 @@ export default function UbahRuanganKelas() {
     const id = location.state.id;
 
     if (
-      academicYearId === "" ||
-      classId === "" ||
-      roomId === "" ||
+      academicYearIds === "" ||
+      classIds === "" ||
+      roomIds === "" ||
       capacitys === "" ||
-      teacherId === ""
+      teacherIds === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
+      const academicYearId = academicYearIds.value;
+      const classId = classIds.value;
+      const roomId = roomIds.value;
+      const teacherId = teacherIds.value;
+
       updateClassRoom(
         setSts,
         id,
-        path,
+        navigateRuangKelas,
         academicYearId,
         classId,
         roomId,
         capacity,
         teacherId
       );
-      // setisOpenStatus(true);
     }
   };
 
@@ -127,45 +140,45 @@ export default function UbahRuanganKelas() {
           <DropdownSiswa
             label="Tahun Ajaran"
             required={true}
-            defaultValue={academicYearId}
+            defaultValue={academicYearIds}
             isClearable={false}
             options={academicYearOptions}
             isSearchable={false}
-            onChange={(e) => setacAdemicYearId(e.value)}
+            onChange={setacAdemicYearId}
           />
           <DropdownSiswa
             label="Kelas"
             required={true}
-            defaultValue={classId}
+            defaultValue={classIds}
             isClearable={false}
             options={classOptions}
             isSearchable={false}
-            onChange={(e) => setClassId(e.value)}
+            onChange={setClassId}
           />
           <DropdownSiswa
             label="Ruang"
             required={true}
-            defaultValue={roomId}
+            defaultValue={roomIds}
             isClearable={false}
             options={roomOptions}
             isSearchable={false}
-            onChange={(e) => setRoomId(e.value)}
+            onChange={setRoomId}
           />
           <TextInput
             label="Kapasitas"
             type="number"
             defaultValue={capacitys}
-            onChange={(e) => setCapacity(e.target.value)}
+            onChange={setCapacity}
             required={true}
           />
           <DropdownSiswa
             label="Wali Kelas"
             required={true}
-            defaultValue={teacherId}
+            defaultValue={teacherIds}
             isClearable={false}
             options={teacherOptions}
             isSearchable={false}
-            onChange={(e) => setTeacherId(e.value)}
+            onChange={setTeacherId}
           />
 
           <div className="btn-form">

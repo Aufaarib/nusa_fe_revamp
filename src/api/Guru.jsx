@@ -62,7 +62,7 @@ export function updateGuru(
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Guru",
         "success",
         "Ubah Guru Berhasil"
       );
@@ -119,7 +119,7 @@ export function postGuru(
       AlertStatusSuccess(
         path,
         "Berhasil",
-        "Tutup",
+        "Kembali Ke Halaman Guru",
         "success",
         "Tambah Guru Berhasil"
       );

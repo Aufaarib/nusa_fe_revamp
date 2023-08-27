@@ -623,6 +623,81 @@
     /* border: 1px solid #000000; */
   }
 
+  .btn-hijau {
+    /* @apply flex; */
+    @apply justify-center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-green-700;
+  }
+
+  .btn-biru {
+    /* @apply flex; */
+    @apply justify-center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    background-color: #7ea1c4;
+  }
+
+  .btn-modal-filter-true {
+    @apply justify-center;
+    width: auto;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 12px;
+    background-color: #caf7b5;
+    border: 1px solid #0c950c;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+  }
+
+  .btn-modal-filter-false {
+    @apply justify-center;
+    width: auto;
+    height: 30px;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 12px;
+    background-color: #9d9e9d;
+    border: 1px solid #0f0f0f;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+  }
+
   .btn-mrh {
     /* @apply flex; */
     @apply justify-center;
@@ -640,7 +715,7 @@
     @apply ease-in-out;
     @apply rounded;
     @apply shadow-md;
-    @apply bg-merah;
+    @apply bg-red-700;
   }
   /* .btn-mrh:hover {
     @apply bg-putih;
@@ -679,6 +754,7 @@
     @apply text-white;
     @apply text-base;
   }
+  
   .btn-action-ungu:hover {
     @apply bg-putih;
   }
@@ -710,13 +786,14 @@
   .btn-action-pink:hover {
     @apply bg-gelap;
   } */
+  /* .pmb-belum-mulai:hover{
+    @apply bg-gray-200;
+  } */
+
   .pmb-belum-mulai {
     @apply bg-gray-100;
     @apply text-gray-700;
   }
-  /* .pmb-belum-mulai:hover{
-        @apply bg-gray-200;
-    } */
   .pmb-belum-mulai .step {
     @apply bg-gray-700;
   }

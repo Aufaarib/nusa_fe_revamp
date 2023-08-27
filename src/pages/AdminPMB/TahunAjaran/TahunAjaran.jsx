@@ -46,7 +46,7 @@ const TahunAjaran = () => {
       width: "auto",
     },
     {
-      name: <div>Nama</div>,
+      name: <div>Nama Tahun Ajaran</div>,
       selector: (data) => data.name,
       cell: (data) => <div>{data.name}</div>,
       width: "auto",
@@ -62,7 +62,7 @@ const TahunAjaran = () => {
       cell: (data) => (
         <button
           style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-action-merah"
+          className="btn-biru"
           title="Edit"
           onClick={() =>
             navigateUbahTahunAjaran(
@@ -75,12 +75,12 @@ const TahunAjaran = () => {
             )
           }
         >
-          <i className="fa fa-edit" /> Ubah
+          <i className="fa fa-edit" /> Edit
         </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "220px",
     },
   ];
 

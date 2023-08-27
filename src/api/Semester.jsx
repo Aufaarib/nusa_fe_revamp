@@ -9,27 +9,27 @@ import {
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
-export function getSemester(setData, setSts) {
-  axios
-    .get(process.env.REACT_APP_NUSA + "/semester/fetch")
-    .then((res) => {
-      setData(res.data.data);
-      setSts({ type: "success" });
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-    });
+// export function getSemester(setData, setSts) {
+//   axios
+//     .get(process.env.REACT_APP_NUSA + "/semester/fetch")
+//     .then((res) => {
+//       setData(res.data.data);
+//       setSts({ type: "success" });
+//     })
+//     .catch((error) => {
+//       setSts({ type: "error", error });
+//     });
 
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
-}
+// axios
+//     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+//     .then((res) => {
+//     setData(res.data);
+//     setSts({ type: 'success' });
+//     })
+//     .catch((error) => {
+//     setSts({ type: 'error', error });
+//     });
+// }
 
 export function updateStatusSemester(setSts, status, id, setData) {
   axios
@@ -39,7 +39,7 @@ export function updateStatusSemester(setSts, status, id, setData) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusUpdateSuccess();
-      getSemester(setData, setSts);
+      // getSemester(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -87,7 +87,7 @@ export function deleteSemester(setSts, deleteId, setData) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusHapusSuccess();
-      getSemester(setData, setSts);
+      // getSemester(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
