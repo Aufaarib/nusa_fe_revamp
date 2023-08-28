@@ -49,7 +49,7 @@ export default function TambahPendaftaran() {
     e.preventDefault();
 
     const gelombang_ke = parseInt(increment);
-    const jumlah = parseInt(amount);
+    const jumlah = parseInt(amount.replace(/\./g, ""), 10);
 
     if (
       academicYearId === 0 ||
