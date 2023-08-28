@@ -24,7 +24,7 @@ const BerkasPembayaran = () => {
   const path = "/pmb/tahapan-pmb";
 
   const navigateSteps = () => {
-    navigate("/pmb/tahapan-pmb");
+    window.location.href = "/pmb/tahapan-pmb";
   };
 
   // Define your asyncSettings for the UploaderComponent (modify this as needed)
