@@ -193,6 +193,11 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
+        name: "Kurikulum",
+        path: `admin/list-kurikulum`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Tahun Ajaran",
         path: `admin/list-tahun-ajaran`,
         icon: <FaWpforms />,
