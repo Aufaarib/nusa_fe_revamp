@@ -141,7 +141,7 @@ const FormPernyataan = ({ indexMurid }) => {
                   <div className="mt-7" key={item.id}>
                     <TextInputModal
                       label={item.question}
-                      type="textarea"
+                      // type="textarea"
                       name="answers"
                       value={
                         (
@@ -159,7 +159,7 @@ const FormPernyataan = ({ indexMurid }) => {
                   <div className="mt-7" key={item.id}>
                     <TextInputModal
                       label={item.statement.question}
-                      type="textarea"
+                      // type="textarea"
                       name="answers"
                       // placeholder={item.answer}
                       defaultValue={item.answer}
