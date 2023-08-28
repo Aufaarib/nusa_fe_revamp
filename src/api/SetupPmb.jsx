@@ -61,7 +61,7 @@ export function getAdmissionDetails(setData, setSts, code) {
 //       });
 //   }
 
-export function updateStatusAdmission(setSts, code, path) {
+export function updateStatusAdmission(setSts, code, navigate) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -73,7 +73,7 @@ export function updateStatusAdmission(setSts, code, path) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Kembali Ke Setup PMB",
         "success",

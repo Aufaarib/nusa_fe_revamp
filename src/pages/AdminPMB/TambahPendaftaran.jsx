@@ -63,7 +63,7 @@ export default function TambahPendaftaran() {
     } else {
       postAdmission(
         setSts,
-        path,
+        navigateDataPendaftaran,
         academicYearId,
         name,
         gelombang_ke,
@@ -76,7 +76,7 @@ export default function TambahPendaftaran() {
     // });
   };
 
-  const navigateKurikulum = () => {
+  const navigateDataPendaftaran = () => {
     navigate(path);
   };
 
@@ -156,7 +156,7 @@ export default function TambahPendaftaran() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateKurikulum}
+              onClick={navigateDataPendaftaran}
             >
               Batal
             </button>
