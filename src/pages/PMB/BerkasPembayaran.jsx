@@ -55,7 +55,12 @@ const BerkasPembayaran = () => {
   // Function to handle file upload to the API using Axios
   const handleFileUpload = () => {
     if (filesData === null) {
-      AlertMessage("File Kosong", "Mohon Upload File Terlebih Dahulu", "Tutup");
+      AlertMessage(
+        "File Kosong",
+        "Coba Lagi",
+        "warning",
+        "Mohon Upload File Terlebih Dahulu"
+      );
     }
 
     const invoice = filesData.file.rawFile;
