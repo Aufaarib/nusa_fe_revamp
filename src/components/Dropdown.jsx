@@ -681,7 +681,7 @@ export const DropdownDatePickers = ({
       <form className="grid-container">
         {label && (
           <label htmlFor={name}>
-            {label} {required && <span className="ml-1 text-merah">*</span>}
+            {label} <span className="ml-1 text-merah">*</span>
           </label>
         )}
         <span>:</span>

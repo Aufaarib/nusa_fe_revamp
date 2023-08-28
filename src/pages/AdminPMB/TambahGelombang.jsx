@@ -22,6 +22,16 @@ export default function TambahGelombang() {
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
   const code = location.state.code;
+  const status = location.state.status;
+
+  const navigateAdmissionDetail = () => {
+    navigate("/admin/admission-detail", {
+      state: {
+        code: code,
+        status: status,
+      },
+    });
+  };
 
   const postData = (e) => {
     e.preventDefault();
@@ -38,7 +48,7 @@ export default function TambahGelombang() {
       const jumlah = parseInt(amount.replace(/\./g, ""), 10);
       postAdmissionPhase(
         setSts,
-        path,
+        navigateAdmissionDetail,
         code,
         increment,
         name,
@@ -158,7 +168,7 @@ export default function TambahGelombang() {
           /> */}
 
           <TextInput
-            label="Nominal"
+            label="Nominal Biaya Pendaftaran"
             type="text"
             onChange={handleInputChange}
             value={amount}

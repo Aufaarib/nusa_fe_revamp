@@ -121,7 +121,7 @@ export default function UbahGelombang() {
           />
 
           <TextInput
-            label="Nominal"
+            label="Nominal Biaya Pendaftaran"
             type="text"
             value={jumlah}
             onChange={handleInputChange}

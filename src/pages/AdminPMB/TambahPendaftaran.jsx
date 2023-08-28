@@ -26,7 +26,9 @@ export default function TambahPendaftaran() {
   const [increment, setIncrement] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [amount, setAmount] = useState("");
+  const [registrationAmount, setRegistrationAmount] = useState("");
+  const [educationAmount, setEducationAmount] = useState("");
+  const [description, setDescription] = useState("Detail Biaya Pendidikan");
 
   const navigate = useNavigate();
 
@@ -49,7 +51,14 @@ export default function TambahPendaftaran() {
     e.preventDefault();
 
     const gelombang_ke = parseInt(increment);
-    const jumlah = parseInt(amount.replace(/\./g, ""), 10);
+    const jumlahBiayaPendaftaran = parseInt(
+      registrationAmount.replace(/\./g, ""),
+      10
+    );
+    const jumlahBiayaPendidikan = parseInt(
+      educationAmount.replace(/\./g, ""),
+      10
+    );
 
     if (
       academicYearId === 0 ||
@@ -57,7 +66,9 @@ export default function TambahPendaftaran() {
       gelombang_ke === 0 ||
       startDate === "" ||
       endDate === "" ||
-      jumlah === 0
+      description === "" ||
+      jumlahBiayaPendaftaran === 0 ||
+      jumlahBiayaPendidikan === 0
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
@@ -69,11 +80,11 @@ export default function TambahPendaftaran() {
         gelombang_ke,
         startDate,
         endDate,
-        jumlah
+        jumlahBiayaPendaftaran,
+        description,
+        jumlahBiayaPendidikan
       );
-      //   setisOpenStatus(true);
     }
-    // });
   };
 
   const navigateDataPendaftaran = () => {
@@ -84,7 +95,14 @@ export default function TambahPendaftaran() {
     let inputVal = event.target.value;
     inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
-    setAmount(inputVal);
+    setRegistrationAmount(inputVal);
+  };
+
+  const handleInputEduChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    setEducationAmount(inputVal);
   };
 
   return (
@@ -139,10 +157,17 @@ export default function TambahPendaftaran() {
             change={(e) => setEndDate(e.element.value)}
           />
           <TextInput
-            label="Nominal"
+            label="Nominal Biaya Pendaftaran"
             type="text"
-            value={amount}
+            value={registrationAmount}
             onChange={handleInputChange}
+            required={true}
+          />
+          <TextInput
+            label="Nominal Biaya Pendidikan"
+            type="text"
+            value={educationAmount}
+            onChange={handleInputEduChange}
             required={true}
           />
           <div className="btn-form">

@@ -109,7 +109,7 @@ export function updateAdmissionPhase(
 
 export function postAdmissionPhase(
   setSts,
-  path,
+  navigate,
   code,
   increment,
   name,
@@ -132,7 +132,7 @@ export function postAdmissionPhase(
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Tutup",
         "success",
