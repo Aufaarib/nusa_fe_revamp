@@ -294,6 +294,7 @@ const DetailDataRegistrasi = () => {
         ? AlertConfirmation(
             onConfirm,
             "Batalkan Verifikasi Pendaftar?",
+            "",
             "Batalkan Verifikasi",
             "question"
           )
@@ -301,6 +302,7 @@ const DetailDataRegistrasi = () => {
           AlertConfirmation(
             onConfirm,
             "Verifikasi Pendaftar?",
+            "",
             "Verifikasi",
             "question"
           );

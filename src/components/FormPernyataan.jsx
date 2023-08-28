@@ -11,6 +11,8 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { getAdmissionAnswer, getAdmissionStatement } from "../api/Registrasi";
 import Header from "./Header";
 import {
+  AlertMessage,
+  AlertStatusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
 } from "./ModalPopUp";
@@ -37,7 +39,9 @@ const FormPernyataan = ({ indexMurid }) => {
   const [formData, setFormData] = useState([]);
   const path = "/pmb/tahapan-pmb";
 
-  console.log("JAWABAN === ", admissionAnswerData);
+  const reload = () => {
+    window.location.href = "/pmb/form-pernyataan";
+  };
 
   const handleInputChange = (e, itemId) => {
     const value = e.currentTarget.value; // Retrieve the latest value
@@ -90,11 +94,22 @@ const FormPernyataan = ({ indexMurid }) => {
       )
       .then(() => {
         setIsLoading(false);
-        AlertStatusTambahSuccess("/pmb/form-pernyataan");
+        AlertStatusSuccess(
+          reload,
+          "Berhasil",
+          "Tutup",
+          "success",
+          "Upload Data Pernyataan Berhasil"
+        );
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusTambahFailed();
+        AlertMessage(
+          "Gagal",
+          "Upload Data Pernyataan Gagal",
+          "Coba Lagi",
+          "error"
+        );
       });
   };
 

@@ -18,11 +18,14 @@ const BerkasPembayaran = () => {
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/invoice`;
   const [isLoading, setIsLoading] = useState(false);
-  const [fileInvoice, setFileInvoice] = useState(null);
   const uploaderRef = useRef(null);
   const [filesData, setFilesData] = useState(null);
   const navigate = useNavigate();
   const path = "/pmb/tahapan-pmb";
+
+  const navigateSteps = () => {
+    navigate("/pmb/tahapan-pmb");
+  };
 
   // Define your asyncSettings for the UploaderComponent (modify this as needed)
   const asyncSettings = {
@@ -71,7 +74,7 @@ const BerkasPembayaran = () => {
       )
       .then(() => {
         AlertStatusSuccess(
-          path,
+          navigateSteps,
           "Berhasil",
           "Kembali Ke Halaman Tahapan PMB",
           "success",
@@ -79,11 +82,11 @@ const BerkasPembayaran = () => {
         );
       })
       .catch(() => {
-        AlertStatusFailed(
+        AlertMessage(
           "Gagal",
           "Coba Lagi",
-          "error",
-          "Unggah Bukti Pembayaran Gagal"
+          "Unggah Bukti Pembayaran Gagal",
+          "error"
         );
       });
   };
@@ -105,7 +108,7 @@ const BerkasPembayaran = () => {
         }}
       >
         {/* COL 1 */}
-        <section>
+        <section style={{ width: "100%" }}>
           <label htmlFor="invoice" className="block mt-4 mb-1">
             Upload Bukti Pembayaran{" "}
           </label>
@@ -118,17 +121,17 @@ const BerkasPembayaran = () => {
             uploading={onFileUpload}
             success={onSuccess.bind(this)}
             locale="id-BAHASA"
-            allowedExtensions=".png"
-            accept=".png"
+            allowedExtensions=".png,.jpg"
+            accept=".png,.jpg"
             minFileSize={minFileSize}
             maxFileSize={maxFileSize}
             multiple={false}
             buttons={{
-              browse: !fileInvoice ? "Pilih File" : "Ganti Berkas",
+              browse: !filesData ? "Pilih File" : "Ganti File",
             }}
           />
           <small className=" text-gray-400">
-            <i>Jenis berkas: .png</i>
+            <i>Jenis berkas: .png / .jpg</i>
           </small>
         </section>
       </div>

@@ -97,6 +97,10 @@ const FormDaftarOrangTua = () => {
     }));
   };
 
+  const reload = () => {
+    window.location.href = "/pmb/form-data-orang-tua-ayah";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -157,7 +161,7 @@ const FormDaftarOrangTua = () => {
       .then(() => {
         setIsLoading(false);
         AlertStatusSuccess(
-          "/pmb/form-data-orang-tua-ayah",
+          reload,
           "Berhasil",
           "Tutup",
           "success",
@@ -285,12 +289,12 @@ const FormDaftarOrangTua = () => {
               />
               <TextInput
                 label="Nomor Ponsel 2"
-                type="numer"
+                type="number"
                 id="phoneNumber2"
                 onChange={updateParents}
                 value={parent.phoneNumber2}
                 disable={false}
-                required={true}
+                required={false}
               />
               <TextInput
                 label="Propinsi"

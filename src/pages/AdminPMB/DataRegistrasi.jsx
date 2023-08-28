@@ -19,13 +19,30 @@ const DataRegistrasi = () => {
   const navigate = useNavigate();
   const year = moment().format("YYYY");
 
-  const [validationFilter, setValidationFilter] = useState("inreview");
+  const [validationFilter, setValidationFilter] = useState(
+    localStorage.getItem("ValidationFilter")
+  );
   const [academicYearFilter, setAcademicYearFilter] = useState(year);
-  const [stepsFilter, setStepsFilter] = useState("");
+  const [stepsFilter, setStepsFilter] = useState(
+    localStorage.getItem("StepsFilter")
+  );
 
-  const [filterValidation, SetFilterValidation] = useState("false");
-  const [filterAcademicYear, SetFilterAcademicYear] = useState("false");
-  const [filterSteps, SetFilterSteps] = useState("false");
+  const [filterValidation, SetFilterValidation] = useState(
+    localStorage.getItem("FilterValidation")
+  );
+  const [filterAcademicYear, SetFilterAcademicYear] = useState(
+    localStorage.getItem("FilterAcademicYear")
+  );
+  const [filterSteps, SetFilterSteps] = useState(
+    localStorage.getItem("FilterSteps")
+  );
+
+  localStorage.setItem("ValidationFilter", validationFilter);
+  localStorage.setItem("StepsFilter", stepsFilter);
+
+  localStorage.setItem("FilterValidation", filterValidation);
+  localStorage.setItem("FilterAcademicYear", filterAcademicYear);
+  localStorage.setItem("FilterSteps", filterSteps);
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);

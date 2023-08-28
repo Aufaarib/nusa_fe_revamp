@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { Header } from "../../components";
 import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
@@ -17,15 +17,18 @@ const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/additionalFile`;
-  const { isLoading, setIsLoading } = useStateContext();
-
-  const [fileInvoice, setFileInvoice] = useState(null);
   const uploaderRef = useRef(null);
+  const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const [filePasPhoto, setPasPhoto] = useState(null);
   const [fileKk, setFileKk] = useState(null);
   const [fileAkte, setFileAkte] = useState(null);
   const [fileRapor, setFileRapor] = useState(null);
   const path = "/pmb/tahapan-pmb";
+
+  const navigateTahapan = () => {
+    navigate(path);
+  };
 
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
@@ -99,7 +102,7 @@ const BerkasPendaftaran = () => {
           // Handle success response if needed
           setIsLoading(false);
           AlertStatusSuccess(
-            "/pmb/berkas-pendaftaran",
+            navigateTahapan,
             "Berhasil",
             "Tutup",
             "success",
@@ -154,17 +157,17 @@ const BerkasPendaftaran = () => {
               uploading={onFileUpload}
               success={onAkte.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileAkte ? "Upload File" : "Ganti File",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </section>
 
@@ -182,17 +185,17 @@ const BerkasPendaftaran = () => {
               uploading={onFileUpload}
               success={onKK.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileKk ? "Upload File" : "Ganti File",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </section>
 
@@ -210,17 +213,17 @@ const BerkasPendaftaran = () => {
               uploading={onFileUpload}
               success={onRapor.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !fileRapor ? "Upload File" : "Ganti File",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </section>
 
@@ -238,17 +241,17 @@ const BerkasPendaftaran = () => {
               uploading={onFileUpload}
               success={onPasPhoto.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Berkas" : "Ganti Berkas",
+                browse: !filePasPhoto ? "Upload File" : "Ganti File",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </section>
         </div>

@@ -4,7 +4,7 @@ import React from "react";
 const Header = ({ home, prev, at, navHome, navePrev, title, icon }) => (
   <div style={{ borderBottom: "1px solid gray", marginBottom: "10px" }}>
     <div style={{ marginBottom: "20px" }}>
-      <Breadcrumbs>
+      <Breadcrumbs className="capitalize">
         <Typography fontSize="14px" color="gray" href={navHome}>
           {home}
         </Typography>

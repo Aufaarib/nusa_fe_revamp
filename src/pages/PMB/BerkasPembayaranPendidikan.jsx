@@ -42,6 +42,10 @@ const BerkasPembayaranBiayaPendidikan = () => {
   const [metode, setMetode] = useState(null);
   const [filesData, setFilesData] = useState(null);
 
+  const navigateTahapan = () => {
+    window.location.href = path;
+  };
+
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
     removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
@@ -84,7 +88,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
       .then((response) => {
         console.log("File uploaded successfully!", response);
         AlertStatusSuccess(
-          path,
+          navigateTahapan,
           "Berhasil",
           "Kembali Ke Halaman Tahapan PMB",
           "success",
@@ -161,8 +165,8 @@ const BerkasPembayaranBiayaPendidikan = () => {
               uploading={onFileUpload}
               success={onSuccess.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
@@ -171,7 +175,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg </i>
             </small>
           </div>
         </section>

@@ -371,7 +371,13 @@ export function updateAdmissionSteps(setSts, code, step, status, note, path) {
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertConfirmation(path, "Ubah Tahapan Berhasil", "Tutup", "success");
+      AlertStatusSuccess(
+        path,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Update Status Tahapan Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -547,11 +553,12 @@ export function uploadHasilTest(score, navigate) {
       }
     )
     .then(() => {
-      AlertConfirmation(
+      AlertStatusSuccess(
         navigate,
-        "Upload Hasil Test Berhasil",
+        "Berhasil",
         "Tutup",
-        "success"
+        "success",
+        "Upload Hasil Test Berhasil"
       );
       // setSts({ type: "success" });
       // setData();

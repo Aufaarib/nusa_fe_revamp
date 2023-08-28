@@ -67,8 +67,8 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
     )
     .then(() => {
       AlertMessage(
-        "Penambahan Anak Berhasil",
-        "Silahkan Klik Lihat Untuk Memulai Proses PMB",
+        "Berhasil",
+        "Penambahan Calon Siswa Berhasil, Silahkan Klik Tombol Lihat Untuk Memulai Proses PMB",
         "Tutup",
         "success"
       );

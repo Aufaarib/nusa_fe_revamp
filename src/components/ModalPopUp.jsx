@@ -174,7 +174,7 @@ export const ModalTambahCalonMurid = ({
       ariaHideApp={false}
     >
       <div className="div-wrapper">
-        <div className="text-wrapper-3">Form Pendaftaran Anak</div>
+        <div className="text-wrapper-3">Form Penambahan Calon Siswa</div>
       </div>
       <div
         style={{
@@ -185,7 +185,7 @@ export const ModalTambahCalonMurid = ({
         }}
       >
         <TextInputModal
-          label="Nama Depan Anak"
+          label="Nama Depan Calon Siswa"
           type="text"
           onChange={onChange}
           required={true}
@@ -466,7 +466,7 @@ export const ModalDetail = ({
 // SA STYLING
 const styledSweetAlert = Swal.mixin({
   customClass: {
-    confirmButton: "btn-merah",
+    confirmButton: "btn-merah capitalize",
     cancelButton: "btn-putih",
   },
   padding: "30px",

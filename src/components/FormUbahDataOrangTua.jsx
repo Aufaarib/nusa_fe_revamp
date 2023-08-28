@@ -8,10 +8,15 @@ import { useStateContext } from "../contexts/ContextProvider";
 import {
   DropdownDatePickers,
   DropdownRadioInputBiological,
+  DropdownRadioInputGender,
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
-import { AlertStatusSuccess, AlertStatusUpdateFailed } from "./ModalPopUp";
+import {
+  AlertMessage,
+  AlertStatusSuccess,
+  AlertStatusUpdateFailed,
+} from "./ModalPopUp";
 import TextInput from "./TextInput";
 import moment from "moment/moment";
 
@@ -59,6 +64,16 @@ const FormUbahDataOrangTua = () => {
   const [incomeGrades, setIncomeGrade] = useState(location.state.incomeGrade);
   const [parent, setParent] = useState({});
 
+  const navigateParentsData = () => {
+    if (relationship === "perwalian") {
+      navigate("/pmb/form-data-orang-tua-wali");
+    } else if (relationship === "ayah") {
+      navigate("/pmb/form-data-orang-tua-ayah");
+    } else if (relationship === "ibu") {
+      navigate("/pmb/form-data-orang-tua-ibu");
+    }
+  };
+
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -103,22 +118,24 @@ const FormUbahDataOrangTua = () => {
       .then(() => {
         setIsLoading(false);
         AlertStatusSuccess(
-          `/pmb/form-data-orang-tua-${
-            location.state.relationship === "perwalian" && "wali"
-          }`,
+          navigateParentsData,
           "Berhasil",
           `Kembali Ke Halaman Data ${
-            location.state.relationship === "perwalian" && "wali"
+            location.state.relationship === "perwalian"
+              ? "wali"
+              : location.state.relationship
           }`,
           "success",
           `Ubah Data ${
-            location.state.relationship === "perwalian" && "wali"
+            location.state.relationship === "perwalian"
+              ? "wali"
+              : location.state.relationship
           } Berhasil`
         );
       })
       .catch(() => {
         setIsLoading(false);
-        AlertStatusUpdateFailed();
+        AlertMessage("Gagal", "Ubah Data Gagal", "Coba Lagi", "error");
       });
   };
 
@@ -136,8 +153,8 @@ const FormUbahDataOrangTua = () => {
         home="PMB"
         prev="Tahapan"
         navePrev={path}
-        at="Pendataan Ayah"
-        title="Form Pendataan Orang Tua"
+        at={`Ubah Data ${location.state.relationship}`}
+        title="Form Ubah Data Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <form
@@ -145,7 +162,9 @@ const FormUbahDataOrangTua = () => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
+            <h1 className="mt-3 text-merah capitalize">
+              Ubah Data {location.state.relationship}
+            </h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -162,6 +181,22 @@ const FormUbahDataOrangTua = () => {
                 disable={false}
                 required={true}
               />
+              {relationship === "perwalian" && (
+                <>
+                  <br />
+                  <DropdownRadioInputGender
+                    required={true}
+                    label="Jenis Kelamin"
+                    value1="male"
+                    value2="female"
+                    label2="Laki-Laki"
+                    label3="Perempuan"
+                    onChange={(e) => setGender(e.element.value)}
+                    checked={gender}
+                  />
+                  <br />
+                </>
+              )}
               <TextInput
                 label="Agama"
                 type="text"
@@ -192,7 +227,7 @@ const FormUbahDataOrangTua = () => {
               <br />
               <DropdownRadioInputBiological
                 required={true}
-                label="Hubungan Ayah"
+                label={`Hubungan ${relationship}`}
                 value1="1"
                 value2="0"
                 label2="Kandung"
@@ -225,12 +260,12 @@ const FormUbahDataOrangTua = () => {
               />
               <TextInput
                 label="Nomor Ponsel 2"
-                type="numer"
+                type="number"
                 id="phoneNumber2"
                 onChange={(e) => setPhoneNumber_2(e.target.value)}
                 value={phoneNumber2}
                 disable={false}
-                required={true}
+                required={false}
               />
               <TextInput
                 label="Propinsi"
@@ -358,7 +393,9 @@ const FormUbahDataOrangTua = () => {
       <section className="flex justify-start">
         <Link
           to={`/pmb/form-data-orang-tua-${
-            location.state.relationship === "perwalian" && "wali"
+            location.state.relationship === "perwalian"
+              ? "wali"
+              : location.state.relationship
           }`}
           className="bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
         >

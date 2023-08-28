@@ -786,7 +786,7 @@ export const DropdownRadioInputBiological = ({
     <div>
       <form className="grid-container">
         {label && (
-          <label htmlFor={name}>
+          <label className="capitalize" htmlFor={name}>
             {label} {required && <span className="ml-1 text-merah">*</span>}
           </label>
         )}

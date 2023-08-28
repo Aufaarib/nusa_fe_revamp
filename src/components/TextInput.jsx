@@ -75,7 +75,7 @@ export const TextInput = ({
       <div>
         <form className="grid-container">
           {label && (
-            <label className="mt-1">
+            <label className="mt-1 mr-2">
               {label} {required && <span className="ml-1 text-merah">*</span>}
             </label>
           )}

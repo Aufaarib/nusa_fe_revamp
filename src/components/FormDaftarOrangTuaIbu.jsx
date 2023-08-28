@@ -35,6 +35,10 @@ const FormDaftarOrangTuaIbu = () => {
   const [admissionParentsData, setAdmissionParents] = useState(null);
   const [sts, setSts] = useState(false);
 
+  const reload = () => {
+    window.location.href = "/pmb/form-data-orang-tua-ibu";
+  };
+
   const navigateUbah = () => {
     navigate("/pmb/form-ubah-data-orang-tua", {
       state: {
@@ -164,7 +168,7 @@ const FormDaftarOrangTuaIbu = () => {
       .then(() => {
         setIsLoading(false);
         AlertStatusSuccess(
-          "/pmb/form-data-orang-tua-ibu",
+          reload,
           "Berhasil",
           "Tutup",
           "success",

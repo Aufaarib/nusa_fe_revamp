@@ -31,6 +31,10 @@ const FormDaftarOrangTuaWali = () => {
   const [sts, setSts] = useState(false);
   const [parent, setParent] = useState({});
 
+  const reload = () => {
+    window.location.href = "/pmb/form-data-orang-tua-wali";
+  };
+
   const navigateUbah = () => {
     navigate("/pmb/form-ubah-data-orang-tua", {
       state: {
@@ -126,8 +130,6 @@ const FormDaftarOrangTuaWali = () => {
     const occupation = parent.occupation;
     const incomeGrade = parseInt(parent.incomeGrade);
 
-    console.log("PARENT === ", parent);
-
     axios
       .post(
         process.env.REACT_APP_BASE_URL + "/user/parent",
@@ -162,7 +164,7 @@ const FormDaftarOrangTuaWali = () => {
       .then(() => {
         setIsLoading(false);
         AlertStatusSuccess(
-          "/pmb/form-data-orang-tua-wali",
+          reload,
           "Berhasil",
           "Tutup",
           "success",
@@ -416,6 +418,16 @@ const FormDaftarOrangTuaWali = () => {
                   label="Nama Lengkap"
                   type="text"
                   value={admissionParentsData?.fullName}
+                  disable={true}
+                />
+                <TextInputModal
+                  label="Jenis Kelamin"
+                  type="text"
+                  value={
+                    admissionParentsData?.gender === "female"
+                      ? "Perempuan"
+                      : "Laki-Laki"
+                  }
                   disable={true}
                 />
                 <TextInputModal

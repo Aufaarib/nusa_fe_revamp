@@ -3,7 +3,7 @@ import { BsChevronBarLeft } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { uploadHasilTest } from "../../api/Registrasi";
 import { Header } from "../../components";
-import { AlertEmpty } from "../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 
 const UploadHasilTes = () => {
@@ -29,7 +29,7 @@ const UploadHasilTes = () => {
 
   const uploadTestResults = () => {
     if (nilai === undefined) {
-      AlertEmpty();
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       const score = parseInt(nilai);
       uploadHasilTest(score, navigateRegistrationDetails);

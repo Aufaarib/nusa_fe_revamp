@@ -48,24 +48,22 @@ const ListCalonSiswa = () => {
         home="PMB"
         // prev="Bank"
         // navePrev={path}
-        at="List Anak"
-        title="List Anak"
+        at="Data Calon Siswa"
+        title="Data Calon Siswa"
       />
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <button
-          className="btn-mrh"
           style={{
-            // marginTop: "20px",
-            // marginRight: "25px",
-            borderRadius: "5px",
-            fontSize: "14px",
-            cursor: "pointer",
+            fontSize: "12px",
+            width: "auto",
+            padding: "2px 10px",
           }}
+          className="btn-hijau w-auto"
           onClick={() => {
             setisOpenCostCenter(true);
           }}
         >
-          <i className="fa fa-plus" /> Daftar Anak
+          <i className="fa fa-plus" /> Tambah Calon Siswa
         </button>
       </div>
       {dataMyAdmission.length !== 0 ? (
@@ -125,7 +123,9 @@ const ListCalonSiswa = () => {
                               : { color: "#8f0d1e", fontWeight: "bold" }
                           }
                         >
-                          {status !== "valid" ? "Belum Aktif" : "Aktif"}
+                          {status !== "valid"
+                            ? "Belum Terverifikasi"
+                            : "Terverifikasi"}
                         </div>
                       </div>
                     </div>
@@ -138,7 +138,7 @@ const ListCalonSiswa = () => {
       ) : (
         <div style={{ textAlign: "center", marginTop: "100px" }}>
           <strong style={{ color: "gray", fontSize: "28px" }}>
-            Belum Ada Anak Yang Terdaftar
+            Belum Ada Calon Murid Yang Terdaftar
           </strong>
         </div>
       )}
