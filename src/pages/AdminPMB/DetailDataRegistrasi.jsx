@@ -264,8 +264,11 @@ const DetailDataRegistrasi = () => {
   const cardBerkasPendaftaran = [
     {
       card: "Anak",
-      nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
-      hp: anak?.gender === "male" ? "Laki-Laki" : "Perempuan",
+      nama: anak?.firstName,
+      hp:
+        anak?.gender === "male" && "Laki-Laki" && anak?.gender === "female"
+          ? "Perempuan"
+          : "",
       alamat: anak?.birthPlace,
     },
     {
@@ -644,26 +647,32 @@ const DetailDataRegistrasi = () => {
                 <strong style={{ padding: "20px 20px" }} className="text-merah">
                   {data.card}
                 </strong>
-                <div
-                  style={{
-                    padding: "15px",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <label>
-                    Nama : <strong>{data.nama}</strong>
-                  </label>
-                  <label>
-                    {data.card === "Anak" ? "Jenis Kelamin : " : "No. Hp : "}{" "}
-                    <strong> {data.hp} </strong>
-                  </label>
-                </div>
-                <label style={{ padding: "20px" }}>
-                  {data.card === "Anak" ? "Tempat Lahir : " : "Alamat : "}{" "}
-                  <strong className="text-abu"> {data.alamat}</strong>
-                </label>
+                {data.nama !== undefined && (
+                  <>
+                    <div
+                      style={{
+                        padding: "15px",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <label>
+                        Nama : <strong>{data.nama}</strong>
+                      </label>
+                      <label>
+                        {data.card === "Anak"
+                          ? "Jenis Kelamin : "
+                          : "No. Hp : "}{" "}
+                        <strong> {data.hp} </strong>
+                      </label>
+                    </div>
+                    <label style={{ padding: "20px" }}>
+                      {data.card === "Anak" ? "Tempat Lahir : " : "Alamat : "}{" "}
+                      <strong className="text-abu"> {data.alamat}</strong>
+                    </label>
+                  </>
+                )}
                 <div
                   style={{
                     backgroundColor: "#8F0D1E",
