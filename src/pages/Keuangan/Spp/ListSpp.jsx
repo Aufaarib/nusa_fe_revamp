@@ -6,6 +6,7 @@ import {
 import { DataTables } from "../../../components/DataTables";
 import {
   AlertDelete,
+  AlertPaymentProof,
   AlertUpdateStatusAktif,
   AlertUpdateStatusNonAktif,
 } from "../../../components/ModalPopUp";
@@ -33,6 +34,10 @@ export default function ListSpp() {
       data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
     );
   }
+
+  const openPaymentProof = (url) => {
+    AlertPaymentProof(url);
+  };
 
   useEffect(() => {
     getSpp(setData, setSts);
@@ -77,9 +82,23 @@ export default function ListSpp() {
       width: "auto",
     },
     {
+      name: <div>Bukti Pembayaran</div>,
+      cell: (data) => (
+        <button
+          title="Tampil Bukti Pembayaran"
+          onClick={() => {
+            openPaymentProof(data.invoice);
+          }}
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-file" />
+        </button>
+      ),
+      width: "auto",
+    },
+    {
       name: <div>Deskripsi</div>,
       cell: (data) => <div>{data.description}</div>,
-      width: "auto",
+      width: "210px",
     },
     {
       name: <div>Aksi</div>,

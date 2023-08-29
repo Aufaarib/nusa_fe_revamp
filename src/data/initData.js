@@ -8,13 +8,6 @@ import product3 from "./product3.jpg";
 import product4 from "./product4.jpg";
 
 export const sidebarMenus = [
-  // {
-  //   title: "Dashboard",
-  //   path: `dashboard`,
-  //   icon: <MdOutlineDashboard />,
-  //   links: [],
-  // },
-
   {
     title: "PMB",
     path: `pmb`,
@@ -52,132 +45,6 @@ export const sidebarMenus = [
       // },
     ],
   },
-  // {
-  //   title: "Tahapan PMB",
-  //   path: `pmb/tahapan-pmb`,
-  //   icon: <BsBarChartSteps />,
-  //   step: "register_payment",
-  //   links: [],
-  // },
-  // {
-  //   title: "Form Data Murid",
-  //   path: `pmb/form-data-murid`,
-  //   icon: <FaChild />,
-  //   step: "register_payment",
-  //   links: [],
-  // },
-  // {
-  //   title: "Form Data Orang Tua",
-  //   path: `pmb/form-data-orang-tua`,
-  //   icon: <RiParentFill />,
-  //   step: "register_payment",
-  //   links: [],
-  // },
-  // {
-  //   title: "Form Pernyataan",
-  //   path: `pmb/form-pernyataan`,
-  //   icon: <FaFileSignature />,
-  //   step: "register_payment",
-  //   links: [],
-  // },
-  // {
-  //   title: "Berkas Pendaftaran",
-  //   path: `pmb/berkas-pendaftaran`,
-  //   icon: <AiFillFileText />,
-  //   step: "register_payment",
-  //   links: [],
-  // },
-  // {
-  //   title: "Keuangan",
-  //   path: `keuangan`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "Submenu 1",
-  //       path: `keuangan-1`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 2",
-  //       path: `keuangan-2`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 3",
-  //       path: `keuangan-3`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   title: "KBM",
-  //   path: `kbm`,
-  //   icon: <AiOutlineSchedule />,
-  //   links: [
-  //     {
-  //       name: "Submenu 1",
-  //       path: `kbm-1`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 2",
-  //       path: `kbm-2`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 3",
-  //       path: `kbm-3`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   title: "Administrasi",
-  //   path: `administrasi`,
-  //   icon: <CgUserList />,
-  //   links: [
-  //     {
-  //       name: "Submenu 1",
-  //       path: `administrasi-1`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 2",
-  //       path: `administrasi-2`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 3",
-  //       path: `administrasi-3`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   title: "Syarat",
-  //   path: `syarat`,
-  //   icon: <BsCardText />,
-  //   links: [
-  //     {
-  //       name: "Submenu 1",
-  //       path: `syarat-1`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 2",
-  //       path: `syarat-2`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Submenu 3",
-  //       path: `syarat-3`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
 ];
 
 export const sidebarMenusAdmin = [
@@ -214,70 +81,70 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
-  // {
-  //   title: "Admin KBM",
-  //   path: `admin/kbm`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "Kurikulum",
-  //       path: `admin/list-kurikulum`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Murid",
-  //       path: `admin/list-murid`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Guru",
-  //       path: `admin/list-guru`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Kelas",
-  //       path: `admin/list-kelas`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Mata Pelajaran",
-  //       path: `admin/list-mata-pelajaran`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Ruangan",
-  //       path: `admin/list-ruangan`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Kelompok Mata Pelajaran",
-  //       path: `admin/list-kelompok-mapel`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Ruangan Kelas",
-  //       path: `admin/list-ruang-kelas`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Admin Keuangan",
-  //   path: `admin/keuangan`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "SPP",
-  //       path: `admin/list-spp`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Pengeluaran",
-  //       path: `admin/list-cost-center`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
+  {
+    title: "Admin KBM",
+    path: `admin/kbm`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "Kurikulum",
+        path: `admin/list-kurikulum`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Murid",
+        path: `admin/list-murid`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Guru",
+        path: `admin/list-guru`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Kelas",
+        path: `admin/list-kelas`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Mata Pelajaran",
+        path: `admin/list-mata-pelajaran`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Ruangan",
+        path: `admin/list-ruangan`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Kelompok Mata Pelajaran",
+        path: `admin/list-kelompok-mapel`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Ruangan Kelas",
+        path: `admin/list-ruang-kelas`,
+        icon: <FaWpforms />,
+      },
+    ],
+  },
+  {
+    title: "Admin Keuangan",
+    path: `admin/keuangan`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "SPP",
+        path: `admin/list-spp`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Pengeluaran",
+        path: `admin/list-cost-center`,
+        icon: <FaWpforms />,
+      },
+    ],
+  },
 ];
 
 export const themeColors = [

@@ -239,103 +239,118 @@ export const ModalDetail = ({
                 <TextInputModal
                   label="Nama Lengkap"
                   type="text"
+                  disable={true}
                   value={data.fullName}
                 />
                 <TextInputModal
                   label="Agama"
                   type="text"
+                  disable={true}
                   value={data.religion}
                 />
                 <TextInputModal
                   label="Nomor Kartu Keluarga"
                   type="text"
+                  disable={true}
                   value={data.familyIdentityNumber}
                 />
                 <TextInputModal
                   label="Nomor KTP"
                   type="text"
+                  disable={true}
                   value={data.identityNumber}
-                />
-                <TextInputModal
-                  label="Hubungan"
-                  type="text"
-                  value={data.isBiological == 1 ? "Kandung" : "Tiri"}
                 />
               </section>
               <section>
                 <TextInputModal
+                  label="Hubungan"
+                  type="text"
+                  disable={true}
+                  value={data.isBiological == 1 ? "Kandung" : "Tiri"}
+                />
+                <TextInputModal
                   label="Tinggal Bersama"
                   type="text"
+                  disable={true}
                   value={data.isBiological == 1 ? "Ya" : "Tidak"}
                 />
                 <TextInputModal
                   label="No Ponsel 1"
                   type="text"
+                  disable={true}
                   value={data.phoneNumber_1}
                 />
                 <TextInputModal
                   label="No Ponsel 2"
                   type="text"
+                  disable={true}
                   value={data.phoneNumber_2}
                 />
-                <TextInputModal
-                  label="Provinsi"
-                  type="text"
-                  value={data.province}
-                />
-                <TextInputModal label="Kota" type="text" value={data.city} />
               </section>
               <section>
                 <TextInputModal
+                  label="Provinsi"
+                  type="text"
+                  disable={true}
+                  value={data.province}
+                />
+                <TextInputModal label="Kota" type="text" value={data.city} />
+                <TextInputModal
                   label="Kecamatan"
                   type="text"
+                  disable={true}
                   value={data.subDistrict}
                 />
                 <TextInputModal
                   label="Kelurahan"
                   type="text"
+                  disable={true}
                   value={data.village}
                 />
-                <TextInputModal
-                  label="Alamat"
-                  type="text"
-                  value={data.address}
-                />
+              </section>
+              <section>
                 <TextInputModal
                   label="Kode Pos"
                   type="text"
+                  disable={true}
                   value={data.postalCode}
                 />
                 <TextInputModal
                   label="Tempat Lahir"
                   type="text"
+                  disable={true}
                   value={data.birthPlace}
                 />
-              </section>
-              <section>
                 <TextInputModal
                   label="Tanggal Lahir"
                   type="text"
+                  disable={true}
                   value={moment(data.birthDate).format("DD-MM-YYYY")}
                 />
                 <TextInputModal
                   label="Pendidikan Terakhir"
                   type="text"
+                  disable={true}
                   value={data.lastEducation}
                 />
+              </section>
+              <section>
                 <TextInputModal
                   label="Perusahaan Tempat Bekerja"
                   type="text"
+                  disable={true}
                   value={data.placeOfWork}
                 />
                 <TextInputModal
                   label="Posisi/Jabatan"
                   type="text"
+                  disable={true}
                   value={data.occupation}
                 />
                 <TextInputModal
                   label="Penghasilan Tiap Bulan"
                   type="text"
+                  disable={true}
                   value={data.incomeGrade}
                 />
               </section>
@@ -346,26 +361,25 @@ export const ModalDetail = ({
                 <TextInputModal
                   label="Nama Depan"
                   type="text"
+                  disable={true}
                   value={data.firstName}
                 />
                 <TextInputModal
                   label="Nama Tengah"
                   type="text"
+                  disable={true}
                   value={data.middleName}
                 />
                 <TextInputModal
                   label="Nama Akhir"
                   type="text"
+                  disable={true}
                   value={data.lastName}
-                />
-                <TextInputModal
-                  label="Tempat Lahir"
-                  type="text"
-                  value={data.birthPlace}
                 />
                 <TextInputModal
                   label="Tanggal Lahir"
                   type="text"
+                  disable={true}
                   value={moment(data.birthDate).format("DD-MM-YYYY")}
                 />
               </section>
@@ -373,82 +387,104 @@ export const ModalDetail = ({
                 <TextInputModal
                   label="Jenis Kelamin"
                   type="text"
+                  disable={true}
                   value={data.gender == "male" ? "Laki-Laki" : "Perempuan"}
                 />
                 <TextInputModal
                   label="Hubungan"
                   type="text"
+                  disable={true}
                   value={data.childStatus == 1 ? "Kandung" : "Tiri"}
                 />
                 <TextInputModal
                   label="Golongan Darah"
                   type="text"
+                  disable={true}
                   value={data.bloodType}
                 />
                 <TextInputModal
                   label="Penyakit Berat Yang Pernah Diderita"
                   type="text"
+                  disable={true}
                   value={data.healthRecord}
-                />
-                <TextInputModal
-                  label="Anak Ke"
-                  type="text"
-                  value={data.childNumber}
                 />
               </section>
               <section>
+                <TextInputModal
+                  label="Anak Ke"
+                  type="text"
+                  disable={true}
+                  value={data.childNumber}
+                />
                 <TextInputModal label="Hobi" type="text" value={data.hobby} />
                 <TextInputModal
                   label="Sifat Dominan"
                   type="text"
+                  disable={true}
                   value={data.characteristic}
                 />
                 <TextInputModal
                   label="Berat Badan"
                   type="text"
+                  disable={true}
                   value={data.weight}
                 />
+              </section>
+              <section>
                 <TextInputModal
                   label="Tinggi Badan"
                   type="text"
+                  disable={true}
                   value={data.height}
                 />
                 <TextInputModal
                   label="Asal Sekolah"
                   type="text"
+                  disable={true}
                   value={data.schoolOriginName}
                 />
-              </section>
-              <section>
                 <TextInputModal
                   label="Jarak Ke Rumah"
                   type="text"
+                  disable={true}
                   value={data.distanceFromHome}
                 />
                 <TextInputModal
                   label="Transportasi Ke Sekolah"
                   type="text"
+                  disable={true}
                   value={data.transportation}
                 />
+              </section>
+              <section>
                 <TextInputModal
                   label="Kelas Pada Saat Mendaftar"
                   type="text"
+                  disable={true}
                   value={data.schoolOriginClass}
                 />
                 <TextInputModal
                   label="Nomor KK"
                   type="text"
+                  disable={true}
                   value={data.familyIdentityNumber}
                 />
                 <TextInputModal
                   label="Nomor Akta Lahir"
                   type="text"
+                  disable={true}
                   value={data.identityNumber}
                 />
               </section>
             </>
           )}
         </div>
+        <TextInputModal
+          label={card !== "Anak" ? "Alamat" : "Tempat Lahir"}
+          type="text"
+          disable={true}
+          value={card !== "Anak" ? data.address : data.birthPlace}
+        />
       </div>
       <div className="buttonModalWrapper">
         <button

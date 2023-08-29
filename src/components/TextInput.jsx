@@ -26,7 +26,7 @@ export const TextInputModal = ({
         </label>
       )}
 
-      <textarea
+      <input
         style={{
           border: "1px solid #EBEBEB",
           background: "#EBEBEB",
