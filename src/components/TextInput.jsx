@@ -31,7 +31,7 @@ export const TextInputModal = ({
           border: "1px solid #EBEBEB",
           background: "#EBEBEB",
           borderRadius: "5px",
-          height: "40px",
+          // height: "40px",
           fontSize: "14px",
           padding: "10px",
           color: "black",

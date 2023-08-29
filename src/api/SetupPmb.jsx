@@ -1,14 +1,4 @@
-import {
-  AlertMessage,
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getAdmission(setData, setSts) {
@@ -26,14 +16,14 @@ export function getAdmission(setData, setSts) {
     });
 }
 
-export function getAdmissionDetails(setData, setSts, code) {
+export function getAdmissionDetails(setDataPhases, setData, setSts, code) {
   axios
     .get(process.env.REACT_APP_BASE_URL + `/admission/${code}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body.phases);
-      setData(res.data.body.phases);
+      setDataPhases(res.data.body.phases);
+      setData(res.data.body.details);
       setSts({ type: "success" });
     })
     .catch((error) => {
@@ -41,27 +31,7 @@ export function getAdmissionDetails(setData, setSts, code) {
     });
 }
 
-//   export function updateKurikulum(setSts, path, code, name, description) {
-//     axios
-//       .put(
-//         process.env.REACT_APP_BASE_URL + `/curriculum/${code}`,
-//         {
-//           name,
-//           description,
-//         },
-//         { headers: { authorization: localStorage.getItem("TOKEN") } }
-//       )
-//       .then(() => {
-//         setSts({ type: "success" });
-//         AlertStatusUpdateDataSuccess(path);
-//       })
-//       .catch((error) => {
-//         setSts({ type: "error", error });
-//         AlertStatusUpdateFailed();
-//       });
-//   }
-
-export function updateStatusAdmission(setSts, code, path) {
+export function updateStatusAdmission(setSts, code, navigate) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -73,7 +43,7 @@ export function updateStatusAdmission(setSts, code, path) {
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Kembali Ke Setup PMB",
         "success",
@@ -94,7 +64,9 @@ export function postAdmission(
   increment,
   startDate,
   endDate,
-  amount
+  registrationAmount,
+  description,
+  educationAmount
 ) {
   axios
     .post(
@@ -107,21 +79,52 @@ export function postAdmission(
             name: name,
             startDate: startDate,
             endDate: endDate,
-            amount: amount,
+            amount: registrationAmount,
           },
         ],
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusSuccess(
-        path,
-        "Berhasil",
-        "Tutup",
-        "success",
-        "Tambah Pendaftaran Berhasil"
-      );
+    .then((res) => {
+      // setSts({ type: "success" });
+      // AlertStatusSuccess(
+      //   path,
+      //   "Berhasil",
+      //   "Tutup",
+      //   "success",
+      //   "Tambah Pendaftaran Berhasil"
+      // );
+      const sequence = 1;
+      axios
+        .post(
+          process.env.REACT_APP_BASE_URL +
+            `/admission/${res.data.body.code}/detail`,
+          {
+            description,
+            amount: educationAmount,
+            sequence,
+          },
+          { headers: { authorization: localStorage.getItem("TOKEN") } }
+        )
+        .then(() => {
+          setSts({ type: "success" });
+          AlertStatusSuccess(
+            path,
+            "Berhasil",
+            "Tutup",
+            "success",
+            "Tambah Pendaftaran Berhasil"
+          );
+        })
+        .catch((error) => {
+          setSts({ type: "error", error });
+          AlertMessage(
+            "Gagal",
+            "Tambah Biaya Pendidikan Gagal",
+            "Coba Lagi",
+            "error"
+          );
+        });
     })
     .catch((error) => {
       setSts({ type: "error", error });
@@ -129,16 +132,46 @@ export function postAdmission(
     });
 }
 
-//   export function deleteKurikulum(setSts, deleteId, setData) {
-//     axios
-//       .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-//       .then(() => {
-//         setSts({ type: "success" });
-//         AlertStatusHapusSuccess();
-//         getKurikulum(setData, setSts);
-//       })
-//       .catch((error) => {
-//         setSts({ type: "error", error });
-//         AlertStatusHapusFailed();
-//       });
-//   }
+// export function postAdmissionDetail(
+//   setSts,
+//   path,
+//   academicYearId,
+//   name,
+//   increment,
+//   startDate,
+//   endDate,
+//   amount,
+//   code
+// ) {
+//   axios
+//     .post(
+//       process.env.REACT_APP_BASE_URL + `/admission/${code}/detail`,
+//       {
+//         academicYearId: academicYearId,
+//         phases: [
+//           {
+//             increment: increment,
+//             name: name,
+//             startDate: startDate,
+//             endDate: endDate,
+//             amount: amount,
+//           },
+//         ],
+//       },
+//       { headers: { authorization: localStorage.getItem("TOKEN") } }
+//     )
+//     .then(() => {
+//       setSts({ type: "success" });
+//       AlertStatusSuccess(
+//         path,
+//         "Berhasil",
+//         "Tutup",
+//         "success",
+//         "Tambah Pendaftaran Berhasil"
+//       );
+//     })
+//     .catch((error) => {
+//       setSts({ type: "error", error });
+//       AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+//     });
+// }

@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         "half-transparent": "rgba(0, 0, 0, 0.5)",
+        hitam: "#000000",
         merah: "#8F0D1E",
         kuning: "#F4BD50",
         krem: "#E6E6E6",

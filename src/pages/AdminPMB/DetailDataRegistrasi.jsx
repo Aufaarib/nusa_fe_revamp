@@ -105,6 +105,7 @@ const DetailDataRegistrasi = () => {
       },
     });
   };
+
   const navigateUploadHasilTes = () => {
     navigate("/admin/upload-hasil-tes", {
       state: {
@@ -260,6 +261,33 @@ const DetailDataRegistrasi = () => {
     },
   ];
 
+  const cardBerkasPendaftaran = [
+    {
+      card: "Anak",
+      nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
+      hp: anak?.gender === "male" ? "Laki-Laki" : "Perempuan",
+      alamat: anak?.birthPlace,
+    },
+    {
+      card: "Ayah",
+      nama: ayah?.fullName,
+      hp: ayah?.phoneNumber_2,
+      alamat: ayah?.address,
+    },
+    {
+      card: "Ibu",
+      nama: ibu?.fullName,
+      hp: ibu?.phoneNumber_2,
+      alamat: ibu?.address,
+    },
+    {
+      card: "Wali",
+      nama: wali?.fullName,
+      hp: wali?.phoneNumber_2,
+      alamat: wali?.address,
+    },
+  ];
+
   const ApproveRegistrasi = () => {
     if (dataStep1?.status !== "valid") {
       AlertMessage(
@@ -316,35 +344,6 @@ const DetailDataRegistrasi = () => {
         : data.status === "inreview" && "valid";
     approvedRegistration(code, status, fetchAdmissionRegistration);
   };
-
-  const cardBerkasPendaftaran = [
-    {
-      card: "Anak",
-      nama: anak?.firstName,
-      // hp: anak?.identityNumber,
-      alamat: anak?.birthPlace,
-    },
-    {
-      card: "Ayah",
-      nama: ayah?.fullName,
-      hp: ayah?.phoneNumber_2,
-      alamat: ayah?.address,
-    },
-    {
-      card: "Ibu",
-      nama: ibu?.fullName,
-      hp: ibu?.phoneNumber_2,
-      alamat: ibu?.address,
-    },
-    {
-      card: "Wali",
-      nama: wali?.fullName,
-      hp: wali?.phoneNumber_2,
-      alamat: wali?.address,
-    },
-  ];
-
-  // console.log("OOOOO === ", data.statements);
 
   const handleModalDetail = (card) => {
     setisCardOpened(card);
@@ -599,7 +598,7 @@ const DetailDataRegistrasi = () => {
                         <h4 className="text-kuning">Sedang Ditinjau</h4>
                       ) : (
                         dataStep2.status === "invalid" && (
-                          <h4 className="text-merah">Gagal Ditinjau</h4>
+                          <h4>Gagal Ditinjau</h4>
                         )
                       )}
                     </>
@@ -639,26 +638,35 @@ const DetailDataRegistrasi = () => {
                   backgroundColor: "white",
                   width: "100%",
                   borderRadius: "6px",
-                  border: "1px solid #E5E7EB",
+                  border: "1px solid #8F0D1E",
                 }}
               >
+                <strong style={{ padding: "20px 20px" }} className="text-merah">
+                  {data.card}
+                </strong>
                 <div
                   style={{
                     padding: "15px",
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
                   }}
                 >
-                  <label style={{ fontWeight: "bold" }} className="text-abu">
-                    {data.card}
+                  <label>
+                    Nama : <strong>{data.nama}</strong>
                   </label>
-                  <label style={{ fontWeight: "bold" }}> {data.nama}</label>
-                  <label style={{ fontWeight: "bold" }}> {data.hp} </label>
-                  <label className="text-abu"> {data.alamat} </label>
+                  <label>
+                    {data.card === "Anak" ? "Jenis Kelamin : " : "No. Hp : "}{" "}
+                    <strong> {data.hp} </strong>
+                  </label>
                 </div>
+                <label style={{ padding: "20px" }}>
+                  {data.card === "Anak" ? "Tempat Lahir : " : "Alamat : "}{" "}
+                  <strong className="text-abu"> {data.alamat}</strong>
+                </label>
                 <div
                   style={{
-                    backgroundColor: "#F9FAFB",
+                    backgroundColor: "#8F0D1E",
                     padding: "15px",
                     width: "100%",
                     borderRadius: "0px 0px 6px 6px",
@@ -667,10 +675,15 @@ const DetailDataRegistrasi = () => {
                   {data.nama !== undefined ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
-                      style={{ fontWeight: "bold" }}
-                      className="text-merah"
+                      style={{
+                        width: "auto",
+                        padding: "2px 10px",
+                        border: "1px solid white",
+                        borderRadius: "10px",
+                      }}
+                      className="btn-biru"
                     >
-                      Detail
+                      <i className="fa fa-eye" /> Detail
                     </button>
                   ) : (
                     <button
@@ -693,7 +706,7 @@ const DetailDataRegistrasi = () => {
                 backgroundColor: "white",
                 width: "100%",
                 borderRadius: "6px",
-                border: "1px solid #E5E7EB",
+                border: "1px solid #8F0D1E",
               }}
             >
               <div
@@ -701,9 +714,7 @@ const DetailDataRegistrasi = () => {
                   padding: "15px",
                 }}
               >
-                <label style={{ fontWeight: "bold" }} className="text-abu">
-                  Pernyataan
-                </label>
+                <strong className="text-merah">Pernyataan</strong>
                 <div
                   style={{
                     display: "grid",
@@ -734,7 +745,7 @@ const DetailDataRegistrasi = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: "#F9FAFB",
+                  backgroundColor: "#8F0D1E",
                   padding: "15px",
                   width: "100%",
                   borderRadius: "0px 0px 6px 6px",
@@ -768,7 +779,7 @@ const DetailDataRegistrasi = () => {
                 backgroundColor: "white",
                 width: "100%",
                 borderRadius: "6px",
-                border: "1px solid #E5E7EB",
+                border: "1px solid #8F0D1E",
               }}
             >
               <div
@@ -778,9 +789,7 @@ const DetailDataRegistrasi = () => {
                   flexDirection: "column",
                 }}
               >
-                <label style={{ fontWeight: "bold" }} className="text-abu">
-                  Berkas
-                </label>
+                <strong className="text-merah">Berkas</strong>
                 <div
                   style={{
                     display: "grid",
@@ -827,7 +836,7 @@ const DetailDataRegistrasi = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: "#F9FAFB",
+                  backgroundColor: "#8F0D1E",
                   padding: "15px",
                   width: "100%",
                   borderRadius: "0px 0px 6px 6px",
@@ -918,9 +927,7 @@ const DetailDataRegistrasi = () => {
                     textAlign: "center",
                   }}
                 >
-                  <h1 className="text-merah">
-                    Orang Tua Belum Mempersetujui Pendaftaran Ulang
-                  </h1>
+                  <h1>Orang Tua Belum Mempersetujui Pendaftaran Ulang</h1>
                 </div>
               )}
             </>

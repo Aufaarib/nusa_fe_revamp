@@ -8,7 +8,8 @@ import { DataTablesAdmissionDetail } from "../../components/DataTables";
 import { AlertUbahStatus } from "../../components/ModalPopUp";
 
 const AdmissionDetails = () => {
-  const [data, setData] = useState([]);
+  const [dataPhases, setDataPhases] = useState([]);
+  const [dataAdmission, setData] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const location = useLocation();
@@ -17,16 +18,16 @@ const AdmissionDetails = () => {
   const code = location.state.code;
   const status = location.state.status;
 
-  let filteredItems = data;
+  let filteredItems = dataPhases;
 
-  if (data !== null) {
-    filteredItems = data.filter((data) =>
+  if (dataPhases !== null) {
+    filteredItems = dataPhases.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
   useEffect(() => {
-    getAdmissionDetails(setData, setSts, code);
+    getAdmissionDetails(setDataPhases, setData, setSts, code);
   }, []);
 
   const columns = [
@@ -60,7 +61,7 @@ const AdmissionDetails = () => {
       width: "auto",
     },
     {
-      name: <div>Nominal</div>,
+      name: <div>Nominal Biaya Pendaftaran</div>,
       selector: (data) => data.amount,
       cell: (data) => (
         <div>
@@ -71,7 +72,19 @@ const AdmissionDetails = () => {
           }).format(data.amount)}
         </div>
       ),
-
+      width: "auto",
+    },
+    {
+      name: <div>Nominal Biaya Pendidikan</div>,
+      cell: () => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(dataAdmission[0]?.amount)}
+        </div>
+      ),
       width: "auto",
     },
     {
@@ -97,7 +110,7 @@ const AdmissionDetails = () => {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "220px",
+      width: "200px",
     },
   ];
 
@@ -105,6 +118,7 @@ const AdmissionDetails = () => {
     navigate("/admin/tambah-gelombang-pmb", {
       state: {
         code: code,
+        status: status,
       },
     });
   };

@@ -22,7 +22,6 @@ export default function TambahSpp() {
   const [description, setDescription] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
-  const [fileInvoice, setFileInvoice] = useState(null);
   const navigate = useNavigate();
   const path = "/admin/list-spp";
   const uploaderRef = useRef(null);
@@ -35,12 +34,14 @@ export default function TambahSpp() {
     getMurid(setStudentsData, setSts);
   };
 
+  const navigateListSpp = () => {
+    navigate(path);
+  };
+
   useEffect(() => {
     fetchAcademicPeriode();
     fetchStudents();
   }, []);
-
-  console.log("kkakmwk === ", studentsData);
 
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
@@ -69,7 +70,7 @@ export default function TambahSpp() {
     // } else {
     postSpp(
       setSts,
-      path,
+      navigateListSpp,
       amount,
       month,
       description,
@@ -177,17 +178,17 @@ export default function TambahSpp() {
               uploading={onFileUpload}
               success={onSuccess.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Bukti Transfer" : "Ganti Berkas",
+                browse: !filesData ? "Unggah Berkas" : "Ganti Berkas",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </div>
 

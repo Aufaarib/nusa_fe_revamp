@@ -23,7 +23,7 @@ export function getSpp(setData, setSts) {
 
 export function postSpp(
   setSts,
-  path,
+  navigate,
   amount,
   month,
   description,
@@ -52,7 +52,7 @@ export function postSpp(
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Tutup",
         "success",
