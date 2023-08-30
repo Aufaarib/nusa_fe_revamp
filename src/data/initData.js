@@ -59,11 +59,11 @@ export const sidebarMenusAdmin = [
     path: `admin/pmb`,
     icon: <AiOutlineBarChart />,
     links: [
-      {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Kurikulum",
+      //   path: `admin/list-kurikulum`,
+      //   icon: <FaWpforms />,
+      // },
       {
         name: "Tahun Ajaran",
         path: `admin/list-tahun-ajaran`,
@@ -140,7 +140,7 @@ export const sidebarMenusAdmin = [
       },
       {
         name: "Pengeluaran",
-        path: `admin/list-cost-center`,
+        path: `admin/list-pengeluaran`,
         icon: <FaWpforms />,
       },
     ],

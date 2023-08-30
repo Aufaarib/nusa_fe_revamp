@@ -1,21 +1,14 @@
-import React from "react";
-import TextInput from "../../../components/TextInput";
-import { postBank } from "../../../api/Bank";
-import {
-  AlertEmpty,
-  ModalEmpty,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { postBank } from "../../../api/Bank";
 import { Header } from "../../../components";
+import { AlertEmpty } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahListBank() {
   const [nama_bank, setNamaBank] = useState("");
   const [nomor_rekening, setNomorRekening] = useState("");
   const [nama_pemilik, setNamaPemilik] = useState("");
-  //   const [isOpenStatus, setisOpenStatus] = useState(false);
-  //   const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [status, setStatus] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
   const navigate = useNavigate();
@@ -40,18 +33,8 @@ export default function TambahListBank() {
         nama_pemilik,
         created_by
       );
-      //   setisOpenStatus(true);
     }
   };
-
-  //   const closeModalEmpty = () => {
-  //     setisOpenEmpty(false);
-  //   };
-
-  //   const closeModalStatus = () => {
-  //     setisOpenStatus(false);
-  //     setStatus("");
-  //   };
 
   const navigateListBank = () => {
     navigate(path);
