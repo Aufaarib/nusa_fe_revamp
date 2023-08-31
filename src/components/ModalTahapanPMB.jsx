@@ -170,7 +170,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           <>
                             {dataAdmissionRegistration.payments?.length == 0 &&
                               "Menunggu Pembayaran"}
-                            {dataAdmissionRegistration.payments?.length != 0 &&
+                            {dataAdmissionRegistration.payments?.length > 0 &&
                               "Menunggu Validasi Admin"}
                           </>
                         )}
@@ -609,7 +609,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           </Link>
                         </>
                       )}
-                      {dataAdmissionRegistration.payments?.length != 0 && (
+                      {dataAdmissionRegistration.payments?.length > 0 && (
                         <>
                           {status === "Dalam Proses" && (
                             <>
@@ -624,6 +624,12 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                                   {admissionSteps5.note}
                                 </strong>
                               </p>
+                              <Link
+                                to={"/pmb/berkas-pembayaran-biaya-pendidikan"}
+                                className="mt-7 btn-merah"
+                              >
+                                Upload Bukti Pembayaran Pendidikan
+                              </Link>
                             </>
                           )}
                           {status == "Berhasil" && (

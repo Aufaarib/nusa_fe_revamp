@@ -37,15 +37,19 @@ const DetailDataRegistrasi = () => {
   const code = localStorage.getItem("REG_NUMBER");
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
-
   const [isOpenDetail, setisOpenDetail] = useState(false);
   const [cardOpened, setisCardOpened] = useState("");
   const [detailData, setDetailData] = useState("");
+  const [totalPaid, setTotalPaid] = useState("");
 
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
+    setTotalPaid(edu.reduce((total, num) => total + num.amount, 0));
   };
+
+  console.log("1 === ", amount.admission?.details[0].amount);
+  console.log("2 === ", totalPaid >= amount.admission?.details[0].amount);
 
   const fetchRegistrationPayment = () => {
     setFetched("1");
@@ -211,6 +215,70 @@ const DetailDataRegistrasi = () => {
     },
   ];
 
+  const columnsEdu = [
+    // {
+    //   cell: (data) => (
+    //     <div>
+    //       <Checkbox></Checkbox>
+    //     </div>
+    //   ),
+    //   width: "60px",
+    // },
+    {
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Tanggal</div>,
+      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>File</div>,
+      cell: (data) => (
+        <button
+          title="Tampil Bukti Pembayaran"
+          onClick={() => {
+            openPaymentProof(data.paymentRecipt);
+          }}
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-file" />
+        </button>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Nominal</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
+        </div>
+      ),
+      width: "auto",
+    },
+    // {
+    //   name: <div>Status</div>,
+    //   cell: (data) => (
+
+    //   ),
+    //   width: "auto",
+    // },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "200px",
+    // },
+  ];
+
   const columnTestResult = [
     // {
     //   cell: (data) => (
@@ -264,9 +332,11 @@ const DetailDataRegistrasi = () => {
   const cardBerkasPendaftaran = [
     {
       card: "Anak",
-      nama: anak?.firstName,
+      nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
       hp:
-        anak?.gender === "male" && "Laki-Laki" && anak?.gender === "female"
+        anak?.gender === "male"
+          ? "Laki-Laki"
+          : anak?.gender === "female"
           ? "Perempuan"
           : "",
       alamat: anak?.birthPlace,
@@ -945,10 +1015,42 @@ const DetailDataRegistrasi = () => {
         {fetched === "5" && (
           <>
             {dataStep5 !== null ? (
-              <DataTablesRegistrationDetail
-                columns={columnsPayments}
-                data={[data]}
-              />
+              <>
+                <strong className="mb-3 flex">
+                  Status Pembayaran :{" "}
+                  <p className="ml-1 text-merah">
+                    {totalPaid >= amount.amount ? "Lunas" : "Cicil"}
+                  </p>
+                </strong>
+
+                <div className="block mb-7">
+                  <strong>Status Tahapan: </strong>
+                  <strong
+                    className={
+                      dataStep5.status === "valid"
+                        ? "text-hijau"
+                        : "text-kuning"
+                    }
+                    style={{ display: "inline-block" }}
+                  >
+                    {dataStep5.status === "valid"
+                      ? " Terverifikasi"
+                      : dataStep5.status === "inreview"
+                      ? " Sedang Di Tinjau"
+                      : dataStep5.status === "invalid" &&
+                        " Gagal Terverifikasi"}
+                  </strong>
+                  <button
+                    style={{ display: "inline-block", float: "right" }}
+                    className="btn-biru w-auto"
+                    title="Edit"
+                    onClick={() => navigateUbahStatus(data.regNumber)}
+                  >
+                    <i className="fa fa-edit" /> Edit Status Tahapan
+                  </button>
+                </div>
+                <DataTablesRegistrationDetail columns={columnsEdu} data={edu} />
+              </>
             ) : (
               <div
                 style={{
