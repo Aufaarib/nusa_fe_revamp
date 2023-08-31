@@ -1024,7 +1024,7 @@ const DetailDataRegistrasi = () => {
                 </strong>
 
                 <div className="block mb-7">
-                  <strong>Status Tahapan: </strong>
+                  <strong>Status Tahapan : </strong>
                   <strong
                     className={
                       dataStep5.status === "valid"
