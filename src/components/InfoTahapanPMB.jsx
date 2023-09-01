@@ -79,7 +79,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                     {dataAdmissionRegistration.invoice === "" &&
                       "Menunggu Pembayaran"}
                     {dataAdmissionRegistration.invoice !== "" &&
-                      "Menunggu Validasi Admin"}
+                      "Menunggu Verifikasi Admin"}
                   </>
                 )}
               </>
@@ -93,7 +93,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                     dataAdmissionRegistration.statements?.length === 0 ||
                     dataAdmissionRegistration.additionalFiles?.length === 0
                       ? "Data Belum Lengkap"
-                      : "Menunggu Validasi Admin"}
+                      : "Menunggu Verifikasi Admin"}
                   </>
                 )}
               </>
@@ -103,7 +103,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                 {status == "Dalam Proses" && (
                   <>
                     {dataAdmissionRegistration.testResult !== null &&
-                      "Menunggu Validasi Admin"}
+                      "Menunggu Verifikasi Admin"}
                     {dataAdmissionRegistration.testResult === null &&
                       "Menunggu Hasil Tes"}
                   </>
@@ -122,7 +122,7 @@ const InfoTahapanPMB = ({ status, title, step, details, onClick }) => {
                     {dataAdmissionRegistration.payments?.length == 0 &&
                       "Menunggu Pembayaran"}
                     {dataAdmissionRegistration.payments?.length != 0 &&
-                      "Menunggu Validasi Admin"}
+                      "Menunggu Verifikasi Admin"}
                   </>
                 )}
               </>

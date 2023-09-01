@@ -126,7 +126,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             {dataAdmissionRegistration.invoice === "" &&
                               "Menunggu Pembayaran"}
                             {dataAdmissionRegistration.invoice !== "" &&
-                              "Menunggu Validasi Admin"}
+                              "Menunggu Verifikasi Admin"}
                           </>
                         )}
                       </>
@@ -141,7 +141,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                               0 ||
                             dataAdmissionRegistration.additionalFiles === null
                               ? "Data Belum Lengkap"
-                              : "Menunggu Validasi Admin"}
+                              : "Menunggu Verifikasi Admin"}
                           </>
                         )}
                       </>
@@ -151,7 +151,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                         {status == "Dalam Proses" && (
                           <>
                             {dataAdmissionRegistration.testResult !== null &&
-                              "Menunggu Validasi Admin"}
+                              "Menunggu Verifikasi Admin"}
                             {dataAdmissionRegistration.testResult === null &&
                               "Menunggu Hasil Tes"}
                           </>
@@ -171,7 +171,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             {dataAdmissionRegistration.payments?.length == 0 &&
                               "Menunggu Pembayaran"}
                             {dataAdmissionRegistration.payments?.length > 0 &&
-                              "Menunggu Validasi Admin"}
+                              "Menunggu Verifikasi Admin"}
                           </>
                         )}
                       </>

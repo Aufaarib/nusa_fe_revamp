@@ -45,11 +45,11 @@ const DetailDataRegistrasi = () => {
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
-    setTotalPaid(edu.reduce((total, num) => total + num.amount, 0));
   };
 
-  console.log("1 === ", amount.admission?.details[0].amount);
-  console.log("2 === ", totalPaid >= amount.admission?.details[0].amount);
+  // console.log("1 === ", amount.admission?.details[0].amount);
+  // console.log("2 === ", totalPaid >= amount.admission?.details[0].amount);
+  // console.log("3 === ", totalPaid);
 
   const fetchRegistrationPayment = () => {
     setFetched("1");
@@ -86,6 +86,15 @@ const DetailDataRegistrasi = () => {
       setDataStep5
     );
   };
+
+  console.log("dsasd === ", fetched);
+  console.log("2sd === ", updatedFetched);
+
+  useEffect(() => {
+    if (updatedFetched === "5" || fetched === "5") {
+      setTotalPaid(edu.reduce((total, num) => total + num.amount, 0));
+    }
+  });
 
   useEffect(() => {
     if (updatedFetched === undefined) {
@@ -344,19 +353,19 @@ const DetailDataRegistrasi = () => {
     {
       card: "Ayah",
       nama: ayah?.fullName,
-      hp: ayah?.phoneNumber_2,
+      hp: ayah?.phoneNumber_1,
       alamat: ayah?.address,
     },
     {
       card: "Ibu",
       nama: ibu?.fullName,
-      hp: ibu?.phoneNumber_2,
+      hp: ibu?.phoneNumber_1,
       alamat: ibu?.address,
     },
     {
       card: "Wali",
       nama: wali?.fullName,
-      hp: wali?.phoneNumber_2,
+      hp: wali?.phoneNumber_1,
       alamat: wali?.address,
     },
   ];
@@ -717,7 +726,7 @@ const DetailDataRegistrasi = () => {
                 <strong style={{ padding: "20px 20px" }} className="text-merah">
                   {data.card}
                 </strong>
-                {data.nama !== undefined && (
+                {anak !== null && (
                   <>
                     <div
                       style={{
@@ -751,7 +760,7 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  {data.nama !== undefined ? (
+                  {anak !== null ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
                       style={{

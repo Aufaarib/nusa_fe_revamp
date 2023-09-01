@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { FiSettings } from "react-icons/fi";
-import { FaTimesCircle, FaRegCheckCircle } from "react-icons/fa";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { ToastComponent } from "@syncfusion/ej2-react-notifications";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
