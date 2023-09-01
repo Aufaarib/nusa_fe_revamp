@@ -37,15 +37,19 @@ const DetailDataRegistrasi = () => {
   const code = localStorage.getItem("REG_NUMBER");
   const path = "/admin/list-data-registrasi";
   const updatedFetched = location?.state?.fetched;
-
   const [isOpenDetail, setisOpenDetail] = useState(false);
   const [cardOpened, setisCardOpened] = useState("");
   const [detailData, setDetailData] = useState("");
+  const [totalPaid, setTotalPaid] = useState("");
 
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
   };
+
+  // console.log("1 === ", amount.admission?.details[0].amount);
+  // console.log("2 === ", totalPaid >= amount.admission?.details[0].amount);
+  // console.log("3 === ", totalPaid);
 
   const fetchRegistrationPayment = () => {
     setFetched("1");
@@ -82,6 +86,15 @@ const DetailDataRegistrasi = () => {
       setDataStep5
     );
   };
+
+  console.log("dsasd === ", fetched);
+  console.log("2sd === ", updatedFetched);
+
+  useEffect(() => {
+    if (updatedFetched === "5" || fetched === "5") {
+      setTotalPaid(edu.reduce((total, num) => total + num.amount, 0));
+    }
+  });
 
   useEffect(() => {
     if (updatedFetched === undefined) {
@@ -211,6 +224,70 @@ const DetailDataRegistrasi = () => {
     },
   ];
 
+  const columnsEdu = [
+    // {
+    //   cell: (data) => (
+    //     <div>
+    //       <Checkbox></Checkbox>
+    //     </div>
+    //   ),
+    //   width: "60px",
+    // },
+    {
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Tanggal</div>,
+      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>File</div>,
+      cell: (data) => (
+        <button
+          title="Tampil Bukti Pembayaran"
+          onClick={() => {
+            openPaymentProof(data.paymentRecipt);
+          }}
+        >
+          <i style={{ fontSize: "21px" }} className="fa fa-file" />
+        </button>
+      ),
+      width: "auto",
+    },
+    {
+      name: <div>Nominal</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
+        </div>
+      ),
+      width: "auto",
+    },
+    // {
+    //   name: <div>Status</div>,
+    //   cell: (data) => (
+
+    //   ),
+    //   width: "auto",
+    // },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "200px",
+    // },
+  ];
+
   const columnTestResult = [
     // {
     //   cell: (data) => (
@@ -265,25 +342,30 @@ const DetailDataRegistrasi = () => {
     {
       card: "Anak",
       nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
-      hp: anak?.gender === "male" ? "Laki-Laki" : "Perempuan",
+      hp:
+        anak?.gender === "male"
+          ? "Laki-Laki"
+          : anak?.gender === "female"
+          ? "Perempuan"
+          : "",
       alamat: anak?.birthPlace,
     },
     {
       card: "Ayah",
       nama: ayah?.fullName,
-      hp: ayah?.phoneNumber_2,
+      hp: ayah?.phoneNumber_1,
       alamat: ayah?.address,
     },
     {
       card: "Ibu",
       nama: ibu?.fullName,
-      hp: ibu?.phoneNumber_2,
+      hp: ibu?.phoneNumber_1,
       alamat: ibu?.address,
     },
     {
       card: "Wali",
       nama: wali?.fullName,
-      hp: wali?.phoneNumber_2,
+      hp: wali?.phoneNumber_1,
       alamat: wali?.address,
     },
   ];
@@ -644,26 +726,32 @@ const DetailDataRegistrasi = () => {
                 <strong style={{ padding: "20px 20px" }} className="text-merah">
                   {data.card}
                 </strong>
-                <div
-                  style={{
-                    padding: "15px",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <label>
-                    Nama : <strong>{data.nama}</strong>
-                  </label>
-                  <label>
-                    {data.card === "Anak" ? "Jenis Kelamin : " : "No. Hp : "}{" "}
-                    <strong> {data.hp} </strong>
-                  </label>
-                </div>
-                <label style={{ padding: "20px" }}>
-                  {data.card === "Anak" ? "Tempat Lahir : " : "Alamat : "}{" "}
-                  <strong className="text-abu"> {data.alamat}</strong>
-                </label>
+                {anak !== null && (
+                  <>
+                    <div
+                      style={{
+                        padding: "15px",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <label>
+                        Nama : <strong>{data.nama}</strong>
+                      </label>
+                      <label>
+                        {data.card === "Anak"
+                          ? "Jenis Kelamin : "
+                          : "No. Hp : "}{" "}
+                        <strong> {data.hp} </strong>
+                      </label>
+                    </div>
+                    <label style={{ padding: "20px" }}>
+                      {data.card === "Anak" ? "Tempat Lahir : " : "Alamat : "}{" "}
+                      <strong className="text-abu"> {data.alamat}</strong>
+                    </label>
+                  </>
+                )}
                 <div
                   style={{
                     backgroundColor: "#8F0D1E",
@@ -672,7 +760,7 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  {data.nama !== undefined ? (
+                  {anak !== null ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
                       style={{
@@ -936,10 +1024,42 @@ const DetailDataRegistrasi = () => {
         {fetched === "5" && (
           <>
             {dataStep5 !== null ? (
-              <DataTablesRegistrationDetail
-                columns={columnsPayments}
-                data={[data]}
-              />
+              <>
+                <strong className="mb-3 flex">
+                  Status Pembayaran :{" "}
+                  <p className="ml-1 text-merah">
+                    {totalPaid >= amount.amount ? "Lunas" : "Cicil"}
+                  </p>
+                </strong>
+
+                <div className="block mb-7">
+                  <strong>Status Tahapan : </strong>
+                  <strong
+                    className={
+                      dataStep5.status === "valid"
+                        ? "text-hijau"
+                        : "text-kuning"
+                    }
+                    style={{ display: "inline-block" }}
+                  >
+                    {dataStep5.status === "valid"
+                      ? " Terverifikasi"
+                      : dataStep5.status === "inreview"
+                      ? " Sedang Di Tinjau"
+                      : dataStep5.status === "invalid" &&
+                        " Gagal Terverifikasi"}
+                  </strong>
+                  <button
+                    style={{ display: "inline-block", float: "right" }}
+                    className="btn-biru w-auto"
+                    title="Edit"
+                    onClick={() => navigateUbahStatus(data.regNumber)}
+                  >
+                    <i className="fa fa-edit" /> Edit Status Tahapan
+                  </button>
+                </div>
+                <DataTablesRegistrationDetail columns={columnsEdu} data={edu} />
+              </>
             ) : (
               <div
                 style={{

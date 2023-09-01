@@ -269,9 +269,9 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       setDataIbu(ibuData);
       setDataWali(waliData);
       // setSts(res.data.code);
-      for (const i of res.data.body.payments) {
-        setEdu(i);
-      }
+      // for (const i of res.data.body.payments) {
+      setEdu(res.data.body.payments);
+      // }
       for (const i of res.data.body.steps) {
         if (i.step === "1") {
           setDataStep1(i);

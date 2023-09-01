@@ -87,6 +87,8 @@ import ListRuangan from "./pages/KBM/Ruangan/ListRuangan";
 import UbahRuangan from "./pages/KBM/Ruangan/UbahRuangan";
 import ListSpp from "./pages/Keuangan/Spp/ListSpp";
 import TambahSpp from "./pages/Keuangan/Spp/TambahSpp";
+import ListPengeluaran from "./pages/Keuangan/Pengeluaran/ListPengeluaran";
+import TambahPengeluaran from "./pages/Keuangan/Pengeluaran/TambahPengeluaran";
 
 const App = () => {
   return (
@@ -164,6 +166,7 @@ const App = () => {
           />
           <Route path="/admin/list-ruangan" element={<ListRuangan />} />
           <Route path="/admin/list-spp" element={<ListSpp />} />
+          <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
@@ -254,6 +257,10 @@ const App = () => {
             element={<TambahMuridKeKelas />}
           />
           <Route path="/admin/tambah-spp" element={<TambahSpp />} />
+          <Route
+            path="/admin/tambah-pengeluaran"
+            element={<TambahPengeluaran />}
+          />
           <Route
             path="/admin/detail-ruang-kelas"
             element={<DetailRuanganKelas />}

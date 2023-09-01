@@ -59,11 +59,11 @@ export const sidebarMenusAdmin = [
     path: `admin/pmb`,
     icon: <AiOutlineBarChart />,
     links: [
-      {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Kurikulum",
+      //   path: `admin/list-kurikulum`,
+      //   icon: <FaWpforms />,
+      // },
       {
         name: "Tahun Ajaran",
         path: `admin/list-tahun-ajaran`,
@@ -81,70 +81,70 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
-  {
-    title: "Admin KBM",
-    path: `admin/kbm`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Murid",
-        path: `admin/list-murid`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Guru",
-        path: `admin/list-guru`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelas",
-        path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Mata Pelajaran",
-        path: `admin/list-mata-pelajaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan",
-        path: `admin/list-ruangan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelompok Mata Pelajaran",
-        path: `admin/list-kelompok-mapel`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan Kelas",
-        path: `admin/list-ruang-kelas`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
-  {
-    title: "Admin Keuangan",
-    path: `admin/keuangan`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "SPP",
-        path: `admin/list-spp`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Pengeluaran",
-        path: `admin/list-cost-center`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
+  // {
+  //   title: "Admin KBM",
+  //   path: `admin/kbm`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Kurikulum",
+  //       path: `admin/list-kurikulum`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Murid",
+  //       path: `admin/list-murid`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Guru",
+  //       path: `admin/list-guru`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelas",
+  //       path: `admin/list-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Mata Pelajaran",
+  //       path: `admin/list-mata-pelajaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Ruangan",
+  //       path: `admin/list-ruangan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelompok Mata Pelajaran",
+  //       path: `admin/list-kelompok-mapel`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Ruangan Kelas",
+  //       path: `admin/list-ruang-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Admin Keuangan",
+  //   path: `admin/keuangan`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "SPP",
+  //       path: `admin/list-spp`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Pengeluaran",
+  //       path: `admin/list-pengeluaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
 ];
 
 export const themeColors = [

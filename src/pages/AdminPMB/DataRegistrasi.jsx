@@ -66,6 +66,8 @@ const DataRegistrasi = () => {
   let filteredValidation = null;
   let filteredAcademicYear = null;
 
+  console.log("dwada === ", filteredItems);
+
   // filter logics
   if (data !== null) {
     // showing all data

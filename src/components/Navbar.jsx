@@ -104,7 +104,7 @@ const Navbar = () => {
       </div> */}
 
       <div className="flex">
-        {role !== "Admin PMB" && (
+        {role !== "ADMIN" && (
           <NavButton
             title="Notifikasi"
             dotColor={notifDotColor}
