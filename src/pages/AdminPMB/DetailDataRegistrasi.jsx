@@ -90,9 +90,9 @@ const DetailDataRegistrasi = () => {
     );
   };
 
-  console.log("dsasd === ", fetched);
-  console.log("2sd === ", totalPaid);
-  console.log("1 === ", edu);
+  // console.log("dsasd === ", fetched);
+  // console.log("2sd === ", totalPaid);
+  // console.log("1 === ", edu);
 
   useEffect(() => {
     if (updatedFetched === undefined) {
@@ -319,7 +319,7 @@ const DetailDataRegistrasi = () => {
   const cardBerkasPendaftaran = [
     {
       card: "Anak",
-      nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
+      nama: anak?.firstName,
       hp:
         anak?.gender === "male"
           ? "Laki-Laki"
@@ -707,7 +707,7 @@ const DetailDataRegistrasi = () => {
                 <strong style={{ padding: "20px 20px" }} className="text-merah">
                   {data.card}
                 </strong>
-                {anak !== null && (
+                {data.nama !== undefined && (
                   <>
                     <div
                       style={{
@@ -741,7 +741,7 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  {anak !== null ? (
+                  {data.nama !== undefined || data.hp !== undefined ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
                       style={{
