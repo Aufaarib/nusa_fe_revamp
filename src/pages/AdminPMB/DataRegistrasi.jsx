@@ -48,7 +48,6 @@ const DataRegistrasi = () => {
 
   localStorage.setItem("ValidationFilter", validationFilter);
   localStorage.setItem("StepsFilter", stepsFilter);
-
   localStorage.setItem("FilterValidation", filterValidation);
   localStorage.setItem("FilterAcademicYear", filterAcademicYear);
   localStorage.setItem("FilterSteps", filterSteps);
