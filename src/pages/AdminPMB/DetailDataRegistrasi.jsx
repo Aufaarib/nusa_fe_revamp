@@ -741,7 +741,7 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  {data.nama !== undefined || data.hp !== undefined ? (
+                  {data.nama !== undefined ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
                       style={{
