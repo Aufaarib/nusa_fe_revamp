@@ -434,17 +434,27 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
                   {step == 3 && status !== "Belum Mulai" && (
                     <>
-                      {dataAdmissionRegistration.testResult === null && (
-                        <>
-                          <p>Rangkaian Tes Sedang Berlangsung</p>
-                        </>
-                      )}
                       {dataAdmissionRegistration.testResult !== null && (
                         <>
                           {status === "Dalam Proses" && (
                             <>
                               <p>Rangkaian Tes Sedang Berlangsung</p>
                               <br />
+                              <p>
+                                Tanggal Tes :{" "}
+                                <strong>
+                                  {moment(
+                                    dataAdmissionRegistration.admissionPhase
+                                      .testSchedule
+                                  ).format("DD-MM-YYYY")}
+                                </strong>
+                              </p>
+                              <p>
+                                {
+                                  dataAdmissionRegistration.admissionPhase
+                                    .testSchedule
+                                }
+                              </p>
                               <p>
                                 Catatan :{" "}
                                 <strong className="capitalize">
@@ -458,6 +468,16 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                               <p>
                                 Alhamdulillah Putra/ Putri Ayah/ Bunda telah
                                 melakukan rangkai tes dengan hasil sbb:
+                              </p>
+                              <br />
+                              <p>
+                                Tanggal Tes :{" "}
+                                <strong>
+                                  {moment(
+                                    dataAdmissionRegistration.admissionPhase
+                                      .testSchedule
+                                  ).format("DD-MM-YYYY")}
+                                </strong>
                               </p>
                               <br />
                               <p>
