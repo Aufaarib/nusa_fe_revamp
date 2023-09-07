@@ -20,26 +20,34 @@ const DataRegistrasi = () => {
   const year = moment().format("YYYY");
 
   const [validationFilter, setValidationFilter] = useState(
-    localStorage.getItem("ValidationFilter")
+    localStorage.getItem("ValidationFilter") == null
+      ? "inreview"
+      : localStorage.getItem("ValidationFilter")
   );
   const [academicYearFilter, setAcademicYearFilter] = useState(year);
   const [stepsFilter, setStepsFilter] = useState(
-    localStorage.getItem("StepsFilter")
+    localStorage.getItem("StepsFilter") == null
+      ? "verification"
+      : localStorage.getItem("StepsFilter")
   );
-
   const [filterValidation, SetFilterValidation] = useState(
-    localStorage.getItem("FilterValidation")
+    localStorage.getItem("FilterValidation") == null
+      ? "false"
+      : localStorage.getItem("FilterValidation")
   );
   const [filterAcademicYear, SetFilterAcademicYear] = useState(
-    localStorage.getItem("FilterAcademicYear")
+    localStorage.getItem("FilterAcademicYear") == null
+      ? "false"
+      : localStorage.getItem("FilterAcademicYear")
   );
   const [filterSteps, SetFilterSteps] = useState(
-    localStorage.getItem("FilterSteps")
+    localStorage.getItem("FilterSteps") == null
+      ? "false"
+      : localStorage.getItem("FilterSteps")
   );
 
   localStorage.setItem("ValidationFilter", validationFilter);
   localStorage.setItem("StepsFilter", stepsFilter);
-
   localStorage.setItem("FilterValidation", filterValidation);
   localStorage.setItem("FilterAcademicYear", filterAcademicYear);
   localStorage.setItem("FilterSteps", filterSteps);

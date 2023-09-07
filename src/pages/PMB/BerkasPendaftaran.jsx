@@ -27,7 +27,7 @@ const BerkasPendaftaran = () => {
   const path = "/pmb/tahapan-pmb";
 
   const navigateTahapan = () => {
-    navigate(path);
+    window.location.href = path;
   };
 
   const asyncSettings = {

@@ -90,9 +90,9 @@ const ResetPassword = () => {
       AlertStatusSuccess(
         navigateLogin,
         "Berhasil",
-        "Password Berhasil Diubah",
         "Kembali Ke Halaman Login",
-        "success"
+        "success",
+        "Password Berhasil Diubah"
       );
     } catch (err) {
       setIsLoading(false);

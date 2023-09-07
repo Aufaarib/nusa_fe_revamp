@@ -18,7 +18,10 @@ export default function UbahGelombang() {
   const [endDate, setEndDate] = useState(
     moment(location.state.endDate).format("YYYY-MM-DD")
   );
-  const [jumlah, setAmount] = useState(location.state.amount);
+  const [testSchedule, setTestSchedule] = useState(
+    moment(location.state.endDate).format("YYYY-MM-DD")
+  );
+  const [jumlah, setAmount] = useState("");
   const [increment, setIncrement] = useState(location.state.increment);
   const [sts, setSts] = useState(undefined);
   const id = location.state.id;
@@ -26,7 +29,6 @@ export default function UbahGelombang() {
 
   const postData = (e) => {
     e.preventDefault();
-
     const amount = parseInt(jumlah.replace(/\./g, ""), 10);
 
     if (
@@ -34,6 +36,7 @@ export default function UbahGelombang() {
       increment === "" ||
       startDate === "" ||
       endDate === "" ||
+      testSchedule == "" ||
       amount === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
@@ -47,6 +50,7 @@ export default function UbahGelombang() {
         name,
         startDate,
         endDate,
+        testSchedule,
         amount
       );
     }
@@ -118,6 +122,12 @@ export default function UbahGelombang() {
             label="Tanggal Selesai"
             value={endDate}
             change={(e) => setEndDate(e.element.value)}
+          />
+
+          <DropdownDatePickers
+            label="Jadwal Tes"
+            value={testSchedule}
+            change={(e) => setTestSchedule(e.element.value)}
           />
 
           <TextInput

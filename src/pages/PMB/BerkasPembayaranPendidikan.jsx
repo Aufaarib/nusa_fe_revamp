@@ -6,7 +6,10 @@ import { CgSpinner } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import { Header } from "../../components";
-import { DropdownDatePickers } from "../../components/Dropdown";
+import {
+  DropdownDatePickers,
+  DropdownPendaftaran,
+} from "../../components/Dropdown";
 import {
   AlertMessage,
   AlertStatusSuccess,
@@ -108,6 +111,17 @@ const BerkasPembayaranBiayaPendidikan = () => {
     setJumlah(inputVal);
   };
 
+  const options = [
+    {
+      value: "transfer",
+      label: "Transfer",
+    },
+    {
+      value: "cash",
+      label: "Cash",
+    },
+  ];
+
   return (
     <article>
       <Header
@@ -119,7 +133,17 @@ const BerkasPembayaranBiayaPendidikan = () => {
       />
       <div>
         <section>
-          <TextInput
+          <DropdownPendaftaran
+            label="Metode Pembayaran"
+            required={true}
+            isClearable={true}
+            isSearchable={false}
+            defaultValue={metode}
+            options={options}
+            onChange={(e) => setMetode(e.value)}
+          />
+
+          {/* <TextInput
             label="Metode Pembayaran"
             type="text"
             id="paymentMethod"
@@ -128,7 +152,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
             // placeholder={admissionParentsData.birthPlace}
             disable={false}
             required={true}
-          />
+          /> */}
 
           <TextInput
             label="Jumlah Transfer"

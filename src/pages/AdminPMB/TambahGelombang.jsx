@@ -10,6 +10,7 @@ export default function TambahGelombang() {
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [testSchedule, setTestSchedule] = useState("");
   const [amount, setAmount] = useState();
   const [increment, setIncrement] = useState();
   // const [birthDate, setBirthDate] = useState("");
@@ -37,11 +38,12 @@ export default function TambahGelombang() {
     e.preventDefault();
 
     if (
-      name.length === 0 ||
-      increment === 0 ||
-      startDate.length === 0 ||
-      endDate.length === 0 ||
-      amount === 0
+      name.length === "" ||
+      increment === "" ||
+      startDate.length === "" ||
+      endDate.length === "" ||
+      testSchedule === "" ||
+      amount === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
@@ -54,6 +56,7 @@ export default function TambahGelombang() {
         name,
         startDate,
         endDate,
+        testSchedule,
         jumlah
       );
       //   setisOpenStatus(true);
@@ -150,23 +153,11 @@ export default function TambahGelombang() {
             value={endDate}
             change={(e) => setEndDate(e.element.value)}
           />
-
-          {/* <TextInput
-            label="Tanggal Mulai"
-            type="text"
-            placeholder="Format YYYY-MM-DD"
-            onChange={(e) => setStartDate(e.target.value)}
-            required={true}
+          <DropdownDatePickers
+            label="Jadwal Tes"
+            value={testSchedule}
+            change={(e) => setTestSchedule(e.element.value)}
           />
-
-          <TextInput
-            label="Tanggal Selesai"
-            type="text"
-            placeholder="Format YYYY-MM-DD"
-            onChange={(e) => setEndDate(e.target.value)}
-            required={true}
-          /> */}
-
           <TextInput
             label="Nominal Biaya Pendaftaran"
             type="text"

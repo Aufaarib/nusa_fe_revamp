@@ -77,6 +77,7 @@ export function updateAdmissionPhase(
   name,
   startDate,
   endDate,
+  testSchedule,
   amount
 ) {
   axios
@@ -87,6 +88,7 @@ export function updateAdmissionPhase(
         name,
         startDate,
         endDate,
+        testSchedule,
         amount,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
@@ -115,6 +117,7 @@ export function postAdmissionPhase(
   name,
   startDate,
   endDate,
+  testSchedule,
   amount
 ) {
   axios
@@ -125,6 +128,7 @@ export function postAdmissionPhase(
         name,
         startDate,
         endDate,
+        testSchedule,
         amount,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }

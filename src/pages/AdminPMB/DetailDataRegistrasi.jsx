@@ -29,7 +29,7 @@ const DetailDataRegistrasi = () => {
   const [dataStep4, setDataStep4] = useState(null);
   const [dataStep5, setDataStep5] = useState(null);
   const [edu, setEdu] = useState([]);
-  const [amount, setAmount] = useState("");
+  const [gelombang, setGelombang] = useState("");
   const [fetched, setFetched] = useState("");
   const [fetchedRegData, setFetchedRegData] = useState("");
   const navigate = useNavigate();
@@ -41,14 +41,15 @@ const DetailDataRegistrasi = () => {
   const [cardOpened, setisCardOpened] = useState("");
   const [detailData, setDetailData] = useState("");
   const [totalPaid, setTotalPaid] = useState("");
+  const [paid, setPaid] = useState("");
 
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
   };
 
-  // console.log("1 === ", amount.admission?.details[0].amount);
-  // console.log("2 === ", totalPaid >= amount.admission?.details[0].amount);
+  // console.log("1 === ", gelombang.admission?.details[0].gelombang);
+  // console.log("2 === ", totalPaid >= gelombang.admission?.details[0].gelombang);
   // console.log("3 === ", totalPaid);
 
   const fetchRegistrationPayment = () => {
@@ -73,7 +74,7 @@ const DetailDataRegistrasi = () => {
   const fetchAdmissionRegistration = () => {
     getAdmissionRegistrationByRegNumberAdmin(
       setData,
-      setAmount,
+      setGelombang,
       setEdu,
       setDataAnak,
       setDataAyah,
@@ -83,18 +84,15 @@ const DetailDataRegistrasi = () => {
       setDataStep2,
       setDataStep3,
       setDataStep4,
-      setDataStep5
+      setDataStep5,
+      setPaid,
+      setTotalPaid
     );
   };
 
-  console.log("dsasd === ", fetched);
-  console.log("2sd === ", updatedFetched);
-
-  useEffect(() => {
-    if (updatedFetched === "5" || fetched === "5") {
-      setTotalPaid(edu.reduce((total, num) => total + num.amount, 0));
-    }
-  });
+  // console.log("dsasd === ", fetched);
+  // console.log("2sd === ", totalPaid);
+  // console.log("1 === ", edu);
 
   useEffect(() => {
     if (updatedFetched === undefined) {
@@ -144,11 +142,7 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Tanggal</div>,
       cell: (data) => (
-        <div>
-          {fetched === "1"
-            ? moment(dataStep1.createdAt).format("DD-MM-YYYY")
-            : moment(dataStep5.createdAt).format("DD-MM-YYYY")}
-        </div>
+        <div>{moment(dataStep1.createdAt).format("DD-MM-YYYY")}</div>
       ),
       width: "auto",
     },
@@ -158,9 +152,7 @@ const DetailDataRegistrasi = () => {
         <button
           title="Tampil Bukti Pembayaran"
           onClick={() => {
-            fetched === "1"
-              ? openPaymentProof(data.invoice)
-              : fetched === "5" && openPaymentProof(edu.paymentRecipt);
+            openPaymentProof(data.invoice);
           }}
         >
           <i style={{ fontSize: "21px" }} className="fa fa-file" />
@@ -172,18 +164,11 @@ const DetailDataRegistrasi = () => {
       name: <div>Nominal</div>,
       cell: (data) => (
         <div>
-          {fetched === "1"
-            ? new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-              }).format(amount.amount)
-            : fetched === "5" &&
-              new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-              }).format(edu.amount)}
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(gelombang.amount)}
         </div>
       ),
       width: "auto",
@@ -303,21 +288,14 @@ const DetailDataRegistrasi = () => {
       width: "55px",
     },
     {
-      name: <div>Tanggal</div>,
+      name: <div>Dilakukan Pada Tanggal</div>,
       cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
       width: "auto",
     },
     {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
+      name: <div>Status Kelulusan</div>,
       cell: (data) => (
-        <div>
-          {dataStep3.status === "valid"
-            ? "Terverifikasi"
-            : dataStep3.status === "inreview"
-            ? "Sedang Di Tinjau"
-            : dataStep3.status === "invalid" && "Gagal Terverifikasi"}
-        </div>
+        <div>{data.testResult?.isPassed === 1 ? "Lulus" : "Tidak Lulus"}</div>
       ),
       width: "auto",
     },
@@ -325,11 +303,11 @@ const DetailDataRegistrasi = () => {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
-          className="btn-biru"
+          className="btn-biru w-auto"
           title="Edit"
           onClick={() => navigateUbahStatus(data.regNumber)}
         >
-          <i className="fa fa-edit" /> Edit Status
+          <i className="fa fa-edit" /> Edit Status Kelulusan
         </button>
       ),
       ignoreRowClick: true,
@@ -341,7 +319,7 @@ const DetailDataRegistrasi = () => {
   const cardBerkasPendaftaran = [
     {
       card: "Anak",
-      nama: `${anak?.firstName} ${anak?.middleName} ${anak?.lastName}`,
+      nama: anak?.firstName,
       hp:
         anak?.gender === "male"
           ? "Laki-Laki"
@@ -385,10 +363,10 @@ const DetailDataRegistrasi = () => {
         "Tutup",
         "warning"
       );
-    } else if (dataStep3?.status !== "valid") {
+    } else if (data.testResult?.isPassed !== 1) {
       AlertMessage(
         "Tidak Dapat Melakukan Verifikasi",
-        "Hasil Tes Belum Terupload atau Terverifikasi (Tahap 3)",
+        "Pendaftar Tidak Lulus Tes (Tahap 3)",
         "Tutup",
         "warning"
       );
@@ -476,7 +454,8 @@ const DetailDataRegistrasi = () => {
               className={
                 dataStep1?.status !== "valid" ||
                 dataStep2?.status !== "valid" ||
-                dataStep3?.status !== "valid"
+                dataStep3?.status !== "valid" ||
+                data.testResult?.isPassed !== 1
                   ? // || dataStep5?.status !== "valid"
                     "btn-action-disabled"
                   : data.status === "inreview"
@@ -581,7 +560,8 @@ const DetailDataRegistrasi = () => {
               color:
                 dataStep1?.status === "valid" &&
                 dataStep2?.status === "valid" &&
-                dataStep3?.status === "valid"
+                dataStep3?.status === "valid" &&
+                data.testResult?.isPassed === 1
                   ? // ? dataStep3 === null
                     fetched === "4" && "white"
                   : // : "grey"
@@ -591,7 +571,8 @@ const DetailDataRegistrasi = () => {
             disabled={
               dataStep1?.status === "valid" &&
               dataStep2?.status === "valid" &&
-              dataStep3?.status === "valid"
+              dataStep3?.status === "valid" &&
+              data.testResult?.isPassed === 1
                 ? // ? dataStep3 === null
                   false
                 : // : true
@@ -726,7 +707,7 @@ const DetailDataRegistrasi = () => {
                 <strong style={{ padding: "20px 20px" }} className="text-merah">
                   {data.card}
                 </strong>
-                {anak !== null && (
+                {data.nama !== undefined && (
                   <>
                     <div
                       style={{
@@ -760,7 +741,7 @@ const DetailDataRegistrasi = () => {
                     borderRadius: "0px 0px 6px 6px",
                   }}
                 >
-                  {anak !== null ? (
+                  {data.nama !== undefined ? (
                     <button
                       onClick={() => handleModalDetail(data.card)}
                       style={{
@@ -1028,7 +1009,7 @@ const DetailDataRegistrasi = () => {
                 <strong className="mb-3 flex">
                   Status Pembayaran :{" "}
                   <p className="ml-1 text-merah">
-                    {totalPaid >= amount.amount ? "Lunas" : "Cicil"}
+                    {totalPaid >= edu ? "Lunas" : "Cicil"}
                   </p>
                 </strong>
 
@@ -1058,7 +1039,10 @@ const DetailDataRegistrasi = () => {
                     <i className="fa fa-edit" /> Edit Status Tahapan
                   </button>
                 </div>
-                <DataTablesRegistrationDetail columns={columnsEdu} data={edu} />
+                <DataTablesRegistrationDetail
+                  columns={columnsEdu}
+                  data={paid}
+                />
               </>
             ) : (
               <div

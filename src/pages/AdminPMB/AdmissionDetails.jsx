@@ -36,14 +36,14 @@ const AdmissionDetails = () => {
       selector: (_row, i) => i + 1,
       width: "55px",
     },
+    // {
+    //   name: <div>Gelombang Ke</div>,
+    //   selector: (data) => data.increment,
+    //   cell: (data) => <div>{data.increment}</div>,
+    //   width: "auto",
+    // },
     {
-      name: <div>Gelombang Ke</div>,
-      selector: (data) => data.increment,
-      cell: (data) => <div>{data.increment}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Nama</div>,
+      name: <div>Nama Gelombang</div>,
       selector: (data) => data.name,
       cell: (data) => <div>{data.name}</div>,
       width: "auto",
@@ -58,6 +58,12 @@ const AdmissionDetails = () => {
       name: <div>Tanggal Selesai</div>,
       selector: (data) => data.endDate,
       cell: (data) => moment(data.endDate).format("DD-MM-YYYY"),
+      width: "auto",
+    },
+    {
+      name: <div>Jadwal Tes</div>,
+      selector: (data) => data.endDate,
+      cell: (data) => moment(data.testSchedule).format("DD-MM-YYYY"),
       width: "auto",
     },
     {

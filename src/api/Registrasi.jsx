@@ -232,7 +232,7 @@ export function getAdmissionRegistrationByRegNumberUser(setData, setSts) {
 
 export function getAdmissionRegistrationByRegNumberAdmin(
   setData,
-  setAmount,
+  setGelombang,
   setEdu,
   setDataAnak,
   setDataAyah,
@@ -242,7 +242,9 @@ export function getAdmissionRegistrationByRegNumberAdmin(
   setDataStep2,
   setDataStep3,
   setDataStep4,
-  setDataStep5
+  setDataStep5,
+  setPaid,
+  setTotalPaid
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
@@ -254,7 +256,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
     )
     .then((res) => {
       setDataAnak(res.data.body.applicant);
-      setAmount(res.data.body.admissionPhase);
+      setGelombang(res.data.body.admissionPhase);
       setData(res.data.body);
       const ayahData = res.data.body.user.parents.find(
         (item) => item.relationship === "ayah"
@@ -270,7 +272,11 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       setDataWali(waliData);
       // setSts(res.data.code);
       // for (const i of res.data.body.payments) {
-      setEdu(res.data.body.payments);
+      setEdu(res.data.body.admissionPhase.admission.details[0]?.amount);
+      setPaid(res.data.body.payments);
+      setTotalPaid(
+        res.data.body.payments.reduce((total, num) => total + num.amount, 0)
+      );
       // }
       for (const i of res.data.body.steps) {
         if (i.step === "1") {
@@ -541,13 +547,13 @@ export function getPaymentInvoice(setData, setSts, code) {
     });
 }
 
-export function uploadHasilTest(score, navigate) {
+export function uploadHasilTest(isPassed, navigate) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
     .post(
       process.env.REACT_APP_BASE_URL +
         `/admission/registration/${regNumber}/testResult`,
-      { score },
+      { isPassed },
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }
