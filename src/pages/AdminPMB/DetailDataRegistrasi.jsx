@@ -305,7 +305,7 @@ const DetailDataRegistrasi = () => {
         <button
           className="btn-biru w-auto"
           title="Edit"
-          onClick={() => navigateUbahStatus(data.regNumber)}
+          onClick={() => navigateUploadHasilTes(data.regNumber)}
         >
           <i className="fa fa-edit" /> Edit Status Kelulusan
         </button>
