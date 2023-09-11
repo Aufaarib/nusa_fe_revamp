@@ -1,4 +1,3 @@
-import { Checkbox } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,10 +5,10 @@ import {
   getAdmissionRegistration,
   moveApplicantToStudent,
 } from "../../api/Registrasi";
-import { Header, UserProfile } from "../../components";
+import { getTahunAjaran } from "../../api/TahunAjaran";
+import { Header } from "../../components";
 import { DataTablesRegistrations } from "../../components/DataTables";
 import { AlertConfirmation } from "../../components/ModalPopUp";
-import { getTahunAjaran } from "../../api/TahunAjaran";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -74,153 +73,278 @@ const DataRegistrasi = () => {
   let filteredValidation = null;
   let filteredAcademicYear = null;
 
-  console.log("dwada === ", filteredItems);
-
   // filter logics
   if (data !== null) {
-    // showing all data
     filteredItems = data.filter(
       (data) =>
         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
         data.childName.toLowerCase().includes(filterText.toLowerCase())
     );
-    // if academic year filter button is on, this will filtering data by academic year
+
     if (filterAcademicYear === "true") {
       filteredAcademicYear = data.filter(
         (data) =>
           data.admissionPhase?.admission?.academicYear?.year ===
           academicYearFilter
       );
-      // then set applicant status filtering by filtered data of academic year
-      filteredValidation = filteredAcademicYear?.filter(
-        (data) => data.status === validationFilter
+      filteredItems = filteredAcademicYear.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
-      // if academic year filter button is off, applicant status filtering will be set to default data
-    } else if (filterAcademicYear === "false") {
-      filteredValidation = data.filter(
-        (data) => data.status === validationFilter
-      );
-    }
-    // if applicant status filter button is on, this will filtering steps status by filtered applicant status
-    if (filterValidation === "true") {
-      // if (validationFilter === "inreview") {
-      if (stepsFilter === "complete") {
-        filteredSteps = filteredValidation.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "5" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "verification") {
-        filteredSteps = filteredValidation.filter(
-          (data) => data.steps[data.steps.length - 1].status === "inreview"
-        );
-      } else if (stepsFilter === "testResult") {
-        filteredSteps = filteredValidation.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "2" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "reReg") {
-        filteredSteps = filteredValidation.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "3" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "eduPayment") {
-        filteredSteps = filteredValidation.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "4" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "invalid") {
-        filteredSteps = filteredValidation.filter(
-          (data) => data.steps[data.steps.length - 1].status === "invalid"
-        );
-      } else {
-        filteredSteps = filteredValidation.filter(
-          (data) => data.steps[data.steps.length - 1].status === "inreview"
-        );
-      }
-      // }
-      // if applicant status filter button is off, this will filtering steps status by default data
-    } else if (filterValidation === "false") {
-      // if (validationFilter === "inreview") {
-      if (stepsFilter === "complete") {
-        filteredSteps = data.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "5" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "verification") {
-        filteredSteps = data.filter(
-          (data) => data.steps[data.steps.length - 1].status === "inreview"
-        );
-      } else if (stepsFilter === "testResult") {
-        filteredSteps = data.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "2" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "reReg") {
-        filteredSteps = data.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "3" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "eduPayment") {
-        filteredSteps = data.filter(
-          (data) =>
-            data.steps[data.steps.length - 1].step === "4" &&
-            data.steps[data.steps.length - 1].status === "valid"
-        );
-      } else if (stepsFilter === "invalid") {
-        filteredSteps = data.filter(
-          (data) => data.steps[data.steps.length - 1].status === "invalid"
-        );
-      } else {
-        filteredSteps = data.filter(
-          (data) => data.steps[data.steps.length - 1].status === "inreview"
-        );
-      }
-      // }
     }
 
     if (filterValidation === "true") {
-      filteredItems = filteredValidation?.filter(
-        (data) =>
-          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      filteredValidation = data.filter(
+        (data) => data.status === validationFilter
       );
-      if (filterSteps === "true") {
-        // if (validationFilter === "inreview") {
-        filteredItems = filteredSteps?.filter(
-          (data) =>
-            data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-            data.childName.toLowerCase().includes(filterText.toLowerCase())
-        );
-      }
-    } else if (filterAcademicYear === "true") {
-      filteredItems = filteredAcademicYear?.filter(
-        (data) =>
-          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-          data.childName.toLowerCase().includes(filterText.toLowerCase())
-      );
-      if (filterSteps === "true") {
-        // if (validationFilter === "inreview") {
-        filteredItems = filteredSteps?.filter(
-          (data) =>
-            data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-            data.childName.toLowerCase().includes(filterText.toLowerCase())
-        );
-        // }
-      }
-    } else if (filterSteps === "true") {
-      filteredItems = filteredSteps?.filter(
+      filteredItems = filteredValidation.filter(
         (data) =>
           data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
           data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
     }
+
+    if (filterSteps === "true") {
+      if (stepsFilter === "complete") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredSteps = data.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      } else {
+        filteredSteps = data.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      }
+      filteredItems = filteredSteps.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
+
+    if (filterAcademicYear === "true" && filterValidation === "true") {
+      filteredValidation = filteredAcademicYear?.filter(
+        (data) => data.status === validationFilter
+      );
+      filteredItems = filteredValidation.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filterAcademicYear === "true" && filterSteps === "true") {
+      if (stepsFilter === "complete") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredSteps = filteredAcademicYear.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      }
+      filteredItems = filteredSteps.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filterValidation === "true" && filterSteps === "true") {
+      if (stepsFilter === "complete") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredSteps = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredSteps = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      }
+      filteredItems = filteredSteps.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
+
+    // else if (filterAcademicYear === "false") {
+    //   filteredValidation = data.filter(
+    //     (data) => data.status === validationFilter
+    //   );
+    // }
+    // if (filterValidation === "true") {
+    //   filteredItems = filteredValidation?.filter(
+    //     (data) =>
+    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
+    //   );
+    //   if (filterSteps === "true") {
+    //     if (stepsFilter === "complete") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) =>
+    //           data.steps[data.steps.length - 1].step === "5" &&
+    //           data.steps[data.steps.length - 1].status === "valid"
+    //       );
+    //     } else if (stepsFilter === "verification") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) => data.steps[data.steps.length - 1].status === "inreview"
+    //       );
+    //     } else if (stepsFilter === "testResult") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) =>
+    //           data.steps[data.steps.length - 1].step === "2" &&
+    //           data.steps[data.steps.length - 1].status === "valid"
+    //       );
+    //     } else if (stepsFilter === "reReg") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) =>
+    //           data.steps[data.steps.length - 1].step === "3" &&
+    //           data.steps[data.steps.length - 1].status === "valid"
+    //       );
+    //     } else if (stepsFilter === "eduPayment") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) =>
+    //           data.steps[data.steps.length - 1].step === "4" &&
+    //           data.steps[data.steps.length - 1].status === "valid"
+    //       );
+    //     } else if (stepsFilter === "invalid") {
+    //       filteredSteps = filteredValidation.filter(
+    //         (data) => data.steps[data.steps.length - 1].status === "invalid"
+    //       );
+    //     }
+    //     filteredItems = filteredSteps?.filter(
+    //       (data) =>
+    //         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+    //         data.childName.toLowerCase().includes(filterText.toLowerCase())
+    //     );
+    //   }
+    // } else if (filterValidation === "false") {
+    //   if (stepsFilter === "complete") {
+    //     filteredSteps = data.filter(
+    //       (data) =>
+    //         data.steps[data.steps.length - 1].step === "5" &&
+    //         data.steps[data.steps.length - 1].status === "valid"
+    //     );
+    //   } else if (stepsFilter === "verification") {
+    //     filteredSteps = data.filter(
+    //       (data) => data.steps[data.steps.length - 1].status === "inreview"
+    //     );
+    //   } else if (stepsFilter === "testResult") {
+    //     filteredSteps = data.filter(
+    //       (data) =>
+    //         data.steps[data.steps.length - 1].step === "2" &&
+    //         data.steps[data.steps.length - 1].status === "valid"
+    //     );
+    //   } else if (stepsFilter === "reReg") {
+    //     filteredSteps = data.filter(
+    //       (data) =>
+    //         data.steps[data.steps.length - 1].step === "3" &&
+    //         data.steps[data.steps.length - 1].status === "valid"
+    //     );
+    //   } else if (stepsFilter === "eduPayment") {
+    //     filteredSteps = data.filter(
+    //       (data) =>
+    //         data.steps[data.steps.length - 1].step === "4" &&
+    //         data.steps[data.steps.length - 1].status === "valid"
+    //     );
+    //   } else if (stepsFilter === "invalid") {
+    //     filteredSteps = data.filter(
+    //       (data) => data.steps[data.steps.length - 1].status === "invalid"
+    //     );
+    //   }
+    // } else if (filterAcademicYear === "true") {
+    //   filteredItems = filteredAcademicYear?.filter(
+    //     (data) =>
+    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
+    //   );
+    //   if (filterSteps === "true") {
+    //     filteredItems = filteredSteps?.filter(
+    //       (data) =>
+    //         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+    //         data.childName.toLowerCase().includes(filterText.toLowerCase())
+    //     );
+    //   }
+    // }
+    // else if (filterSteps === "true") {
+    //   filteredItems = filteredSteps?.filter(
+    //     (data) =>
+    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
+    //   );
+    // }
   }
 
   const navigateRegistrationDetails = (code) => {
@@ -233,7 +357,7 @@ const DataRegistrasi = () => {
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
-  const isAllRowsSelected = selectedRows.length === filteredItems.length;
+  const isAllRowsSelected = selectedRows.length === filteredItems?.length;
 
   const handleSelectAll = () => {
     if (selectedRows.length === filteredItems.length) {
