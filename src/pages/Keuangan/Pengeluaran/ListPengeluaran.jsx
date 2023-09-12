@@ -35,7 +35,7 @@ export default function ListPengeluaran() {
       width: "55px",
     },
     {
-      name: <div>Nama</div>,
+      name: <div>Nama Barang</div>,
       cell: (data) => <div>{data.name}</div>,
       width: "240px",
     },
@@ -46,7 +46,15 @@ export default function ListPengeluaran() {
     },
     {
       name: <div>Total Pengeluaran</div>,
-      cell: (data) => <div>{data.amount}</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
+        </div>
+      ),
       width: "auto",
     },
     {
@@ -73,23 +81,21 @@ export default function ListPengeluaran() {
       cell: (data) => (
         <div>
           <button
-            className="btn-action-merah"
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             title="Edit"
             onClick={() =>
-              navigateUbahSpp(
+              navigateUbahPengeluaran(
                 data.id,
                 data.amount,
-                data.month,
-                data.description,
-                data.invoice,
-                data.academicPeriode.id,
-                data.academicPeriode.increment,
-                data.student.code,
-                data.student.firstName
+                data.name,
+                data.transactionDate,
+                data.type,
+                data.description
               )
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
         </div>
       ),
@@ -103,28 +109,22 @@ export default function ListPengeluaran() {
     navigate("/admin/tambah-pengeluaran");
   };
 
-  const navigateUbahSpp = (
+  const navigateUbahPengeluaran = (
     id,
     amount,
-    month,
-    description,
-    invoice,
-    periodeId,
-    increment,
-    code,
-    studentName
+    name,
+    transactionDate,
+    type,
+    description
   ) => {
-    navigate("/admin/tambah-spp", {
+    navigate("/admin/ubah-pengeluaran", {
       state: {
         id: id,
         amount: amount,
-        month: month,
+        name: name,
+        transactionDate: transactionDate,
+        type: type,
         description: description,
-        invoice: invoice,
-        periodeId: periodeId,
-        increment: increment,
-        code: code,
-        studentName: studentName,
       },
     });
   };

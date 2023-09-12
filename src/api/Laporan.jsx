@@ -1,14 +1,8 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
 import axios from "./axios";
 
-export function getPengeluaran(setData, setSts) {
+export function getLaporan(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/spending", {
+    .get(process.env.REACT_APP_BASE_URL + "/report/finance", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
@@ -18,73 +12,5 @@ export function getPengeluaran(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-    });
-}
-
-export function postPengeluaran(
-  setSts,
-  navigate,
-  formData,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode
-) {
-  axios
-    .post(process.env.REACT_APP_BASE_URL + "/spending", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        authorization: localStorage.getItem("TOKEN"),
-      },
-    })
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusSuccess(
-        navigate,
-        "Berhasil",
-        "Tutup",
-        "success",
-        "Tambah Pendaftaran Berhasil"
-      );
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
-    });
-}
-
-export function updateSpp(
-  setSts,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode,
-  id
-) {
-  axios
-    .put(
-      process.env.REACT_APP_BASE_URL + `/spp/${id}`,
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
-      },
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
     });
 }

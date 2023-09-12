@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getPengeluaran } from "../../../api/Spendings";
+import { getLaporan } from "../../../api/Laporan";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
+import moment from "moment/moment";
 
 export default function ListLaporan() {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ export default function ListLaporan() {
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.name.toLowerCase().includes(filterText.toLowerCase())
+      data.type.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
@@ -24,7 +25,7 @@ export default function ListLaporan() {
   };
 
   useEffect(() => {
-    getPengeluaran(setData, setSts);
+    getLaporan(setData, setSts);
   }, []);
 
   const columns = [
@@ -34,8 +35,13 @@ export default function ListLaporan() {
       width: "55px",
     },
     {
-      name: <div>Nama</div>,
-      cell: (data) => <div>{data.name}</div>,
+      name: <div>Tanggal</div>,
+      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      width: "240px",
+    },
+    {
+      name: <div>Tipe</div>,
+      cell: (data) => <div>{data.type === "K" ? "Kredit" : "Debit"}</div>,
       width: "240px",
     },
     {
@@ -44,62 +50,22 @@ export default function ListLaporan() {
       width: "auto",
     },
     {
-      name: <div>Total Pengeluaran</div>,
-      cell: (data) => <div>{data.amount}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Bukti Pembayaran</div>,
-      cell: (data) => (
-        <button
-          title="Tampil Bukti Pembayaran"
-          onClick={() => {
-            openPaymentProof(data.invoice);
-          }}
-        >
-          <i style={{ fontSize: "21px" }} className="fa fa-file" />
-        </button>
-      ),
-      width: "auto",
-    },
-    // {
-    //   name: <div>Deskripsi</div>,
-    //   cell: (data) => <div>{data.description}</div>,
-    //   width: "210px",
-    // },
-    {
-      name: <div>Aksi</div>,
+      name: <div>Total</div>,
       cell: (data) => (
         <div>
-          <button
-            className="btn-action-merah"
-            title="Edit"
-            onClick={() =>
-              navigateUbahSpp(
-                data.id,
-                data.amount,
-                data.month,
-                data.description,
-                data.invoice,
-                data.academicPeriode.id,
-                data.academicPeriode.increment,
-                data.student.code,
-                data.student.firstName
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Ubah
-          </button>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
         </div>
       ),
-      ignoreRowClick: true,
-      button: true,
-      width: "110px",
+      width: "auto",
     },
   ];
 
   const navigateTambahPengeluaran = () => {
-    navigate("/admin/tambah-pengeluaran");
+    navigate("/admin/tambah-Laporan Keuangan");
   };
 
   const navigateUbahSpp = (
@@ -134,8 +100,8 @@ export default function ListLaporan() {
         home="Admin Keuangan"
         // prev="Bank"
         // navePrev={path}
-        at="Pengeluaran"
-        title="Data Pengeluaran"
+        at="Laporan Keuangan"
+        title="Data Laporan Keuangan"
       />
 
       <div style={{ marginTop: "50px" }}>

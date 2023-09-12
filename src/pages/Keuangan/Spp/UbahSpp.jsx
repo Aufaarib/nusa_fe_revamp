@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { postSpp, updateSpp } from "../../../api/Spp";
-import { Header } from "../../../components";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
-import TextInput from "../../../components/TextInput";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-import { useRef } from "react";
-import { DropdownSiswa } from "../../../components/Dropdown";
-import { useEffect } from "react";
-import { getSemester } from "../../../api/TahunAjaran";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getMurid } from "../../../api/Murid";
+import { updateSpp } from "../../../api/Spp";
+import { getSemester } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { DropdownSiswa } from "../../../components/Dropdown";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function UbahSpp() {
   const navigate = useNavigate();
@@ -18,7 +16,7 @@ export default function UbahSpp() {
   const location = useLocation();
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
-  const [amounts, setAmount] = useState();
+  const [amounts, setAmount] = useState(location.state.amount);
   const [month, setMonth] = useState(location.state.month);
   const [periodeIds, setPeriodeId] = useState({
     label: location.state.increment,
@@ -31,7 +29,6 @@ export default function UbahSpp() {
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
-  const [fileInvoice, setFileInvoice] = useState(null);
 
   const fetchAcademicPeriode = () => {
     getSemester(setAcademicPeriodeData, setSts);
@@ -46,7 +43,7 @@ export default function UbahSpp() {
     fetchStudents();
   }, []);
 
-  console.log("kkakmwk === ", studentsData);
+  console.log("kkakmwk === ", studentCodes);
 
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
@@ -57,7 +54,6 @@ export default function UbahSpp() {
   const maxFileSize = 5000000;
 
   const onRemoveFile = (args) => {};
-
   const onFileUpload = (args) => {};
 
   const onSuccess = (args) => {
@@ -66,27 +62,31 @@ export default function UbahSpp() {
   };
 
   const postData = (e) => {
-    const invoice = filesData.file.rawFile;
-    const periodeId = periodeIds.value;
-    const studentCode = studentCodes.value;
-    const amount = parseInt(amounts.replace(/\./g, ""), 10);
+    const invoice = filesData?.file?.rawFile;
+    const amount = parseInt(amounts);
     e.preventDefault();
 
-    // if (amount.length === 0 || description.length === 0 || type.length === 0) {
-    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
-    // } else {
-    updateSpp(
-      setSts,
-      path,
-      amount,
-      month,
-      description,
-      invoice,
-      periodeId,
-      studentCode,
-      location.state.id
-    );
-    // }
+    if (
+      amounts === "" ||
+      month === "" ||
+      periodeIds === "" ||
+      studentCodes === "" ||
+      description === ""
+    ) {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+    } else {
+      updateSpp(
+        setSts,
+        navigateSpp,
+        amount,
+        month,
+        description,
+        invoice,
+        periodeIds.value,
+        studentCodes.value,
+        location.state.id
+      );
+    }
   };
 
   const navigateSpp = () => {
@@ -134,7 +134,7 @@ export default function UbahSpp() {
           <DropdownSiswa
             label="Semester"
             required={true}
-            defaultValue={periodeId}
+            defaultValue={periodeIds}
             isClearable={false}
             options={academicYearOptions}
             isSearchable={false}
@@ -143,17 +143,18 @@ export default function UbahSpp() {
           <TextInput
             label="Spp Bulan"
             type="text"
+            value={month}
             onChange={(e) => setMonth(e.target.value)}
             required={true}
           />
           <DropdownSiswa
             label="Murid"
             required={true}
-            defaultValue={studentCode}
+            defaultValue={studentCodes}
             isClearable={false}
             options={studentsOptions}
             isSearchable={true}
-            onChange={(e) => setStudentCode(e.value)}
+            onChange={(e) => setStudentCode(e)}
           />
           <TextInput
             label="Jumlah"
@@ -165,6 +166,7 @@ export default function UbahSpp() {
           <TextInput
             label="Deskripsi"
             type="text"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
@@ -178,7 +180,11 @@ export default function UbahSpp() {
               width: "auto",
             }}
           >
+            <label htmlFor="invoice" className="block mt-4 mb-1">
+              Upload Bukti Pembayaran{" "}
+            </label>
             <UploaderComponent
+              id="invoice"
               type="file"
               ref={uploaderRef}
               asyncSettings={asyncSettings}
@@ -186,17 +192,17 @@ export default function UbahSpp() {
               uploading={onFileUpload}
               success={onSuccess.bind(this)}
               locale="id-BAHASA"
-              allowedExtensions=".png"
-              accept=".png"
+              allowedExtensions=".png,.jpg"
+              accept=".png,.jpg"
               minFileSize={minFileSize}
               maxFileSize={maxFileSize}
               multiple={false}
               buttons={{
-                browse: !fileInvoice ? "Unggah Bukti Transfer" : "Ganti Berkas",
+                browse: !filesData ? "Pilih File" : "Ganti File",
               }}
             />
             <small className=" text-gray-400">
-              <i>Jenis berkas: .png</i>
+              <i>Jenis berkas: .png / .jpg</i>
             </small>
           </div>
 
@@ -206,7 +212,7 @@ export default function UbahSpp() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"

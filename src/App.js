@@ -89,6 +89,9 @@ import ListSpp from "./pages/Keuangan/Spp/ListSpp";
 import TambahSpp from "./pages/Keuangan/Spp/TambahSpp";
 import ListPengeluaran from "./pages/Keuangan/Pengeluaran/ListPengeluaran";
 import TambahPengeluaran from "./pages/Keuangan/Pengeluaran/TambahPengeluaran";
+import ListLaporan from "./pages/Keuangan/Laporan/ListLaporan";
+import UbahSpp from "./pages/Keuangan/Spp/UbahSpp";
+import UbahPengeluaran from "./pages/Keuangan/Pengeluaran/UbahPengeluaran";
 
 const App = () => {
   return (
@@ -167,6 +170,7 @@ const App = () => {
           <Route path="/admin/list-ruangan" element={<ListRuangan />} />
           <Route path="/admin/list-spp" element={<ListSpp />} />
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
+          <Route path="/admin/list-laporan" element={<ListLaporan />} />
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
@@ -200,6 +204,8 @@ const App = () => {
             element={<UbahRuanganKelas />}
           />
           <Route path="/admin/ubah-ruangan" element={<UbahRuangan />} />
+          <Route path="/admin/ubah-spp" element={<UbahSpp />} />
+          <Route path="/admin/ubah-pengeluaran" element={<UbahPengeluaran />} />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />

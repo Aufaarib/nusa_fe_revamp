@@ -56,17 +56,18 @@ export function postSpp(
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Pendaftaran Berhasil"
+        "Tambah SPP Berhasil"
       );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+      AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
     });
 }
 
 export function updateSpp(
   setSts,
+  navigate,
   amount,
   month,
   description,
@@ -87,15 +88,24 @@ export function updateSpp(
         studentCode,
       },
       {
-        headers: { authorization: localStorage.getItem("TOKEN") },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: localStorage.getItem("TOKEN"),
+        },
       }
     )
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah SPP Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
     });
 }

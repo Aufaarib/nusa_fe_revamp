@@ -1,24 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postSpp } from "../../../api/Spp";
-import { Header } from "../../../components";
-import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
-import TextInput from "../../../components/TextInput";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-import { useRef } from "react";
-import { DropdownSiswa } from "../../../components/Dropdown";
-import { useEffect } from "react";
-import { getSemester } from "../../../api/TahunAjaran";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getMurid } from "../../../api/Murid";
+import { postSpp } from "../../../api/Spp";
+import { getSemester } from "../../../api/TahunAjaran";
+import { Header } from "../../../components";
+import { DropdownSiswa } from "../../../components/Dropdown";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import TextInput from "../../../components/TextInput";
 
 export default function TambahSpp() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
-  const [amounts, setAmount] = useState();
+  const [amounts, setAmount] = useState("");
   const [month, setMonth] = useState("");
   const [periodeId, setPeriodeId] = useState("");
   const [studentCode, setStudentCode] = useState("");
-  const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
@@ -65,20 +62,27 @@ export default function TambahSpp() {
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
-    // if (amount.length === 0 || description.length === 0 || type.length === 0) {
-    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
-    // } else {
-    postSpp(
-      setSts,
-      navigateListSpp,
-      amount,
-      month,
-      description,
-      invoice,
-      periodeId,
-      studentCode
-    );
-    // }
+    if (
+      amounts === "" ||
+      month === "" ||
+      periodeId === "" ||
+      studentCode === "" ||
+      description === "" ||
+      invoice == null
+    ) {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+    } else {
+      postSpp(
+        setSts,
+        navigateListSpp,
+        amount,
+        month,
+        description,
+        invoice,
+        periodeId,
+        studentCode
+      );
+    }
   };
 
   const navigateSpp = () => {
