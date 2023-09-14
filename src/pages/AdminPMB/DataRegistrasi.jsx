@@ -150,7 +150,53 @@ const DataRegistrasi = () => {
       );
     }
 
-    if (filterAcademicYear === "true" && filterValidation === "true") {
+    if (
+      filterAcademicYear === "true" &&
+      filterValidation === "true" &&
+      filterSteps === "true"
+    ) {
+      filteredValidation = filteredAcademicYear.filter(
+        (data) => data.status === validationFilter
+      );
+      if (stepsFilter === "complete") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "5" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "verification") {
+        filteredSteps = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "inreview"
+        );
+      } else if (stepsFilter === "testResult") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "2" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "reReg") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "3" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "eduPayment") {
+        filteredSteps = filteredValidation.filter(
+          (data) =>
+            data.steps[data.steps.length - 1].step === "4" &&
+            data.steps[data.steps.length - 1].status === "valid"
+        );
+      } else if (stepsFilter === "invalid") {
+        filteredSteps = filteredValidation.filter(
+          (data) => data.steps[data.steps.length - 1].status === "invalid"
+        );
+      }
+      filteredItems = filteredSteps.filter(
+        (data) =>
+          data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.childName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filterAcademicYear === "true" && filterValidation === "true") {
       filteredValidation = filteredAcademicYear?.filter(
         (data) => data.status === validationFilter
       );
@@ -238,113 +284,6 @@ const DataRegistrasi = () => {
           data.childName.toLowerCase().includes(filterText.toLowerCase())
       );
     }
-
-    // else if (filterAcademicYear === "false") {
-    //   filteredValidation = data.filter(
-    //     (data) => data.status === validationFilter
-    //   );
-    // }
-    // if (filterValidation === "true") {
-    //   filteredItems = filteredValidation?.filter(
-    //     (data) =>
-    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
-    //   );
-    //   if (filterSteps === "true") {
-    //     if (stepsFilter === "complete") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) =>
-    //           data.steps[data.steps.length - 1].step === "5" &&
-    //           data.steps[data.steps.length - 1].status === "valid"
-    //       );
-    //     } else if (stepsFilter === "verification") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) => data.steps[data.steps.length - 1].status === "inreview"
-    //       );
-    //     } else if (stepsFilter === "testResult") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) =>
-    //           data.steps[data.steps.length - 1].step === "2" &&
-    //           data.steps[data.steps.length - 1].status === "valid"
-    //       );
-    //     } else if (stepsFilter === "reReg") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) =>
-    //           data.steps[data.steps.length - 1].step === "3" &&
-    //           data.steps[data.steps.length - 1].status === "valid"
-    //       );
-    //     } else if (stepsFilter === "eduPayment") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) =>
-    //           data.steps[data.steps.length - 1].step === "4" &&
-    //           data.steps[data.steps.length - 1].status === "valid"
-    //       );
-    //     } else if (stepsFilter === "invalid") {
-    //       filteredSteps = filteredValidation.filter(
-    //         (data) => data.steps[data.steps.length - 1].status === "invalid"
-    //       );
-    //     }
-    //     filteredItems = filteredSteps?.filter(
-    //       (data) =>
-    //         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-    //         data.childName.toLowerCase().includes(filterText.toLowerCase())
-    //     );
-    //   }
-    // } else if (filterValidation === "false") {
-    //   if (stepsFilter === "complete") {
-    //     filteredSteps = data.filter(
-    //       (data) =>
-    //         data.steps[data.steps.length - 1].step === "5" &&
-    //         data.steps[data.steps.length - 1].status === "valid"
-    //     );
-    //   } else if (stepsFilter === "verification") {
-    //     filteredSteps = data.filter(
-    //       (data) => data.steps[data.steps.length - 1].status === "inreview"
-    //     );
-    //   } else if (stepsFilter === "testResult") {
-    //     filteredSteps = data.filter(
-    //       (data) =>
-    //         data.steps[data.steps.length - 1].step === "2" &&
-    //         data.steps[data.steps.length - 1].status === "valid"
-    //     );
-    //   } else if (stepsFilter === "reReg") {
-    //     filteredSteps = data.filter(
-    //       (data) =>
-    //         data.steps[data.steps.length - 1].step === "3" &&
-    //         data.steps[data.steps.length - 1].status === "valid"
-    //     );
-    //   } else if (stepsFilter === "eduPayment") {
-    //     filteredSteps = data.filter(
-    //       (data) =>
-    //         data.steps[data.steps.length - 1].step === "4" &&
-    //         data.steps[data.steps.length - 1].status === "valid"
-    //     );
-    //   } else if (stepsFilter === "invalid") {
-    //     filteredSteps = data.filter(
-    //       (data) => data.steps[data.steps.length - 1].status === "invalid"
-    //     );
-    //   }
-    // } else if (filterAcademicYear === "true") {
-    //   filteredItems = filteredAcademicYear?.filter(
-    //     (data) =>
-    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
-    //   );
-    //   if (filterSteps === "true") {
-    //     filteredItems = filteredSteps?.filter(
-    //       (data) =>
-    //         data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-    //         data.childName.toLowerCase().includes(filterText.toLowerCase())
-    //     );
-    //   }
-    // }
-    // else if (filterSteps === "true") {
-    //   filteredItems = filteredSteps?.filter(
-    //     (data) =>
-    //       data.regNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-    //       data.childName.toLowerCase().includes(filterText.toLowerCase())
-    //   );
-    // }
   }
 
   const navigateRegistrationDetails = (code) => {
