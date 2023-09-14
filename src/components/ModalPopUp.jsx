@@ -179,7 +179,7 @@ export const ModalTambahCalonMurid = ({
       <div
         style={{
           padding: "28px 35px 50px 30px",
-          width: "400px",
+          width: "350px",
           fontSize: "22px",
           fontWeight: "bold",
         }}
@@ -189,7 +189,7 @@ export const ModalTambahCalonMurid = ({
           type="text"
           onChange={onChange}
           required={true}
-          placeholder="Masukkan Nama"
+          placeholder="Masukkan Nama Depan"
         />
       </div>
       <div className="buttonModalWrapper">
