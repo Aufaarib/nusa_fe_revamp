@@ -56,7 +56,7 @@ export function getKelompokMapelRoom(setData, setSts, roomClassesId) {
 
 export function postClassRoom(
   setSts,
-  path,
+  navigate,
   academicYearId,
   classId,
   roomId,
@@ -78,7 +78,7 @@ export function postClassRoom(
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
-        path,
+        navigate,
         "Berhasil",
         "Tutup",
         "success",

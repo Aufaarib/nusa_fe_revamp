@@ -70,7 +70,7 @@ export default function TambahRuanganKelas() {
     } else {
       postClassRoom(
         setSts,
-        path,
+        navigateRuangKelas,
         academicYearId,
         classId,
         roomId,
