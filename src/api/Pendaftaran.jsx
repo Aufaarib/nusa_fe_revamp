@@ -76,7 +76,12 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
       setSts({ type: "success" });
     })
     .catch((error) => {
-      AlertStatusUpdateFailed();
+      AlertMessage(
+        "Gagal",
+        "Penambahan Calon Siswa Gagal, Silahkan Coba Lagi",
+        "Coba Lagi",
+        "error"
+      );
       setSts({ type: "error", error });
     });
 }

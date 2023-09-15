@@ -802,12 +802,10 @@ const DetailDataRegistrasi = () => {
                         paddingBottom: "5px",
                       }}
                     >
-                      <label style={{ fontWeight: "bold" }} className="mt-1">
-                        {data.statement.question}
-                      </label>
+                      <label className="mt-1">{data.statement.question}</label>
 
                       <span className="mt-1">:</span>
-                      <label className="mt-1">{data.answer}</label>
+                      <label className="mt-1 font-bold">{data.answer}</label>
                     </div>
                   ))}
                 </div>

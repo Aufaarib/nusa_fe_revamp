@@ -6,12 +6,7 @@ import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { Header } from "../../components";
-import {
-  AlertMessage,
-  AlertStatusFailed,
-  AlertStatusSuccess,
-  AlertUploadInvoiceFailed,
-} from "../../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
 
 const BerkasPembayaran = () => {
   const token = localStorage.getItem("TOKEN");

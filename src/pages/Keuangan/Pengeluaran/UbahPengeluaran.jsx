@@ -1,30 +1,34 @@
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postPengeluaran } from "../../../api/Spendings";
+import { useLocation, useNavigate } from "react-router-dom";
+import { postPengeluaran, updatePengeluaran } from "../../../api/Spendings";
 import { Header } from "../../../components";
 import {
   DropdownDatePickers,
   DropdownSiswa,
 } from "../../../components/Dropdown";
 import TextInput from "../../../components/TextInput";
+import { AlertMessage } from "../../../components/ModalPopUp";
+import moment from "moment/moment";
 
-export default function TambahPengeluaran() {
-  const [amounts, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
-  const [transactionDate, setTransactionDate] = useState("");
-  const [type, setType] = useState("");
+export default function UbahPengeluaran() {
+  const location = useLocation();
+  const [amounts, setAmount] = useState(location.state.amount);
+  const [description, setDescription] = useState(location.state.description);
+  const [name, setName] = useState(location.state.name);
+  const [transactionDate, setTransactionDate] = useState(
+    moment(location.state.transactionDate).format("YYYY-MM-DD")
+  );
+  const [type, setType] = useState({
+    label: location.state.type,
+    value: location.state.type,
+  });
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
   const [fields, setFields] = useState([{ name: "", amount: "", qty: "" }]);
   const navigate = useNavigate();
   const path = "/admin/list-pengeluaran";
   const uploaderRef = useRef(null);
-
-  const navigateListSpp = () => {
-    navigate(path);
-  };
 
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
@@ -44,11 +48,9 @@ export default function TambahPengeluaran() {
   };
 
   const postData = (e) => {
-    const invoice = filesData.file.rawFile;
+    const invoice = filesData?.file?.rawFile;
     const amount = parseInt(amounts);
     e.preventDefault();
-
-    console.log("ssddsd === ", transactionDate);
 
     const formData = new FormData();
 
@@ -56,7 +58,7 @@ export default function TambahPengeluaran() {
     formData.append(`description`, description);
     formData.append(`name`, name);
     formData.append(`transactionDate`, transactionDate);
-    formData.append(`type`, type);
+    formData.append(`type`, type.value);
     formData.append(`invoice`, invoice);
 
     fields.forEach((item, index) => {
@@ -69,21 +71,26 @@ export default function TambahPengeluaran() {
       console.log(entry[0], entry[1]);
     }
 
-    // if (amount.length === 0 || description.length === 0 || type.length === 0) {
-    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
-    // } else {
-    postPengeluaran(setSts, navigateListSpp, formData);
-    // }
+    if (amounts === "" || description === "") {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+    } else {
+      updatePengeluaran(
+        setSts,
+        navigatePengeluaran,
+        formData,
+        location.state.id
+      );
+    }
   };
 
-  const navigateSpp = () => {
+  const navigatePengeluaran = () => {
     navigate(path);
   };
 
   const handleInputChange = (event) => {
     let inputVal = event.target.value;
-    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
-    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    // inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    // inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
     // const value = parseInt(inputVal);
     setAmount(inputVal);
   };
@@ -121,8 +128,8 @@ export default function TambahPengeluaran() {
         home="Admin Keuangan"
         prev="List Pengeluaran"
         navePrev={path}
-        at="Tambah Pengeluaran"
-        title="Tambah Pengeluaran"
+        at="Ubah Pengeluaran"
+        title="Ubah Pengeluaran"
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -132,18 +139,20 @@ export default function TambahPengeluaran() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Pengeluaran
+          Form Ubah Pengeluaran
         </p>
         <article>
           <TextInput
             label="Total Pengeluaran"
-            type="number"
-            onChange={(e) => setAmount(e.target.value)}
+            type="text"
+            value={amounts}
+            onChange={handleInputChange}
             required={true}
           />
           <TextInput
             label="Nama"
             type="text"
+            value={name}
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
@@ -170,6 +179,7 @@ export default function TambahPengeluaran() {
           <TextInput
             label="Catatan"
             type="text"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
@@ -268,12 +278,12 @@ export default function TambahPengeluaran() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSpp}
+              onClick={navigatePengeluaran}
             >
               Batal
             </button>

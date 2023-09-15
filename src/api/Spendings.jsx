@@ -1,9 +1,4 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getPengeluaran(setData, setSts) {
@@ -12,7 +7,6 @@ export function getPengeluaran(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
@@ -21,16 +15,7 @@ export function getPengeluaran(setData, setSts) {
     });
 }
 
-export function postPengeluaran(
-  setSts,
-  navigate,
-  formData,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode
-) {
+export function postPengeluaran(setSts, navigate, formData) {
   axios
     .post(process.env.REACT_APP_BASE_URL + "/spending", formData, {
       headers: {
@@ -54,37 +39,26 @@ export function postPengeluaran(
     });
 }
 
-export function updateSpp(
-  setSts,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode,
-  id
-) {
+export function updatePengeluaran(setSts, navigate, formData, id) {
   axios
-    .put(
-      process.env.REACT_APP_BASE_URL + `/spp/${id}`,
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
+    .put(process.env.REACT_APP_BASE_URL + `/spending/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("TOKEN"),
       },
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
+    })
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Ubah Pendaftaran Berhasil"
+      );
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      AlertMessage("Gagal", "Ubah Pendaftaran Gagal", "Coba Lagi", "error");
     });
 }

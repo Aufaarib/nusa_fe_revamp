@@ -1,28 +1,12 @@
-import {
-  deleteTipeTransaksi,
-  getTipeTransaksi,
-  updateTipeTransaksi,
-} from "../../../api/TipeTransaksi";
-import { DataTables } from "../../../components/DataTables";
-import {
-  AlertDelete,
-  AlertPaymentProof,
-  AlertUpdateStatusAktif,
-  AlertUpdateStatusNonAktif,
-} from "../../../components/ModalPopUp";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../../../components";
 import { getSpp } from "../../../api/Spp";
+import { Header } from "../../../components";
+import { DataTables } from "../../../components/DataTables";
+import { AlertPaymentProof } from "../../../components/ModalPopUp";
 
 export default function ListSpp() {
   const [data, setData] = useState([]);
-  // const [status, setStatus] = useState("");
-  const statusAktif = "Aktif";
-  const statusNonAktif = "Tidak Aktif";
-  const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
-  const [desc, setDesc] = useState("");
   const [filterText, setFilterText] = useState("");
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
@@ -105,7 +89,8 @@ export default function ListSpp() {
       cell: (data) => (
         <div>
           <button
-            className="btn-action-merah"
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
             title="Edit"
             onClick={() =>
               navigateUbahSpp(
@@ -121,7 +106,7 @@ export default function ListSpp() {
               )
             }
           >
-            <i className="fa fa-edit" /> Ubah
+            <i className="fa fa-edit" /> Edit
           </button>
         </div>
       ),
@@ -146,7 +131,7 @@ export default function ListSpp() {
     code,
     studentName
   ) => {
-    navigate("/admin/tambah-spp", {
+    navigate("/admin/ubah-spp", {
       state: {
         id: id,
         amount: amount,
