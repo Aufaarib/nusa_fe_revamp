@@ -1,5 +1,4 @@
 import {
-  AlertConfirmation,
   AlertMessage,
   AlertStatusFailed,
   AlertStatusSuccess,
@@ -22,7 +21,6 @@ export function ApproveEducationalPayment(id, setSts, setData) {
     .then((res) => {
       AlertStatusUpdateSuccess();
       getRegistrationDetail(setSts, setData);
-      // setSts(res.code);
     })
     .catch((res) => {
       AlertStatusUpdateFailed();
@@ -153,42 +151,24 @@ export function getAdmissionAnswer(setData, setSts) {
     });
 }
 
-export function getAdmissionRegistration(setData, setSts) {
+export function getAdmissionRegistration(setData, setSts, setIsLoading) {
   const data = [];
   axios
     .get(process.env.REACT_APP_BASE_URL + `/admission/registration`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       res.data.body.forEach((element) => {
         if (element.steps.length > 0 && element.isStudent != 1) {
           data.push(element);
         }
       });
       setData(data);
-      // if (res.data.body.length === 100) {
-      //   axios
-      //     .get(
-      //       process.env.REACT_APP_BASE_URL +
-      //         `/admission/registration?pageSize=100&page=${page + 1}`,
-      //       {
-      //         headers: { authorization: localStorage.getItem("TOKEN") },
-      //       }
-      //     )
-      //     .then((res) => {
-      //       if (res.data.body !== null) {
-      //         res.data.body.forEach((element) => {
-      //           if (element.steps.length > 0) {
-      //             data.push(element);
-      //           }
-      //         });
-      //       }
-      //       console.log("DAFKAS === ", data);
-      //     });
-      // }
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
     });
 }
@@ -244,7 +224,8 @@ export function getAdmissionRegistrationByRegNumberAdmin(
   setDataStep4,
   setDataStep5,
   setPaid,
-  setTotalPaid
+  setTotalPaid,
+  setIsLoading
 ) {
   const regNumber = localStorage.getItem("REG_NUMBER");
   axios
@@ -255,6 +236,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       }
     )
     .then((res) => {
+      setIsLoading(false);
       setDataAnak(res.data.body.applicant);
       setGelombang(res.data.body.admissionPhase);
       setData(res.data.body);
@@ -270,8 +252,6 @@ export function getAdmissionRegistrationByRegNumberAdmin(
       setDataAyah(ayahData);
       setDataIbu(ibuData);
       setDataWali(waliData);
-      // setSts(res.data.code);
-      // for (const i of res.data.body.payments) {
       setEdu(res.data.body.admissionPhase.admission.details[0]?.amount);
       setPaid(res.data.body.payments);
       setTotalPaid(
@@ -292,7 +272,9 @@ export function getAdmissionRegistrationByRegNumberAdmin(
         }
       }
     })
-    .catch((error) => {});
+    .catch((error) => {
+      setIsLoading(false);
+    });
 }
 
 export function getMyAdmission(setData, setSts) {
@@ -437,7 +419,6 @@ export function getAdmissionRegistrationParentsIbu(setData, setSts) {
       for (const i of res.data.body) {
         switch (i.relationship) {
           case "ibu":
-            // console.log("REGISTRATION PARENTS IBU === ", i);
             setData(i);
             setSts(res.data.code);
         }
@@ -457,7 +438,6 @@ export function getAdmissionRegistrationParentsWali(setData, setSts) {
       for (const i of res.data.body) {
         switch (i.relationship) {
           case "perwalian":
-            // console.log("REGISTRATION PARENTS WALI === ", i);
             setData(i);
           // setSts(res.data.code);
         }
@@ -470,7 +450,6 @@ export function getAdmissionRegistrationParentsWali(setData, setSts) {
 
 export function postAdmissionAnswer(
   setSts,
-  // path,
   code,
   name,
   questionId,

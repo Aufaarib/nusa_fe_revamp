@@ -1,9 +1,3 @@
-/* @import "../node_modules/@syncfusion/ej2-base/styles/tailwind.css";
-@import '../node_modules/@syncfusion/ej2-react-buttons/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-react-popups/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-react-notifications/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-react-inputs/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';   */
 @import "./tailwind-nusa.css";
 
 .sidebar {

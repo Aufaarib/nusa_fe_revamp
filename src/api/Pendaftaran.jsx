@@ -1,9 +1,4 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertMessage } from "../components/ModalPopUp";
 import { getMyAdmission } from "./Registrasi";
 import axios from "./axios";
 
@@ -38,19 +33,6 @@ export function getActiveAdmission(setData, setStatus) {
     .catch((error) => {
       setStatus({ type: "error", error });
     });
-
-  // axios
-  // .get("https://63dcbb592308e3e319eca644.mockapi.io/nusa-pendaftaran")
-  // .then((res) => {
-  //     const data = res.data.filter(
-  //         (e) => e.nama_lengkap_anak !== ""
-  //         );
-  //     setPendaftaranData(data);
-  //     setStatus({ type: 'success' });
-  // })
-  // .catch((error) => {
-  //     setStatus({ type: 'error', error });
-  // });
 }
 
 export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {

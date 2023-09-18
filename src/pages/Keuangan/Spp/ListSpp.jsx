@@ -12,7 +12,6 @@ export default function ListSpp() {
   const navigate = useNavigate();
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
@@ -134,7 +133,7 @@ export default function ListSpp() {
     navigate("/admin/ubah-spp", {
       state: {
         id: id,
-        amount: amount,
+        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         month: month,
         description: description,
         invoice: invoice,

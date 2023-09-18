@@ -3,17 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { getTahunAjaran } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 const TahunAjaran = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = data;
 
@@ -24,7 +21,8 @@ const TahunAjaran = () => {
   }
 
   useEffect(() => {
-    getTahunAjaran(setData, setSts);
+    setIsLoading(true);
+    getTahunAjaran(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

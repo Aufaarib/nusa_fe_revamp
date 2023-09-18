@@ -102,6 +102,57 @@ export default function TambahSpp() {
     value: c.id,
   }));
 
+  const monthOptions = [
+    {
+      label: "Januari",
+      value: 1,
+    },
+    {
+      label: "Februari",
+      value: 2,
+    },
+    {
+      label: "Maret",
+      value: 3,
+    },
+    {
+      label: "April",
+      value: 4,
+    },
+    {
+      label: "Mei",
+      value: 5,
+    },
+    {
+      label: "Juni",
+      value: 6,
+    },
+    {
+      label: "Juli",
+      value: 7,
+    },
+    {
+      label: "Agustus",
+      value: 8,
+    },
+    {
+      label: "September",
+      value: 9,
+    },
+    {
+      label: "Oktober",
+      value: 10,
+    },
+    {
+      label: "November",
+      value: 11,
+    },
+    {
+      label: "Desember",
+      value: 12,
+    },
+  ];
+
   const studentsOptions = studentsData.map((c) => ({
     label: `${c.code} : ${c.firstName} ${c.middleName} ${c.lastName}`,
     value: c.code,
@@ -136,12 +187,21 @@ export default function TambahSpp() {
             isSearchable={false}
             onChange={(e) => setPeriodeId(e.value)}
           />
-          <TextInput
+          <DropdownSiswa
+            label="Spp Bulan"
+            required={true}
+            defaultValue={month}
+            isClearable={false}
+            options={monthOptions}
+            isSearchable={false}
+            onChange={(e) => setMonth(e.value)}
+          />
+          {/* <TextInput
             label="Spp Bulan"
             type="text"
             onChange={(e) => setMonth(e.target.value)}
             required={true}
-          />
+          /> */}
           <DropdownSiswa
             label="Murid"
             required={true}

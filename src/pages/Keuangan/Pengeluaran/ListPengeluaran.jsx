@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getSpp } from "../../../api/Spp";
+import { getPengeluaran } from "../../../api/Spendings";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
-import { getPengeluaran } from "../../../api/Spendings";
 
 export default function ListPengeluaran() {
   const [data, setData] = useState([]);
@@ -13,7 +12,6 @@ export default function ListPengeluaran() {
   const navigate = useNavigate();
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
@@ -120,7 +118,7 @@ export default function ListPengeluaran() {
     navigate("/admin/ubah-pengeluaran", {
       state: {
         id: id,
-        amount: amount,
+        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         name: name,
         transactionDate: transactionDate,
         type: type,

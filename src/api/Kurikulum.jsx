@@ -3,10 +3,6 @@ import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
   AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
@@ -94,19 +90,5 @@ export function postKurikulum(setSts, path, name, description) {
     .catch((error) => {
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Tambah Kurikulum Gagal", "Coba Lagi", "error");
-    });
-}
-
-export function deleteKurikulum(setSts, deleteId, setData) {
-  axios
-    .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusHapusSuccess();
-      getKurikulum(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusHapusFailed();
     });
 }

@@ -49,7 +49,7 @@ export default function UbahPengeluaran() {
 
   const postData = (e) => {
     const invoice = filesData?.file?.rawFile;
-    const amount = parseInt(amounts);
+    const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
     const formData = new FormData();
@@ -89,8 +89,8 @@ export default function UbahPengeluaran() {
 
   const handleInputChange = (event) => {
     let inputVal = event.target.value;
-    // inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
-    // inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
     // const value = parseInt(inputVal);
     setAmount(inputVal);
   };

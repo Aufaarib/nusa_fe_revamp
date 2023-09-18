@@ -10,9 +10,7 @@ export function getSemester(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      // for (const i of res.data.body) {
       setData(res.data.body.periode);
-      // }
       console.log(res.data.body.periode);
       setSts({ type: "success" });
     })
@@ -21,16 +19,18 @@ export function getSemester(setData, setSts) {
     });
 }
 
-export function getTahunAjaran(setData, setSts) {
+export function getTahunAjaran(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/academic/year", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
     });
 }
@@ -105,17 +105,3 @@ export function postTahunAjaran(
       AlertMessage("Gagal", "Tambah Tahun Ajaran Gagal", "Coba Lagi", "error");
     });
 }
-
-// export function deleteKurikulum(setSts, deleteId, setData) {
-//   axios
-//     .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusHapusSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusHapusFailed();
-//     });
-// }

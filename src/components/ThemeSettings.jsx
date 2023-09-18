@@ -2,7 +2,7 @@ import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { BsCheck } from "react-icons/bs";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { Button } from ".";
+import Button from "./Button";
 
 import { themeColors } from "../data/initData";
 import { useStateContext } from "../contexts/ContextProvider";

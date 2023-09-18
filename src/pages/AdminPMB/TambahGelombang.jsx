@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { postAdmissionPhase } from "../../api/Gelombang";
 import { Header } from "../../components";
 import { DropdownDatePickers } from "../../components/Dropdown";
-import { AlertMessage, AlertStatusFailed } from "../../components/ModalPopUp";
+import { AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function TambahGelombang() {
   const [name, setName] = useState("");
@@ -13,21 +14,18 @@ export default function TambahGelombang() {
   const [testSchedule, setTestSchedule] = useState("");
   const [amount, setAmount] = useState();
   const [increment, setIncrement] = useState();
-  // const [birthDate, setBirthDate] = useState("");
-  // const [semesterData, setSemesterData] = useState([]);
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
-  // const created_by = localStorage.getItem("NAMA");
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
   const code = location.state.code;
   const status = location.state.status;
+  const { isLoading, setIsLoading } = useStateContext();
 
   const navigateAdmissionDetail = () => {
     navigate("/admin/admission-detail", {
       state: {
+        theresActive: location.state.theresActive,
         code: code,
         status: status,
       },
@@ -48,6 +46,7 @@ export default function TambahGelombang() {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       const jumlah = parseInt(amount.replace(/\./g, ""), 10);
+      setIsLoading(true);
       postAdmissionPhase(
         setSts,
         navigateAdmissionDetail,
@@ -57,9 +56,9 @@ export default function TambahGelombang() {
         startDate,
         endDate,
         testSchedule,
-        jumlah
+        jumlah,
+        setIsLoading
       );
-      //   setisOpenStatus(true);
     }
   };
 
@@ -67,43 +66,20 @@ export default function TambahGelombang() {
     navigate("/admin/admission-detail", {
       state: {
         code: code,
+        theresActive: location.state.theresActive,
       },
     });
   };
-
-  const [formFields, setFormFields] = useState([]);
-
-  // const addField = () => {
-  //   setFormFields([...formFields, ""]);
-  // };
-
-  // const removeField = (index) => {
-  //   const updatedFields = [...formFields];
-  //   updatedFields.splice(index, 1);
-  //   setFormFields(updatedFields);
-  // };
-
-  // const handleChange = (index, value) => {
-  //   const updatedFields = [...formFields];
-  //   updatedFields[index] = value;
-  //   setFormFields(updatedFields);
-  // };
 
   const handleIncrementChange = (e) => {
     const value = parseInt(e.target.value);
     setIncrement(value);
   };
 
-  // const SemesterOptions = semesterData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
-
   const handleInputChange = (event) => {
     let inputVal = event.target.value;
     inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
-    // const value = parseInt(inputVal);
     setAmount(inputVal);
   };
 
@@ -133,7 +109,6 @@ export default function TambahGelombang() {
             onChange={handleIncrementChange}
             required={true}
           />
-
           <TextInput
             label="Nama"
             type="text"
@@ -142,7 +117,6 @@ export default function TambahGelombang() {
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
-
           <DropdownDatePickers
             label="Tanggal Mulai"
             value={startDate}

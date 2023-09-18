@@ -128,10 +128,6 @@ export default function ListLaporan() {
     }
   }
 
-  console.log("sdadad ===", filteredMonth);
-  console.log("sdadsadad ===", filteredTipe);
-  console.log("0 ===", filteredItems);
-
   useEffect(() => {
     getLaporan(setData, setSts);
   }, []);

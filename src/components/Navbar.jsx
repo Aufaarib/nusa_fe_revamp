@@ -1,13 +1,12 @@
+import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { RiNotification3Line, RiPaintBrushFill } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { BsSearch } from "react-icons/bs";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import avatar from "../data/product1.jpg";
+import { RiNotification3Line } from "react-icons/ri";
 import logoSaim from "../data/logo-saim.png";
 
-import { Notification, ThemeSettings, UserProfile } from ".";
+import UserProfile from "./UserProfile";
+import Notification from "./Notification";
 import { useStateContext } from "../contexts/ContextProvider";
 import useAuth from "../hooks/useAuth";
 

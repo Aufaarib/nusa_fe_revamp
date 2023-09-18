@@ -3,28 +3,27 @@ import { useNavigate } from "react-router-dom";
 import { getAdmission } from "../../api/SetupPmb";
 import { Header } from "../../components";
 import { DataTablesPMB } from "../../components/DataTables";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const SetupPMB = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
 
   let filteredItems = data;
-
+  let hasValueOne = false;
   if (data !== null) {
+    hasValueOne = data.some((obj) => obj.status === 1);
     filteredItems = data.filter((data) =>
       data.code.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
   useEffect(() => {
-    getAdmission(setData, setSts);
+    setIsLoading(true);
+    getAdmission(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [
@@ -81,6 +80,7 @@ const SetupPMB = () => {
   const navigateAdmissionDetails = (code, status) => {
     navigate("/admin/admission-detail", {
       state: {
+        theresActive: hasValueOne,
         code: code,
         status: status,
       },

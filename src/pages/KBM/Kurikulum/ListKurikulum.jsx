@@ -10,11 +10,9 @@ export default function ListKurikulum() {
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-
   const path = "/admin/tambah-kurikulum";
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
@@ -32,12 +30,6 @@ export default function ListKurikulum() {
   const onUpdateStatus = (code) => {
     updateStatusKurikulum(setSts, code, setData);
   };
-
-  // const onDelete = (id) => {
-  //   deleteKurikulum(setSts, id, setData);
-  //   // closeModalHapus();
-  //   // setisOpenStatus(true);
-  // };
 
   const columns = [
     {

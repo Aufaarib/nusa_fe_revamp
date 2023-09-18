@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getGuru } from "../../../api/Guru";
+import { updateStatusKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
-import { getGuru } from "../../../api/Guru";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
-import { updateStatusKurikulum } from "../../../api/Kurikulum";
-import moment from "moment";
 
 const HasilTes = () => {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.fullname.toLowerCase().includes(filterText.toLowerCase())
@@ -124,19 +121,11 @@ const HasilTes = () => {
   };
 
   const handleStatus = (code, description, status) => {
-    console.log("sdasd");
     AlertUbahStatus(description, code, status, onUpdateStatus);
-    // setisOpenUpdateTidakAktif(true);
-    // setStatus("Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
   };
 
   const onUpdateStatus = (code) => {
     updateStatusKurikulum(setSts, code, setData);
-    // closeModalUpdateAktif();
-    // closeModalUpdateTidakAktif();
-    // setisOpenStatus(true);
   };
 
   return (

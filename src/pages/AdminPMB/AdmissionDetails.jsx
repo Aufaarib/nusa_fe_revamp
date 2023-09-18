@@ -5,7 +5,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAdmissionDetails, updateStatusAdmission } from "../../api/SetupPmb";
 import { Header } from "../../components";
 import { DataTablesAdmissionDetail } from "../../components/DataTables";
-import { AlertUbahStatus } from "../../components/ModalPopUp";
+import { AlertMessage, AlertUbahStatus } from "../../components/ModalPopUp";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const AdmissionDetails = () => {
   const [dataPhases, setDataPhases] = useState([]);
@@ -17,9 +18,9 @@ const AdmissionDetails = () => {
   const path = "/admin/list-setup-pmb";
   const code = location.state.code;
   const status = location.state.status;
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = dataPhases;
-
   if (dataPhases !== null) {
     filteredItems = dataPhases.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
@@ -27,7 +28,8 @@ const AdmissionDetails = () => {
   }
 
   useEffect(() => {
-    getAdmissionDetails(setDataPhases, setData, setSts, code);
+    setIsLoading(true);
+    getAdmissionDetails(setDataPhases, setData, setSts, code, setIsLoading);
   }, []);
 
   const columns = [
@@ -125,9 +127,12 @@ const AdmissionDetails = () => {
       state: {
         code: code,
         status: status,
+        theresActive: location.state.theresActive,
       },
     });
   };
+
+  console.log("makskdmad === ", location.state.theresActive);
 
   const navigateSetupPmb = () => {
     navigate("/admin/list-setup-pmb");
@@ -149,13 +154,27 @@ const AdmissionDetails = () => {
         name: name,
         startDate: moment(startDate).format("YYYY-MM-DD"),
         endDate: moment(endDate).format("YYYY-MM-DD"),
-        amount: amount,
+        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        theresActive: location.state.theresActive,
       },
     });
   };
 
   const handleStatus = () => {
-    AlertUbahStatus(code, code, status, onUpdateStatus);
+    if (status === 1) {
+      AlertUbahStatus(code, code, status, onUpdateStatus);
+    } else if (status !== 1) {
+      if (location.state.theresActive) {
+        AlertMessage(
+          "Tidak Dapat Mengaktifkan Pendaftaran Ini",
+          "Sedang Ada Pendaftaran Yang Aktif",
+          "Tutup",
+          "warning"
+        );
+      } else {
+        AlertUbahStatus(code, code, status, onUpdateStatus);
+      }
+    }
   };
 
   const onUpdateStatus = (code) => {

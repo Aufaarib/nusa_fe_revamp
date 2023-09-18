@@ -1,30 +1,10 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
-import moment from "moment/moment";
-import {
-  DropdownDatePickers,
-  DropdownListComponents,
-  DropdownRadioInputBiological,
-  DropdownRadioInputBloodType,
-  DropdownRadioInputGender,
-} from "./Dropdown";
-import TextInput from "./TextInput";
-import { useStateContext } from "../contexts/ContextProvider";
 import { getAdmissionRegistrationApplicant } from "../api/Registrasi";
-import { dropdownData } from "../data/initData";
+import { useStateContext } from "../contexts/ContextProvider";
 import Header from "./Header";
-import {
-  AlertEmpty,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-  AlertUpdateStatusAktif,
-} from "./ModalPopUp";
+import TextInput from "./TextInput";
 
 const ProfilepPage = () => {
   const token = localStorage.getItem("TOKEN");

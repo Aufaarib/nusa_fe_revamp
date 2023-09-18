@@ -9,6 +9,7 @@ import { getTahunAjaran } from "../../api/TahunAjaran";
 import { Header } from "../../components";
 import { DataTablesRegistrations } from "../../components/DataTables";
 import { AlertConfirmation } from "../../components/ModalPopUp";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ const DataRegistrasi = () => {
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const year = moment().format("YYYY");
+  const { isLoading, setIsLoading } = useStateContext();
 
   const [validationFilter, setValidationFilter] = useState(
     localStorage.getItem("ValidationFilter") == null
@@ -52,8 +54,13 @@ const DataRegistrasi = () => {
   localStorage.setItem("FilterSteps", filterSteps);
 
   useEffect(() => {
-    getAdmissionRegistration(setData, setSts);
-    getTahunAjaran(setAcademicYeardata, setSts);
+    setIsLoading(true);
+    getAdmissionRegistration(setData, setSts, setIsLoading);
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getTahunAjaran(setAcademicYeardata, setSts, setIsLoading);
   }, []);
 
   const handleAcademicYearFilter = (event) => {
@@ -305,9 +312,6 @@ const DataRegistrasi = () => {
       const allRowIds = filteredItems.map((row) => row.regNumber);
       setSelectedRows(allRowIds);
     }
-    //   const allRowIds = filteredItems.map((row) => row.regNumber);
-    //   setSelectedRows(allRowIds);
-    //   handleSubmit();
   };
 
   const handleRowSelect = (regNumber) => {
@@ -463,8 +467,6 @@ const DataRegistrasi = () => {
     },
   ];
 
-  console.log("makmdsdsad === ", selectedRows);
-
   const columnsCheckbox = [
     {
       name: (
@@ -473,9 +475,6 @@ const DataRegistrasi = () => {
           checked={isAllRowsSelected}
           onChange={handleSelectAll}
         />
-        // <div onClick={handleSelectAll}>
-        //   {isAllRowsSelected ? "Deselect All" : "Select All"}
-        // </div>
       ),
       selector: (data) => (
         <input
@@ -653,10 +652,7 @@ const DataRegistrasi = () => {
           valueSteps={stepsFilter}
           setData={setData}
           setSts={setSts}
-          // selectableRows
-          // selectableRowsComponent={Checkbox}
           setSelected={handlePindah}
-          // setAllSelected={handlePindahSemua}
           selectedRows={selectedRows}
         />
       </div>

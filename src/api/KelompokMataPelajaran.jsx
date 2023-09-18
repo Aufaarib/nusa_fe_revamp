@@ -1,11 +1,6 @@
 import {
   AlertMessage,
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
   AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -135,19 +130,5 @@ export function postKelompokMapel(
         "Coba Lagi",
         "error"
       );
-    });
-}
-
-export function deleteKelompokMapel(setSts, deleteId, setData) {
-  axios
-    .delete(process.env.REACT_APP_NUSA + `/group-course/delete/${deleteId}`)
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusHapusSuccess();
-      getKelompokMapel(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusHapusFailed();
     });
 }

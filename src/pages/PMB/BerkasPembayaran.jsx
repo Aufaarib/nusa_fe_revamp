@@ -30,7 +30,7 @@ const BerkasPembayaran = () => {
 
   // Define your minFileSize and maxFileSize (modify these as needed)
   const minFileSize = 0;
-  const maxFileSize = 5000000; // 5 MB (you can modify this value)
+  const maxFileSize = 5000000;
 
   // Function to handle removing a file
   const onRemoveFile = (args) => {
@@ -38,9 +38,7 @@ const BerkasPembayaran = () => {
   };
 
   // Function to handle uploading a file
-  const onFileUpload = (args) => {
-    // You can perform any custom actions before the file upload starts if needed
-  };
+  const onFileUpload = (args) => {};
 
   // Function to handle upload success
   const onSuccess = (args) => {

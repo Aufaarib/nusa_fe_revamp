@@ -3,10 +3,6 @@ import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
   AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
-  AlertStatusUpdateFailed,
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
@@ -23,16 +19,6 @@ export function getKelas(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
 export function updateKelas(setSts, path, grade, name, description, id) {
@@ -90,19 +76,5 @@ export function postKelas(setSts, path, grade, name, description) {
     .catch((error) => {
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Tambah Kelas Gagal", "Coba Lagi", "error");
-    });
-}
-
-export function deleteKelas(setSts, deleteId, setData) {
-  axios
-    .delete(process.env.REACT_APP_NUSA + `/class/delete/${deleteId}`)
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusHapusSuccess();
-      getKelas(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusHapusFailed();
     });
 }

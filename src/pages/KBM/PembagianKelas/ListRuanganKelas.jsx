@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAdmission } from "../../../api/SetupPmb";
+import { getClassRoom } from "../../../api/RuanganKelas";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
-import { getMurid } from "../../../api/Murid";
-import { getClassRoom } from "../../../api/RuanganKelas";
 
 const ListRuanganKelas = () => {
   const [data, setData] = useState([]);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const [deleteId, setDeleteId] = useState("");
-  const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.room?.name.toLowerCase().includes(filterText.toLowerCase())

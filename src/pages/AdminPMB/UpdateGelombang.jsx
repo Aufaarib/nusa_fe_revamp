@@ -6,11 +6,14 @@ import { Header } from "../../components";
 import { DropdownDatePickers } from "../../components/Dropdown";
 import { AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function UbahGelombang() {
   const location = useLocation();
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
+  const { isLoading, setIsLoading } = useStateContext();
+
   const [name, setName] = useState(location.state.name);
   const [startDate, setStartDate] = useState(
     moment(location.state.startDate).format("YYYY-MM-DD")
@@ -21,7 +24,7 @@ export default function UbahGelombang() {
   const [testSchedule, setTestSchedule] = useState(
     moment(location.state.endDate).format("YYYY-MM-DD")
   );
-  const [jumlah, setAmount] = useState("");
+  const [jumlah, setAmount] = useState(location.state.amount);
   const [increment, setIncrement] = useState(location.state.increment);
   const [sts, setSts] = useState(undefined);
   const id = location.state.id;
@@ -51,7 +54,8 @@ export default function UbahGelombang() {
         startDate,
         endDate,
         testSchedule,
-        amount
+        amount,
+        setIsLoading
       );
     }
   };
@@ -60,6 +64,7 @@ export default function UbahGelombang() {
     navigate("/admin/admission-detail", {
       state: {
         code: code,
+        theresActive: location.state.theresActive,
       },
     });
   };

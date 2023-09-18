@@ -506,7 +506,6 @@ const styledSweetAlert = Swal.mixin({
     cancelButton: "btn-putih",
   },
   padding: "30px",
-  maxWidth: "auto",
   buttonsStyling: false,
 });
 
@@ -796,22 +795,10 @@ export const AlertUploadInvoiceFailed = () => {
   });
 };
 
-export const AlertValidateRegistration = (
-  // desc,
-  code,
-  // status,
-  // url,
-  onValidate
-) => {
-  // const domain = process.env.REACT_APP_BASE_STATIC_FILE;
-  // console.log("KAKA", domain + url);
-  // if (status === 1) {
+export const AlertValidateRegistration = (code, onValidate) => {
   styledSweetAlert
     .fire({
       title: "Bukti Pembayaran",
-      // imageUrl: domain + url, // Replace with the path to your image
-      // imageWidth: 400, // Adjust the width of the image as needed
-      // imageHeight: 200, // Adjust the height of the image as needed
       showConfirmButton: true,
       confirmButtonText: "Validasi",
       showCancelButton: "Batal",
@@ -821,21 +808,6 @@ export const AlertValidateRegistration = (
         onValidate(code);
       }
     });
-  // } else {
-  //   styledSweetAlert
-  //     .fire({
-  //       title: "Aktifkan",
-  //       text: desc + " ?",
-  //       showConfirmButton: true,
-  //       confirmButtonText: "Aktifkan",
-  //       showCancelButton: "Batal",
-  //     })
-  //     .then((result) => {
-  //       if (result.isConfirmed) {
-  //         onUpdateStatus(code);
-  //       }
-  //     });
-  // }
 };
 
 export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
@@ -847,7 +819,8 @@ export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
         text: desc + " ?",
         showConfirmButton: true,
         confirmButtonText: "Non-Aktifkan",
-        showCancelButton: "Batal",
+        showCancelButton: true,
+        cancelButtonText: "Batal",
       })
       .then((result) => {
         if (result.isConfirmed) {
