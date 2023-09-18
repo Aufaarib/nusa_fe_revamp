@@ -720,6 +720,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                   )}
 
                   <br />
+                  <br />
                   <p>
                     Terimakasih,
                     <br />
