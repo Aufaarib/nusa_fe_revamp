@@ -124,7 +124,7 @@ const Navbar = () => {
               alt="user-profile"
             />
             <p className="w-full font-bold text-black capitalize xs:hidden lg:block bloxk text-14 whitespace-nowrap">
-              <span className="text-merah">Ahlan, </span> {auth.nama}
+              <span className="text-merah">Selamat Datang, </span> {auth.nama}
             </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>

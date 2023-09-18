@@ -68,7 +68,7 @@ const UserProfile = () => {
           </p>
         </div>
       </div>
-      <div>
+      {/* <div>
         {userProfileData.map((item, index) => (
           <div
             key={index}
@@ -92,9 +92,9 @@ const UserProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <Link onClick={handleLogout} className="mt-5 btn-merah">
-        Log Out
+        Keluar
       </Link>
     </div>
   );

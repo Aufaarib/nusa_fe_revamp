@@ -152,7 +152,7 @@ export default function ListSpp() {
         // prev="Bank"
         // navePrev={path}
         at="Spp"
-        title="List Spp Terbayar"
+        title="Data Pembayaran SPP"
       />
 
       <div style={{ marginTop: "50px" }}>

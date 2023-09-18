@@ -2,18 +2,31 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPengeluaran } from "../../../api/Spendings";
 import { Header } from "../../../components";
-import { DataTables } from "../../../components/DataTables";
+import {
+  DataTablePengeluaran,
+  DataTables,
+} from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
+import moment from "moment/moment";
 
 export default function ListPengeluaran() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const [filterType, setFilterType] = useState("");
   const navigate = useNavigate();
 
+  const handleTypeFilter = (event) => {
+    const val = event.target.value;
+    setFilterType(val);
+  };
+
   let filteredItems = data;
+  let filteredType = data;
   if (data !== null) {
-    filteredItems = data.filter((data) =>
+    filteredType = data.filter((data) => data.type === filterType);
+
+    filteredItems = filteredType.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
@@ -33,9 +46,21 @@ export default function ListPengeluaran() {
       width: "55px",
     },
     {
+      name: <div>Tanggal Transaksi</div>,
+      cell: (data) => (
+        <div>{moment(data.transactionDate).format("YYYY-MM-DD")}</div>
+      ),
+      width: "auto",
+    },
+    {
       name: <div>Nama Barang</div>,
       cell: (data) => <div>{data.name}</div>,
-      width: "240px",
+      width: "200px",
+    },
+    {
+      name: <div>Tipe Pengeluaran</div>,
+      cell: (data) => <div className="capitalize">{data.type}</div>,
+      width: "auto",
     },
     {
       name: <div>Deskripsi</div>,
@@ -138,12 +163,14 @@ export default function ListPengeluaran() {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTables
+        <DataTablePengeluaran
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahPengeluaran}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          onChange={handleTypeFilter}
+          value={filterType}
         />
       </div>
     </>
