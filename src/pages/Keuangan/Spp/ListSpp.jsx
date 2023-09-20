@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getSpp } from "../../../api/Spp";
+import { getSpp, getUnpaidSpp } from "../../../api/Spp";
 import { Header } from "../../../components";
-import { DataTables } from "../../../components/DataTables";
+import { DataTables, DataTablesListSpp } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
 
 export default function ListSpp() {
   const [data, setData] = useState([]);
-  const [filterText, setFilterText] = useState("");
+  const [unpaidData, setUnpaidData] = useState([]);
   const [sts, setSts] = useState(undefined);
+  const [filterText, setFilterText] = useState("");
+  const [filterPaid, setFilterPaid] = useState(true);
+  const [filterUnPaid, setFilterUnPaid] = useState(false);
   const navigate = useNavigate();
 
   let filteredItems = data;
   if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
-    );
+    if (filterPaid === true) {
+      filteredItems = data.filter((data) =>
+        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filterUnPaid === true) {
+      filteredItems = unpaidData.filter((data) =>
+        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else {
+      filteredItems = data.filter((data) =>
+        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
   }
 
   const openPaymentProof = (url) => {
@@ -24,6 +37,7 @@ export default function ListSpp() {
 
   useEffect(() => {
     getSpp(setData, setSts);
+    getUnpaidSpp(setUnpaidData, setSts);
   }, []);
 
   const columns = [
@@ -156,12 +170,16 @@ export default function ListSpp() {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTables
+        <DataTablesListSpp
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahSpp}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          filterPaid={filterPaid}
+          setFilterPaid={setFilterPaid}
+          filterUnPaid={filterUnPaid}
+          setFilterUnPaid={setFilterUnPaid}
         />
       </div>
     </>

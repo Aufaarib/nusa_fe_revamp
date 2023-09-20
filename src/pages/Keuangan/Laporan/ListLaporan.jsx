@@ -3,131 +3,54 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLaporan } from "../../../api/Laporan";
 import { Header } from "../../../components";
-import { DataTablesFinanceReport } from "../../../components/DataTables";
+import {
+  DataTablePengeluaran,
+  DataTablesFinanceReport,
+} from "../../../components/DataTables";
 
 export default function ListLaporan() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
-  const [monthFilter, setMonthFilter] = useState(
-    localStorage.getItem("MonthFilter") == null
-      ? "07"
-      : localStorage.getItem("MonthFilter")
-  );
-  const [tipeFilter, setTipeFilter] = useState(
-    localStorage.getItem("TipeFilter") == null
-      ? "K"
-      : localStorage.getItem("TipeFilter")
-  );
-  const [yearFilter, setYearFilter] = useState(
-    localStorage.getItem("YearFilter") == null
-      ? "2023"
-      : localStorage.getItem("YearFilter")
-  );
-  const [filterMonth, setFilterMonth] = useState(
-    localStorage.getItem("FilterMonth") == null
-      ? "false"
-      : localStorage.getItem("FilterMonth")
-  );
-  const [filterTipe, setFilterTipe] = useState(
-    localStorage.getItem("FilterTipe") == null
-      ? "false"
-      : localStorage.getItem("FilterTipe")
-  );
-  const [filterYear, setFilterYear] = useState(
-    localStorage.getItem("FilterYear") == null
-      ? "false"
-      : localStorage.getItem("FilterYear")
-  );
-  const navigate = useNavigate();
+  const [filterType, setFilterType] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-  localStorage.setItem("MonthFilter", monthFilter);
-  localStorage.setItem("TipeFilter", tipeFilter);
-  localStorage.setItem("YearFilter", yearFilter);
-  localStorage.setItem("FilterMonth", filterMonth);
-  localStorage.setItem("FilterTipe", filterTipe);
-  localStorage.setItem("FilterYear", filterYear);
-
-  const handleMonthFilter = (event) => {
+  const handleTypeFilter = (event) => {
     const val = event.target.value;
-    setMonthFilter(val);
+    setFilterType(val);
   };
 
-  const handleYearFilter = (event) => {
-    const val = event.target.value;
-    setYearFilter(val);
-  };
-
-  const handleTipeFilter = (event) => {
-    const val = event.target.value;
-    setTipeFilter(val);
-  };
-
-  let filteredItems = data;
-  let filteredMonth = null;
-  let filteredTipe = null;
-  let filteredYear = null;
-
+  let filteredType = data;
+  let filteredItems = null;
+  let filteredDate = null;
   if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.description.toLowerCase().includes(filterText.toLowerCase())
-    );
-
-    if (filterYear === "true") {
-      filteredYear = data.filter(
-        (data) => moment(data.createdAt).format("YYYY") === yearFilter
-      );
-
-      filteredItems = filteredYear.filter((data) =>
-        data.description.toLowerCase().includes(filterText.toLowerCase())
-      );
+    if (filterType !== "all") {
+      filteredType = data.filter((data) => data.type === filterType);
     }
 
-    if (filterMonth === "true") {
-      filteredMonth = data.filter(
-        (data) => moment(data.createdAt).format("MM") === monthFilter
-      );
-
-      filteredItems = filteredMonth.filter((data) =>
-        data.description.toLowerCase().includes(filterText.toLowerCase())
-      );
-    }
-
-    if (filterTipe === "true") {
-      filteredTipe = data.filter((data) => data.type === tipeFilter);
-
-      filteredItems = filteredTipe.filter((data) =>
-        data.description.toLowerCase().includes(filterText.toLowerCase())
-      );
-    }
-
-    if (
-      filterYear === "true" &&
-      filterMonth === "true" &&
-      filterTipe === "true"
-    ) {
-      filteredMonth = filteredYear.filter(
-        (data) => moment(data.createdAt).format("MM") === monthFilter
-      );
-      filteredTipe = filteredMonth.filter((data) => data.type === tipeFilter);
-      filteredItems = filteredTipe.filter((data) =>
-        data.description.includes(filterText.toLowerCase())
-      );
-    } else if (filterYear === "true" && filterMonth === "true") {
-      filteredMonth = filteredYear.filter(
-        (data) => moment(data.createdAt).format("MM") === monthFilter
-      );
-      filteredItems = filteredMonth.filter((data) =>
-        data.description.toLowerCase().includes(filterText.toLowerCase())
-      );
-    } else if (filterMonth === "true" && filterTipe === "true") {
-      filteredTipe = filteredMonth.filter((data) => data.type === tipeFilter);
-      filteredItems = filteredTipe.filter((data) =>
+    if (startDate.length !== 0) {
+      if (endDate.length !== 0) {
+        filteredDate = filteredType.filter(
+          (data) => data.createdAt >= startDate && data.createdAt <= endDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      } else {
+        filteredDate = filteredType.filter(
+          (data) => data.createdAt >= startDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      }
+    } else {
+      filteredItems = filteredType.filter((data) =>
         data.description.toLowerCase().includes(filterText.toLowerCase())
       );
     }
   }
-
   useEffect(() => {
     getLaporan(setData, setSts);
   }, []);
@@ -140,7 +63,7 @@ export default function ListLaporan() {
     },
     {
       name: <div>Tanggal</div>,
-      cell: (data) => <div>{moment(data.createdAt).format("DD-MM-YYYY")}</div>,
+      cell: (data) => <div>{moment(data.createdAt).format("YYYY-MM-DD")}</div>,
       width: "240px",
     },
     {
@@ -195,6 +118,19 @@ export default function ListLaporan() {
         <DataTablesFinanceReport
           columns={columns}
           data={filteredItems}
+          // onClick={navigateTambahPengeluaran}
+          onFilter={(e) => setFilterText(e.target.value)}
+          filterText={filterText}
+          onChange={handleTypeFilter}
+          value={filterType}
+          selectedStart={startDate}
+          onChangeStart={(e) => setStartDate(e.element.value)}
+          selectedEnd={endDate}
+          onChangeEnd={(e) => setEndDate(e.element.value)}
+        />
+        {/* <DataTablesFinanceReport
+          columns={columns}
+          data={filteredItems}
           filterText={filterText}
           filterTipe={filterTipe}
           filterMonth={filterMonth}
@@ -210,7 +146,7 @@ export default function ListLaporan() {
           valueYear={yearFilter}
           onFilter={(e) => setFilterText(e.target.value)}
           createdAt={data}
-        />
+        /> */}
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import { Header } from "../../../components";
 import {
   DataTablePengeluaran,
   DataTables,
+  FilterDate,
 } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
 import moment from "moment/moment";
@@ -13,7 +14,9 @@ export default function ListPengeluaran() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const navigate = useNavigate();
 
   const handleTypeFilter = (event) => {
@@ -21,14 +24,36 @@ export default function ListPengeluaran() {
     setFilterType(val);
   };
 
-  let filteredItems = data;
   let filteredType = data;
+  let filteredItems = data;
+  let filteredDate = null;
   if (data !== null) {
-    filteredType = data.filter((data) => data.type === filterType);
+    if (filterType !== "all") {
+      filteredType = data.filter((data) => data.type === filterType);
+    }
 
-    filteredItems = filteredType.filter((data) =>
-      data.name.toLowerCase().includes(filterText.toLowerCase())
-    );
+    if (startDate.length !== 0) {
+      if (endDate.length !== 0) {
+        filteredDate = filteredType.filter(
+          (data) =>
+            data.transactionDate >= startDate && data.transactionDate <= endDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      } else {
+        filteredDate = filteredType.filter(
+          (data) => data.transactionDate >= startDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      }
+    } else {
+      filteredItems = filteredType.filter((data) =>
+        data.description.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
   }
 
   const openPaymentProof = (url) => {
@@ -46,7 +71,7 @@ export default function ListPengeluaran() {
       width: "55px",
     },
     {
-      name: <div>Tanggal Transaksi</div>,
+      name: <div>Tanggal Pengeluaran</div>,
       cell: (data) => (
         <div>{moment(data.transactionDate).format("YYYY-MM-DD")}</div>
       ),
@@ -171,6 +196,10 @@ export default function ListPengeluaran() {
           filterText={filterText}
           onChange={handleTypeFilter}
           value={filterType}
+          selectedStart={startDate}
+          onChangeStart={(e) => setStartDate(e.element.value)}
+          selectedEnd={endDate}
+          onChangeEnd={(e) => setEndDate(e.element.value)}
         />
       </div>
     </>

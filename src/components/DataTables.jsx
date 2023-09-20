@@ -7,6 +7,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import { useStateContext } from "../contexts/ContextProvider";
+import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 
 //Filter Components
 const Input = styled.input.attrs((props) => ({
@@ -23,53 +24,53 @@ const Input = styled.input.attrs((props) => ({
   outline: none;
 `;
 
-export const Date = ({
-  selectedStart,
-  onChangeStart,
-  selectedEnd,
-  onChangeEnd,
-}) => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <form className="grid-container">
-          <label htmlFor="custom-date-picker-input">
-            Tanggal Awal <span className="ml-1 text-merah">*</span>
-          </label>
+// export const Date = ({
+//   selectedStart,
+//   onChangeStart,
+//   selectedEnd,
+//   onChangeEnd,
+// }) => {
+//   return (
+//     <div style={{ display: "flex", flexDirection: "column" }}>
+//       <div style={{ display: "flex", flexDirection: "row" }}>
+//         <form className="grid-container">
+//           <label htmlFor="custom-date-picker-input">
+//             Tanggal Awal <span className="ml-1 text-merah">*</span>
+//           </label>
 
-          <span>:</span>
+//           <span>:</span>
 
-          <DatePicker
-            selected={selectedStart}
-            onChange={onChangeStart}
-            className="custom-date-picker" // Add custom class name
-            dateFormat="yyyy-MM-dd" // Set date format
-            calendarClassName="custom-date-picker-calendar" // Set calendar class name
-            popperPlacement="bottom" // Set calendar position
-          />
-        </form>
-      </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <form className="grid-container">
-          <label htmlFor="custom-date-picker-input">
-            Tanggal Akhir <span className="ml-1 text-merah">*</span>
-          </label>
+//           <DatePicker
+//             selected={selectedStart}
+//             onChange={onChangeStart}
+//             className="custom-date-picker" // Add custom class name
+//             dateFormat="yyyy-MM-dd" // Set date format
+//             calendarClassName="custom-date-picker-calendar" // Set calendar class name
+//             popperPlacement="bottom" // Set calendar position
+//           />
+//         </form>
+//       </div>
+//       <div style={{ display: "flex", flexDirection: "row" }}>
+//         <form className="grid-container">
+//           <label htmlFor="custom-date-picker-input">
+//             Tanggal Akhir <span className="ml-1 text-merah">*</span>
+//           </label>
 
-          <span>:</span>
+//           <span>:</span>
 
-          <DatePicker
-            selected={selectedStart}
-            onChange={onChangeStart}
-            className="custom-date-picker" // Add custom class name
-            dateFormat="yyyy-MM-dd" // Set date format
-            calendarClassName="custom-date-picker-calendar" // Set calendar class name
-            popperPlacement="bottom" // Set calendar position
-          />
-        </form>
-      </div>
-    </div>
-  );
-};
+//           <DatePicker
+//             selected={selectedStart}
+//             onChange={onChangeStart}
+//             className="custom-date-picker" // Add custom class name
+//             dateFormat="yyyy-MM-dd" // Set date format
+//             calendarClassName="custom-date-picker-calendar" // Set calendar class name
+//             popperPlacement="bottom" // Set calendar position
+//           />
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
 
 export const FilterDate = ({
   selectedStart,
@@ -160,6 +161,10 @@ export function FilterComponentPengeluaran({
   button,
   value,
   onChange,
+  selectedStart,
+  onChangeStart,
+  selectedEnd,
+  onChangeEnd,
 }) {
   return (
     <>
@@ -187,7 +192,7 @@ export function FilterComponentPengeluaran({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        <label className="text-sm ml-2">Filter Tipe : </label>
+        <label className="ml-2 text-merah font-bold">Filter Tipe : </label>
         <select
           style={{
             border: "1px solid grey",
@@ -196,13 +201,120 @@ export function FilterComponentPengeluaran({
             height: "30px",
             fontSize: "12px",
             padding: "5px",
+            marginLeft: "5px",
           }}
           value={value}
           onChange={onChange}
         >
+          <option value="all">Semua</option>
           <option value="operasional">Operasional</option>
           <option value="pendidikan">Pendidikan</option>
         </select>
+        <div
+          style={{
+            display: "inline-block",
+            float: "right",
+            marginBottom: "20px",
+          }}
+        >
+          <button
+            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+            className="btn-hijau"
+            onClick={onClick}
+          >
+            <i className="fa fa-plus mr-1 mt-1"></i> {button}
+          </button>
+        </div>
+      </div>
+      <div className="flex mb-3 gap-5 justify-between items-center font-bold text-merah">
+        <label className="w-72 mt-5">Filter Tanggal : </label>
+        <DatePickerComponent
+          floatLabelType="Auto"
+          value={selectedStart}
+          change={onChangeStart}
+          format="yyy-MM-dd"
+          placeholder="Mulai (YYYY-MM-DD)"
+        />
+        <label className="mt-5">-</label>
+        <DatePickerComponent
+          floatLabelType="Auto"
+          value={selectedEnd}
+          change={onChangeEnd}
+          format="yyy-MM-dd"
+          placeholder="Sampai (YYYY-MM-DD)"
+        />
+      </div>
+    </>
+  );
+}
+
+export function FilterComponentSpp({
+  filterText,
+  onFilter,
+  onClick,
+  button,
+  filterPaid,
+  setFilterPaid,
+  filterUnPaid,
+  setFilterUnPaid,
+}) {
+  return (
+    <>
+      <div
+        style={{
+          display: "block",
+          padding: "14px",
+          marginBottom: "10px",
+          borderRadius: "10px",
+        }}
+      >
+        <div
+          style={{
+            borderRadius: "5px",
+            border: "1px solid #bfbfbf",
+            textAlign: "center",
+            display: "inline-block",
+          }}
+        >
+          <Input
+            id="search"
+            placeholder="Cari Nama Barang..."
+            value={filterText}
+            onChange={onFilter}
+          />
+          <i style={{ padding: "7px 6px" }} className="fa fa-search" />
+        </div>
+        <button
+          onClick={() => {
+            if (filterPaid === false) {
+              setFilterPaid(true);
+            } else setFilterPaid(false);
+          }}
+          className={
+            filterPaid === true
+              ? "ml-2 btn-modal-filter-true"
+              : "ml-2 btn-modal-filter-false"
+          }
+        >
+          Tampilkan Telah Membayar{" "}
+          {filterPaid === true && <i className="fa fa-check text-hijau" />}
+        </button>
+
+        <button
+          onClick={() => {
+            if (filterUnPaid === false) {
+              setFilterUnPaid(true);
+            } else setFilterUnPaid(false);
+          }}
+          className={
+            filterUnPaid === true
+              ? "ml-2 btn-modal-filter-true"
+              : "ml-2 btn-modal-filter-false"
+          }
+        >
+          Tampilkan Belum Membayar{" "}
+          {filterUnPaid === true && <i className="fa fa-check text-hijau" />}
+        </button>
         <div
           style={{
             display: "inline-block",
@@ -691,52 +803,16 @@ export function FilterComponentRegistrations({
 
 export function FilterComponentFinanceReport({
   filterText,
-  filterTipe,
-  filterMonth,
-  filterYear,
-  setFilterTipe,
-  setFilterMonth,
-  setFilterYear,
   onFilter,
-  onChangeMonth,
-  valueMonth,
-  onChangeTipe,
-  valueTipe,
-  onChangeYear,
-  valueYear,
-  data = [],
-  createdAt,
+  onClick,
+  button,
+  value,
+  onChange,
+  selectedStart,
+  onChangeStart,
+  selectedEnd,
+  onChangeEnd,
 }) {
-  const [isOpenFilter, SetIsOpenFilter] = useState("false");
-
-  const uniqueArray = createdAt.reduce((accumulator, current) => {
-    // Check if there's already an object with the same 'name' in the accumulator array (case-insensitive and trimmed)
-    const isDuplicate = accumulator.some(
-      (item) =>
-        moment(item.createdAt).format("MM").trim().toLowerCase() ===
-        moment(current.createdAt).format("MM").trim().toLowerCase()
-    );
-
-    if (!isDuplicate) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
-  const uniqueYear = createdAt.reduce((accumulator, current) => {
-    // Check if there's already an object with the same 'name' in the accumulator array (case-insensitive and trimmed)
-    const isDuplicate = accumulator.some(
-      (item) =>
-        moment(item.createdAt).format("YYYY").trim().toLowerCase() ===
-        moment(current.createdAt).format("YYYY").trim().toLowerCase()
-    );
-
-    if (!isDuplicate) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
   return (
     <>
       <div
@@ -757,258 +833,50 @@ export function FilterComponentFinanceReport({
         >
           <Input
             id="search"
-            placeholder="Pencarian..."
+            placeholder="Cari Nama Barang..."
             value={filterText}
             onChange={onFilter}
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        <button
-          className="btn-hijau w-auto"
+        <label className="ml-2 text-merah font-bold">Filter Tipe : </label>
+        <select
           style={{
-            display: "inline-block",
-            float: "right",
-            padding: "2px 10px",
-            fontSize: "12px",
+            border: "1px solid grey",
+            borderRadius: "10px",
             width: "auto",
+            height: "30px",
+            fontSize: "12px",
+            padding: "5px",
+            marginLeft: "5px",
           }}
-          onClick={() => SetIsOpenFilter("true")}
+          value={value}
+          onChange={onChange}
         >
-          <i className="fa fa-filter mr-1"> </i> Filter
-        </button>
-        {isOpenFilter === "true" && (
-          <>
-            <div className="nav-item absolute right-20 mt-2 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
-              <div className="flex justify-between">
-                {data ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "100%",
-                      gap: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "block",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <div style={{ display: "inline-block" }}>
-                        <h3>Filter Data</h3>
-                      </div>
-                      <button
-                        className="text-merah"
-                        onClick={() => SetIsOpenFilter("false")}
-                        style={{
-                          display: "inline-block",
-                          float: "right",
-                          fontSize: "25px",
-                        }}
-                      >
-                        <MdOutlineCancel />
-                      </button>
-                    </div>
-                    <strong className="text-merah">
-                      Filter Data Berdasarkan :
-                    </strong>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "start",
-                        gap: "5px",
-                      }}
-                    >
-                      <button
-                        onClick={() => {
-                          if (filterYear === "false") {
-                            setFilterYear("true");
-                          } else setFilterYear("false");
-                        }}
-                        className={
-                          filterYear === "true"
-                            ? "btn-modal-filter-true"
-                            : "btn-modal-filter-false"
-                        }
-                      >
-                        Tahun{" "}
-                        {filterYear === "true" ? (
-                          <i className="fa fa-check text-hijau" />
-                        ) : (
-                          <i className="fa fa-angle-down" />
-                        )}
-                      </button>
-                      {filterYear === "true" && (
-                        <select
-                          style={{
-                            border: "1px solid grey",
-                            borderRadius: "10px",
-                            width: "auto",
-                            height: "32px",
-                            fontSize: "12px",
-                            padding: "5px",
-                            marginLeft: "10px",
-                            outline: "none",
-                          }}
-                          value={valueYear}
-                          onChange={onChangeYear}
-                        >
-                          {uniqueYear.map((c) => (
-                            <>
-                              <option
-                                value={moment(c.createdAt).format("YYYY")}
-                              >
-                                {moment(c.createdAt).format("YYYY")}
-                              </option>
-                            </>
-                          ))}
-                        </select>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "start",
-                        gap: "5px",
-                      }}
-                    >
-                      <button
-                        onClick={() => {
-                          if (filterMonth === "false") {
-                            setFilterMonth("true");
-                          } else setFilterMonth("false");
-                        }}
-                        className={
-                          filterMonth === "true"
-                            ? "btn-modal-filter-true"
-                            : "btn-modal-filter-false"
-                        }
-                      >
-                        Bulan{" "}
-                        {filterMonth === "true" ? (
-                          <i className="fa fa-check text-hijau" />
-                        ) : (
-                          <i className="fa fa-angle-down" />
-                        )}
-                      </button>
-                      {filterMonth === "true" && (
-                        <select
-                          style={{
-                            border: "1px solid grey",
-                            borderRadius: "10px",
-                            width: "auto",
-                            height: "32px",
-                            fontSize: "12px",
-                            padding: "5px",
-                            marginLeft: "10px",
-                            outline: "none",
-                          }}
-                          value={valueMonth}
-                          onChange={onChangeMonth}
-                        >
-                          {uniqueArray.map((c) => (
-                            <>
-                              <option value={moment(c.createdAt).format("MM")}>
-                                {moment(c.createdAt).format("MM") === "01"
-                                  ? "Januari"
-                                  : moment(c.createdAt).format("MM") === "02"
-                                  ? "Februari"
-                                  : moment(c.createdAt).format("MM") === "03"
-                                  ? "Maret"
-                                  : moment(c.createdAt).format("MM") === "04"
-                                  ? "April"
-                                  : moment(c.createdAt).format("MM") === "05"
-                                  ? "Mei"
-                                  : moment(c.createdAt).format("MM") === "06"
-                                  ? "Juni"
-                                  : moment(c.createdAt).format("MM") === "07"
-                                  ? "Juli"
-                                  : moment(c.createdAt).format("MM") === "08"
-                                  ? "Agustus"
-                                  : moment(c.createdAt).format("MM") === "09"
-                                  ? "September"
-                                  : moment(c.createdAt).format("MM") === "10"
-                                  ? "Oktober"
-                                  : moment(c.createdAt).format("MM") === "11"
-                                  ? "November"
-                                  : moment(c.createdAt).format("MM") === "12" &&
-                                    "Desember"}
-                              </option>
-                            </>
-                          ))}
-                        </select>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "start",
-                        gap: "5px",
-                      }}
-                    >
-                      <button
-                        onClick={() => {
-                          if (filterTipe === "false") {
-                            setFilterTipe("true");
-                          } else setFilterTipe("false");
-                        }}
-                        className={
-                          filterTipe === "true"
-                            ? "btn-modal-filter-true"
-                            : "btn-modal-filter-false"
-                        }
-                      >
-                        Tipe{" "}
-                        {filterTipe === "true" ? (
-                          <i className="fa fa-check text-hijau" />
-                        ) : (
-                          <i className="fa fa-angle-down" />
-                        )}
-                      </button>
-                      {filterTipe === "true" && (
-                        <select
-                          style={{
-                            border: "1px solid grey",
-                            borderRadius: "10px",
-                            width: "auto",
-                            height: "32px",
-                            fontSize: "12px",
-                            padding: "5px",
-                            marginLeft: "10px",
-                            outline: "none",
-                          }}
-                          value={valueTipe}
-                          onChange={onChangeTipe}
-                        >
-                          <option value="K">Kredit</option>
-                          <option value="D">Debit</option>
-                        </select>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <select
-                    style={{
-                      border: "1px solid grey",
-                      borderRadius: "10px",
-                      width: "auto",
-                      height: "30px",
-                      fontSize: "12px",
-                      padding: "5px",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    <option value="null">Data Tidak Tersedia</option>
-                  </select>
-                )}
-              </div>
-            </div>
-          </>
-        )}
+          <option value="all">Semua</option>
+          <option value="K">Kredit</option>
+          <option value="D">Debit</option>
+        </select>
+      </div>
+      <div className="flex mb-3 pr-52 gap-5 justify-between items-center font-bold text-merah">
+        <label className="w-72 mt-5">Filter Tanggal : </label>
+        <DatePickerComponent
+          floatLabelType="Auto"
+          value={selectedStart}
+          change={onChangeStart}
+          format="yyy-MM-dd"
+          placeholder="Mulai (YYYY-MM-DD)"
+          strictMode
+        />
+        <label className="mt-5">-</label>
+        <DatePickerComponent
+          floatLabelType="Auto"
+          value={selectedEnd}
+          change={onChangeEnd}
+          format="yyy-MM-dd"
+          placeholder="Sampai (YYYY-MM-DD)"
+          strictMode
+        />
       </div>
     </>
   );
@@ -1532,7 +1400,6 @@ export function DataTablesRegistrations({
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
-    console.log("PAAD", selected);
     setItemsPerPage(itemsPerPage);
   };
 
@@ -1567,30 +1434,27 @@ export function DataTablesRegistrations({
         onChangeSteps={handleFilterStatusSteps}
         dataLength={data.length}
         setSelected={setSelected}
-        // setAllSelected={setAllSelected}
         selectedRows={selectedRows}
       />
-      {data ? (
-        <div>
-          {isLoading ? (
-            <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
-            </div>
-          ) : (
-            <DataTable
-              columns={columns}
-              customStyles={CustomStylesTable}
-              data={currentPageData}
-              defaultSortAsc={false}
-              defaultSortFieldId={defaultSortFieldId}
-            />
-          )}
-        </div>
-      ) : (
-        <div style={{ textAlign: "center" }}>
-          <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
-        </div>
-      )}
+      <div>
+        {isLoading ? (
+          <div style={{ textAlign: "center" }}>
+            <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+          </div>
+        ) : data ? (
+          <DataTable
+            columns={columns}
+            customStyles={CustomStylesTable}
+            data={currentPageData}
+            defaultSortAsc={false}
+            defaultSortFieldId={defaultSortFieldId}
+          />
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
+          </div>
+        )}
+      </div>
       {itemsPerPage !== "all" && (
         <>
           <div
@@ -1960,7 +1824,7 @@ export function DataTablesPMB({
   );
 }
 
-// (ListKurikulum, ListKelas, ListMataPelajaran, ListKelompokMapel, ListSpp, ListPengeluaran, )
+// (ListKurikulum, ListKelas, ListMataPelajaran, ListKelompokMapel, ListPengeluaran, )
 export function DataTables({
   columns,
   status,
@@ -2230,8 +2094,8 @@ export function DataTables({
   );
 }
 
-// (ListPengeluaran)
-export function DataTablePengeluaran({
+// (ListSpp)
+export function DataTablesListSpp({
   columns,
   status,
   data = [],
@@ -2239,8 +2103,10 @@ export function DataTablePengeluaran({
   filterText,
   onFilter,
   onClick,
-  onChange,
-  value,
+  filterPaid,
+  setFilterPaid,
+  filterUnPaid,
+  setFilterUnPaid,
 }) {
   const CustomStylesTable = {
     table: {
@@ -2365,6 +2231,281 @@ export function DataTablePengeluaran({
 
   return (
     <>
+      <FilterComponentSpp
+        data={data}
+        filterText={filterText}
+        onFilter={onFilter}
+        onClick={onClick}
+        filterPaid={filterPaid}
+        setFilterPaid={setFilterPaid}
+        filterUnPaid={filterUnPaid}
+        setFilterUnPaid={setFilterUnPaid}
+        button="Tambah"
+      />
+      {data ? (
+        <div>
+          {status == 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+            </div>
+          ) : (
+            <DataTable
+              columns={columns}
+              customStyles={CustomStylesTable}
+              data={currentPageData}
+              defaultSortAsc={false}
+              defaultSortFieldId={defaultSortFieldId}
+            />
+          )}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
+        </div>
+      )}
+      {itemsPerPage !== "all" && (
+        <>
+          <div
+            style={{
+              display: "block",
+              padding: "20px 0",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                float: "left",
+                fontSize: "14px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "20px",
+                }}
+              >
+                <strong className="text-merah" style={{ marginTop: "6px" }}>
+                  Jumlah Data Per Halaman
+                </strong>
+                <button
+                  onClick={() => setItemsPerPage(20)}
+                  className={
+                    itemsPerPage === 20
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  20
+                </button>
+                <button
+                  onClick={() => setItemsPerPage(50)}
+                  className={
+                    itemsPerPage === 50
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  50
+                </button>
+                <button
+                  onClick={() => setItemsPerPage(100)}
+                  className={
+                    itemsPerPage === 100
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  100
+                </button>
+              </div>
+            </div>
+            <div style={{ display: "inline-block", float: "right" }}>
+              <style>{styles}</style>
+              <ReactPaginate
+                previousLabel={
+                  <i className="fa fa-chevron-left text-merah"></i>
+                }
+                nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+                breakLabel={<a className="text-merah">...</a>}
+                pageRangeDisplayed={5}
+                marginPagesDisplayed={2}
+                forcePage={currentPage}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "block",
+              padding: "20px 0",
+              marginTop: "20px",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                float: "left",
+                fontSize: "14px",
+              }}
+            >
+              <label>
+                Menampilkan{" "}
+                <strong className="text-merah">{currentPageData.length}</strong>{" "}
+                dari <strong className="text-merah">{data.length}</strong> Data
+              </label>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+// (ListPengeluaran)
+export function DataTablePengeluaran({
+  columns,
+  status,
+  data = [],
+  defaultSortFieldId,
+  filterText,
+  onFilter,
+  onClick,
+  onChange,
+  value,
+  selectedStart,
+  onChangeStart,
+  selectedEnd,
+  onChangeEnd,
+}) {
+  const CustomStylesTable = {
+    table: {
+      style: {
+        width: "auto", // set the width of the table wrapper
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for data cells
+        justifyContent: "center",
+        fontWeight: "bold",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#D5D5D540",
+        marginTop: "10px",
+        borderRadius: "10px",
+        border: "0px",
+        minHeight: "72px", // override the row height
+        "&:not(:last-of-type)": {
+          border: "0px",
+        },
+      },
+    },
+    denseStyle: {
+      minHeight: "32px",
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#8F0D1E",
+        minHeight: "52px",
+        borderRadius: "10px",
+      },
+      denseStyle: {
+        minHeight: "32px",
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for head cells
+        paddingRight: "10px",
+        justifyContent: "center",
+        color: "rgb(243 241 241)",
+      },
+    },
+  };
+
+  // CSS styles
+  const styles = `
+        .pagination {
+            display: flex;
+            border-radius: 10px;
+            padding: 0 0;
+        }
+        .pagination li {
+            display: inline-block;
+            margin-right: 5px;
+            padding: 5px;
+            border-radius: 15px;
+            background-color: transparent;
+            width: 40px;
+            text-align: center;
+        }
+        .pagination li.active {
+            background-color: #8F0D1E;
+        }
+        .pagination li.disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+        .pagination li a {
+            cursor: pointer;
+            color: black;
+        }
+        .pagination li.active a {
+            cursor: pointer;
+            color: #fff;
+        }
+        .pagination li.disabled a {
+            cursor: not-allowed;
+            color: grey;
+        }
+        // .pagination li:hover{
+        //     background-color: #8F0D1E;
+        // }
+        // .pagination li:hover a{
+        //     background-color: #8F0D1E;
+        //     color: #fff;
+        // }
+        // .pagination li.disabled:hover{
+        //     background-color: transparent;
+        // }
+        // .pagination li.disabled:hover a{
+        //     background-color: transparent;
+        //     color: grey;
+        // }
+        `;
+
+  data.sort(function (a, b) {
+    var c = new Date(a.transactionDate);
+    var d = new Date(b.transactionDate);
+    return c - d;
+  });
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+    setItemsPerPage(itemsPerPage);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  let currentPageData = [];
+  let pageCount = 0;
+
+  if (data !== null) {
+    currentPageData =
+      itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
+    pageCount = Math.ceil(data.length / itemsPerPage);
+  }
+
+  return (
+    <>
       <FilterComponentPengeluaran
         data={data}
         filterText={filterText}
@@ -2372,7 +2513,11 @@ export function DataTablePengeluaran({
         onClick={onClick}
         value={value}
         onChange={onChange}
-        button="Tambah"
+        selectedStart={selectedStart}
+        onChangeStart={onChangeStart}
+        selectedEnd={selectedEnd}
+        onChangeEnd={onChangeEnd}
+        button="Tambah Pengeluaran"
       />
       {data ? (
         <div>
@@ -2770,22 +2915,18 @@ export function DataTablesWithoutButton({
 // (ListLaporan)
 export function DataTablesFinanceReport({
   columns,
+  status,
   data = [],
+  defaultSortFieldId,
   filterText,
-  filterTipe,
-  filterMonth,
-  filterYear,
-  setFilterTipe,
-  setFilterMonth,
-  setFilterYear,
-  onChangeMonth,
-  valueMonth,
-  onChangeTipe,
-  valueTipe,
-  onChangeYear,
-  valueYear,
   onFilter,
-  createdAt,
+  onClick,
+  onChange,
+  value,
+  selectedStart,
+  onChangeStart,
+  selectedEnd,
+  onChangeEnd,
 }) {
   const CustomStylesTable = {
     table: {
@@ -2887,7 +3028,9 @@ export function DataTablesFinanceReport({
         `;
 
   data.sort(function (a, b) {
-    return b.id - a.id;
+    var c = new Date(a.createdAt);
+    var d = new Date(b.createdAt);
+    return c - d;
   });
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -2911,37 +3054,32 @@ export function DataTablesFinanceReport({
   return (
     <>
       <FilterComponentFinanceReport
-        filterText={filterText}
-        filterTipe={filterTipe}
-        filterMonth={filterMonth}
-        filterYear={filterYear}
-        setFilterTipe={setFilterTipe}
-        setFilterMonth={setFilterMonth}
-        setFilterYear={setFilterYear}
-        onFilter={onFilter}
-        onChangeMonth={onChangeMonth}
-        valueMonth={valueMonth}
-        onChangeTipe={onChangeTipe}
-        valueTipe={valueTipe}
-        onChangeYear={onChangeYear}
-        valueYear={valueYear}
         data={data}
-        createdAt={createdAt}
+        filterText={filterText}
+        onFilter={onFilter}
+        onClick={onClick}
+        value={value}
+        onChange={onChange}
+        selectedStart={selectedStart}
+        onChangeStart={onChangeStart}
+        selectedEnd={selectedEnd}
+        onChangeEnd={onChangeEnd}
       />
       {data ? (
         <div>
-          {/* {data.length === 0 ? (
+          {status == 0 ? (
             <div style={{ textAlign: "center" }}>
               <h1 style={{ fontSize: "24px" }}>Loading...</h1>
             </div>
-          ) : ( */}
-          <DataTable
-            columns={columns}
-            customStyles={CustomStylesTable}
-            data={currentPageData}
-            defaultSortAsc={false}
-          />
-          {/* )} */}
+          ) : (
+            <DataTable
+              columns={columns}
+              customStyles={CustomStylesTable}
+              data={currentPageData}
+              defaultSortAsc={false}
+              defaultSortFieldId={defaultSortFieldId}
+            />
+          )}
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
