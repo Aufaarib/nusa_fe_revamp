@@ -12,12 +12,16 @@ export function getKurikulum(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
-    .catch((error) => {
-      setSts({ type: "error", error });
+    .catch((err) => {
+      AlertMessage(
+        "Gagal",
+        err.response.data.status.message,
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
@@ -41,9 +45,13 @@ export function updateKurikulum(setSts, path, code, name, description) {
         "Ubah Kurikulum Berhasil"
       );
     })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Kurikulum Gagal", "Coba Lagi", "error");
+    .catch((err) => {
+      AlertMessage(
+        "Gagal",
+        err.response.data.status.message,
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
@@ -61,13 +69,17 @@ export function updateStatusKurikulum(setSts, code, setData) {
       AlertMessage("Berhasil", "Ubah Status Berhasil", "Tutup", "success");
       getKurikulum(setData, setSts);
     })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Status Gagal", "Tutup", "error");
+    .catch((err) => {
+      AlertMessage(
+        "Gagal",
+        err.response.data.status.message,
+        "Coba Lagi",
+        "error"
+      );
     });
 }
 
-export function postKurikulum(setSts, path, name, description) {
+export function postKurikulum(path, name, description) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/curriculum",
@@ -78,7 +90,6 @@ export function postKurikulum(setSts, path, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
       AlertStatusSuccess(
         path,
         "Berhasil",
@@ -87,8 +98,12 @@ export function postKurikulum(setSts, path, name, description) {
         "Tambah Kurikulum Berhasil"
       );
     })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Kurikulum Gagal", "Coba Lagi", "error");
+    .catch((err) => {
+      AlertMessage(
+        "Gagal",
+        err.response.data.status.message,
+        "Coba Lagi",
+        "error"
+      );
     });
 }

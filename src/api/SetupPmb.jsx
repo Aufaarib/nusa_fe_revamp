@@ -40,7 +40,7 @@ export function getAdmissionDetails(
     });
 }
 
-export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
+export function updateStatusAdmission(setSts, code, navigate) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -50,7 +50,7 @@ export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
       }
     )
     .then(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -61,7 +61,7 @@ export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
       );
     })
     .catch((error) => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
     });
@@ -77,8 +77,8 @@ export function postAdmission(
   endDate,
   registrationAmount,
   description,
-  educationAmount,
-  setIsLoading
+  educationAmount
+  // setIsLoading
 ) {
   axios
     .post(
@@ -111,7 +111,7 @@ export function postAdmission(
           { headers: { authorization: localStorage.getItem("TOKEN") } }
         )
         .then(() => {
-          setIsLoading(false);
+          // setIsLoading(false);
           setSts({ type: "success" });
           AlertStatusSuccess(
             path,
@@ -122,7 +122,7 @@ export function postAdmission(
           );
         })
         .catch((error) => {
-          setIsLoading(false);
+          // setIsLoading(false);
           setSts({ type: "error", error });
           AlertMessage(
             "Gagal",
@@ -133,7 +133,7 @@ export function postAdmission(
         });
     })
     .catch((error) => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
     });

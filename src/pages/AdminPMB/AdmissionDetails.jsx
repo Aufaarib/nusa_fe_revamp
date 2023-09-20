@@ -134,8 +134,6 @@ const AdmissionDetails = () => {
     });
   };
 
-  console.log("makskdmad === ", location.state.theresActive);
-
   const navigateSetupPmb = () => {
     navigate("/admin/list-setup-pmb");
   };

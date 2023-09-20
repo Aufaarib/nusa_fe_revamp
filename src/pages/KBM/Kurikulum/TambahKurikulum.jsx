@@ -18,7 +18,7 @@ export default function TambahKurikulum() {
     if (name.length === 0 || description.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postKurikulum(setSts, navigateKurikulum, name, description);
+      postKurikulum(navigateKurikulum, name, description);
     }
   };
 
@@ -37,7 +37,7 @@ export default function TambahKurikulum() {
           title="Tambah Kurikulum"
         />
       </div>
-      <div style={{ padding: "44px 154px 0" }}>
+      <div style={{ padding: "44px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",

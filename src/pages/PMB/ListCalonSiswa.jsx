@@ -138,7 +138,7 @@ const ListCalonSiswa = () => {
       ) : (
         <div style={{ textAlign: "center", marginTop: "100px" }}>
           <strong style={{ color: "gray", fontSize: "28px" }}>
-            Belum Ada Calon Murid Yang Terdaftar
+            Belum Ada Calon Siswa
           </strong>
         </div>
       )}

@@ -40,9 +40,9 @@ export function validateOTP(setSts, otp, navigateLogin, directTo) {
         AlertStatusSuccess(
           navigateLogin,
           "Berhasil",
-          "Kembali Ke Halaman Reset Password",
+          "Reset Password",
           "success",
-          "Reset Password Berhasil"
+          "Silahkan Reset Password Anda"
         );
       } else if (directTo === "Login") {
         AlertStatusSuccess(
