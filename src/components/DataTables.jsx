@@ -859,7 +859,9 @@ export function FilterComponentFinanceReport({
         </select>
       </div>
       <div className="flex mb-3 pr-52 gap-5 justify-between items-center font-bold text-merah">
-        <label className="w-72 mt-5">Filter Tanggal : </label>
+        <div className="w-80 mt-5">
+          <label>Filter Tanggal : </label>
+        </div>
         <DatePickerComponent
           floatLabelType="Auto"
           value={selectedStart}
