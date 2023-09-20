@@ -10,12 +10,7 @@ import {
   DropdownDatePickers,
   DropdownPendaftaran,
 } from "../../components/Dropdown";
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertUploadInvoiceFailed,
-  AlertUploadInvoiceSuccess,
-} from "../../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
 
@@ -23,7 +18,6 @@ const BerkasPembayaranBiayaPendidikan = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/payment`;
-  const domain = process.env.REACT_APP_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
   const {
     documents,

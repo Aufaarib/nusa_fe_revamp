@@ -434,35 +434,27 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
                   {step == 3 && status !== "Belum Mulai" && (
                     <>
+                      {status === "Dalam Proses" && (
+                        <>
+                          <p>
+                            Alhamdulillah pengisian formulir data Calon Siswa
+                            dan Keluarga telah selesai.
+                          </p>
+                          <p>Sedang Berlangsung Rangkaian Tes</p>
+                          <br />
+                          <p>
+                            Dimulai Pada Tanggal :{" "}
+                            <strong>
+                              {moment(
+                                dataAdmissionRegistration.admissionPhase
+                                  .testSchedule
+                              ).format("DD-MM-YYYY")}
+                            </strong>
+                          </p>
+                        </>
+                      )}
                       {dataAdmissionRegistration.testResult !== null && (
                         <>
-                          {status === "Dalam Proses" && (
-                            <>
-                              <p>Rangkaian Tes Sedang Berlangsung</p>
-                              <br />
-                              <p>
-                                Tanggal Tes :{" "}
-                                <strong>
-                                  {moment(
-                                    dataAdmissionRegistration.admissionPhase
-                                      .testSchedule
-                                  ).format("DD-MM-YYYY")}
-                                </strong>
-                              </p>
-                              <p>
-                                {
-                                  dataAdmissionRegistration.admissionPhase
-                                    .testSchedule
-                                }
-                              </p>
-                              <p>
-                                Catatan :{" "}
-                                <strong className="capitalize">
-                                  {admissionSteps3.note}
-                                </strong>
-                              </p>
-                            </>
-                          )}
                           {status === "Berhasil" && (
                             <div>
                               <p>
@@ -495,13 +487,13 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                                     : "Lulus"}
                                 </strong>
                               </p>
-                              <br />
-                              <p>
+                              {/* <br /> */}
+                              {/* <p>
                                 Catatan :{" "}
                                 <strong className="capitalize">
                                   {admissionSteps3.note}
                                 </strong>
-                              </p>
+                              </p> */}
                               <br />
                               {dataAdmissionRegistration.testResult.isPassed ===
                               0 ? (
@@ -726,8 +718,6 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                       )}
                     </>
                   )}
-
-                  {/* {step == 5 && admissionSteps5.status !== undefined && <></>} */}
 
                   <br />
                   <br />

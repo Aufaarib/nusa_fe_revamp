@@ -8,6 +8,7 @@ import {
   DropdownSiswa,
 } from "../../../components/Dropdown";
 import TextInput from "../../../components/TextInput";
+import { AlertMessage } from "../../../components/ModalPopUp";
 
 export default function TambahPengeluaran() {
   const [amounts, setAmount] = useState("");
@@ -45,7 +46,7 @@ export default function TambahPengeluaran() {
 
   const postData = (e) => {
     const invoice = filesData.file.rawFile;
-    const amount = parseInt(amounts);
+    const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
     console.log("ssddsd === ", transactionDate);
@@ -69,11 +70,11 @@ export default function TambahPengeluaran() {
       console.log(entry[0], entry[1]);
     }
 
-    // if (amount.length === 0 || description.length === 0 || type.length === 0) {
-    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
-    // } else {
-    postPengeluaran(setSts, navigateListSpp, formData);
-    // }
+    if (amount.length === 0 || description.length === 0 || type.length === 0) {
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+    } else {
+      postPengeluaran(setSts, navigateListSpp, formData);
+    }
   };
 
   const navigateSpp = () => {
@@ -137,8 +138,9 @@ export default function TambahPengeluaran() {
         <article>
           <TextInput
             label="Total Pengeluaran"
-            type="number"
-            onChange={(e) => setAmount(e.target.value)}
+            type="text"
+            value={amounts}
+            onChange={handleInputChange}
             required={true}
           />
           <TextInput

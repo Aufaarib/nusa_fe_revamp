@@ -17,7 +17,10 @@ export default function UbahSpp() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
   const [amounts, setAmount] = useState(location.state.amount);
-  const [month, setMonth] = useState(location.state.month);
+  const [month, setMonth] = useState({
+    label: location.state.month,
+    value: location.state.month,
+  });
   const [periodeIds, setPeriodeId] = useState({
     label: location.state.increment,
     value: location.state.periodeId,
@@ -43,8 +46,6 @@ export default function UbahSpp() {
     fetchStudents();
   }, []);
 
-  console.log("kkakmwk === ", studentCodes);
-
   const asyncSettings = {
     saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
     removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
@@ -63,7 +64,7 @@ export default function UbahSpp() {
 
   const postData = (e) => {
     const invoice = filesData?.file?.rawFile;
-    const amount = parseInt(amounts);
+    const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
     if (
@@ -111,6 +112,57 @@ export default function UbahSpp() {
     value: c.code,
   }));
 
+  const monthOptions = [
+    {
+      label: "Januari",
+      value: 1,
+    },
+    {
+      label: "Februari",
+      value: 2,
+    },
+    {
+      label: "Maret",
+      value: 3,
+    },
+    {
+      label: "April",
+      value: 4,
+    },
+    {
+      label: "Mei",
+      value: 5,
+    },
+    {
+      label: "Juni",
+      value: 6,
+    },
+    {
+      label: "Juli",
+      value: 7,
+    },
+    {
+      label: "Agustus",
+      value: 8,
+    },
+    {
+      label: "September",
+      value: 9,
+    },
+    {
+      label: "Oktober",
+      value: 10,
+    },
+    {
+      label: "November",
+      value: 11,
+    },
+    {
+      label: "Desember",
+      value: 12,
+    },
+  ];
+
   return (
     <div>
       <Header
@@ -140,13 +192,22 @@ export default function UbahSpp() {
             isSearchable={false}
             onChange={(e) => setPeriodeId(e.value)}
           />
-          <TextInput
+          <DropdownSiswa
+            label="Spp Bulan"
+            required={true}
+            defaultValue={month}
+            isClearable={false}
+            options={monthOptions}
+            isSearchable={false}
+            onChange={(e) => setMonth(e.value)}
+          />
+          {/* <TextInput
             label="Spp Bulan"
             type="text"
             value={month}
             onChange={(e) => setMonth(e.target.value)}
             required={true}
-          />
+          /> */}
           <DropdownSiswa
             label="Murid"
             required={true}

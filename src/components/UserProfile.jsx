@@ -1,10 +1,9 @@
 import React from "react";
+import { MdOutlineCancel } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { MdOutlineCancel, MdVerified } from "react-icons/md";
-import { Button } from ".";
-import { userProfileData } from "../data/initData";
+import Button from "./Button";
 import { useStateContext } from "../contexts/ContextProvider";
-import avatar from "../data/product1.jpg";
+import { userProfileData } from "../data/initData";
 import logoSaim from "../data/logo-saim.png";
 import useAuth from "../hooks/useAuth";
 
@@ -69,7 +68,7 @@ const UserProfile = () => {
           </p>
         </div>
       </div>
-      <div>
+      {/* <div>
         {userProfileData.map((item, index) => (
           <div
             key={index}
@@ -93,9 +92,9 @@ const UserProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <Link onClick={handleLogout} className="mt-5 btn-merah">
-        Log Out
+        Keluar
       </Link>
     </div>
   );

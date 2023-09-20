@@ -1,11 +1,4 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getRoom(setData, setSts) {

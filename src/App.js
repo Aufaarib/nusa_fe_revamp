@@ -1,97 +1,78 @@
-import { Routes, Route } from "react-router-dom";
-import Register from "./pages/Auth/Register";
-import Login from "./pages/Auth/Login";
-import TahapanPMB from "./pages/PMB/TahapanPMB";
-import FormMurid from "./pages/PMB/FormMurid";
-import FormOrangTua from "./pages/PMB/FormOrangTua";
-import FormPernyataanOrangTua from "./pages/PMB/FormPernyataanOrangTua";
-import BerkasPendaftaran from "./pages/PMB/BerkasPendaftaran";
-import SetupPMB from "./pages/AdminPMB/SetupPMB";
-import KonfirmasiPembayaran from "./pages/AdminPMB/KonfirmasiPembayaran";
-import HasilTes from "./pages/AdminPMB/HasilTes";
+import { Route, Routes } from "react-router-dom";
+import "../src/styles/App.css";
+
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import RequireAuthAdmin from "./components/RequireAuthAdmin";
+import KonfirmasiPembayaran from "./pages/AdminPMB/KonfirmasiPembayaran";
+import SetupPMB from "./pages/AdminPMB/SetupPMB";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import BerkasPendaftaran from "./pages/PMB/BerkasPendaftaran";
+import FormMurid from "./pages/PMB/FormMurid";
+import FormOrangTua from "./pages/PMB/FormOrangTua";
+import FormPernyataanOrangTua from "./pages/PMB/FormPernyataanOrangTua";
+import TahapanPMB from "./pages/PMB/TahapanPMB";
 
-import UbahMataPelajaran from "./pages/KBM/Mapel/UbahMataPelajaran";
-import UbahKurikulum from "./pages/KBM/Kurikulum/UbahKurikulum";
-import UbahListBank from "./pages/Keuangan/Bank/UbahListBank";
-import UbahKelompokMapel from "./pages/KBM/KelompokMapel/UbahKelompokMapel";
 import UbahKelas from "./pages/KBM/Kelas/UbahKelas";
-import UbahSemester from "./pages/KBM/Semester/UbahSemester";
+import UbahKelompokMapel from "./pages/KBM/KelompokMapel/UbahKelompokMapel";
+import UbahKurikulum from "./pages/KBM/Kurikulum/UbahKurikulum";
+import UbahMataPelajaran from "./pages/KBM/Mapel/UbahMataPelajaran";
 
 import DashboardKeuangan from "./pages/Keuangan/DashboardKeuangan/DashboardKeuangan";
 
-import ListJadwalMataPelajaran from "./pages/KBM/JadwalMapel/ListJadwalMapel";
-import ListMataPelajaran from "./pages/KBM/Mapel/ListMataPelajaran";
-import ListKurikulum from "./pages/KBM/Kurikulum/ListKurikulum";
-import ListSemester from "./pages/KBM/Semester/ListSemester";
+import DataRegistrasi from "./pages/AdminPMB/DataRegistrasi";
 import ListKelas from "./pages/KBM/Kelas/ListKelas";
 import ListKelompokMapel from "./pages/KBM/KelompokMapel/ListKelompokMapel";
-import ListBank from "./pages/Keuangan/Bank/ListBank";
-import ListCostCenter from "./pages/Keuangan/CostCenter/ListCostCenter";
-import ListBiayaOperasional from "./pages/Keuangan/BiayaOperasional/ListBiayaOperasional";
-import ListTipeTransaksi from "./pages/Keuangan/TipeTransaksi/ListTipeTransaksi";
-import ListBiayaPendidikan from "./pages/Keuangan/BiayaPendidikan/ListBiayaPendidikan";
-import DataRegistrasi from "./pages/AdminPMB/DataRegistrasi";
+import ListKurikulum from "./pages/KBM/Kurikulum/ListKurikulum";
+import ListMataPelajaran from "./pages/KBM/Mapel/ListMataPelajaran";
 
-import TambahJadwalMataPelajaran from "./pages/KBM/JadwalMapel/TambahJadwalMapel";
-import TambahMataPelajaran from "./pages/KBM/Mapel/TambahMataPelajaran";
-import TambahKurikulum from "./pages/KBM/Kurikulum/TambahKurikulum";
-import TambahSemester from "./pages/KBM/Semester/TambahSemester";
 import TambahKelas from "./pages/KBM/Kelas/TambahKelas";
 import TambahKelompokMapel from "./pages/KBM/KelompokMapel/TambahKelompokMapel";
-import TambahTipeTransaksi from "./pages/Keuangan/TipeTransaksi/TambahTipeTransaksi";
-import TambahCostCenter from "./pages/Keuangan/CostCenter/TambahCostCenter";
-import TambahBiayaOperasional from "./pages/Keuangan/BiayaOperasional/TambahBiayaOperasional";
-import TambahBiayaPendidikan from "./pages/Keuangan/BiayaPendidikan/TambahBiayaPendidikan";
-import TambahListBank from "./pages/Keuangan/Bank/TambahListBank";
+import TambahKurikulum from "./pages/KBM/Kurikulum/TambahKurikulum";
+import TambahMataPelajaran from "./pages/KBM/Mapel/TambahMataPelajaran";
 
-import "./App.css";
-import UbahJadwalMapel from "./pages/KBM/JadwalMapel/UbahJadwalMapel";
-import GelombangPMB from "./components/admin-pmb/GelombangPMB";
+import FormDaftarOrangTuaIbu from "./components/FormDaftarOrangTuaIbu";
+import FormDaftarOrangTuaWali from "./components/FormDaftarOrangTuaWali";
+import FormUbahDataMurid from "./components/FormUbahDataMurid";
+import FormUbahDataOrangTua from "./components/FormUbahDataOrangTua";
+import ProfilepPage from "./components/ProfilePage";
+import AdmissionDetails from "./pages/AdminPMB/AdmissionDetails";
+import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
+import TahunAjaran from "./pages/KBM/TahunAjaran/TahunAjaran";
+import TambahTahunAjaran from "./pages/KBM/TahunAjaran/TambahTahunAjaran";
+import UbahTahunAjaran from "./pages/KBM/TahunAjaran/UbahTahunAjaran";
+import TambahGelombang from "./pages/AdminPMB/TambahGelombang";
+import TambahPendaftaran from "./pages/AdminPMB/TambahPendaftaran";
+import UbahGelombang from "./pages/AdminPMB/UpdateGelombang";
+import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
+import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import UserVerification from "./pages/Auth/UserVerification";
 import ListGuru from "./pages/KBM/Guru/ListGuru";
 import TambahGuru from "./pages/KBM/Guru/TambahGuru";
 import UbahGuru from "./pages/KBM/Guru/UbahGuru";
-import TambahGelombang from "./pages/AdminPMB/TambahGelombang";
-import TambahPendaftaran from "./pages/AdminPMB/TambahPendaftaran";
-import TahunAjaran from "./pages/AdminPMB/TahunAjaran/TahunAjaran";
-import TambahTahunAjaran from "./pages/AdminPMB/TahunAjaran/TambahTahunAjaran";
-import UbahTahunAjaran from "./pages/AdminPMB/TahunAjaran/UbahTahunAjaran";
-import FormDaftarOrangTuaIbu from "./components/FormDaftarOrangTuaIbu";
-import FormDaftarOrangTuaWali from "./components/FormDaftarOrangTuaWali";
-import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
-import AdmissionDetails from "./pages/AdminPMB/AdmissionDetails";
-import UbahGelombang from "./pages/AdminPMB/UpdateGelombang";
-import UserVerification from "./pages/Auth/UserVerification";
-import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
-import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
-import ForgotPassword from "./pages/Auth/ForgotPassword";
-import ResetPassword from "./pages/Auth/ResetPassword";
-import DetailDataRegistrasi from "./pages/AdminPMB/DetailDataRegistrasi";
-import ProfilepPage from "./components/ProfilePage";
-import UpdateStatusStepPage from "./pages/AdminPMB/UpdateStatusStepPage";
-import UploadHasilTes from "./pages/AdminPMB/UploadHasilTes";
 import ListMurid from "./pages/KBM/Murid/ListMurid";
 import UbahMurid from "./pages/KBM/Murid/UbahMurid";
-import ListRuanganKelas from "./pages/KBM/PembagianKelas/ListRuanganKelas";
-import TambahRuanganKelas from "./pages/KBM/PembagianKelas/TambahRuanganKelas";
-import FormUbahDataMurid from "./components/FormUbahDataMurid";
-import FormUbahDaftarOrangTua from "./components/FormUbahDataOrangTua";
-import FormUbahDataOrangTua from "./components/FormUbahDataOrangTua";
 import DetailRuanganKelas from "./pages/KBM/PembagianKelas/DetailRuanganKelas";
+import ListRuanganKelas from "./pages/KBM/PembagianKelas/ListRuanganKelas";
 import TambahMuridKeKelas from "./pages/KBM/PembagianKelas/TambahMuridKeKelas";
+import TambahRuanganKelas from "./pages/KBM/PembagianKelas/TambahRuanganKelas";
 import UbahRuanganKelas from "./pages/KBM/PembagianKelas/UbahRuanganKelas";
-import TambahRuangan from "./pages/KBM/Ruangan/TambahRuangan";
 import ListRuangan from "./pages/KBM/Ruangan/ListRuangan";
+import TambahRuangan from "./pages/KBM/Ruangan/TambahRuangan";
 import UbahRuangan from "./pages/KBM/Ruangan/UbahRuangan";
-import ListSpp from "./pages/Keuangan/Spp/ListSpp";
-import TambahSpp from "./pages/Keuangan/Spp/TambahSpp";
+import ListLaporan from "./pages/Keuangan/Laporan/ListLaporan";
 import ListPengeluaran from "./pages/Keuangan/Pengeluaran/ListPengeluaran";
 import TambahPengeluaran from "./pages/Keuangan/Pengeluaran/TambahPengeluaran";
-import ListLaporan from "./pages/Keuangan/Laporan/ListLaporan";
-import UbahSpp from "./pages/Keuangan/Spp/UbahSpp";
 import UbahPengeluaran from "./pages/Keuangan/Pengeluaran/UbahPengeluaran";
+import ListSpp from "./pages/Keuangan/Spp/ListSpp";
+import TambahSpp from "./pages/Keuangan/Spp/TambahSpp";
+import UbahSpp from "./pages/Keuangan/Spp/UbahSpp";
+import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
+import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
+import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
 
 const App = () => {
   return (
@@ -128,67 +109,44 @@ const App = () => {
             path="/admin/konfirmasi-pembayaran"
             element={<KonfirmasiPembayaran />}
           />
-          <Route path="/admin/hasil-tes" element={<HasilTes />} />
+
           {/* lists */}
-          <Route
-            path="/admin/list-jadwal-mata-pelajaran"
-            element={<ListJadwalMataPelajaran />}
-          />
           <Route
             path="/admin/list-mata-pelajaran"
             element={<ListMataPelajaran />}
           />
           <Route path="/admin/list-kurikulum" element={<ListKurikulum />} />
-          {/* <Route path="/admin/list-semester" element={<ListSemester />} /> */}
           <Route path="/admin/list-kelas" element={<ListKelas />} />
           <Route
             path="/admin/list-kelompok-mapel"
             element={<ListKelompokMapel />}
-          />
-          <Route path="/admin/list-bank" element={<ListBank />} />
-          <Route
-            path="/admin/list-cost-center"
-            element={<ListCostCenter />}
-          ></Route>
-          <Route
-            path="/admin/list-biaya-operasional"
-            element={<ListBiayaOperasional />}
-          />
-          <Route
-            path="/admin/list-tipe-transaksi"
-            element={<ListTipeTransaksi />}
-          />
-          <Route
-            path="/admin/list-biaya-pendidikan"
-            element={<ListBiayaPendidikan />}
           />
           <Route path="/admin/list-murid" element={<ListMurid />} />
           <Route
             path="/admin/list-ruang-kelas"
             element={<ListRuanganKelas />}
           />
+          <Route
+            path="/admin/detail-ruang-kelas"
+            element={<DetailRuanganKelas />}
+          />
           <Route path="/admin/list-ruangan" element={<ListRuangan />} />
           <Route path="/admin/list-spp" element={<ListSpp />} />
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
+
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
             path="/admin/ubah-mata-pelajaran"
             element={<UbahMataPelajaran />}
           />
-          <Route
-            path="/admin/ubah-jadwal-mata-pelajaran"
-            element={<UbahJadwalMapel />}
-          />
           <Route path="/admin/ubah-kurikulum" element={<UbahKurikulum />} />
-          <Route path="/admin/ubah-list-bank" element={<UbahListBank />} />
           <Route
             path="/admin/ubah-kelompok-mapel"
             element={<UbahKelompokMapel />}
           />
           <Route path="/admin/ubah-kelas" element={<UbahKelas />} />
-          <Route path="/admin/ubah-semester" element={<UbahSemester />} />
           <Route path="/admin/ubah-guru" element={<UbahGuru />} />
           <Route
             path="/admin/ubah-tahun-ajaran"
@@ -207,6 +165,7 @@ const App = () => {
           <Route path="/admin/ubah-spp" element={<UbahSpp />} />
           <Route path="/admin/ubah-pengeluaran" element={<UbahPengeluaran />} />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
+
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
           <Route
@@ -218,10 +177,6 @@ const App = () => {
             element={<TambahPendaftaran />}
           />
           <Route
-            path="/admin/tambah-jadwal-mata-pelajaran"
-            element={<TambahJadwalMataPelajaran />}
-          />
-          <Route
             path="/admin/tambah-mata-pelajaran"
             element={<TambahMataPelajaran />}
           />
@@ -230,28 +185,10 @@ const App = () => {
             path="/admin/tambah-tahun-ajaran"
             element={<TambahTahunAjaran />}
           />
-          <Route path="/admin/tambah-semester" element={<TambahSemester />} />
           <Route path="/admin/tambah-kelas" element={<TambahKelas />} />
           <Route
             path="/admin/tambah-kelompok-mapel"
             element={<TambahKelompokMapel />}
-          />
-          <Route path="/admin/tambah-list-bank" element={<TambahListBank />} />
-          <Route
-            path="/admin/tambah-cost-center"
-            element={<TambahCostCenter />}
-          />
-          <Route
-            path="/admin/tambah-biaya-pendidikan"
-            element={<TambahBiayaPendidikan />}
-          />
-          <Route
-            path="/admin/tambah-biaya-operasional"
-            element={<TambahBiayaOperasional />}
-          />
-          <Route
-            path="/admin/tambah-tipe-transaksi"
-            element={<TambahTipeTransaksi />}
           />
           <Route
             path="/admin/tambah-ruang-kelas"
@@ -266,10 +203,6 @@ const App = () => {
           <Route
             path="/admin/tambah-pengeluaran"
             element={<TambahPengeluaran />}
-          />
-          <Route
-            path="/admin/detail-ruang-kelas"
-            element={<DetailRuanganKelas />}
           />
         </Route>
 

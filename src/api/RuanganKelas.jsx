@@ -149,6 +149,11 @@ export function moveStudentToClassRoom(setSts, path, students, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      AlertMessage(
+        "Gagal",
+        "Penambahan Murid Ke Kelas Gagal",
+        "Coba Lagi",
+        "error"
+      );
     });
 }

@@ -1,26 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteKelompokMapel,
-  getKelompokMapel,
-  updateStatusKelompokMapel,
-} from "../../../api/KelompokMataPelajaran";
+import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
-import {
-  AlertUpdateStatusAktif,
-  AlertUpdateStatusNonAktif,
-} from "../../../components/ModalPopUp";
 
 export default function ListKelompokMapel() {
   const [data, setData] = useState([]);
-  const statusAktif = "Aktif";
-  const statusNonAktif = "Tidak Aktif";
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.subject.name.toLowerCase().includes(filterText.toLowerCase())
@@ -30,54 +19,6 @@ export default function ListKelompokMapel() {
   useEffect(() => {
     getKelompokMapel(setData, setSts);
   }, []);
-
-  // const handleNonActiveStatus = (id, description) => {
-  //   // setisOpenUpdateTidakAktif(true);
-  //   // setStatus("Aktif");
-  //   // setDesc(description);
-  //   // setUpdateId(id);
-  //   AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
-  // };
-
-  // // const closeModalUpdateTidakAktif = () => {
-  // //   setisOpenUpdateTidakAktif(false);
-  // // };
-
-  // const handleActiveStatus = (id, description) => {
-  //   // setisOpenUpdateAktif(true);
-  //   // setStatus("Tidak Aktif");
-  //   // setDesc(description);
-  //   // setUpdateId(id);
-  //   AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
-  // };
-
-  // // const closeModalUpdateAktif = () => {
-  // //   setisOpenUpdateAktif(false);
-  // // };
-
-  // const onUpdateStatus = (id, status) => {
-  //   updateStatusKelompokMapel(setSts, status, id, setData);
-  //   // closeModalUpdateAktif();
-  //   // closeModalUpdateTidakAktif();
-  //   // setisOpenStatus(true);
-  // };
-
-  // const openModalHapus = (id, name) => {
-  //   // setisOpenDelete(true);
-  //   setDesc_nama(name);
-  //   setDeleteId(id);
-  //   AlertDelete(name, id, onDelete);
-  // };
-
-  // const closeModalHapus = () => {
-  //   setisOpenDelete(false);
-  // };
-
-  // const onDelete = (id) => {
-  //   deleteKelompokMapel(setSts, id, setData);
-  //   // closeModalHapus();
-  //   // setisOpenStatus(true);
-  // };
 
   const columns = [
     {

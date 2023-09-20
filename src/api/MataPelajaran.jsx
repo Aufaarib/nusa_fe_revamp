@@ -1,11 +1,6 @@
 import {
   AlertMessage,
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
   AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -23,16 +18,6 @@ export function getMapel(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
 export function updateStatusMapel(setSts, status, id, setData) {
@@ -114,19 +99,5 @@ export function postMapel(setSts, path, name, description, type) {
         "Coba Lagi",
         "error"
       );
-    });
-}
-
-export function deleteMapel(setSts, deleteId, setData) {
-  axios
-    .delete(process.env.REACT_APP_NUSA + `/course/delete/${deleteId}`)
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusHapusSuccess();
-      getMapel(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusHapusFailed();
     });
 }

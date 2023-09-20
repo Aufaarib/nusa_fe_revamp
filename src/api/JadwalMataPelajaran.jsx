@@ -3,8 +3,6 @@ import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
   AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
 } from "../components/ModalPopUp";
@@ -20,16 +18,6 @@ export function getJadwalMapel(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
-
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
 }
 
 export function updateJadwalMapel(

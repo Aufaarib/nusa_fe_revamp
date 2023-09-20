@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import {
-  getAdmissionRegistrationByRegNumber,
   getAdmissionRegistrationByRegNumberUser,
   getAdmissionSteps,
 } from "../api/Registrasi";

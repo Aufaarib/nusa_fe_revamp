@@ -1,9 +1,4 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getSpp(setData, setSts) {
@@ -12,7 +7,19 @@ export function getSpp(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+export function getUnpaidSpp(setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/unpaid-spp", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
       setData(res.data.body);
       setSts({ type: "success" });
     })

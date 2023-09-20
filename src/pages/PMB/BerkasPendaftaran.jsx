@@ -8,10 +8,6 @@ import axios from "../../api/axios";
 import { Header } from "../../components";
 import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
 import { useStateContext } from "../../contexts/ContextProvider";
-// import { L10n } from "@syncfusion/ej2-base";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const SUBMIT_URL = "/admission/registration/REG00038/additionalFile";
 
 const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");

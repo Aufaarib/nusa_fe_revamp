@@ -9,10 +9,8 @@ const ListRuangan = () => {
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
@@ -83,6 +81,7 @@ const ListRuangan = () => {
       width: "220px",
     },
   ];
+
   const navigateUpdateClassRoom = (code, name, description) => {
     navigate("/admin/ubah-ruangan", {
       state: {

@@ -1,37 +1,46 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
-export function getAdmission(setData, setSts) {
+export function getAdmission(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
     });
 }
 
-export function getAdmissionDetails(setDataPhases, setData, setSts, code) {
+export function getAdmissionDetails(
+  setDataPhases,
+  setData,
+  setSts,
+  code,
+  setIsLoading
+) {
   axios
     .get(process.env.REACT_APP_BASE_URL + `/admission/${code}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setDataPhases(res.data.body.phases);
       setData(res.data.body.details);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
     });
 }
 
-export function updateStatusAdmission(setSts, code, navigate) {
+export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -41,6 +50,7 @@ export function updateStatusAdmission(setSts, code, navigate) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -51,6 +61,7 @@ export function updateStatusAdmission(setSts, code, navigate) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
     });
@@ -66,7 +77,8 @@ export function postAdmission(
   endDate,
   registrationAmount,
   description,
-  educationAmount
+  educationAmount,
+  setIsLoading
 ) {
   axios
     .post(
@@ -86,14 +98,6 @@ export function postAdmission(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then((res) => {
-      // setSts({ type: "success" });
-      // AlertStatusSuccess(
-      //   path,
-      //   "Berhasil",
-      //   "Tutup",
-      //   "success",
-      //   "Tambah Pendaftaran Berhasil"
-      // );
       const sequence = 1;
       axios
         .post(
@@ -107,6 +111,7 @@ export function postAdmission(
           { headers: { authorization: localStorage.getItem("TOKEN") } }
         )
         .then(() => {
+          setIsLoading(false);
           setSts({ type: "success" });
           AlertStatusSuccess(
             path,
@@ -117,6 +122,7 @@ export function postAdmission(
           );
         })
         .catch((error) => {
+          setIsLoading(false);
           setSts({ type: "error", error });
           AlertMessage(
             "Gagal",
@@ -127,51 +133,8 @@ export function postAdmission(
         });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
     });
 }
-
-// export function postAdmissionDetail(
-//   setSts,
-//   path,
-//   academicYearId,
-//   name,
-//   increment,
-//   startDate,
-//   endDate,
-//   amount,
-//   code
-// ) {
-//   axios
-//     .post(
-//       process.env.REACT_APP_BASE_URL + `/admission/${code}/detail`,
-//       {
-//         academicYearId: academicYearId,
-//         phases: [
-//           {
-//             increment: increment,
-//             name: name,
-//             startDate: startDate,
-//             endDate: endDate,
-//             amount: amount,
-//           },
-//         ],
-//       },
-//       { headers: { authorization: localStorage.getItem("TOKEN") } }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusSuccess(
-//         path,
-//         "Berhasil",
-//         "Tutup",
-//         "success",
-//         "Tambah Pendaftaran Berhasil"
-//       );
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
-//     });
-// }

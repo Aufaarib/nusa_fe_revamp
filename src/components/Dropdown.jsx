@@ -46,7 +46,6 @@ export const DropdownKurikulum = ({
     </div>
   );
 };
-
 export const DropdownStatus = ({
   isSearchable,
   label,
@@ -96,7 +95,6 @@ export const DropdownStatus = ({
     </div>
   );
 };
-
 export const DropdownGroup = ({
   isSearchable,
   label,
@@ -146,7 +144,6 @@ export const DropdownGroup = ({
     </div>
   );
 };
-
 export const DropdownCostCenter = ({
   label,
   name,
@@ -218,7 +215,6 @@ export const DropdownCostCenter = ({
     </div>
   );
 };
-
 export const DropdownSiswa = ({
   label,
   name,
@@ -264,7 +260,6 @@ export const DropdownSiswa = ({
     </div>
   );
 };
-
 export const DropdownJenisTransaksi = ({
   isSearchable,
   label,
@@ -322,7 +317,6 @@ export const DropdownJenisTransaksi = ({
     </div>
   );
 };
-
 export const DropdownDebitKredit = ({
   isSearchable,
   label,
@@ -385,7 +379,6 @@ export const DropdownDebitKredit = ({
     </div>
   );
 };
-
 export const DropdownBank = ({
   isSearchable,
   label,
@@ -501,7 +494,6 @@ export const DropdownPendaftaran = ({
     </div>
   );
 };
-
 export const DropdownValidasiStep = ({
   isSearchable,
   label,
@@ -555,7 +547,6 @@ export const DropdownValidasiStep = ({
     </div>
   );
 };
-
 export const DropdownTipeTransaksi = ({
   isSearchable,
   label,
@@ -617,7 +608,6 @@ export const DropdownTipeTransaksi = ({
     </div>
   );
 };
-
 export const DropdownListComponents = ({
   placeholder,
   label,
@@ -664,18 +654,7 @@ export const DropdownListComponents = ({
     </div>
   );
 };
-
-export const DropdownDatePickers = ({
-  placeholder,
-  label,
-  id,
-  name,
-  value,
-  change,
-  required,
-  defaultValue,
-  isClearable,
-}) => {
+export const DropdownDatePickers = ({ label, id, name, value, change }) => {
   return (
     <div>
       <form className="grid-container">
@@ -686,14 +665,13 @@ export const DropdownDatePickers = ({
         )}
         <span>:</span>
         <div
-          className="text-sm text-base font-normal text-gray-700 bg-white "
+          className="text-sm text-base font-normal text-gray-700 bg-merah "
           style={{
             marginLeft: "40px",
             display: "flex",
             fontSize: "14px",
             borderRadius: "5px",
             outline: "none",
-            // border: "1px solid gray",
           }}
         >
           <DatePickerComponent
@@ -708,7 +686,6 @@ export const DropdownDatePickers = ({
     </div>
   );
 };
-
 export const DropdownRadioInputisOneHouse = ({
   onChange,
   label,
@@ -765,7 +742,6 @@ export const DropdownRadioInputisOneHouse = ({
     </div>
   );
 };
-
 export const DropdownRadioInputBiological = ({
   onChange,
   label,
@@ -838,7 +814,6 @@ export const DropdownRadioInputBiological = ({
     </div>
   );
 };
-
 export const DropdownRadioInputGender = ({
   onChange,
   label,
@@ -894,7 +869,6 @@ export const DropdownRadioInputGender = ({
     </div>
   );
 };
-
 export const DropdownRadioInputBloodType = ({
   onChange,
   label,

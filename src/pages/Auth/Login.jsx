@@ -2,11 +2,7 @@ import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import {
-  AlertLoginFailed,
-  AlertNetwork,
-  AlertStatusFailed,
-} from "../../components/ModalPopUp";
+import { AlertStatusFailed } from "../../components/ModalPopUp";
 import { TextInputPassword } from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
 import logoSaim from "../../data/logo-saim.png";
@@ -27,6 +23,7 @@ const Login = () => {
         password: pwd,
       })
       .then((res) => {
+        setIsLoading(false);
         const role = res?.data?.body.role;
         const email = res?.data?.body.email;
         const verified = res?.data?.body.status;
@@ -36,7 +33,6 @@ const Login = () => {
         localStorage.setItem("NAMA", nama);
         localStorage.setItem("ROLE", role);
         localStorage.setItem("EMAIL", email);
-        setIsLoading(false);
         if (res.status === 200) {
           if (role === "ADMIN" && verified === 1) {
             navigate("/admin/list-data-registrasi", { replace: true });

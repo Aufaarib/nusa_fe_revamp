@@ -1,23 +1,59 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getSpp } from "../../../api/Spp";
-import { Header } from "../../../components";
-import { DataTables } from "../../../components/DataTables";
-import { AlertPaymentProof } from "../../../components/ModalPopUp";
 import { getPengeluaran } from "../../../api/Spendings";
+import { Header } from "../../../components";
+import {
+  DataTablePengeluaran,
+  DataTables,
+  FilterDate,
+} from "../../../components/DataTables";
+import { AlertPaymentProof } from "../../../components/ModalPopUp";
+import moment from "moment/moment";
 
 export default function ListPengeluaran() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const navigate = useNavigate();
 
-  let filteredItems = data;
+  const handleTypeFilter = (event) => {
+    const val = event.target.value;
+    setFilterType(val);
+  };
 
+  let filteredType = data;
+  let filteredItems = data;
+  let filteredDate = null;
   if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.name.toLowerCase().includes(filterText.toLowerCase())
-    );
+    if (filterType !== "all") {
+      filteredType = data.filter((data) => data.type === filterType);
+    }
+
+    if (startDate.length !== 0) {
+      if (endDate.length !== 0) {
+        filteredDate = filteredType.filter(
+          (data) =>
+            data.transactionDate >= startDate && data.transactionDate <= endDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      } else {
+        filteredDate = filteredType.filter(
+          (data) => data.transactionDate >= startDate
+        );
+        filteredItems = filteredDate.filter((data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase())
+        );
+      }
+    } else {
+      filteredItems = filteredType.filter((data) =>
+        data.description.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
   }
 
   const openPaymentProof = (url) => {
@@ -35,9 +71,21 @@ export default function ListPengeluaran() {
       width: "55px",
     },
     {
+      name: <div>Tanggal Pengeluaran</div>,
+      cell: (data) => (
+        <div>{moment(data.transactionDate).format("YYYY-MM-DD")}</div>
+      ),
+      width: "auto",
+    },
+    {
       name: <div>Nama Barang</div>,
       cell: (data) => <div>{data.name}</div>,
-      width: "240px",
+      width: "200px",
+    },
+    {
+      name: <div>Tipe Pengeluaran</div>,
+      cell: (data) => <div className="capitalize">{data.type}</div>,
+      width: "auto",
     },
     {
       name: <div>Deskripsi</div>,
@@ -120,7 +168,7 @@ export default function ListPengeluaran() {
     navigate("/admin/ubah-pengeluaran", {
       state: {
         id: id,
-        amount: amount,
+        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
         name: name,
         transactionDate: transactionDate,
         type: type,
@@ -140,12 +188,18 @@ export default function ListPengeluaran() {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTables
+        <DataTablePengeluaran
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahPengeluaran}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          onChange={handleTypeFilter}
+          value={filterType}
+          selectedStart={startDate}
+          onChangeStart={(e) => setStartDate(e.element.value)}
+          selectedEnd={endDate}
+          onChangeEnd={(e) => setEndDate(e.element.value)}
         />
       </div>
     </>

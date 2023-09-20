@@ -60,11 +60,6 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
-        name: "Tahun Ajaran",
-        path: `admin/list-tahun-ajaran`,
-        icon: <FaWpforms />,
-      },
-      {
         name: "Setup PMB",
         path: `admin/list-setup-pmb`,
         icon: <FaWpforms />,
@@ -81,6 +76,11 @@ export const sidebarMenusAdmin = [
   //   path: `admin/kbm`,
   //   icon: <AiOutlineBarChart />,
   //   links: [
+  //     {
+  //       name: "Tahun Ajaran",
+  //       path: `admin/list-tahun-ajaran`,
+  //       icon: <FaWpforms />,
+  //     },
   //     {
   //       name: "Kurikulum",
   //       path: `admin/list-kurikulum`,

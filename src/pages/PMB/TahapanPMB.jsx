@@ -1,23 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-import { BsBarChartSteps, BsChevronBarLeft } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { BsChevronBarLeft } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../../components";
 import InfoTahapanPMB from "../../components/InfoTahapanPMB";
 import ModalTahapanPMB from "../../components/ModalTahapanPMB";
 import { useStateContext } from "../../contexts/ContextProvider";
-import { FaTimesCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 
 const TahapanPMB = () => {
-  const {
-    stepsPMB,
-    dataAdmissionRegistration,
-    // setStepsPMB,
-    // getStepsPMBData,
-    // errStep,
-    // formCheck,
-    // getFormCheck,
-  } = useStateContext();
+  const { stepsPMB, dataAdmissionRegistration } = useStateContext();
 
   const navigate = useNavigate();
   const path = "/pmb/list-calon-siswa";
@@ -29,7 +20,6 @@ const TahapanPMB = () => {
   });
 
   const handleSelected = (index, keyName, details) => {
-    // console.log("DETAILS === ", details);
     setSelected({
       step: index,
       status: keyName,

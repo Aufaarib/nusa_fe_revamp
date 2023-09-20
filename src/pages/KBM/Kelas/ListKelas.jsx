@@ -10,7 +10,6 @@ export default function ListKelas() {
   const [filterText, setFilterText] = useState("");
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())

@@ -67,7 +67,7 @@ export default function TambahSpp() {
       month === "" ||
       periodeId === "" ||
       studentCode === "" ||
-      description === "" ||
+      // description === "" ||
       invoice == null
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
@@ -102,6 +102,57 @@ export default function TambahSpp() {
     value: c.id,
   }));
 
+  const monthOptions = [
+    {
+      label: "Januari",
+      value: 1,
+    },
+    {
+      label: "Februari",
+      value: 2,
+    },
+    {
+      label: "Maret",
+      value: 3,
+    },
+    {
+      label: "April",
+      value: 4,
+    },
+    {
+      label: "Mei",
+      value: 5,
+    },
+    {
+      label: "Juni",
+      value: 6,
+    },
+    {
+      label: "Juli",
+      value: 7,
+    },
+    {
+      label: "Agustus",
+      value: 8,
+    },
+    {
+      label: "September",
+      value: 9,
+    },
+    {
+      label: "Oktober",
+      value: 10,
+    },
+    {
+      label: "November",
+      value: 11,
+    },
+    {
+      label: "Desember",
+      value: 12,
+    },
+  ];
+
   const studentsOptions = studentsData.map((c) => ({
     label: `${c.code} : ${c.firstName} ${c.middleName} ${c.lastName}`,
     value: c.code,
@@ -111,10 +162,10 @@ export default function TambahSpp() {
     <div>
       <Header
         home="Admin Keuangan"
-        prev="List Spp Terbayar"
+        prev="Data Pembayaran SPP"
         navePrev={path}
-        at="Tambah Spp"
-        title="Tambah Spp"
+        at="Pembayaran Spp"
+        title="Pembayaran Spp"
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -124,7 +175,7 @@ export default function TambahSpp() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Spp
+          Form Pembayaran Spp
         </p>
         <article>
           <DropdownSiswa
@@ -136,12 +187,6 @@ export default function TambahSpp() {
             isSearchable={false}
             onChange={(e) => setPeriodeId(e.value)}
           />
-          <TextInput
-            label="Spp Bulan"
-            type="text"
-            onChange={(e) => setMonth(e.target.value)}
-            required={true}
-          />
           <DropdownSiswa
             label="Murid"
             required={true}
@@ -151,8 +196,17 @@ export default function TambahSpp() {
             isSearchable={true}
             onChange={(e) => setStudentCode(e.value)}
           />
+          <DropdownSiswa
+            label="Spp Bulan"
+            required={true}
+            defaultValue={month}
+            isClearable={false}
+            options={monthOptions}
+            isSearchable={false}
+            onChange={(e) => setMonth(e.value)}
+          />
           <TextInput
-            label="Jumlah"
+            label="Jumlah Yang Di Bayar"
             type="text"
             onChange={handleInputChange}
             value={amounts}
@@ -202,7 +256,7 @@ export default function TambahSpp() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Simpan
             </button>
             <button
               type="button"

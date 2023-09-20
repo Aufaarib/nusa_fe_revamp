@@ -8,13 +8,10 @@ export default function ListMataPelajaran() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
-
   const navigate = useNavigate();
-
   const path = "/admin/tambah-mata-pelajaran";
 
   let filteredItems = data;
-
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.name.toLowerCase().includes(filterText.toLowerCase())
