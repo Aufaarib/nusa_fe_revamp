@@ -25,14 +25,23 @@ export default function UbahGelombang() {
     moment(location.state.endDate).format("YYYY-MM-DD")
   );
   const [jumlah, setAmount] = useState(location.state.amount);
+  const [educationAmount, setEducationAmount] = useState(
+    location.state.eduAmount
+  );
   const [increment, setIncrement] = useState(location.state.increment);
+  const [description, setDescription] = useState("Detail Biaya Pendidikan");
   const [sts, setSts] = useState(undefined);
   const id = location.state.id;
+  const eduId = location.state.eduId;
   const code = location.state.code;
+
+  console.log("EDU === ", eduId);
+  console.log("id === ", id);
 
   const postData = (e) => {
     e.preventDefault();
     const amount = parseInt(jumlah.replace(/\./g, ""), 10);
+    const eduAmount = parseInt(educationAmount.replace(/\./g, ""), 10);
 
     if (
       name === "" ||
@@ -55,6 +64,9 @@ export default function UbahGelombang() {
         endDate,
         testSchedule,
         amount,
+        eduAmount,
+        description,
+        eduId,
         setIsLoading
       );
     }
@@ -79,6 +91,13 @@ export default function UbahGelombang() {
     inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
     setAmount(inputVal);
+  };
+
+  const handleInputEduChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    setEducationAmount(inputVal);
   };
 
   return (
@@ -140,6 +159,14 @@ export default function UbahGelombang() {
             type="text"
             value={jumlah}
             onChange={handleInputChange}
+            required={true}
+          />
+
+          <TextInput
+            label="Nominal Biaya Pendidikan"
+            type="text"
+            value={educationAmount}
+            onChange={handleInputEduChange}
             required={true}
           />
 

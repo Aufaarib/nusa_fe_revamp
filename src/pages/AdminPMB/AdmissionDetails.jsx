@@ -109,7 +109,9 @@ const AdmissionDetails = () => {
               data.name,
               data.startDate,
               data.endDate,
-              data.amount
+              data.amount,
+              dataAdmission[0]?.amount,
+              dataAdmission[0]?.id
             )
           }
         >
@@ -144,7 +146,9 @@ const AdmissionDetails = () => {
     name,
     startDate,
     endDate,
-    amount
+    amount,
+    eduAmount,
+    eduId
   ) => {
     navigate("/admin/ubah-gelombang", {
       state: {
@@ -155,6 +159,8 @@ const AdmissionDetails = () => {
         startDate: moment(startDate).format("YYYY-MM-DD"),
         endDate: moment(endDate).format("YYYY-MM-DD"),
         amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        eduAmount: eduAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        eduId: eduId,
         theresActive: location.state.theresActive,
       },
     });

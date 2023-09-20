@@ -11,7 +11,10 @@ export function updateAdmissionPhase(
   startDate,
   endDate,
   testSchedule,
-  amount
+  amount,
+  educationAmount,
+  description,
+  eduId
 ) {
   axios
     .put(
@@ -27,14 +30,31 @@ export function updateAdmissionPhase(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
-      AlertStatusSuccess(
-        navigate,
-        "Berhasil",
-        "Kembali Ke Detail Pendaftaran",
-        "success",
-        "Ubah Gelombang Berhasil"
-      );
+      const sequence = 1;
+      axios
+        .put(
+          process.env.REACT_APP_BASE_URL + `/admission/${code}/detail/${eduId}`,
+          {
+            description,
+            amount: educationAmount,
+            sequence,
+          },
+          { headers: { authorization: localStorage.getItem("TOKEN") } }
+        )
+        .then(() => {
+          setSts({ type: "success" });
+          AlertStatusSuccess(
+            navigate,
+            "Berhasil",
+            "Kembali Ke Detail Pendaftaran",
+            "success",
+            "Ubah Gelombang Berhasil"
+          );
+        })
+        .catch((error) => {
+          setSts({ type: "error", error });
+          AlertMessage("Gagal", "Ubah Gelombang Gagal", "Coba Lagi", "error");
+        });
     })
     .catch((error) => {
       setSts({ type: "error", error });
