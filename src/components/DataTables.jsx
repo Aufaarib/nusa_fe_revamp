@@ -226,8 +226,10 @@ export function FilterComponentPengeluaran({
           </button>
         </div>
       </div>
-      <div className="flex mb-3 gap-5 justify-between items-center font-bold text-merah">
-        <label className="w-72 mt-5">Filter Tanggal : </label>
+      <div className="flex mb-3 px-48 gap-5 justify-between items-center font-bold text-merah">
+        <div className="w-96 mt-5">
+          <label>Filter Tanggal : </label>
+        </div>
         <DatePickerComponent
           floatLabelType="Auto"
           value={selectedStart}
@@ -858,8 +860,8 @@ export function FilterComponentFinanceReport({
           <option value="D">Debit</option>
         </select>
       </div>
-      <div className="flex mb-3 pr-52 gap-5 justify-between items-center font-bold text-merah">
-        <div className="w-80 mt-5">
+      <div className="flex mb-3 px-48 gap-5 justify-between items-center font-bold text-merah">
+        <div className="w-96 mt-5">
           <label>Filter Tanggal : </label>
         </div>
         <DatePickerComponent
