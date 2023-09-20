@@ -8,6 +8,7 @@ import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
 import { getTahunAjaran } from "../../api/TahunAjaran";
 import { postAdmission } from "../../api/SetupPmb";
 import { BsHandIndexThumbFill } from "react-icons/bs";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function TambahPendaftaran() {
   const [sts, setSts] = useState(undefined);
@@ -29,11 +30,12 @@ export default function TambahPendaftaran() {
   const [registrationAmount, setRegistrationAmount] = useState("");
   const [educationAmount, setEducationAmount] = useState("");
   const [description, setDescription] = useState("Detail Biaya Pendidikan");
+  const { isLoading, setIsLoading } = useStateContext();
 
   const navigate = useNavigate();
 
   const fetchAcademicYear = () => {
-    getTahunAjaran(setAcademicYearData, setSts);
+    getTahunAjaran(setAcademicYearData, setSts, setIsLoading);
   };
 
   useEffect(() => {

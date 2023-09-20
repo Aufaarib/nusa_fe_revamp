@@ -11,7 +11,6 @@ export function getSemester(setData, setSts) {
     })
     .then((res) => {
       setData(res.data.body.periode);
-      console.log(res.data.body.periode);
       setSts({ type: "success" });
     })
     .catch((error) => {
