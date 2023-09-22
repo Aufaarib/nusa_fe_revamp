@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { FaEye, FaLowVision } from "react-icons/fa";
 
+const onKeyDown = (event) => {
+  if (event.keyCode === 13) {
+    //13 is the key code for Enter
+    event.preventDefault();
+    //Here you can even write the logic to select the value from the drop down or something.
+  }
+};
+
 export const TextInputModal = ({
   placeholder,
   label,
@@ -27,6 +35,7 @@ export const TextInputModal = ({
       )}
 
       <input
+        onKeyDown={onKeyDown}
         style={{
           border: "1px solid #EBEBEB",
           background: "#EBEBEB",
@@ -70,6 +79,9 @@ export const TextInput = ({
   onInput,
   defaultValue,
 }) => {
+  const numberInputOnWheelPreventChange = (e) => {
+    e.target.blur();
+  };
   return (
     <>
       <div>
@@ -94,6 +106,7 @@ export const TextInput = ({
             }}
           >
             <input
+              onKeyDown={onKeyDown}
               style={{
                 width: "100%",
                 padding: "5px",
@@ -111,6 +124,7 @@ export const TextInput = ({
               disabled={disable}
               onInput={onInput}
               defaultValue={defaultValue}
+              onWheel={numberInputOnWheelPreventChange}
             />
           </div>
         </form>
@@ -153,6 +167,7 @@ export const TextInputPassword = ({
           }}
         >
           <input
+            onKeyDown={onKeyDown}
             style={{
               width: "100%",
               padding: "10px",

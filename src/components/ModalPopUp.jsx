@@ -692,10 +692,11 @@ export const AlertStatusValidatePayment = (onValidate, id) => {
     .fire({
       icon: "question",
       title: "Konfirmasi",
-      text: "Apakah anda setuju merubah status murid?",
+      text: "Edit Status?",
       showConfirmButton: true,
-      confirmButtonText: "Ubah",
-      showCancelButton: "Batal",
+      confirmButtonText: "Edit",
+      showCancelButton: true,
+      cancelButtonText: "Batal",
     })
     .then((result) => {
       if (result.isConfirmed) {

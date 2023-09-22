@@ -14,6 +14,9 @@ export function getAdmission(setData, setSts, setIsLoading) {
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -37,6 +40,9 @@ export function getAdmissionDetails(
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -63,7 +69,11 @@ export function updateStatusAdmission(setSts, code, navigate) {
     .catch((error) => {
       // setIsLoading(false);
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
+      }
     });
 }
 
@@ -124,17 +134,25 @@ export function postAdmission(
         .catch((error) => {
           // setIsLoading(false);
           setSts({ type: "error", error });
-          AlertMessage(
-            "Gagal",
-            "Tambah Biaya Pendidikan Gagal",
-            "Coba Lagi",
-            "error"
-          );
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Gagal",
+              "Tambah Biaya Pendidikan Gagal",
+              "Coba Lagi",
+              "error"
+            );
+          }
         });
     })
     .catch((error) => {
       // setIsLoading(false);
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+      }
     });
 }

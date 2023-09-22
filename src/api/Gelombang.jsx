@@ -53,12 +53,30 @@ export function updateAdmissionPhase(
         })
         .catch((error) => {
           setSts({ type: "error", error });
-          AlertMessage("Gagal", "Ubah Gelombang Gagal", "Coba Lagi", "error");
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Gagal",
+              "Ubah Gelombang Gagal, Silahkan Coba Lagi",
+              "Coba Lagi",
+              "error"
+            );
+          }
         });
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Gelombang Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Ubah Gelombang Gagal, Silahkan Coba Lagi",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -98,6 +116,10 @@ export function postAdmissionPhase(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Gelombang Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Gelombang Gagal", "Coba Lagi", "error");
+      }
     });
 }

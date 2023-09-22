@@ -15,6 +15,9 @@ export function getSemester(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -31,6 +34,9 @@ export function getTahunAjaran(setData, setSts, setIsLoading) {
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -66,7 +72,11 @@ export function updateTahunAjaran(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Tahun Ajaran Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Ubah Tahun Ajaran Gagal", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -101,6 +111,15 @@ export function postTahunAjaran(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Tahun Ajaran Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Tambah Tahun Ajaran Gagal",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }

@@ -16,12 +16,7 @@ import {
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-} from "./ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
 
 // const PARENTS_URL = "/api/pmb/parent";
 
@@ -83,12 +78,10 @@ const FormDaftarOrangTuaIbu = () => {
       ...existingValues,
       [fieldName]: e.target.value,
     }));
-    console.log("PARENTS DATA === ", parent);
   };
 
   const updateParentsCal = (e) => {
     const fieldName = e.element.id;
-    // console.log("fieldName ===> ", e)
     setParent((existingValues) => ({
       // Retain the existing values
       ...existingValues,
@@ -110,6 +103,9 @@ const FormDaftarOrangTuaIbu = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    console.log("KKDSS === ", parseInt(parent.isBiological));
+    console.log("MASDM === ", parseInt(parent.isOneHouse));
 
     const fullName = parent.fullName;
     const religion = parent.religion;
@@ -175,14 +171,18 @@ const FormDaftarOrangTuaIbu = () => {
           "Pendataan Ibu Berhasil Terupload"
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage(
-          "Gagal",
-          "Gagal Mengupload Data Ibu",
-          "Coba Lagi",
-          "error"
-        );
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
@@ -196,7 +196,7 @@ const FormDaftarOrangTuaIbu = () => {
         title="Form Pendataan Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
@@ -548,7 +548,7 @@ const FormDaftarOrangTuaIbu = () => {
               </section>
             </div>
           )}
-        </form>
+        </div>
       </div>
 
       {admissionParentsData !== null && (

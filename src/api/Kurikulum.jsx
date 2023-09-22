@@ -15,13 +15,17 @@ export function getKurikulum(setData, setSts) {
       setData(res.data.body);
       setSts({ type: "success" });
     })
-    .catch((err) => {
-      AlertMessage(
-        "Gagal",
-        err.response.data.status.message,
-        "Coba Lagi",
-        "error"
-      );
+    .catch((error) => {
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -45,13 +49,17 @@ export function updateKurikulum(setSts, path, code, name, description) {
         "Ubah Kurikulum Berhasil"
       );
     })
-    .catch((err) => {
-      AlertMessage(
-        "Gagal",
-        err.response.data.status.message,
-        "Coba Lagi",
-        "error"
-      );
+    .catch((error) => {
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -69,13 +77,17 @@ export function updateStatusKurikulum(setSts, code, setData) {
       AlertMessage("Berhasil", "Ubah Status Berhasil", "Tutup", "success");
       getKurikulum(setData, setSts);
     })
-    .catch((err) => {
-      AlertMessage(
-        "Gagal",
-        err.response.data.status.message,
-        "Coba Lagi",
-        "error"
-      );
+    .catch((error) => {
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -98,12 +110,20 @@ export function postKurikulum(path, name, description) {
         "Tambah Kurikulum Berhasil"
       );
     })
-    .catch((err) => {
-      AlertMessage(
-        "Gagal",
-        err.response.data.status.message,
-        "Coba Lagi",
-        "error"
-      );
+    .catch((error) => {
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Gagal",
+            error.response.data.status.message,
+            "Coba Lagi",
+            "error"
+          );
+        }
+      }
     });
 }

@@ -133,9 +133,18 @@ const FormUbahDataOrangTua = () => {
           } Berhasil`
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage("Gagal", "Ubah Data Gagal", "Coba Lagi", "error");
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
@@ -157,10 +166,7 @@ const FormUbahDataOrangTua = () => {
         title="Form Ubah Data Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
-          // onSubmit={handleSubmit}
-          style={{ display: "block", gap: "22px", padding: "10px" }}
-        >
+        <div style={{ display: "block", gap: "22px", padding: "10px" }}>
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah capitalize">
               Ubah Data {location.state.relationship}
@@ -379,7 +385,7 @@ const FormUbahDataOrangTua = () => {
               />
             </section>
           </section>
-        </form>
+        </div>
       </div>
 
       <button className="btn-merah" onClick={handleSubmitUpdate}>

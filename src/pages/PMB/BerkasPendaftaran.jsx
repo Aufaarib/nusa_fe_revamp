@@ -31,9 +31,6 @@ const BerkasPendaftaran = () => {
     removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
   };
 
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
   const onRemoveFile = (args) => {
     // setFileInvoice(null);
   };
@@ -65,7 +62,6 @@ const BerkasPendaftaran = () => {
     setPasPhoto(args);
   };
 
-  // Function to handle file upload to the API using Axios
   const handleFileUpload = () => {
     if (
       fileRapor !== null ||
@@ -73,7 +69,6 @@ const BerkasPendaftaran = () => {
       fileKk !== null ||
       filePasPhoto !== null
     ) {
-      setIsLoading(true);
       const rapor = fileRapor.file.rawFile;
       const akte = fileAkte.file.rawFile;
       const kk = fileKk.file.rawFile;
@@ -94,8 +89,7 @@ const BerkasPendaftaran = () => {
             },
           }
         )
-        .then((response) => {
-          // Handle success response if needed
+        .then(() => {
           setIsLoading(false);
           AlertStatusSuccess(
             navigateTahapan,
@@ -106,7 +100,6 @@ const BerkasPendaftaran = () => {
           );
         })
         .catch((error) => {
-          // Handle error response if needed
           setIsLoading(false);
           AlertMessage("Gagal", "Silahkan Coba Lagi", "Coba Lagi", "error");
         });
@@ -155,16 +148,21 @@ const BerkasPendaftaran = () => {
               locale="id-BAHASA"
               allowedExtensions=".png,.jpg"
               accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
+              minFileSize={0}
+              maxFileSize={100000}
               multiple={false}
               buttons={{
                 browse: !fileAkte ? "Upload File" : "Ganti File",
               }}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
+            <div className="flex justify-between">
+              <small className=" text-gray-400">
+                <i>Jenis Berkas: .png / .jpg</i>
+              </small>
+              <small className=" text-gray-400">
+                <i>Ukuran Maksimal 10 MB</i>
+              </small>
+            </div>
           </section>
 
           {/* COL 2 */}
@@ -183,16 +181,21 @@ const BerkasPendaftaran = () => {
               locale="id-BAHASA"
               allowedExtensions=".png,.jpg"
               accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
+              minFileSize={0}
+              maxFileSize={100000}
               multiple={false}
               buttons={{
                 browse: !fileKk ? "Upload File" : "Ganti File",
               }}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
+            <div className="flex justify-between">
+              <small className=" text-gray-400">
+                <i>Jenis Berkas: .png / .jpg</i>
+              </small>
+              <small className=" text-gray-400">
+                <i>Ukuran Maksimal 10 MB</i>
+              </small>
+            </div>
           </section>
 
           {/* COL 3 */}
@@ -211,16 +214,21 @@ const BerkasPendaftaran = () => {
               locale="id-BAHASA"
               allowedExtensions=".png,.jpg"
               accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
+              minFileSize={0}
+              maxFileSize={100000}
               multiple={false}
               buttons={{
                 browse: !fileRapor ? "Upload File" : "Ganti File",
               }}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
+            <div className="flex justify-between">
+              <small className=" text-gray-400">
+                <i>Jenis Berkas: .png / .jpg</i>
+              </small>
+              <small className=" text-gray-400">
+                <i>Ukuran Maksimal 10 MB</i>
+              </small>
+            </div>
           </section>
 
           {/* COL 4 */}
@@ -239,16 +247,21 @@ const BerkasPendaftaran = () => {
               locale="id-BAHASA"
               allowedExtensions=".png,.jpg"
               accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
+              minFileSize={0}
+              maxFileSize={100000}
               multiple={false}
               buttons={{
                 browse: !filePasPhoto ? "Upload File" : "Ganti File",
               }}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
+            <div className="flex justify-between">
+              <small className=" text-gray-400">
+                <i>Jenis Berkas: .png / .jpg</i>
+              </small>
+              <small className=" text-gray-400">
+                <i>Ukuran Maksimal 10 MB</i>
+              </small>
+            </div>
           </section>
         </div>
 

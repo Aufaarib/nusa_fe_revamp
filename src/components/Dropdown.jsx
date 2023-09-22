@@ -4,6 +4,14 @@ import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import RadioInput from "./RadioInput";
 import { useState } from "react";
 
+const onKeyDown = (event) => {
+  if (event.keyCode === 13) {
+    //13 is the key code for Enter
+    event.preventDefault();
+    //Here you can even write the logic to select the value from the drop down or something.
+  }
+};
+
 export const DropdownKurikulum = ({
   label,
   name,
@@ -40,6 +48,7 @@ export const DropdownKurikulum = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -89,6 +98,7 @@ export const DropdownStatus = ({
             placeholder={placeholder}
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -138,6 +148,7 @@ export const DropdownGroup = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -181,6 +192,7 @@ export const DropdownCostCenter = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
           <p>
             <a
@@ -200,6 +212,7 @@ export const DropdownCostCenter = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
           <p>
             <a
@@ -302,6 +315,7 @@ export const DropdownJenisTransaksi = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
         {/* <Select
@@ -364,6 +378,7 @@ export const DropdownDebitKredit = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
         {/* <Select
@@ -421,6 +436,7 @@ export const DropdownBank = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
         {/* <Select
@@ -479,6 +495,7 @@ export const DropdownPendaftaran = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
         {/* <Select
@@ -541,6 +558,7 @@ export const DropdownValidasiStep = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -593,17 +611,9 @@ export const DropdownTipeTransaksi = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -647,7 +657,6 @@ export const DropdownListComponents = ({
             fields={fields}
             value={value}
             change={change}
-            // popupHeight="auto"
           />
         </div>
       </form>
@@ -657,7 +666,7 @@ export const DropdownListComponents = ({
 export const DropdownDatePickers = ({ label, id, name, value, change }) => {
   return (
     <div>
-      <form className="grid-container">
+      <div className="grid-container">
         {label && (
           <label htmlFor={name}>
             {label} <span className="ml-1 text-merah">*</span>
@@ -682,7 +691,7 @@ export const DropdownDatePickers = ({ label, id, name, value, change }) => {
             placeholder="Pilih Tanggal (YYYY-MM-DD)"
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };

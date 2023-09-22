@@ -111,7 +111,12 @@ const FormUbahDataMurid = () => {
       middleName === "" ||
       firstName === ""
     ) {
-      AlertEmpty();
+      AlertMessage(
+        "Tidak Sesuai",
+        "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+        "Tutup Pesan",
+        "warning"
+      );
       setIsLoading(false);
     } else {
       axios
@@ -154,16 +159,19 @@ const FormUbahDataMurid = () => {
             "success",
             "Data Anak Berhasil Diubah"
           );
-          // AlertMessage(
-          //   "Berhasil",
-          //   "Data Anak Berhasil Terubah",
-          //   "Tutup",
-          //   "success"
-          // );
         })
-        .catch(() => {
+        .catch((error) => {
           setIsLoading(false);
-          AlertMessage("Gagal", "Data Anak Gagal Diubah", "Coba Lagi", "error");
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Tidak Sesuai",
+              "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+              "Tutup Pesan",
+              "warning"
+            );
+          }
         });
     }
   };
@@ -178,7 +186,7 @@ const FormUbahDataMurid = () => {
         title="Form Ubah Data Anak"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "20px", padding: "20px" }}
         >
@@ -387,7 +395,7 @@ const FormUbahDataMurid = () => {
               </section>
             </div>
           </section>
-        </form>
+        </div>
       </div>
 
       <button className="btn-merah" onClick={handleSubmitUpdate}>

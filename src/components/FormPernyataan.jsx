@@ -102,14 +102,18 @@ const FormPernyataan = ({ indexMurid }) => {
           "Upload Data Pernyataan Berhasil"
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage(
-          "Gagal",
-          "Upload Data Pernyataan Gagal",
-          "Coba Lagi",
-          "error"
-        );
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
@@ -123,7 +127,7 @@ const FormPernyataan = ({ indexMurid }) => {
         title="Form Pernyataan Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "20px" }}
         >
@@ -169,7 +173,7 @@ const FormPernyataan = ({ indexMurid }) => {
                   </div>
                 ))}
           </section>
-        </form>
+        </div>
       </div>
       {admissionAnswerData.length !== 0 && (
         <button className="btn-disabled">Pernyataan Telah Tersimpan</button>

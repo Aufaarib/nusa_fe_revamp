@@ -12,6 +12,9 @@ export function getPengeluaran(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -35,7 +38,11 @@ export function postPengeluaran(setSts, navigate, formData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -59,6 +66,10 @@ export function updatePengeluaran(setSts, navigate, formData, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Pendaftaran Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Ubah Pendaftaran Gagal", "Coba Lagi", "error");
+      }
     });
 }

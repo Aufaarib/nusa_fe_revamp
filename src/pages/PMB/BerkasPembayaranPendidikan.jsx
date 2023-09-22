@@ -19,16 +19,6 @@ const BerkasPembayaranBiayaPendidikan = () => {
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/payment`;
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    documents,
-    setDocuments,
-    getDocumentsData,
-    errMsg,
-    setErrMsg,
-    setSuccessMsg,
-    formCheck,
-    getFormCheck,
-  } = useStateContext();
 
   const path = "/pmb/tahapan-pmb";
 
@@ -83,7 +73,6 @@ const BerkasPembayaranBiayaPendidikan = () => {
         }
       )
       .then((response) => {
-        console.log("File uploaded successfully!", response);
         AlertStatusSuccess(
           navigateTahapan,
           "Berhasil",
@@ -136,17 +125,6 @@ const BerkasPembayaranBiayaPendidikan = () => {
             options={options}
             onChange={(e) => setMetode(e.value)}
           />
-
-          {/* <TextInput
-            label="Metode Pembayaran"
-            type="text"
-            id="paymentMethod"
-            onChange={(e) => setMetode(e.target.value)}
-            value={metode}
-            // placeholder={admissionParentsData.birthPlace}
-            disable={false}
-            required={true}
-          /> */}
 
           <TextInput
             label="Jumlah Transfer"

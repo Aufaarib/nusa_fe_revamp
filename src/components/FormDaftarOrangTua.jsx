@@ -4,9 +4,8 @@ import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
-import TextInput, { TextInputModal } from "./TextInput";
 import { getAdmissionRegistrationParentsAyah } from "../api/Registrasi";
+import axios from "../api/axios";
 import { useStateContext } from "../contexts/ContextProvider";
 import {
   DropdownDatePickers,
@@ -14,12 +13,8 @@ import {
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahSuccess,
-  AlertStatusUpdateFailed,
-} from "./ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
+import TextInput, { TextInputModal } from "./TextInput";
 
 const FormDaftarOrangTua = () => {
   const token = localStorage.getItem("TOKEN");
@@ -168,14 +163,18 @@ const FormDaftarOrangTua = () => {
           "Pendataan Ayah Berhasil Terupload"
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage(
-          "Gagal",
-          "Gagal Mengupload Data Ayah",
-          "Coba Lagi",
-          "error"
-        );
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
@@ -197,7 +196,7 @@ const FormDaftarOrangTua = () => {
         title="Form Pendataan Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
@@ -549,7 +548,7 @@ const FormDaftarOrangTua = () => {
               </section>
             </div>
           )}
-        </form>
+        </div>
       </div>
 
       {admissionParentsData !== null && (

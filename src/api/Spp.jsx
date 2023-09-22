@@ -12,6 +12,9 @@ export function getSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 export function getUnpaidSpp(setData, setSts) {
@@ -25,6 +28,9 @@ export function getUnpaidSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -68,7 +74,11 @@ export function postSpp(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -113,6 +123,10 @@ export function updateSpp(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
+      }
     });
 }

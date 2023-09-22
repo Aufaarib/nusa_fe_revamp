@@ -12,12 +12,14 @@ export function getKelas(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -46,7 +48,11 @@ export function updateKelas(setSts, path, grade, name, description, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Kelas Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Ubah Kelas Gagal", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -75,6 +81,10 @@ export function postKelas(setSts, path, grade, name, description) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Kelas Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Kelas Gagal", "Coba Lagi", "error");
+      }
     });
 }
