@@ -247,6 +247,7 @@ export const DropdownSiswa = ({
             options={options}
             onChange={onChange}
             isSearchable={isSearchable}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
