@@ -285,6 +285,7 @@ const FormDaftarOrangTuaIbu = () => {
                 value={parent.phoneNumber1}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
               />
               <TextInput
                 label="Nomor Ponsel 2"
@@ -293,7 +294,8 @@ const FormDaftarOrangTuaIbu = () => {
                 onChange={updateParents}
                 value={parent.phoneNumber2}
                 disable={false}
-                required={true}
+                required={false}
+                placeholder={"Contoh: 081234567892"}
               />
               <TextInput
                 label="Propinsi"
@@ -393,7 +395,7 @@ const FormDaftarOrangTuaIbu = () => {
                 required={true}
               />
               <TextInput
-                label="Penghasilan Tiap Bulan"
+                label="Penghasilan Tiap Bulan (Rp)"
                 type="number"
                 id="incomeGrade"
                 onChange={updateParents}

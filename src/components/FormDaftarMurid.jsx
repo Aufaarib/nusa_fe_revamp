@@ -15,7 +15,7 @@ import {
   DropdownRadioInputGender,
 } from "./Dropdown";
 import Header from "./Header";
-import { AlertEmpty, AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
 import TextInput, { TextInputModal } from "./TextInput";
 
 const FormDaftarMurid = () => {
@@ -282,7 +282,6 @@ const FormDaftarMurid = () => {
                     value={anakKe}
                     disable={false}
                     required={true}
-                    // min="1"
                   />
                 </section>
                 <section>
@@ -294,7 +293,6 @@ const FormDaftarMurid = () => {
                     value={tinggi}
                     disable={false}
                     required={true}
-                    min="1"
                   />
                   <TextInput
                     label="Tempat Lahir"

@@ -133,10 +133,7 @@ const FormPernyataan = ({ indexMurid }) => {
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">Pernyataan</h1>
-            {/* <p className="text-xs">
-              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-              <span className="text-merah">*</span>) wajib diisi.
-            </p> */}
+            <p className="text-md">Catatan : Formulir Ini Bersifat Opsional</p>
           </section>
           {/* COL 1 */}
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
@@ -155,7 +152,7 @@ const FormPernyataan = ({ indexMurid }) => {
                         ).answer || ""
                       }
                       onChange={(e) => handleInputChange(e, item.id)}
-                      required={true}
+                      required={false}
                     />
                   </div>
                 ))
@@ -168,7 +165,7 @@ const FormPernyataan = ({ indexMurid }) => {
                       // placeholder={item.answer}
                       defaultValue={item.answer}
                       disable={true}
-                      required={true}
+                      required={false}
                     />
                   </div>
                 ))}

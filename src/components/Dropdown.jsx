@@ -2,7 +2,7 @@ import Select from "react-select";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import RadioInput from "./RadioInput";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const onKeyDown = (event) => {
   if (event.keyCode === 13) {
@@ -204,26 +204,6 @@ export const DropdownCostCenter = ({
             </a>
           </p>
         </div>
-        {/* <div>
-          <Select
-            className="ml-20"
-            isClearable={isClearable}
-            defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
-            options={options}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-          />
-          <p>
-            <a
-              style={{ fontSize: "12px", borderBottom: "1px solid #8F0D1E" }}
-              className="block text-merah float-right"
-              onClick={handleOnClick}
-            >
-              Tambah Cost Center
-            </a>
-          </p>
-        </div> */}
       </form>
     </div>
   );
@@ -318,15 +298,6 @@ export const DropdownJenisTransaksi = ({
             onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -381,15 +352,6 @@ export const DropdownDebitKredit = ({
             onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -439,16 +401,6 @@ export const DropdownBank = ({
             onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          id={id}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -498,15 +450,6 @@ export const DropdownPendaftaran = ({
             onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -689,6 +632,7 @@ export const DropdownDatePickers = ({ label, id, name, value, change }) => {
             change={change}
             format="yyy-MM-dd"
             placeholder="Pilih Tanggal (YYYY-MM-DD)"
+            openOnFocus
           />
         </div>
       </div>

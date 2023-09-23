@@ -292,6 +292,7 @@ const FormDaftarOrangTuaWali = () => {
                 value={parent.phoneNumber1}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
               />
               <TextInput
                 label="Nomor Ponsel 2"
@@ -301,6 +302,7 @@ const FormDaftarOrangTuaWali = () => {
                 value={parent.phoneNumber2}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
               />
               <TextInput
                 label="Propinsi"
@@ -400,7 +402,7 @@ const FormDaftarOrangTuaWali = () => {
                 required={true}
               />
               <TextInput
-                label="Penghasilan Tiap Bulan"
+                label="Penghasilan Tiap Bulan (Rp)"
                 type="number"
                 id="incomeGrade"
                 onChange={updateParents}
@@ -468,12 +470,14 @@ const FormDaftarOrangTuaWali = () => {
                   type="number"
                   value={admissionParentsData?.phoneNumber_1}
                   disable={true}
+                  placeholder={"Contoh: 081234567892"}
                 />
                 <TextInputModal
                   label="Nomor Ponsel 2"
                   type="numer"
                   value={admissionParentsData?.phoneNumber_2}
-                  disable={true}
+                  disable={false}
+                  placeholder={"Contoh: 081234567892"}
                 />
                 <TextInputModal
                   label="Propinsi"
@@ -533,14 +537,12 @@ const FormDaftarOrangTuaWali = () => {
                   )}
                   disable={true}
                 />
-
                 <TextInputModal
                   label="Pendidikan Terakhir"
                   type="text"
                   value={admissionParentsData?.lastEducation}
                   disable={true}
                 />
-
                 <TextInputModal
                   label="Perusahaan Tempat Bekerja"
                   type="text"
@@ -555,9 +557,8 @@ const FormDaftarOrangTuaWali = () => {
                   value={admissionParentsData?.occupation}
                   disable={true}
                 />
-
                 <TextInputModal
-                  label="Penghasilan Tiap Bulan"
+                  label="Penghasilan Tiap Bulan (Rp)"
                   type="number"
                   value={admissionParentsData?.incomeGrade}
                   disable={true}
