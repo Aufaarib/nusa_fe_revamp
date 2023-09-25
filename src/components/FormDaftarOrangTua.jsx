@@ -186,6 +186,8 @@ const FormDaftarOrangTua = () => {
     setValidPhone(PHONE_REGEX.test(parent.phoneNumber1));
   }, [parent.phoneNumber1]);
 
+  console.log("smakdk === ", admissionParentsData);
+
   return (
     <article>
       <Header

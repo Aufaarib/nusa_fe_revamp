@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postGuru } from "../../api/Guru";
-import { Header } from "../../components";
-import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
-import TextInput from "../../components/TextInput";
-import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
-import { getTahunAjaran } from "../../api/TahunAjaran";
 import { postAdmission } from "../../api/SetupPmb";
-import { BsHandIndexThumbFill } from "react-icons/bs";
+import { getTahunAjaran } from "../../api/TahunAjaran";
+import { Header } from "../../components";
+import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
+import { AlertMessage } from "../../components/ModalPopUp";
+import TextInput from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function TambahPendaftaran() {
