@@ -78,6 +78,8 @@ export const TextInput = ({
   disable,
   onInput,
   defaultValue,
+  validationMsg,
+  validation,
 }) => {
   const numberInputOnWheelPreventChange = (e) => {
     e.target.blur();
@@ -95,9 +97,8 @@ export const TextInput = ({
           <span className="mt-1">:</span>
 
           <div
-            className="px-3 py-2 text-sm text-base font-normal text-gray-700 bg-white "
+            className="px-3 md:ml-10 py-2 text-sm text-base font-normal text-gray-700 bg-white "
             style={{
-              marginLeft: "40px",
               display: "flex",
               textAlign: "center",
               fontSize: "14px",
@@ -128,6 +129,14 @@ export const TextInput = ({
             />
           </div>
         </form>
+        {validation == false ? (
+          <p className="flex md:justify-end  md:mr-24 mb-1 text-red-400 italic text-xs">
+            <span className="ml-1 text-red-400">*</span>
+            {validationMsg}
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

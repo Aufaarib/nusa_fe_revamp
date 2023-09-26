@@ -618,9 +618,8 @@ export const DropdownDatePickers = ({ label, id, name, value, change }) => {
         )}
         <span>:</span>
         <div
-          className="text-sm text-base font-normal text-gray-700 bg-merah "
+          className="text-sm md:ml-10 text-base font-normal text-gray-700 bg-merah "
           style={{
-            marginLeft: "40px",
             display: "flex",
             fontSize: "14px",
             borderRadius: "5px",

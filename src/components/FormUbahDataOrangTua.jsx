@@ -148,13 +148,15 @@ const FormUbahDataOrangTua = () => {
       });
   };
 
-  const [validPhone, setValidPhone] = useState(false);
+  const [validPhone1, setValidPhone1] = useState(false);
+  const [validPhone2, setValidPhone2] = useState(false);
 
   const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
 
   useEffect(() => {
-    setValidPhone(PHONE_REGEX.test(parent.phoneNumber1));
-  }, [parent.phoneNumber1]);
+    setValidPhone1(PHONE_REGEX.test(phoneNumber1));
+    setValidPhone2(PHONE_REGEX.test(phoneNumber2));
+  }, [phoneNumber1, phoneNumber2]);
 
   return (
     <article>
@@ -263,15 +265,25 @@ const FormUbahDataOrangTua = () => {
                 value={phoneNumber1}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone1}
               />
               <TextInput
                 label="Nomor Ponsel 2"
                 type="number"
                 id="phoneNumber2"
-                onChange={(e) => setPhoneNumber_2(e.target.value)}
+                onChange={(e) => setPhoneNumber_1(e.target.value)}
                 value={phoneNumber2}
                 disable={false}
                 required={false}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone2}
               />
               <TextInput
                 label="Propinsi"

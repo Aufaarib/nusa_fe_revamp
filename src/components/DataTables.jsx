@@ -286,7 +286,7 @@ export function FilterComponentSpp({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        <button
+        {/* <button
           onClick={() => {
             if (filterPaid === false) {
               setFilterPaid(true);
@@ -316,7 +316,7 @@ export function FilterComponentSpp({
         >
           Tampilkan Belum Membayar{" "}
           {filterUnPaid === true && <i className="fa fa-check text-hijau" />}
-        </button>
+        </button> */}
         <div
           style={{
             display: "inline-block",

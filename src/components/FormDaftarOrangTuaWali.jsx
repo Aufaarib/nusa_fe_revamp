@@ -181,6 +181,16 @@ const FormDaftarOrangTuaWali = () => {
       });
   };
 
+  const [validPhone1, setValidPhone1] = useState(false);
+  const [validPhone2, setValidPhone2] = useState(false);
+
+  const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
+
+  useEffect(() => {
+    setValidPhone1(PHONE_REGEX.test(parent.phoneNumber1));
+    setValidPhone2(PHONE_REGEX.test(parent.phoneNumber2));
+  }, [parent.phoneNumber1, parent.phoneNumber2]);
+
   return (
     <article>
       <Header
@@ -293,16 +303,24 @@ const FormDaftarOrangTuaWali = () => {
                 disable={false}
                 required={true}
                 placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone1}
               />
               <TextInput
                 label="Nomor Ponsel 2"
-                type="numer"
+                type="number"
                 id="phoneNumber2"
                 onChange={updateParents}
                 value={parent.phoneNumber2}
                 disable={false}
-                required={true}
+                required={false}
                 placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone2}
               />
               <TextInput
                 label="Propinsi"
@@ -580,7 +598,15 @@ const FormDaftarOrangTuaWali = () => {
         </button>
       )}
       {admissionParentsData === null && (
-        <button className="btn-merah" onClick={handleSubmit}>
+        <button
+          className={
+            validPhone1 == false || validPhone2 == false
+              ? "btn-abu"
+              : "btn-merah"
+          }
+          disabled={validPhone1 == false || validPhone2 == false ? true : false}
+          onClick={handleSubmit}
+        >
           {isLoading ? (
             <CgSpinner className="mr-2 text-xl animate-spin" />
           ) : (
