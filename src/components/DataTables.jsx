@@ -169,9 +169,9 @@ export function FilterComponentPengeluaran({
   return (
     <>
       <div
+        className="px-0 py-2"
         style={{
           display: "block",
-          padding: "14px",
           marginBottom: "10px",
           borderRadius: "10px",
         }}
@@ -192,24 +192,6 @@ export function FilterComponentPengeluaran({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        <label className="ml-2 text-merah font-bold">Filter Tipe : </label>
-        <select
-          style={{
-            border: "1px solid grey",
-            borderRadius: "10px",
-            width: "auto",
-            height: "30px",
-            fontSize: "12px",
-            padding: "5px",
-            marginLeft: "5px",
-          }}
-          value={value}
-          onChange={onChange}
-        >
-          <option value="all">Semua</option>
-          <option value="operasional">Operasional</option>
-          <option value="pendidikan">Pendidikan</option>
-        </select>
         <div
           style={{
             display: "inline-block",
@@ -226,25 +208,47 @@ export function FilterComponentPengeluaran({
           </button>
         </div>
       </div>
-      <div className="flex mb-3 px-48 gap-5 justify-between items-center font-bold text-merah">
-        <div className="w-96 mt-5">
-          <label>Filter Tanggal : </label>
+      <div className="flex mb-3 px-0 gap-5 justify-between items-center font-bold text-merah">
+        <div className="flex flex-row gap-2 mt-5">
+          <label className="mt-6">Filter Tipe : </label>
+          <select
+            className="text-hitam font-normal w-28 mt-6 px-2"
+            style={{
+              border: "1px solid grey",
+              borderRadius: "10px",
+              height: "30px",
+              fontSize: "12px",
+            }}
+            value={value}
+            onChange={onChange}
+          >
+            <option value="all">Semua</option>
+            <option value="operasional">Operasional</option>
+            <option value="pendidikan">Pendidikan</option>
+          </select>
         </div>
-        <DatePickerComponent
-          floatLabelType="Auto"
-          value={selectedStart}
-          change={onChangeStart}
-          format="yyy-MM-dd"
-          placeholder="Mulai (YYYY-MM-DD)"
-        />
-        <label className="mt-5">-</label>
-        <DatePickerComponent
-          floatLabelType="Auto"
-          value={selectedEnd}
-          change={onChangeEnd}
-          format="yyy-MM-dd"
-          placeholder="Sampai (YYYY-MM-DD)"
-        />
+        <div className="flex flex-row gap-2 mt-5">
+          <label className="mt-6">Filter Tanggal : </label>
+          <div className="flex flex-row gap-5 items-center">
+            <DatePickerComponent
+              floatLabelType="Auto"
+              value={selectedStart}
+              change={onChangeStart}
+              format="yyy-MM-dd"
+              placeholder="Mulai (YYYY-MM-DD)"
+              openOnFocus
+            />
+            <label className="mt-5">~</label>
+            <DatePickerComponent
+              floatLabelType="Auto"
+              value={selectedEnd}
+              change={onChangeEnd}
+              format="yyy-MM-dd"
+              placeholder="Sampai (YYYY-MM-DD)"
+              openOnFocus
+            />
+          </div>
+        </div>
       </div>
     </>
   );
@@ -819,68 +823,61 @@ export function FilterComponentFinanceReport({
     <>
       <div
         style={{
-          display: "block",
-          padding: "14px",
-          marginBottom: "10px",
-          borderRadius: "10px",
+          borderRadius: "5px",
+          border: "1px solid #bfbfbf",
+          textAlign: "center",
+          display: "inline-block",
         }}
       >
-        <div
-          style={{
-            borderRadius: "5px",
-            border: "1px solid #bfbfbf",
-            textAlign: "center",
-            display: "inline-block",
-          }}
-        >
-          <Input
-            id="search"
-            placeholder="Cari Nama Barang..."
-            value={filterText}
-            onChange={onFilter}
-          />
-          <i style={{ padding: "7px 6px" }} className="fa fa-search" />
-        </div>
-        <label className="ml-2 text-merah font-bold">Filter Tipe : </label>
-        <select
-          style={{
-            border: "1px solid grey",
-            borderRadius: "10px",
-            width: "auto",
-            height: "30px",
-            fontSize: "12px",
-            padding: "5px",
-            marginLeft: "5px",
-          }}
-          value={value}
-          onChange={onChange}
-        >
-          <option value="all">Semua</option>
-          <option value="K">Kredit</option>
-          <option value="D">Debit</option>
-        </select>
+        <Input
+          id="search"
+          placeholder="Cari Nama Barang..."
+          value={filterText}
+          onChange={onFilter}
+        />
+        <i style={{ padding: "7px 6px" }} className="fa fa-search" />
       </div>
-      <div className="flex mb-3 px-48 gap-5 justify-between items-center font-bold text-merah">
-        <div className="w-96 mt-5">
-          <label>Filter Tanggal : </label>
+      <div className="flex mb-3 px-0 gap-5 justify-between items-center font-bold text-merah">
+        <div className="flex flex-row gap-2 mt-5">
+          <label className="mt-6">Filter Tipe : </label>
+          <select
+            className="text-hitam font-normal w-28 mt-6 px-2"
+            style={{
+              border: "1px solid grey",
+              borderRadius: "10px",
+              height: "30px",
+              fontSize: "12px",
+            }}
+            value={value}
+            onChange={onChange}
+          >
+            <option value="all">Semua</option>
+            <option value="K">Kredit</option>
+            <option value="D">Debit</option>
+          </select>
         </div>
-        <DatePickerComponent
-          floatLabelType="Auto"
-          value={selectedStart}
-          change={onChangeStart}
-          format="yyy-MM-dd"
-          placeholder="Mulai (YYYY-MM-DD)"
-          strictMode
-        />
-        <label className="mt-5">-</label>
-        <DatePickerComponent
-          floatLabelType="Auto"
-          value={selectedEnd}
-          change={onChangeEnd}
-          format="yyy-MM-dd"
-          placeholder="Sampai (YYYY-MM-DD)"
-          strictMode
-        />
+        <div className="flex flex-row gap-2 mt-5">
+          <label className="mt-6">Filter Tanggal : </label>
+          <div className="flex flex-row gap-5 items-center">
+            <DatePickerComponent
+              floatLabelType="Auto"
+              value={selectedStart}
+              change={onChangeStart}
+              format="yyy-MM-dd"
+              placeholder="Mulai (YYYY-MM-DD)"
+              openOnFocus
+            />
+            <label className="mt-5">~</label>
+            <DatePickerComponent
+              floatLabelType="Auto"
+              value={selectedEnd}
+              change={onChangeEnd}
+              format="yyy-MM-dd"
+              placeholder="Sampai (YYYY-MM-DD)"
+              openOnFocus
+            />
+          </div>
+        </div>
       </div>
     </>
   );

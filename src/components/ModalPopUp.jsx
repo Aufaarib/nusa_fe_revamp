@@ -5,6 +5,8 @@ import { DropdownDebitKredit, DropdownGroup } from "./Dropdown";
 import { FilterDate } from "./DataTables";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useStateContext } from "../contexts/ContextProvider";
+import { CgSpinner } from "react-icons/cg";
 
 export const CustomStylesStatus = {
   content: {
@@ -667,24 +669,40 @@ export const AlertStatusVerifiedFailed = () => {
 
 export const AlertPaymentProof = (url) => {
   const domain = process.env.REACT_APP_BASE_STATIC_FILE;
-  styledSweetAlert.fire({
-    title: "Bukti Pembayaran",
-    imageUrl: domain + url, // Replace with the path to your image
-    imageWidth: "100%", // Adjust the width of the image as needed
-    showConfirmButton: true,
-    confirmButtonText: "Tutup",
-  });
+  if (domain.length == 0) {
+    styledSweetAlert.fire({
+      title: "Loading...",
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  } else {
+    styledSweetAlert.fire({
+      title: "Bukti Pembayaran",
+      imageUrl: domain + url, // Replace with the path to your image
+      imageWidth: "100%", // Adjust the width of the image as needed
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  }
 };
 
 export const AlertFiles = (url) => {
   const domain = process.env.REACT_APP_BASE_STATIC_FILE;
-  styledSweetAlert.fire({
-    width: "700px",
-    imageUrl: domain + url, // Replace with the path to your image
-    imageWidth: "100%", // Adjust the width of the image as needed
-    showConfirmButton: true,
-    confirmButtonText: "Tutup",
-  });
+  if (domain.length == 0) {
+    styledSweetAlert.fire({
+      title: "Loading...",
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  } else {
+    styledSweetAlert.fire({
+      width: "700px",
+      imageUrl: domain + url, // Replace with the path to your image
+      imageWidth: "100%", // Adjust the width of the image as needed
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  }
 };
 
 export const AlertStatusValidatePayment = (onValidate, id) => {
