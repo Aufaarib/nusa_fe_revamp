@@ -23,7 +23,7 @@ export default function TambahPengeluaran() {
   const path = "/admin/list-pengeluaran";
   const uploaderRef = useRef(null);
 
-  const navigateListSpp = () => {
+  const navigateListSpending = () => {
     navigate(path);
   };
 
@@ -73,12 +73,8 @@ export default function TambahPengeluaran() {
     if (amount.length === 0 || description.length === 0 || type.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postPengeluaran(setSts, navigateListSpp, formData);
+      postPengeluaran(setSts, navigateListSpending, formData);
     }
-  };
-
-  const navigateSpp = () => {
-    navigate(path);
   };
 
   const handleInputChange = (event) => {
@@ -102,9 +98,9 @@ export default function TambahPengeluaran() {
   };
 
   // Function to remove a set of fields
-  const removeField = (index) => {
+  const removeField = () => {
     const newFields = [...fields];
-    newFields.splice(index, 1);
+    newFields.pop();
     setFields(newFields);
   };
 
@@ -163,12 +159,6 @@ export default function TambahPengeluaran() {
             isSearchable={false}
             onChange={(e) => setType(e.value)}
           />
-          {/* <TextInput
-            label="Tipe Pengeluaran"
-            type="text"
-            onChange={(e) => setType(e.target.value)}
-            required={true}
-          /> */}
           <TextInput
             label="Catatan"
             type="text"
@@ -176,6 +166,7 @@ export default function TambahPengeluaran() {
             required={true}
           />
           <div
+            className="mr-10"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -206,16 +197,12 @@ export default function TambahPengeluaran() {
             </small>
           </div>
           <br />
-          <p
-            style={{ display: "flex", justifyContent: "center" }}
-            className="ml-1 font-bold text-merah"
-          >
-            Detail Barang
+          <hr className="mr-10 mb-10" />
+          <p className="font-bold text-merah mr-8 underline flex justify-center">
+            Tambah Detail Barang
           </p>
           {fields.map((field, index) => (
             <div key={index}>
-              <br />
-              <hr />
               <br />
               <TextInput
                 label="Nama Barang"
@@ -247,35 +234,39 @@ export default function TambahPengeluaran() {
                 // onChange={(e) => setMonth(e.target.value)}
                 required={true}
               />
+              <br />
+              <hr className="mr-10 " />
             </div>
           ))}
-          <button
-            className="btn-mrh w-10"
-            style={{ display: "flex", float: "right" }}
-            onClick={removeField}
-          >
-            <i className="mt-1 fa fa-minus" />
-          </button>
-          <button
-            className="btn-hijau w-10"
-            style={{ display: "flex", float: "right", marginRight: "4px" }}
-            onClick={addField}
-          >
-            <i className="mt-1 fa fa-plus" />
-          </button>
+          <div className="mr-10 flex justify-end py-5 gap-2">
+            <button
+              className="btn-mrh w-10"
+              title="Kurangi Formulir"
+              onClick={removeField}
+            >
+              <i className="mt-1 fa fa-minus" />
+            </button>
+            <button
+              className="btn-hijau w-10"
+              title="Tambah Formulir"
+              onClick={addField}
+            >
+              <i className="mt-1 fa fa-plus" />
+            </button>
+          </div>
           <br />
-          <div className="btn-form">
+          <div className="btn-form mr-7">
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Simpan
             </button>
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSpp}
+              onClick={navigateListSpending}
             >
               Batal
             </button>

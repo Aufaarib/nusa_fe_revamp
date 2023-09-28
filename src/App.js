@@ -73,6 +73,14 @@ import UbahSpp from "./pages/Keuangan/Spp/UbahSpp";
 import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
 import BerkasPembayaranBiayaPendidikan from "./pages/PMB/BerkasPembayaranPendidikan";
 import ListCalonSiswa from "./pages/PMB/ListCalonSiswa";
+import ListResume from "./pages/SARAT/Resume/ListResume";
+import ListSession from "./pages/SARAT/Sesi/ListSession";
+import ListQuestion from "./pages/SARAT/Soal/ListQuestion";
+import DetailQuestion from "./pages/SARAT/Soal/DetailQuestion";
+import TambahResume from "./pages/SARAT/Resume/TambahResume";
+import TambahSession from "./pages/SARAT/Sesi/TambahSession";
+import UbahResume from "./pages/SARAT/Resume/UbahResume";
+import TambahQuestion from "./pages/SARAT/Soal/TambahQuestion";
 
 const App = () => {
   return (
@@ -109,6 +117,8 @@ const App = () => {
             path="/admin/konfirmasi-pembayaran"
             element={<KonfirmasiPembayaran />}
           />
+          <Route path="/admin/list-soal" element={<ListQuestion />} />
+          <Route path="/admin/detail-soal" element={<DetailQuestion />} />
 
           {/* lists */}
           <Route
@@ -134,6 +144,8 @@ const App = () => {
           <Route path="/admin/list-spp" element={<ListSpp />} />
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
+          <Route path="/admin/list-resume" element={<ListResume />} />
+          <Route path="/admin/list-sesi" element={<ListSession />} />
 
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
@@ -165,6 +177,7 @@ const App = () => {
           <Route path="/admin/ubah-spp" element={<UbahSpp />} />
           <Route path="/admin/ubah-pengeluaran" element={<UbahPengeluaran />} />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
+          <Route path="/admin/ubah-resume" element={<UbahResume />} />
 
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
@@ -204,6 +217,9 @@ const App = () => {
             path="/admin/tambah-pengeluaran"
             element={<TambahPengeluaran />}
           />
+          <Route path="/admin/tambah-Resume" element={<TambahResume />} />
+          <Route path="/admin/tambah-sesi" element={<TambahSession />} />
+          <Route path="/admin/tambah-soal" element={<TambahQuestion />} />
         </Route>
 
         {/* PROTECTED ROUTES */}

@@ -145,6 +145,18 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
+  {
+    title: "Admin SARAT",
+    path: `admin/sarat`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "Resume",
+        path: `admin/list-resume`,
+        icon: <FaWpforms />,
+      },
+    ],
+  },
 ];
 
 export const themeColors = [

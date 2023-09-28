@@ -341,6 +341,58 @@ export function FilterComponentSpp({
   );
 }
 
+export function FilterComponentSession({
+  filterText,
+  onFilter,
+  onClick,
+  button,
+}) {
+  return (
+    <>
+      <div
+        style={{
+          display: "block",
+          padding: "14px",
+          marginBottom: "10px",
+          borderRadius: "10px",
+        }}
+      >
+        <div
+          style={{
+            borderRadius: "5px",
+            border: "1px solid #bfbfbf",
+            textAlign: "center",
+            display: "inline-block",
+          }}
+        >
+          <Input
+            id="search"
+            placeholder="Cari Nama Sesi..."
+            value={filterText}
+            onChange={onFilter}
+          />
+          <i style={{ padding: "7px 6px" }} className="fa fa-search" />
+        </div>
+        <div
+          style={{
+            display: "inline-block",
+            float: "right",
+            marginBottom: "20px",
+          }}
+        >
+          <button
+            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+            className="btn-hijau font-bold"
+            onClick={onClick}
+          >
+            <i className="fa fa-plus mr-1 mt-1"></i> {button}
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export function FilterComponentWithoutButton({
   filterText,
   onFilter,
@@ -2242,6 +2294,270 @@ export function DataTablesListSpp({
         filterUnPaid={filterUnPaid}
         setFilterUnPaid={setFilterUnPaid}
         button="Tambah"
+      />
+      {data ? (
+        <div>
+          {status == 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+            </div>
+          ) : (
+            <DataTable
+              columns={columns}
+              customStyles={CustomStylesTable}
+              data={currentPageData}
+              defaultSortAsc={false}
+              defaultSortFieldId={defaultSortFieldId}
+            />
+          )}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
+        </div>
+      )}
+      {itemsPerPage !== "all" && (
+        <>
+          <div
+            style={{
+              display: "block",
+              padding: "20px 0",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                float: "left",
+                fontSize: "14px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "20px",
+                }}
+              >
+                <strong className="text-merah" style={{ marginTop: "6px" }}>
+                  Jumlah Data Per Halaman
+                </strong>
+                <button
+                  onClick={() => setItemsPerPage(20)}
+                  className={
+                    itemsPerPage === 20
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  20
+                </button>
+                <button
+                  onClick={() => setItemsPerPage(50)}
+                  className={
+                    itemsPerPage === 50
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  50
+                </button>
+                <button
+                  onClick={() => setItemsPerPage(100)}
+                  className={
+                    itemsPerPage === 100
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  100
+                </button>
+              </div>
+            </div>
+            <div style={{ display: "inline-block", float: "right" }}>
+              <style>{styles}</style>
+              <ReactPaginate
+                previousLabel={
+                  <i className="fa fa-chevron-left text-merah"></i>
+                }
+                nextLabel={<i className="fa fa-chevron-right text-merah"></i>}
+                breakLabel={<a className="text-merah">...</a>}
+                pageRangeDisplayed={5}
+                marginPagesDisplayed={2}
+                forcePage={currentPage}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "block",
+              padding: "20px 0",
+              marginTop: "20px",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                float: "left",
+                fontSize: "14px",
+              }}
+            >
+              <label>
+                Menampilkan{" "}
+                <strong className="text-merah">{currentPageData.length}</strong>{" "}
+                dari <strong className="text-merah">{data.length}</strong> Data
+              </label>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+export function DataTablesSession({
+  columns,
+  status,
+  data = [],
+  defaultSortFieldId,
+  filterText,
+  onFilter,
+  onClick,
+  itemsPerPage,
+  setItemsPerPage,
+  setCurrentPage,
+  currentPage,
+  pagination,
+  buttonText,
+}) {
+  const CustomStylesTable = {
+    table: {
+      style: {
+        width: "auto", // set the width of the table wrapper
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for data cells
+        justifyContent: "center",
+        fontWeight: "bold",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#D5D5D540",
+        marginTop: "10px",
+        borderRadius: "10px",
+        border: "0px",
+        minHeight: "72px", // override the row height
+        "&:not(:last-of-type)": {
+          border: "0px",
+        },
+      },
+    },
+    denseStyle: {
+      minHeight: "32px",
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#8F0D1E",
+        minHeight: "52px",
+        borderRadius: "10px",
+      },
+      denseStyle: {
+        minHeight: "32px",
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for head cells
+        paddingRight: "10px",
+        justifyContent: "center",
+        color: "rgb(243 241 241)",
+      },
+    },
+  };
+
+  // CSS styles
+  const styles = `
+        .pagination {
+            display: flex;
+            border-radius: 10px;
+            padding: 0 0;
+        }
+        .pagination li {
+            display: inline-block;
+            margin-right: 5px;
+            padding: 5px;
+            border-radius: 15px;
+            background-color: transparent;
+            width: 40px;
+            text-align: center;
+        }
+        .pagination li.active {
+            background-color: #8F0D1E;
+        }
+        .pagination li.disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+        .pagination li a {
+            cursor: pointer;
+            color: black;
+        }
+        .pagination li.active a {
+            cursor: pointer;
+            color: #fff;
+        }
+        .pagination li.disabled a {
+            cursor: not-allowed;
+            color: grey;
+        }
+        // .pagination li:hover{
+        //     background-color: #8F0D1E;
+        // }
+        // .pagination li:hover a{
+        //     background-color: #8F0D1E;
+        //     color: #fff;
+        // }
+        // .pagination li.disabled:hover{
+        //     background-color: transparent;
+        // }
+        // .pagination li.disabled:hover a{
+        //     background-color: transparent;
+        //     color: grey;
+        // }
+        `;
+
+  data.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+    setItemsPerPage(itemsPerPage);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  let currentPageData = [];
+  let pageCount = 0;
+
+  if (data !== null) {
+    currentPageData =
+      itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
+    pageCount = Math.ceil(pagination?.total / itemsPerPage);
+  }
+
+  return (
+    <>
+      <FilterComponentSession
+        data={data}
+        filterText={filterText}
+        onFilter={onFilter}
+        onClick={onClick}
+        button={buttonText}
       />
       {data ? (
         <div>
