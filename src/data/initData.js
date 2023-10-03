@@ -155,6 +155,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-resume`,
         icon: <FaWpforms />,
       },
+      {
+        name: "Institusi",
+        path: `admin/list-institusi`,
+        icon: <FaWpforms />,
+      },
     ],
   },
 ];

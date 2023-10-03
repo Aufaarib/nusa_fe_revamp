@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
-import { getSession } from "../../../api/Sarat";
+import { getInstitution, getSession } from "../../../api/Sarat";
 
-export default function ListResume() {
+export default function ListInstitution() {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState("");
   const [sts, setSts] = useState(undefined);
@@ -21,7 +21,7 @@ export default function ListResume() {
   }
 
   useEffect(() => {
-    getSession(currentPage, itemsPerPage, setData, setSts, setPagination);
+    getInstitution(setData, setSts);
   }, []);
 
   const columns = [
@@ -31,58 +31,9 @@ export default function ListResume() {
       width: "55px",
     },
     {
-      name: <div>Nama Resume</div>,
+      name: <div>Nama Institusi</div>,
       cell: (data) => <div>{data.name}</div>,
       width: "auto",
-    },
-    {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => (
-        <div
-          className={
-            data.status === 1
-              ? "capitalize text-hijau"
-              : "capitalize text-merah"
-          }
-        >
-          {data.status == 1 ? "Aktif" : "Tidak Aktif"}
-        </div>
-      ),
-      width: "auto",
-    },
-    {
-      name: <div>Aksi</div>,
-      cell: (data) => (
-        <div className="flex gap-2">
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-hijau"
-            title="Edit"
-            onClick={() =>
-              navigateUbahSession(
-                data.id,
-                data.name,
-                data.academic_year_id,
-                data.details
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Edit Nama Resume
-          </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() => navigateListSession(data.id, data.name)}
-          >
-            <i className="fa fa-edit" /> Daftar Sesi
-          </button>
-        </div>
-      ),
-      ignoreRowClick: true,
-      button: true,
-      width: "300px",
     },
   ];
 
@@ -118,8 +69,8 @@ export default function ListResume() {
         home="Admin SARAT"
         // prev="Bank"
         // navePrev={path}
-        at="Resume"
-        title="Daftar Resume"
+        at="Institusi"
+        title="Daftar Institusi"
       />
 
       <div style={{ marginTop: "50px" }}>
@@ -135,6 +86,7 @@ export default function ListResume() {
           setCurrentPage={setCurrentPage}
           pagination={pagination}
           buttonText="Tambah Resume"
+          showButton={false}
         />
       </div>
     </>

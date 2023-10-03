@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { updateSession } from "../../../api/Sarat";
+import { updateQuestion, updateSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
-export default function UbahResume() {
+export default function UbahQuestion() {
   const location = useLocation();
-  const path = "/admin/list-resume";
-  const [fields, setFields] = useState(location.state.details);
-  const [name, setName] = useState(location.state.resumeName);
+  const path = "/admin/list-soal";
+  const [description, setDescription] = useState(location.state.description);
+  const [is_publish, setPublish] = useState(location.state.is_publish);
   const [sts, setSts] = useState("");
   const navigate = useNavigate();
 
@@ -17,23 +17,25 @@ export default function UbahResume() {
     navigate(path);
   };
 
-  console.log("resumename === ", location.state.resumeName);
-  console.log("resumeid === ", location.state.academicYearId);
-  console.log("resumeid === ", location.state.details);
+  console.log("desc === ", description);
+  console.log("pub === ", is_publish);
+  console.log("seq === ", location.state.sequence);
 
   const postData = (e) => {
     e.preventDefault();
 
-    const data = {
-      name: name,
-      academic_year_id: location.state.academicYearId,
-      details: fields,
-    };
-
-    if (name === "") {
+    if (description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateSession(location.state.resumeId, setSts, navigateListResume, data);
+      updateQuestion(
+        location.state.question_id,
+        setSts,
+        navigateListResume,
+        location.state.session_detail_id,
+        location.state.sequence,
+        description,
+        is_publish
+      );
     }
   };
 
@@ -43,21 +45,19 @@ export default function UbahResume() {
         home="Admin SARAT"
         prev="Daftar Resume"
         navePrev={path}
-        at="Edit Nama Resume"
-        title="Edit Nama Resume"
+        at="Edit Pertanyaan"
+        title="Edit Pertanyaan"
       />
 
       <div style={{ padding: "40px 104px 0" }}>
-        <p className="text-[24px] font-bold text-merah">
-          Form Edit Nama Resume
-        </p>
+        <p className="text-[24px] font-bold text-merah">Form Edit Pertanyaan</p>
         <article>
           <br />
           <TextInput
-            label="Nama Resume"
+            label="Pertanyaan"
             type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
             required={true}
           />
           <br />

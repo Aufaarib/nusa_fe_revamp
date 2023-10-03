@@ -239,7 +239,7 @@ export const TextArea = ({
           <span>:</span>
 
           <textarea
-            className="w-auto ml-20 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
+            className="w-auto md:ml-10 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
             type={type}
             id={id}
             name={name}

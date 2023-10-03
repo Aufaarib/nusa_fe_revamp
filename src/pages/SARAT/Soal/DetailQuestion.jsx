@@ -13,17 +13,21 @@ export default function ListQuestion() {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const navigate = useNavigate();
   const location = useLocation();
+  const path = "/admin/list-soal";
+  const session_tittle = localStorage.getItem("SESSION_TITTLE");
 
-  console.log(data);
+  console.log("Answers Data === ", data);
+  // console.log(location.state.question_id);
 
   let filteredItems = data;
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.description.toLowerCase().includes(filterText.toLowerCase())
+      data.description?.toLowerCase().includes(filterText.toLowerCase())
     );
   }
+
   useEffect(() => {
-    getDetailQuestion(localStorage.getItem("RESUME_ID"), setData, setSts);
+    getDetailQuestion(location.state.question_id, setData, setSts);
   }, []);
 
   const columns = [
@@ -39,7 +43,7 @@ export default function ListQuestion() {
     },
     {
       name: <div>Kunci Jawaban</div>,
-      selector: (data) => data.is_publish,
+      selector: (data) => data.correct_answer,
       cell: (data) => (
         <div
           className={
@@ -53,52 +57,74 @@ export default function ListQuestion() {
       ),
       width: "auto",
     },
-    // {
-    //   name: <div>Aksi</div>,
-    //   cell: (data) => (
-    //     <div>
-    //       <button
-    //         style={{ width: "auto", padding: "2px 10px" }}
-    //         className="btn-biru"
-    //         title="Edit"
-    //         onClick={() => navigateDetailSession(data.id, data.name)}
-    //       >
-    //         <i className="fa fa-edit" /> Detail
-    //       </button>
-    //     </div>
-    //   ),
-    //   ignoreRowClick: true,
-    //   button: true,
-    //   width: "180px",
-    // },
+
+    {
+      name: <div>Aksi</div>,
+      cell: (data) => (
+        <div className="flex gap-1">
+          <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-hijau"
+            title="Edit"
+            onClick={() =>
+              navigateUbahDetailQuestion(
+                data.id,
+                data.description,
+                data.correct_answer
+              )
+            }
+          >
+            <i className="fa fa-edit" /> Edit Jawaban
+          </button>
+        </div>
+      ),
+      ignoreRowClick: true,
+      button: true,
+      width: "300px",
+    },
   ];
 
   const navigateListSoal = () => {
-    navigate("/admin/list-soal", {
+    navigate(path, {
       state: {
-        session_tittle: location.state.session_tittle,
+        session_tittle: session_tittle,
+      },
+    });
+  };
+
+  const navigateUbahDetailQuestion = (id, description, correct_answer) => {
+    navigate("/admin/ubah-detail-soal", {
+      state: {
+        id: id,
+        description: description,
+        correct_answer: correct_answer,
+        question_id: location.state.question_id,
       },
     });
   };
 
   const navigateTambahDetailQuestion = () => {
-    navigate("/admin/tambah-sesi");
+    navigate("/admin/tambah-detail-soal", {
+      state: {
+        question_id: location.state.question_id,
+      },
+    });
   };
 
   return (
     <>
       <Header
         home="Admin SARAT"
-        // prev="Bank"
+        prev="Daftar Soal"
         // navePrev={path}
-        at="Soal"
-        title="Soal"
+        at="Daftar Jawaban Soal"
+        title="Daftar Jawaban Soal"
       />
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesSession
           columns={columns}
-          data={filteredItems}
+          data={data}
           onClick={navigateTambahDetailQuestion}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}

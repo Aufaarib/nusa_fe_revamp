@@ -81,6 +81,10 @@ import TambahResume from "./pages/SARAT/Resume/TambahResume";
 import TambahSession from "./pages/SARAT/Sesi/TambahSession";
 import UbahResume from "./pages/SARAT/Resume/UbahResume";
 import TambahQuestion from "./pages/SARAT/Soal/TambahQuestion";
+import ListInstitution from "./pages/SARAT/Institusi/ListIntitution";
+import UbahQuestion from "./pages/SARAT/Soal/UbahQuestion";
+import UbahDetailQuestion from "./pages/SARAT/Soal/UbahDetailQuestion";
+import TambahAnswers from "./pages/SARAT/Soal/TambahAnswers";
 
 const App = () => {
   return (
@@ -146,6 +150,7 @@ const App = () => {
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
           <Route path="/admin/list-resume" element={<ListResume />} />
           <Route path="/admin/list-sesi" element={<ListSession />} />
+          <Route path="/admin/list-institusi" element={<ListInstitution />} />
 
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
@@ -178,6 +183,11 @@ const App = () => {
           <Route path="/admin/ubah-pengeluaran" element={<UbahPengeluaran />} />
           <Route path="/admin/upload-hasil-tes" element={<UploadHasilTes />} />
           <Route path="/admin/ubah-resume" element={<UbahResume />} />
+          <Route path="/admin/ubah-soal" element={<UbahQuestion />} />
+          <Route
+            path="/admin/ubah-detail-soal"
+            element={<UbahDetailQuestion />}
+          />
 
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
@@ -220,6 +230,7 @@ const App = () => {
           <Route path="/admin/tambah-Resume" element={<TambahResume />} />
           <Route path="/admin/tambah-sesi" element={<TambahSession />} />
           <Route path="/admin/tambah-soal" element={<TambahQuestion />} />
+          <Route path="/admin/tambah-detail-soal" element={<TambahAnswers />} />
         </Route>
 
         {/* PROTECTED ROUTES */}

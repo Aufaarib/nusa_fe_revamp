@@ -54,6 +54,11 @@ export default function ListSession() {
       width: "auto",
     },
     {
+      name: <div>Deskripsi</div>,
+      cell: (data) => <div>{data.id}</div>,
+      width: "auto",
+    },
+    {
       name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => (
@@ -77,7 +82,7 @@ export default function ListSession() {
             style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
-            onClick={() => navigateSoal(data.title)}
+            onClick={() => navigateSoal(data.id, data.title)}
           >
             <i className="fa fa-edit" /> Data Soal
           </button>
@@ -100,22 +105,19 @@ export default function ListSession() {
     });
   };
 
-  const navigateSoal = (session_tittle) => {
-    navigate("/admin/list-soal", {
-      state: {
-        session_id: localStorage.getItem("RESUME_ID"),
-        session_tittle: session_tittle,
-      },
-    });
+  const navigateSoal = (session_id, session_tittle) => {
+    localStorage.setItem("SESSION_ID", session_id);
+    localStorage.setItem("SESSION_TITTLE", session_tittle);
+    navigate("/admin/list-soal");
   };
 
   return (
     <>
       <Header
         home="Admin SARAT"
-        prev="Data Resume"
+        prev="Daftar Resume"
         navePrev={path}
-        at="Data Sesi"
+        at="Daftar Sesi"
         title={`${localStorage.getItem("RESUME_NAME")}`}
       />
 

@@ -346,6 +346,7 @@ export function FilterComponentSession({
   onFilter,
   onClick,
   button,
+  showButton,
 }) {
   return (
     <>
@@ -380,13 +381,15 @@ export function FilterComponentSession({
             marginBottom: "20px",
           }}
         >
-          <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-hijau font-bold"
-            onClick={onClick}
-          >
-            <i className="fa fa-plus mr-1 mt-1"></i> {button}
-          </button>
+          {showButton !== false && (
+            <button
+              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+              className="btn-hijau font-bold"
+              onClick={onClick}
+            >
+              <i className="fa fa-plus mr-1 mt-1"></i> {button}
+            </button>
+          )}
         </div>
       </div>
     </>
@@ -2431,6 +2434,7 @@ export function DataTablesSession({
   currentPage,
   pagination,
   buttonText,
+  showButton,
 }) {
   const CustomStylesTable = {
     table: {
@@ -2531,7 +2535,7 @@ export function DataTablesSession({
         // }
         `;
 
-  data.sort(function (a, b) {
+  data?.sort(function (a, b) {
     return b.id - a.id;
   });
 
@@ -2558,6 +2562,7 @@ export function DataTablesSession({
         onFilter={onFilter}
         onClick={onClick}
         button={buttonText}
+        showButton={showButton}
       />
       {data ? (
         <div>
@@ -2671,8 +2676,10 @@ export function DataTablesSession({
             >
               <label>
                 Menampilkan{" "}
-                <strong className="text-merah">{currentPageData.length}</strong>{" "}
-                dari <strong className="text-merah">{data.length}</strong> Data
+                <strong className="text-merah">
+                  {currentPageData?.length}
+                </strong>{" "}
+                dari <strong className="text-merah">{data?.length}</strong> Data
               </label>
             </div>
           </div>

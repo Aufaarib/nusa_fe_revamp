@@ -74,7 +74,7 @@ export default function TambahResume() {
     <>
       <Header
         home="Admin SARAT"
-        prev="Data Resume"
+        prev="Daftar Resume"
         navePrev={path}
         at="Tambah Resume"
         title="Tambah Resume"
@@ -88,11 +88,11 @@ export default function TambahResume() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Resume SARAT
+          Form Tambah Resume
         </p>
         <article>
           <TextInput
-            label="Nama Resume SARAT"
+            label="Nama Resume"
             type="text"
             onChange={(e) => setName(e.target.value)}
             value={name}

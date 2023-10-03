@@ -4,7 +4,6 @@ import { updateSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
-import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function TambahSession() {
   const location = useLocation();
@@ -41,10 +40,6 @@ export default function TambahSession() {
     });
   };
 
-  console.log("resumename === ", location.state.resume_name);
-  console.log("resumeid === ", location.state.academicYearId);
-  console.log("resumeid === ", location.state.details);
-
   const postData = (e) => {
     e.preventDefault();
 
@@ -70,8 +65,8 @@ export default function TambahSession() {
     <>
       <Header
         home="Admin SARAT"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Daftar Sesi"
+        navePrev={path}
         at="Edit Sesi"
         title="Edit Sesi"
       />

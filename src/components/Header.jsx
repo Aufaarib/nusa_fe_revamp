@@ -1,7 +1,7 @@
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import React from "react";
 
-const Header = ({ home, prev, at, navHome, navePrev, title, icon }) => (
+const Header = ({ home, prev, at, navHome, navPrev, title, icon }) => (
   <div style={{ borderBottom: "1px solid gray", marginBottom: "10px" }}>
     <div style={{ marginBottom: "20px" }}>
       <Breadcrumbs className="capitalize">
@@ -9,7 +9,7 @@ const Header = ({ home, prev, at, navHome, navePrev, title, icon }) => (
           {home}
         </Typography>
         {prev && (
-          <Link underline="hover" href={navePrev}>
+          <Link underline="hover" href={navPrev}>
             <Typography fontSize="14px" color="gray">
               {prev}
             </Typography>
