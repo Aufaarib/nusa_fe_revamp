@@ -5,15 +5,16 @@ import { getMurid } from "../../../api/Murid";
 import { postSpp } from "../../../api/Spp";
 import { getSemester } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
-import { DropdownSiswa } from "../../../components/Dropdown";
+import { DropdownMultiple, DropdownSiswa } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import Select from "react-select";
 
 export default function TambahSpp() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
   const [amounts, setAmount] = useState("");
-  const [month, setMonth] = useState("");
+  const [months, setMonth] = useState([]);
   const [periodeId, setPeriodeId] = useState("");
   const [studentCode, setStudentCode] = useState("");
   const [description, setDescription] = useState("");
@@ -58,30 +59,33 @@ export default function TambahSpp() {
   };
 
   const postData = (e) => {
-    const invoice = filesData.file.rawFile;
+    const invoice = filesData?.file?.rawFile;
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
+    const formData = new FormData();
+
+    formData.append(`amount`, amount);
+    formData.append(`description`, description);
+    formData.append(`invoice`, invoice);
+    formData.append(`periodeId`, periodeId);
+    formData.append(`studentCode`, studentCode);
+
+    months.forEach((item, index) => {
+      formData.append(`month`, item.value);
+      console.log("dsa === ", item.value);
+    });
+
     if (
       amounts === "" ||
-      month === "" ||
+      months === "" ||
       periodeId === "" ||
       studentCode === "" ||
-      // description === "" ||
       invoice == null
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postSpp(
-        setSts,
-        navigateListSpp,
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode
-      );
+      postSpp(setSts, navigateListSpp, formData);
     }
   };
 
@@ -158,6 +162,10 @@ export default function TambahSpp() {
     value: c.code,
   }));
 
+  const handleSelectChange = (selectedValues) => {
+    setMonth(selectedValues);
+  };
+
   return (
     <div>
       <Header
@@ -196,14 +204,14 @@ export default function TambahSpp() {
             isSearchable={true}
             onChange={(e) => setStudentCode(e.value)}
           />
-          <DropdownSiswa
+          <DropdownMultiple
             label="Spp Bulan"
             required={true}
-            defaultValue={month}
+            defaultValue={months}
             isClearable={false}
             options={monthOptions}
             isSearchable={false}
-            onChange={(e) => setMonth(e.value)}
+            onChange={handleSelectChange}
           />
           <TextInput
             label="Jumlah Yang Di Bayar"

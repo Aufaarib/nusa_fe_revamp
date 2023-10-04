@@ -208,6 +208,51 @@ export const DropdownCostCenter = ({
     </div>
   );
 };
+export const DropdownMultiple = ({
+  label,
+  name,
+  onChange,
+  required,
+  options,
+  defaultValue,
+  isClearable,
+  handleOnClick,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
+          <Select
+            className="w-full"
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            isMulti
+            placeholder="Pilih Beberapa..."
+            options={options}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
 export const DropdownSiswa = ({
   label,
   name,

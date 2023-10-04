@@ -151,13 +151,18 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
+        name: "Institusi",
+        path: `admin/list-institusi`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Resume",
         path: `admin/list-resume`,
         icon: <FaWpforms />,
       },
       {
-        name: "Institusi",
-        path: `admin/list-institusi`,
+        name: "Berita",
+        path: `admin/list-berita`,
         icon: <FaWpforms />,
       },
     ],

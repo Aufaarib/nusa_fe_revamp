@@ -1,6 +1,22 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
+export function getNews(setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/news/filter`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
 export function getInstitution(setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/institution/filter`, {
@@ -76,7 +92,7 @@ export function postAnswers(setSts, navigate, question_id, fields) {
           "Berhasil",
           "Tutup",
           "success",
-          "Tambah Sesi Berhasil"
+          "Tambah Pilihan Jawaban Berhasil"
         );
       })
       .catch((error) => {
@@ -136,26 +152,17 @@ export function postQuestion(
                 "Berhasil",
                 "Tutup",
                 "success",
-                "Tambah Sesi Berhasil"
+                "Tambah Soal Berhasil"
               );
             })
             .catch((error) => {
               setSts({ type: "error", error });
-              if (error.code === "ERR_NETWORK") {
-                AlertMessage(
-                  "Gagal",
-                  "Koneksi Bermasalah",
-                  "Coba Lagi",
-                  "error"
-                );
-              } else {
-                AlertMessage(
-                  "Gagal",
-                  "Tambah Answer Gagal",
-                  "Coba Lagi",
-                  "error"
-                );
-              }
+              AlertMessage(
+                "Gagal",
+                "Tambah Pilihan Jawaban Gagal",
+                "Coba Lagi",
+                "error"
+              );
             });
         }
       })
@@ -164,7 +171,7 @@ export function postQuestion(
         if (error.code === "ERR_NETWORK") {
           AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
         } else {
-          AlertMessage("Gagal", "Tambah Sesi Gagal", "Coba Lagi", "error");
+          AlertMessage("Gagal", "Tambah Soal Gagal", "Coba Lagi", "error");
         }
       });
   }
@@ -289,7 +296,7 @@ export function updateQuestion(
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Sesi Berhasil"
+        "Edit Pertanyaan Berhasil"
       );
     })
     .catch((error) => {
@@ -297,7 +304,7 @@ export function updateQuestion(
       if (error.code === "ERR_NETWORK") {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
       } else {
-        AlertMessage("Gagal", "Edit Sesi Gagal", "Coba Lagi", "error");
+        AlertMessage("Gagal", "Edit Pertanyaan Gagal", "Coba Lagi", "error");
       }
     });
 }
@@ -326,7 +333,7 @@ export function updateDetailQuestion(
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Sesi Berhasil"
+        "Edit Pilihan Jawaban Berhasil"
       );
     })
     .catch((error) => {
@@ -334,7 +341,12 @@ export function updateDetailQuestion(
       if (error.code === "ERR_NETWORK") {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
       } else {
-        AlertMessage("Gagal", "Edit Sesi Gagal", "Coba Lagi", "error");
+        AlertMessage(
+          "Gagal",
+          "Edit Pilihan Jawaban Gagal",
+          "Coba Lagi",
+          "error"
+        );
       }
     });
 }

@@ -54,11 +54,6 @@ export default function ListSession() {
       width: "auto",
     },
     {
-      name: <div>Deskripsi</div>,
-      cell: (data) => <div>{data.id}</div>,
-      width: "auto",
-    },
-    {
       name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => (

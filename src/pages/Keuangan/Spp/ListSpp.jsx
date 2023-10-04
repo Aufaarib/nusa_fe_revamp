@@ -51,7 +51,7 @@ export default function ListSpp() {
       cell: (data) => (
         <div>{`${data.student.firstName} ${data.student.middleName} ${data.student.lastName}`}</div>
       ),
-      width: "240px",
+      width: "190px",
     },
     {
       name: <div>Spp Bulan</div>,
@@ -71,11 +71,24 @@ export default function ListSpp() {
             (data.month == 12 && "Desember")}
         </div>
       ),
-      width: "auto",
+      width: "90px",
     },
     {
       name: <div>Semester</div>,
       cell: (data) => <div>{`Semester ${data.academicPeriode.increment}`}</div>,
+      width: "130px",
+    },
+    {
+      name: <div>Jumlah</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
+        </div>
+      ),
       width: "auto",
     },
     {
@@ -90,12 +103,12 @@ export default function ListSpp() {
           <i style={{ fontSize: "21px" }} className="fa fa-file" />
         </button>
       ),
-      width: "auto",
+      width: "100px",
     },
     {
       name: <div>Deskripsi</div>,
       cell: (data) => <div>{data.description}</div>,
-      width: "210px",
+      width: "auto",
     },
     {
       name: <div>Aksi</div>,

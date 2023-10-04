@@ -47,14 +47,16 @@ export default function UbahDetailQuestion() {
     <>
       <Header
         home="Admin SARAT"
-        prev="Daftar Sesi"
+        prev="Daftar Pilihan Jawaban"
         navePrev={path}
-        at="Edit Sesi"
-        title="Edit Sesi"
+        at="Edit Pilihan Jawaban"
+        title="Edit Pilihan Jawaban"
       />
 
       <div style={{ padding: "40px 104px 0" }}>
-        <p className="text-[24px] font-bold text-merah">Form Edit Sesi</p>
+        <p className="text-[24px] font-bold text-merah">
+          Form Edit Pilihan Jawaban
+        </p>
         <article>
           <br />
           <TextInput

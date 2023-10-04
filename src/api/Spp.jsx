@@ -34,34 +34,14 @@ export function getUnpaidSpp(setData, setSts) {
     });
 }
 
-export function postSpp(
-  setSts,
-  navigate,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode
-) {
+export function postSpp(setSts, navigate, formData) {
   axios
-    .post(
-      process.env.REACT_APP_BASE_URL + "/spp",
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
+    .post(process.env.REACT_APP_BASE_URL + "/spp", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("TOKEN"),
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      }
-    )
+    })
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
@@ -82,35 +62,14 @@ export function postSpp(
     });
 }
 
-export function updateSpp(
-  setSts,
-  navigate,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode,
-  id
-) {
+export function updateSpp(setSts, navigate, formData, id) {
   axios
-    .put(
-      process.env.REACT_APP_BASE_URL + `/spp/${id}`,
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
+    .put(process.env.REACT_APP_BASE_URL + `/spp/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("TOKEN"),
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      }
-    )
+    })
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(

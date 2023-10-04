@@ -284,7 +284,7 @@ export function FilterComponentSpp({
         >
           <Input
             id="search"
-            placeholder="Cari Nama Barang..."
+            placeholder="Cari Nama Murid..."
             value={filterText}
             onChange={onFilter}
           />
@@ -2535,9 +2535,9 @@ export function DataTablesSession({
         // }
         `;
 
-  data?.sort(function (a, b) {
-    return b.id - a.id;
-  });
+  // data?.sort(function (a, b) {
+  //   return b.id - a.id;
+  // });
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);

@@ -85,6 +85,7 @@ import ListInstitution from "./pages/SARAT/Institusi/ListIntitution";
 import UbahQuestion from "./pages/SARAT/Soal/UbahQuestion";
 import UbahDetailQuestion from "./pages/SARAT/Soal/UbahDetailQuestion";
 import TambahAnswers from "./pages/SARAT/Soal/TambahAnswers";
+import ListNews from "./pages/SARAT/News/ListNews";
 
 const App = () => {
   return (
@@ -151,6 +152,7 @@ const App = () => {
           <Route path="/admin/list-resume" element={<ListResume />} />
           <Route path="/admin/list-sesi" element={<ListSession />} />
           <Route path="/admin/list-institusi" element={<ListInstitution />} />
+          <Route path="/admin/list-berita" element={<ListNews />} />
 
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />

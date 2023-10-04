@@ -117,8 +117,8 @@ export default function ListQuestion() {
         home="Admin SARAT"
         prev="Daftar Soal"
         // navePrev={path}
-        at="Daftar Jawaban Soal"
-        title="Daftar Jawaban Soal"
+        at="Daftar Pilihan Jawaban"
+        title="Daftar Pilihan Jawaban"
       />
 
       <div style={{ marginTop: "50px" }}>

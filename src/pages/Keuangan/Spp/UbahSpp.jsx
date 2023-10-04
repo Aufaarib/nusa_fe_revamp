@@ -5,7 +5,7 @@ import { getMurid } from "../../../api/Murid";
 import { updateSpp } from "../../../api/Spp";
 import { getSemester } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
-import { DropdownSiswa } from "../../../components/Dropdown";
+import { DropdownMultiple, DropdownSiswa } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
@@ -17,7 +17,7 @@ export default function UbahSpp() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
   const [amounts, setAmount] = useState(location.state.amount);
-  const [month, setMonth] = useState({
+  const [months, setMonth] = useState({
     label: location.state.month,
     value: location.state.month,
   });
@@ -32,6 +32,8 @@ export default function UbahSpp() {
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
+
+  console.log(months);
 
   const fetchAcademicPeriode = () => {
     getSemester(setAcademicPeriodeData, setSts);
@@ -67,26 +69,25 @@ export default function UbahSpp() {
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
+    const formData = new FormData();
+
+    formData.append(`amount`, amount);
+    formData.append(`description`, description);
+    formData.append(`invoice`, invoice);
+    formData.append(`periodeId`, periodeIds.value);
+    formData.append(`studentCode`, studentCodes.value);
+    formData.append(`month`, months);
+
     if (
       amounts === "" ||
-      month === "" ||
+      months === "" ||
       periodeIds === "" ||
       studentCodes === "" ||
       description === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateSpp(
-        setSts,
-        navigateSpp,
-        amount,
-        month,
-        description,
-        invoice,
-        periodeIds.value,
-        studentCodes.value,
-        location.state.id
-      );
+      updateSpp(setSts, navigateSpp, formData, location.state.id);
     }
   };
 
@@ -195,19 +196,12 @@ export default function UbahSpp() {
           <DropdownSiswa
             label="Spp Bulan"
             required={true}
-            defaultValue={month}
+            defaultValue={months}
             isClearable={false}
             options={monthOptions}
             isSearchable={false}
             onChange={(e) => setMonth(e.value)}
           />
-          {/* <TextInput
-            label="Spp Bulan"
-            type="text"
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-            required={true}
-          /> */}
           <DropdownSiswa
             label="Murid"
             required={true}
