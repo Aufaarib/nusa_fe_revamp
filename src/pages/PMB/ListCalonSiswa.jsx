@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { getActiveAdmission, postCalonSiswa } from "../../api/Pendaftaran";
 import { getMyAdmission } from "../../api/Registrasi";
 import { Header } from "../../components";
-import { ModalTambahCalonMurid } from "../../components/ModalPopUp";
+import {
+  AlertMessage,
+  ModalTambahCalonMurid,
+} from "../../components/ModalPopUp";
 
 const ListCalonSiswa = () => {
   const [dataMyAdmission, setDataMyAdmission] = useState([]);
@@ -11,6 +14,8 @@ const ListCalonSiswa = () => {
   const [childName, setName] = useState("");
   const [sts, setSts] = useState("");
   const path = "/pmb/tahapan-pmb";
+
+  console.log("active === ", dataActiveAdmission);
 
   useEffect(() => {
     getMyAdmission(setDataMyAdmission, setSts);

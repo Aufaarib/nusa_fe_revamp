@@ -67,6 +67,13 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
       setSts({ type: "error", error });
       if (error.code === "ERR_NETWORK") {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else if (admissionPhaseId === "") {
+        AlertMessage(
+          "Tidak Dapat Mendaftar",
+          "Belum Ada Sesi Pendaftaran Yang Dibuka",
+          "Tutup",
+          "warning"
+        );
       } else {
         AlertMessage(
           "Gagal",

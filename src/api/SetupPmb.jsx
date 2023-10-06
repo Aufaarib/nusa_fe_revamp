@@ -85,6 +85,7 @@ export function postAdmission(
   increment,
   startDate,
   endDate,
+  testSchedule,
   registrationAmount,
   description,
   educationAmount
@@ -102,6 +103,7 @@ export function postAdmission(
             startDate: startDate,
             endDate: endDate,
             amount: registrationAmount,
+            testSchedule: testSchedule,
           },
         ],
       },
@@ -145,14 +147,14 @@ export function postAdmission(
             );
           }
         });
-    })
-    .catch((error) => {
-      // setIsLoading(false);
-      setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
-      }
     });
+  // .catch((error) => {
+  //   // setIsLoading(false);
+  //   setSts({ type: "error", error });
+  //   if (error.code === "ERR_NETWORK") {
+  //     AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+  //   } else {
+  //     AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+  //   }
+  // });
 }

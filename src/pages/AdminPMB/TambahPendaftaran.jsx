@@ -25,6 +25,7 @@ export default function TambahPendaftaran() {
   const [increment, setIncrement] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [testSchedule, setTestSchedule] = useState("");
   const [registrationAmount, setRegistrationAmount] = useState("");
   const [educationAmount, setEducationAmount] = useState("");
   const [description, setDescription] = useState("Detail Biaya Pendidikan");
@@ -66,6 +67,7 @@ export default function TambahPendaftaran() {
       gelombang_ke === 0 ||
       startDate === "" ||
       endDate === "" ||
+      testSchedule === "" ||
       description === "" ||
       jumlahBiayaPendaftaran === 0 ||
       jumlahBiayaPendidikan === 0
@@ -80,6 +82,7 @@ export default function TambahPendaftaran() {
         gelombang_ke,
         startDate,
         endDate,
+        testSchedule,
         jumlahBiayaPendaftaran,
         description,
         jumlahBiayaPendidikan
@@ -155,6 +158,11 @@ export default function TambahPendaftaran() {
             label="Tanggal Selesai"
             value={endDate}
             change={(e) => setEndDate(e.element.value)}
+          />
+          <DropdownDatePickers
+            label="Tanggal Tes"
+            value={testSchedule}
+            change={(e) => setTestSchedule(e.element.value)}
           />
           <TextInput
             label="Nominal Biaya Pendaftaran"

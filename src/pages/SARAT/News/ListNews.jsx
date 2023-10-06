@@ -78,15 +78,16 @@ export default function ListNews() {
             className="btn-hijau"
             title="Edit"
             onClick={() =>
-              navigateUbahSession(
+              navigateUbahNews(
                 data.id,
-                data.name,
-                data.academic_year_id,
-                data.details
+                data.session_detail_id,
+                data.description,
+                data.video_url,
+                data.images
               )
             }
           >
-            <i className="fa fa-edit" /> Edit Nama Resume
+            <i className="fa fa-edit" /> Edit Berita
           </button>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
@@ -94,13 +95,13 @@ export default function ListNews() {
             title="Edit"
             onClick={() => navigateListSession(data.id, data.name)}
           >
-            <i className="fa fa-edit" /> Daftar Sesi
+            <i className="fa fa-edit" /> Daftar Foto
           </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "260px",
     },
   ];
 
@@ -110,22 +111,24 @@ export default function ListNews() {
     navigate("/admin/list-sesi");
   };
 
-  const navigateTambahSession = () => {
-    navigate("/admin/tambah-resume");
+  const navigateTambahBerita = () => {
+    navigate("/admin/tambah-berita");
   };
 
-  const navigateUbahSession = (
-    resume_id,
-    resume_name,
-    academicYearId,
-    detailsData
+  const navigateUbahNews = (
+    id,
+    session_detail_id,
+    description,
+    video_url,
+    images
   ) => {
-    navigate("/admin/ubah-resume", {
+    navigate("/admin/ubah-berita", {
       state: {
-        resumeId: resume_id,
-        resumeName: resume_name,
-        academicYearId: academicYearId,
-        details: detailsData,
+        id: id,
+        session_detail_id: session_detail_id,
+        description: description,
+        video_url: video_url,
+        images: images,
       },
     });
   };
@@ -144,7 +147,7 @@ export default function ListNews() {
         <DataTablesSession
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahSession}
+          onClick={navigateTambahBerita}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           itemsPerPage={itemsPerPage}
@@ -152,7 +155,7 @@ export default function ListNews() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
-          buttonText="Tambah Resume"
+          buttonText="Tambah Berita"
         />
       </div>
     </>

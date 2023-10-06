@@ -69,6 +69,60 @@ export function getQuestion(setData, setSts, session_id) {
       }
     });
 }
+export function getSession(page, per_page, setData, setSts, setPagination) {
+  axios
+    .get(
+      process.env.REACT_APP_NUSA_SARAT +
+        `/session/filter?page=${page}&per_page=${per_page}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      setData(res.data.body);
+      setPagination(res.data.meta);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
+export function getActiveSession(setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/session/active`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body.details);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
+export function getDetailSession(id, setData, setDetailsData, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/session/fetch/${id}`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body);
+      setDetailsData(res.data.body.details);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
 export function postAnswers(setSts, navigate, question_id, fields) {
   for (const i of fields) {
     axios
@@ -176,44 +230,6 @@ export function postQuestion(
       });
   }
 }
-export function getSession(page, per_page, setData, setSts, setPagination) {
-  axios
-    .get(
-      process.env.REACT_APP_NUSA_SARAT +
-        `/session/filter?page=${page}&per_page=${per_page}`,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then((res) => {
-      setData(res.data.body);
-      setPagination(res.data.meta);
-      setSts({ type: "success" });
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
-    });
-}
-export function getDetailSession(id, setData, setDetailsData, setSts) {
-  axios
-    .get(process.env.REACT_APP_NUSA_SARAT + `/session/fetch/${id}`, {
-      headers: { authorization: localStorage.getItem("TOKEN") },
-    })
-    .then((res) => {
-      setData(res.data.body);
-      setDetailsData(res.data.body.details);
-      setSts({ type: "success" });
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
-    });
-}
 export function postSession(setSts, navigate, data) {
   axios
     .post(process.env.REACT_APP_NUSA_SARAT + "/session/create", data, {
@@ -237,6 +253,32 @@ export function postSession(setSts, navigate, data) {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
       } else {
         AlertMessage("Gagal", "Tambah Sesi Gagal", "Coba Lagi", "error");
+      }
+    });
+}
+export function postNews(setSts, navigate, formData) {
+  axios
+    .post(process.env.REACT_APP_NUSA_SARAT + "/news/create", formData, {
+      headers: {
+        authorization: localStorage.getItem("TOKEN"),
+      },
+    })
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Berita Berhasil"
+      );
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Berita Gagal", "Coba Lagi", "error");
       }
     });
 }
@@ -326,6 +368,37 @@ export function updateDetailQuestion(
         },
       }
     )
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Edit Pilihan Jawaban Berhasil"
+      );
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Edit Pilihan Jawaban Gagal",
+          "Coba Lagi",
+          "error"
+        );
+      }
+    });
+}
+export function updateNews(id, setSts, navigate, formData) {
+  axios
+    .put(process.env.REACT_APP_NUSA_SARAT + `/news/update/${id}`, formData, {
+      headers: {
+        authorization: localStorage.getItem("TOKEN"),
+      },
+    })
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(

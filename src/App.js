@@ -86,6 +86,8 @@ import UbahQuestion from "./pages/SARAT/Soal/UbahQuestion";
 import UbahDetailQuestion from "./pages/SARAT/Soal/UbahDetailQuestion";
 import TambahAnswers from "./pages/SARAT/Soal/TambahAnswers";
 import ListNews from "./pages/SARAT/News/ListNews";
+import TambahNews from "./pages/SARAT/News/TambahNews";
+import UbahNews from "./pages/SARAT/News/UbahNews";
 
 const App = () => {
   return (
@@ -190,6 +192,7 @@ const App = () => {
             path="/admin/ubah-detail-soal"
             element={<UbahDetailQuestion />}
           />
+          <Route path="/admin/ubah-berita" element={<UbahNews />} />
 
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
@@ -233,6 +236,7 @@ const App = () => {
           <Route path="/admin/tambah-sesi" element={<TambahSession />} />
           <Route path="/admin/tambah-soal" element={<TambahQuestion />} />
           <Route path="/admin/tambah-detail-soal" element={<TambahAnswers />} />
+          <Route path="/admin/tambah-berita" element={<TambahNews />} />
         </Route>
 
         {/* PROTECTED ROUTES */}
