@@ -1,6 +1,22 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 
+export function getDonations(session_id, setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/donation/fetch/${session_id}`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
 export function getNews(setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/news/filter`, {
@@ -106,12 +122,14 @@ export function getSession(page, per_page, setData, setSts, setPagination) {
       }
     });
 }
-export function getActiveSession(setData, setSts) {
+export function getActiveSession(setData, setSts, setAllData) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/active`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setAllData(res.data.body);
+      localStorage.setItem("SESSION_ID", res.data.body.id);
       setData(res.data.body.details);
       setSts({ type: "success" });
     })
