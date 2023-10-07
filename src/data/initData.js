@@ -165,6 +165,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-berita`,
         icon: <FaWpforms />,
       },
+      {
+        name: "Infaq",
+        path: `admin/list-infaq`,
+        icon: <FaWpforms />,
+      },
     ],
   },
 ];

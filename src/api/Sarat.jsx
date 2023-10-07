@@ -17,6 +17,22 @@ export function getNews(setData, setSts) {
       }
     });
 }
+export function getNewsDetail(id, setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/news/fetch/${id}`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body.images);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
 export function getInstitution(setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/institution/filter`, {

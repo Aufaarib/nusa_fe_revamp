@@ -2535,9 +2535,9 @@ export function DataTablesSession({
         // }
         `;
 
-  // data?.sort(function (a, b) {
-  //   return b.id - a.id;
-  // });
+  data?.sort(function (a, b) {
+    return b.id - a.id;
+  });
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);

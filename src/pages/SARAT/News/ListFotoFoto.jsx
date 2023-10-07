@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
-import { getNews, getSession } from "../../../api/Sarat";
+import { getNews, getNewsDetail, getSession } from "../../../api/Sarat";
 import moment from "moment/moment";
-import {
-  AlerNewsFiles,
-  AlerNewsVideos,
-  AlertFiles,
-} from "../../../components/ModalPopUp";
+import { AlerNewsFiles, AlertFiles } from "../../../components/ModalPopUp";
+import { BsChevronBarLeft } from "react-icons/bs";
 
-export default function ListNews() {
+export default function ListFotoFoto() {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState("");
   const [sts, setSts] = useState(undefined);
@@ -18,16 +15,17 @@ export default function ListNews() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const navigate = useNavigate();
+  const location = useLocation();
 
   let filteredItems = data;
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.description.toLowerCase().includes(filterText.toLowerCase())
+      data.createdAt.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
   useEffect(() => {
-    getNews(setData, setSts);
+    getNewsDetail(location.state.id, setData, setSts);
   }, []);
 
   const columns = [
@@ -37,17 +35,12 @@ export default function ListNews() {
       width: "55px",
     },
     {
-      name: <div>Deskripsi</div>,
-      cell: (data) => <div>{data.description}</div>,
-      width: "220px",
-    },
-    {
-      name: <div>Thumbnail</div>,
+      name: <div>Foto</div>,
       cell: (data) => (
         <button
           title="Lihat Thumbnail"
           onClick={() => {
-            AlerNewsFiles(data.images[0].image_url);
+            AlerNewsFiles(data.image_url);
           }}
         >
           <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
@@ -56,53 +49,31 @@ export default function ListNews() {
       width: "auto",
     },
     {
-      name: <div>Video</div>,
-      cell: (data) => (
-        <button
-          title="Lihat Video"
-          onClick={() => {
-            AlerNewsVideos(data.video_url);
-          }}
-        >
-          <i style={{ fontSize: "21px" }} className="fa fa-file-video-o" />
-        </button>
-      ),
-      width: "auto",
-    },
-    {
-      name: <div>Tanggal Dibuat</div>,
+      name: <div>Tanggal DiUpload</div>,
       cell: (data) => <div>{moment(data.createdAt).format("YYYY-MM-DD")}</div>,
       width: "190px",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div className="flex gap-2">
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-hijau"
-            title="Edit"
-            onClick={() =>
-              navigateUbahNews(
-                data.id,
-                data.session_detail_id,
-                data.description,
-                data.video_url,
-                data.images
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Edit Berita
-          </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() => navigateDetailNews(data.id, data.description)}
-          >
-            <i className="fa fa-edit" /> Daftar Foto
-          </button>
-        </div>
+        // <div className="flex gap-2">
+        <button
+          style={{ width: "auto", padding: "2px 10px" }}
+          className="btn-mrh"
+          title="Hapus"
+          // onClick={() =>
+          //   navigateUbahNews(
+          //     data.id,
+          //     data.session_detail_id,
+          //     data.description,
+          //     data.video_url,
+          //     data.images
+          //   )
+          // }
+        >
+          <i className="fa fa-trash" /> Hapus
+        </button>
+        // </div>
       ),
       ignoreRowClick: true,
       button: true,
@@ -110,13 +81,8 @@ export default function ListNews() {
     },
   ];
 
-  const navigateDetailNews = (id, description) => {
-    navigate("/admin/list-foto-berita", {
-      state: {
-        id: id,
-        description: description,
-      },
-    });
+  const navigateListNews = () => {
+    navigate("/admin/list-berita");
   };
 
   const navigateTambahBerita = () => {
@@ -147,8 +113,8 @@ export default function ListNews() {
         home="Admin SARAT"
         // prev="Bank"
         // navePrev={path}
-        at="Resume"
-        title="Daftar Resume"
+        at="Daftar Foto Berita"
+        title="Daftar Foto Berita"
       />
 
       <div style={{ marginTop: "50px" }}>
@@ -163,8 +129,16 @@ export default function ListNews() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
-          buttonText="Tambah Berita"
+          buttonText="Tambah Foto"
         />
+        <div className="flex justify-start w-full">
+          <button
+            onClick={navigateListNews}
+            className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
+          >
+            <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
+          </button>
+        </div>
       </div>
     </>
   );

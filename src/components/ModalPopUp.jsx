@@ -686,6 +686,39 @@ export const AlertPaymentProof = (url) => {
   }
 };
 
+export const AlerNewsVideos = (url) => {
+  console.log(url);
+  styledSweetAlert
+    .fire({
+      width: "700px",
+      showConfirmButton: true,
+      confirmButtonText: "Lihat Video",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        window.open(url, "_blank");
+      }
+    });
+};
+export const AlerNewsFiles = (url) => {
+  const domain = process.env.REACT_APP_BASE_STATIC_SARAT_FILE;
+  if (domain.length == 0) {
+    styledSweetAlert.fire({
+      title: "Loading...",
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  } else {
+    styledSweetAlert.fire({
+      width: "700px",
+      imageUrl: domain + url, // Replace with the path to your image
+      imageWidth: "100%", // Adjust the width of the image as needed
+      showConfirmButton: true,
+      confirmButtonText: "Tutup",
+    });
+  }
+};
+
 export const AlertFiles = (url) => {
   const domain = process.env.REACT_APP_BASE_STATIC_FILE;
   if (domain.length == 0) {

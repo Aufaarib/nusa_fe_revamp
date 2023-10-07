@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DropdownSiswa } from "../../../components/Dropdown";
 import TextInput, { TextArea } from "../../../components/TextInput";
-import { getActiveSession, postNews } from "../../../api/Sarat";
+import { getActiveSession, postNews, updateNews } from "../../../api/Sarat";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { useEffect } from "react";
 
@@ -19,9 +19,16 @@ export default function UbahNews() {
   const [video_url, setVideoUrl] = useState(location.state.video_url);
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(location.state.images);
+  const [updateFilesData, setUpdateFilesData] = useState([]);
   const navigate = useNavigate();
   const path = "/admin/list-berita";
   const uploaderRef = useRef(null);
+
+  const removeFiles = (index) => {
+    const newArray = [...filesData];
+    newArray.splice(index, 1);
+    setFilesData(newArray);
+  };
 
   console.log("filesData === ", filesData);
 
@@ -43,14 +50,13 @@ export default function UbahNews() {
 
   const onUploadChange = (args) => {
     console.log("File uploaded successfully:", args);
-    setFilesData([...filesData, args]);
+    setUpdateFilesData([...updateFilesData, args]);
   };
-  console.log("filesData", filesData);
 
   const removeFile = (fileIndex) => {
-    const updatedFiles = [...filesData];
+    const updatedFiles = [...updateFilesData];
     updatedFiles.splice(fileIndex, 1);
-    setFilesData(updatedFiles);
+    setUpdateFilesData(updatedFiles);
   };
   const onFileUpload = (args) => {};
 
@@ -68,19 +74,29 @@ export default function UbahNews() {
     formData.append(`video_url`, video_url);
 
     filesData.forEach((file, index) => {
+      formData.append(
+        `images`,
+        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + file.image_url
+      );
+    });
+
+    updateFilesData.forEach((file, index) => {
       formData.append(`images`, file.filesData[0].rawFile);
-      console.log("dasdfv === ", file.filesData[0].rawFile);
+    });
+
+    formData.forEach(function (value, key) {
+      console.log(key, value);
     });
 
     if (
-      // session_detail_id === "" ||
+      session_detail_id.value === "" ||
       description === "" ||
-      video_url === "" ||
-      filesData.length === 0
+      video_url === ""
+      // filesData.length === 0
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postNews(setSts, navigateListSpending, formData);
+      updateNews(location.state.id, setSts, navigateListSpending, formData);
     }
   };
 
@@ -133,12 +149,23 @@ export default function UbahNews() {
             required={true}
           />
           <br />
+          <hr className="mr-10 mb-10" />
           {filesData.map((files, index) => (
-            <div key={index}>
-              <label>{files.image_url}</label>
+            <div key={index} className="flex justify-center gap-3 items-center">
+              <img
+                className="w-84 h-64 mt-2"
+                src={
+                  process.env.REACT_APP_BASE_STATIC_SARAT_FILE + files.image_url
+                }
+                alt="Girl in a jacket"
+              />
+              <button
+                className="mt-2 px-2 text-merah border-solid border-1 border-merah rounded-full text-3xl fa fa-trash"
+                onClick={() => removeFiles(index)}
+              />
             </div>
           ))}
-          <hr className="mr-10 mb-10" />
+          <br />
           <p className="font-bold text-merah mr-8 underline flex justify-center">
             Tambah Foto-Foto
           </p>
