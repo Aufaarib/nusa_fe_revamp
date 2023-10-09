@@ -72,20 +72,28 @@ export default function ListSession() {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div>
+        <div className="flex gap-1">
           <button
-            style={{ width: "auto", padding: "2px 10px" }}
+            // style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
             onClick={() => navigateSoal(data.id, data.title)}
           >
             <i className="fa fa-edit" /> Data Soal
           </button>
+          <button
+            // style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            title="Edit"
+            onClick={() => navigateInfaq(data.id, data.title)}
+          >
+            <i className="fa fa-edit" /> Data Infaq
+          </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "150px",
+      width: "300px",
     },
   ];
 
@@ -98,6 +106,12 @@ export default function ListSession() {
         details: detailsData,
       },
     });
+  };
+
+  const navigateInfaq = (session_id, session_tittle) => {
+    localStorage.setItem("SESSION_ID", session_id);
+    localStorage.setItem("SESSION_TITTLE", session_tittle);
+    navigate("/admin/list-infaq");
   };
 
   const navigateSoal = (session_id, session_tittle) => {

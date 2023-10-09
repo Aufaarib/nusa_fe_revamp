@@ -75,6 +75,11 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
+        name: "Pertanyaan Pernyataan",
+        path: `admin/list-pertanyaan-pernyataan`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Data Registrasi",
         path: `admin/list-data-registrasi`,
         icon: <FaWpforms />,
@@ -165,11 +170,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-berita`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Infaq",
-        path: `admin/list-infaq`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Infaq",
+      //   path: `admin/list-infaq`,
+      //   icon: <FaWpforms />,
+      // },
     ],
   },
 ];

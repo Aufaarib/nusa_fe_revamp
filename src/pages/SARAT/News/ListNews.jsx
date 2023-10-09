@@ -37,6 +37,11 @@ export default function ListNews() {
       width: "55px",
     },
     {
+      name: <div>Session Id</div>,
+      cell: (data) => <div>{data.session_detail_id}</div>,
+      width: "auto",
+    },
+    {
       name: <div>Deskripsi</div>,
       cell: (data) => <div>{data.description}</div>,
       width: "220px",
@@ -147,8 +152,8 @@ export default function ListNews() {
         home="Admin SARAT"
         // prev="Bank"
         // navePrev={path}
-        at="Resume"
-        title="Daftar Resume"
+        at="Berita"
+        title="Daftar Berita"
       />
 
       <div style={{ marginTop: "50px" }}>
