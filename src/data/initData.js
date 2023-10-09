@@ -86,97 +86,97 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
-  {
-    title: "Admin KBM",
-    path: `admin/kbm`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Murid",
-        path: `admin/list-murid`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Guru",
-        path: `admin/list-guru`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelas",
-        path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Mata Pelajaran",
-        path: `admin/list-mata-pelajaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan",
-        path: `admin/list-ruangan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelompok Mata Pelajaran",
-        path: `admin/list-kelompok-mapel`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan Kelas",
-        path: `admin/list-ruang-kelas`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
-  {
-    title: "Admin Keuangan",
-    path: `admin/keuangan`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "SPP",
-        path: `admin/list-spp`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Pengeluaran",
-        path: `admin/list-pengeluaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Laporan",
-        path: `admin/list-laporan`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
-  {
-    title: "Admin SARAT",
-    path: `admin/sarat`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Institusi",
-        path: `admin/list-institusi`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Resume",
-        path: `admin/list-resume`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Berita",
-        path: `admin/list-berita`,
-        icon: <FaWpforms />,
-      },
-      // {
-      //   name: "Infaq",
-      //   path: `admin/list-infaq`,
-      //   icon: <FaWpforms />,
-      // },
-    ],
-  },
+  // {
+  //   title: "Admin KBM",
+  //   path: `admin/kbm`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Murid",
+  //       path: `admin/list-murid`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Guru",
+  //       path: `admin/list-guru`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelas",
+  //       path: `admin/list-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Mata Pelajaran",
+  //       path: `admin/list-mata-pelajaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Ruangan",
+  //       path: `admin/list-ruangan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Kelompok Mata Pelajaran",
+  //       path: `admin/list-kelompok-mapel`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Ruangan Kelas",
+  //       path: `admin/list-ruang-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Admin Keuangan",
+  //   path: `admin/keuangan`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "SPP",
+  //       path: `admin/list-spp`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Pengeluaran",
+  //       path: `admin/list-pengeluaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Laporan",
+  //       path: `admin/list-laporan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Admin SARAT",
+  //   path: `admin/sarat`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Institusi",
+  //       path: `admin/list-institusi`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Resume",
+  //       path: `admin/list-resume`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Berita",
+  //       path: `admin/list-berita`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     // {
+  //     //   name: "Infaq",
+  //     //   path: `admin/list-infaq`,
+  //     //   icon: <FaWpforms />,
+  //     // },
+  //   ],
+  // },
 ];
 
 export const themeColors = [

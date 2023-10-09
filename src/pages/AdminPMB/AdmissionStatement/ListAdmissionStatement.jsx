@@ -52,11 +52,11 @@ export default function ListAdmissionStatement() {
   return (
     <>
       <Header
-        home="Admin Keuangan"
+        home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Laporan Keuangan"
-        title="Data Laporan Keuangan"
+        at="Daftar Pertanyaan Pernyataan"
+        title="Daftar Pertanyaan Pernyataan"
       />
 
       <div style={{ marginTop: "50px" }}>
