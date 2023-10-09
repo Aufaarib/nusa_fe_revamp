@@ -150,21 +150,33 @@ export default function UbahNews() {
           />
           <br />
           <hr className="mr-10 mb-10" />
-          {filesData.map((files, index) => (
-            <div key={index} className="flex justify-center gap-3 items-center">
-              <img
-                className="w-84 h-64 mt-2"
-                src={
-                  process.env.REACT_APP_BASE_STATIC_SARAT_FILE + files.image_url
-                }
-                alt="Girl in a jacket"
-              />
-              <button
-                className="mt-2 px-2 text-merah border-solid border-1 border-merah rounded-full text-3xl fa fa-trash"
-                onClick={() => removeFiles(index)}
-              />
-            </div>
-          ))}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+              padding: "20px",
+            }}
+          >
+            {filesData.map((files, index) => (
+              <div
+                key={index}
+                className="flex flex-col justify-center gap-3 items-center"
+              >
+                <img
+                  className="w-84 h-64 mt-2"
+                  src={
+                    process.env.REACT_APP_BASE_STATIC_SARAT_FILE +
+                    files.image_url
+                  }
+                  alt="Girl in a jacket"
+                />
+                <button
+                  className="mt-2 px-2 text-merah border-solid border-1 border-merah rounded-full text-3xl fa fa-trash"
+                  onClick={() => removeFiles(index)}
+                />
+              </div>
+            ))}
+          </div>
           <br />
           <p className="font-bold text-merah mr-8 underline flex justify-center">
             Tambah Foto-Foto

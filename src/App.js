@@ -90,6 +90,9 @@ import TambahNews from "./pages/SARAT/News/TambahNews";
 import UbahNews from "./pages/SARAT/News/UbahNews";
 import ListFotoFoto from "./pages/SARAT/News/ListFotoFoto";
 import ListDonations from "./pages/SARAT/Infaq/ListDonations";
+import TambahDonations from "./pages/SARAT/Infaq/TambahDonations";
+import TambahAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/TambahAdmissionStatement";
+import ListAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/ListAdmissionStatement";
 
 const App = () => {
   return (
@@ -159,6 +162,10 @@ const App = () => {
           <Route path="/admin/list-berita" element={<ListNews />} />
           <Route path="/admin/list-foto-berita" element={<ListFotoFoto />} />
           <Route path="/admin/list-infaq" element={<ListDonations />} />
+          <Route
+            path="/admin/list-pertanyaan-pernyataan"
+            element={<ListAdmissionStatement />}
+          />
 
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
@@ -241,6 +248,11 @@ const App = () => {
           <Route path="/admin/tambah-soal" element={<TambahQuestion />} />
           <Route path="/admin/tambah-detail-soal" element={<TambahAnswers />} />
           <Route path="/admin/tambah-berita" element={<TambahNews />} />
+          <Route path="/admin/tambah-infaq" element={<TambahDonations />} />
+          <Route
+            path="/admin/tambah-pertanyaan-pernyataan"
+            element={<TambahAdmissionStatement />}
+          />
         </Route>
 
         {/* PROTECTED ROUTES */}

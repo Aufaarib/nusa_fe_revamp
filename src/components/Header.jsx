@@ -9,7 +9,7 @@ const Header = ({ home, prev, at, navHome, navPrev, title, icon }) => (
           {home}
         </Typography>
         {prev && (
-          <Link underline="hover" href={navPrev}>
+          <Link underline="hover" to={navPrev}>
             <Typography fontSize="14px" color="gray">
               {prev}
             </Typography>

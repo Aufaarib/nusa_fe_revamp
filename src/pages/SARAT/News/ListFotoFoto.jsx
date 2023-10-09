@@ -49,36 +49,36 @@ export default function ListFotoFoto() {
       width: "auto",
     },
     {
-      name: <div>Tanggal DiUpload</div>,
+      name: <div>Tanggal Di Upload</div>,
       cell: (data) => <div>{moment(data.createdAt).format("YYYY-MM-DD")}</div>,
-      width: "190px",
+      width: "auto",
     },
-    {
-      name: <div>Aksi</div>,
-      cell: (data) => (
-        // <div className="flex gap-2">
-        <button
-          style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-mrh"
-          title="Hapus"
-          // onClick={() =>
-          //   navigateUbahNews(
-          //     data.id,
-          //     data.session_detail_id,
-          //     data.description,
-          //     data.video_url,
-          //     data.images
-          //   )
-          // }
-        >
-          <i className="fa fa-trash" /> Hapus
-        </button>
-        // </div>
-      ),
-      ignoreRowClick: true,
-      button: true,
-      width: "260px",
-    },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+    //     // <div className="flex gap-2">
+    //     <button
+    //       style={{ width: "auto", padding: "2px 10px" }}
+    //       className="btn-mrh"
+    //       title="Hapus"
+    //       // onClick={() =>
+    //       //   navigateUbahNews(
+    //       //     data.id,
+    //       //     data.session_detail_id,
+    //       //     data.description,
+    //       //     data.video_url,
+    //       //     data.images
+    //       //   )
+    //       // }
+    //     >
+    //       <i className="fa fa-trash" /> Hapus
+    //     </button>
+    //     // </div>
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "260px",
+    // },
   ];
 
   const navigateListNews = () => {

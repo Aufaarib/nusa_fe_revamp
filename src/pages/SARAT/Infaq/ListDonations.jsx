@@ -23,6 +23,12 @@ export default function ListDonations() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(
+    "location.state.session_id === ",
+    localStorage.getItem("SESSION_ID")
+  );
+  console.log("data === ", data);
+
   let filteredItems = data;
   if (data !== null) {
     filteredItems = data.donation_history?.filter((data) =>
@@ -42,66 +48,56 @@ export default function ListDonations() {
     },
     {
       name: <div>Jumlah Infaq</div>,
-      cell: (data) => <div>{data.total}</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.total)}
+        </div>
+      ),
       width: "auto",
     },
     {
       name: <div>Tanggal Dibuat</div>,
       cell: (data) => <div>{moment(data.createdAt).format("YYYY-MM-DD")}</div>,
-      width: "190px",
+      width: "auto",
     },
-    {
-      name: <div>Aksi</div>,
-      cell: (data) => (
-        // <div className="flex gap-2">
-        <button
-          style={{ width: "auto", padding: "2px 10px" }}
-          className="btn-mrh"
-          title="Hapus"
-          // onClick={() =>
-          //   navigateUbahNews(
-          //     data.id,
-          //     data.session_detail_id,
-          //     data.description,
-          //     data.video_url,
-          //     data.images
-          //   )
-          // }
-        >
-          <i className="fa fa-trash" /> Hapus
-        </button>
-        // </div>
-      ),
-      ignoreRowClick: true,
-      button: true,
-      width: "260px",
-    },
+    // {
+    //   name: <div>Aksi</div>,
+    //   cell: (data) => (
+    //     // <div className="flex gap-2">
+    //     <button
+    //       style={{ width: "auto", padding: "2px 10px" }}
+    //       className="btn-mrh"
+    //       title="Hapus"
+    //       // onClick={() =>
+    //       //   navigateUbahNews(
+    //       //     data.id,
+    //       //     data.session_detail_id,
+    //       //     data.description,
+    //       //     data.video_url,
+    //       //     data.images
+    //       //   )
+    //       // }
+    //     >
+    //       <i className="fa fa-trash" /> Hapus
+    //     </button>
+    //     // </div>
+    //   ),
+    //   ignoreRowClick: true,
+    //   button: true,
+    //   width: "260px",
+    // },
   ];
 
-  const navigateListNews = () => {
-    navigate("/admin/list-berita");
+  const navigateTambahInfaq = () => {
+    navigate("/admin/tambah-infaq");
   };
 
-  const navigateTambahBerita = () => {
-    navigate("/admin/tambah-berita");
-  };
-
-  const navigateUbahNews = (
-    id,
-    session_detail_id,
-    description,
-    video_url,
-    images
-  ) => {
-    navigate("/admin/ubah-berita", {
-      state: {
-        id: id,
-        session_detail_id: session_detail_id,
-        description: description,
-        video_url: video_url,
-        images: images,
-      },
-    });
+  const navigateListSesi = () => {
+    navigate("/admin/list-sesi");
   };
 
   return (
@@ -110,19 +106,23 @@ export default function ListDonations() {
         home="Admin SARAT"
         // prev="Bank"
         // navePrev={path}
-        at="Daftar Foto Berita"
-        title={`Total Infaq ${new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
-        }).format(data.total)}`}
+        at="Daftar Infaq"
+        title={
+          data.length !== 0
+            ? `Total Infaq ${new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+              }).format(data.total)}`
+            : "Total Infaq Rp 0"
+        }
       />
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesSession
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahBerita}
+          onClick={navigateTambahInfaq}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           itemsPerPage={itemsPerPage}
@@ -130,11 +130,11 @@ export default function ListDonations() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
-          buttonText="Tambah Foto"
+          buttonText="Tambah Infaq"
         />
         <div className="flex justify-start w-full">
           <button
-            onClick={navigateListNews}
+            onClick={navigateListSesi}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-navigate hover:bg-transparent text-merah hover:text-gelap"
           >
             <BsChevronBarLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
