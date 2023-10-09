@@ -17,22 +17,9 @@ export function getKelompokMapel(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-    });
-}
-
-export function updateStatusKelompokMapel(setSts, status, id, setData) {
-  axios
-    .post(process.env.REACT_APP_BASE_URL + `/group-course/update/${id}`, {
-      status,
-    })
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
-      getKelompokMapel(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -76,12 +63,16 @@ export function updateKelompokMapel(
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      AlertMessage(
-        "Gagal",
-        "Ubah Kelompok Mata Pelajaran Gagal",
-        "Coba Lagi",
-        "error"
-      );
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Ubah Kelompok Mata Pelajaran Gagal",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -124,11 +115,15 @@ export function postKelompokMapel(
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      AlertMessage(
-        "Gagal",
-        "Tambah Kelompok Mata Pelajaran Gagal",
-        "Coba Lagi",
-        "error"
-      );
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Tambah Kelompok Mata Pelajaran Gagal",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }

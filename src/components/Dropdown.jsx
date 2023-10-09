@@ -2,7 +2,15 @@ import Select from "react-select";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import RadioInput from "./RadioInput";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+const onKeyDown = (event) => {
+  if (event.keyCode === 13) {
+    //13 is the key code for Enter
+    event.preventDefault();
+    //Here you can even write the logic to select the value from the drop down or something.
+  }
+};
 
 export const DropdownKurikulum = ({
   label,
@@ -40,6 +48,7 @@ export const DropdownKurikulum = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -89,6 +98,7 @@ export const DropdownStatus = ({
             placeholder={placeholder}
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -138,6 +148,7 @@ export const DropdownGroup = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -181,6 +192,7 @@ export const DropdownCostCenter = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
           <p>
             <a
@@ -192,25 +204,51 @@ export const DropdownCostCenter = ({
             </a>
           </p>
         </div>
-        {/* <div>
+      </form>
+    </div>
+  );
+};
+export const DropdownMultiple = ({
+  label,
+  name,
+  onChange,
+  required,
+  options,
+  defaultValue,
+  isClearable,
+  handleOnClick,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div
+          className="text-sm text-base font-normal text-gray-700 bg-white "
+          style={{
+            marginLeft: "40px",
+            display: "flex",
+            fontSize: "14px",
+            borderRadius: "5px",
+            outline: "none",
+            // border: "1px solid gray",
+          }}
+        >
           <Select
-            className="ml-20"
+            className="w-full"
             isClearable={isClearable}
             defaultValue={defaultValue}
-            placeholder="Pilih Salah Satu..."
+            isMulti
+            placeholder="Pilih Beberapa..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
-          <p>
-            <a
-              style={{ fontSize: "12px", borderBottom: "1px solid #8F0D1E" }}
-              className="block text-merah float-right"
-              onClick={handleOnClick}
-            >
-              Tambah Cost Center
-            </a>
-          </p>
-        </div> */}
+        </div>
       </form>
     </div>
   );
@@ -254,6 +292,7 @@ export const DropdownSiswa = ({
             options={options}
             onChange={onChange}
             isSearchable={isSearchable}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -302,17 +341,9 @@ export const DropdownJenisTransaksi = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -364,17 +395,9 @@ export const DropdownDebitKredit = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -421,18 +444,9 @@ export const DropdownBank = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          id={id}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -479,17 +493,9 @@ export const DropdownPendaftaran = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -541,6 +547,7 @@ export const DropdownValidasiStep = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
       </form>
@@ -593,17 +600,9 @@ export const DropdownTipeTransaksi = ({
             placeholder="Pilih Salah Satu..."
             options={options}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </div>
-        {/* <Select
-          className="ml-20"
-          isSearchable={isSearchable}
-          isClearable={isClearable}
-          defaultValue={defaultValue}
-          placeholder="Pilih Salah Satu..."
-          options={options}
-          onChange={onChange}
-        /> */}
       </form>
     </div>
   );
@@ -647,7 +646,6 @@ export const DropdownListComponents = ({
             fields={fields}
             value={value}
             change={change}
-            // popupHeight="auto"
           />
         </div>
       </form>
@@ -657,7 +655,7 @@ export const DropdownListComponents = ({
 export const DropdownDatePickers = ({ label, id, name, value, change }) => {
   return (
     <div>
-      <form className="grid-container">
+      <div className="grid-container">
         {label && (
           <label htmlFor={name}>
             {label} <span className="ml-1 text-merah">*</span>
@@ -665,9 +663,8 @@ export const DropdownDatePickers = ({ label, id, name, value, change }) => {
         )}
         <span>:</span>
         <div
-          className="text-sm text-base font-normal text-gray-700 bg-merah "
+          className="text-sm md:ml-10 text-base font-normal text-gray-700 bg-merah "
           style={{
-            marginLeft: "40px",
             display: "flex",
             fontSize: "14px",
             borderRadius: "5px",
@@ -680,9 +677,10 @@ export const DropdownDatePickers = ({ label, id, name, value, change }) => {
             change={change}
             format="yyy-MM-dd"
             placeholder="Pilih Tanggal (YYYY-MM-DD)"
+            openOnFocus
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };

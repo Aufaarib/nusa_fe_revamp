@@ -102,14 +102,18 @@ const FormPernyataan = ({ indexMurid }) => {
           "Upload Data Pernyataan Berhasil"
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage(
-          "Gagal",
-          "Upload Data Pernyataan Gagal",
-          "Coba Lagi",
-          "error"
-        );
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
@@ -123,16 +127,13 @@ const FormPernyataan = ({ indexMurid }) => {
         title="Form Pernyataan Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "20px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">Pernyataan</h1>
-            {/* <p className="text-xs">
-              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-              <span className="text-merah">*</span>) wajib diisi.
-            </p> */}
+            <p className="text-md">Catatan : Formulir Ini Bersifat Opsional</p>
           </section>
           {/* COL 1 */}
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
@@ -151,7 +152,7 @@ const FormPernyataan = ({ indexMurid }) => {
                         ).answer || ""
                       }
                       onChange={(e) => handleInputChange(e, item.id)}
-                      required={true}
+                      required={false}
                     />
                   </div>
                 ))
@@ -164,12 +165,12 @@ const FormPernyataan = ({ indexMurid }) => {
                       // placeholder={item.answer}
                       defaultValue={item.answer}
                       disable={true}
-                      required={true}
+                      required={false}
                     />
                   </div>
                 ))}
           </section>
-        </form>
+        </div>
       </div>
       {admissionAnswerData.length !== 0 && (
         <button className="btn-disabled">Pernyataan Telah Tersimpan</button>

@@ -14,6 +14,7 @@ import {
   FaRegTimesCircle,
   FaRegUserCircle,
 } from "react-icons/fa";
+import { AlertConfirmation } from "./ModalPopUp";
 
 const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
   const {
@@ -35,6 +36,20 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
 
   const reload = () => {
     window.location.href = path2;
+  };
+
+  const konfirmasiDaftarUlangAgreement = () => {
+    AlertConfirmation(
+      onConfirm,
+      "Persetujui Pendaftaran Ulang?",
+      "Apakah Ayah/Bunda Menyetujui Proses Pendaftaran Ulang?",
+      "Setuju",
+      "question"
+    );
+  };
+
+  const onConfirm = () => {
+    daftarUlangAgreement(reload);
   };
 
   const navigateFormulir = () => {
@@ -349,7 +364,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                     <>
                       {dataAdmissionRegistration.applicant === null ||
                       user?.parents?.length !== 3 ||
-                      dataAdmissionRegistration.statements?.length === 0 ||
+                      // dataAdmissionRegistration.statements?.length === 0 ||
                       dataAdmissionRegistration.additionalFiles?.length ===
                         0 ? (
                         <>
@@ -362,8 +377,8 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                           {user?.parents?.length !== 3 && (
                             <p>- Form Data Orang Tua Belum Lengkap</p>
                           )}
-                          {dataAdmissionRegistration.statements?.length ===
-                            0 && <p>- Belum Mengisi Form Pernyataan</p>}
+                          {/* {dataAdmissionRegistration.statements?.length ===
+                            0 && <p>- Belum Mengisi Form Pernyataan</p>} */}
                           {dataAdmissionRegistration.additionalFiles?.length ===
                             0 && <p>- Belum Mengisi Form Upload Berkas</p>}
                           <br />
@@ -553,7 +568,7 @@ const ModalTahapanPMB = ({ status, step, selected, setSelected }) => {
                             </p>
                             <br />
                             <button
-                              onClick={() => daftarUlangAgreement(reload)}
+                              onClick={() => konfirmasiDaftarUlangAgreement()}
                               className="mt-3 btn-merah"
                             >
                               Persetujuan Daftar Ulang

@@ -12,6 +12,9 @@ export function getSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 export function getUnpaidSpp(setData, setSts) {
@@ -25,37 +28,20 @@ export function getUnpaidSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
-export function postSpp(
-  setSts,
-  navigate,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode
-) {
+export function postSpp(setSts, navigate, formData) {
   axios
-    .post(
-      process.env.REACT_APP_BASE_URL + "/spp",
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
+    .post(process.env.REACT_APP_BASE_URL + "/spp", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("TOKEN"),
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      }
-    )
+    })
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
@@ -68,39 +54,22 @@ export function postSpp(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
+      }
     });
 }
 
-export function updateSpp(
-  setSts,
-  navigate,
-  amount,
-  month,
-  description,
-  invoice,
-  periodeId,
-  studentCode,
-  id
-) {
+export function updateSpp(setSts, navigate, formData, id) {
   axios
-    .put(
-      process.env.REACT_APP_BASE_URL + `/spp/${id}`,
-      {
-        amount,
-        month,
-        description,
-        invoice,
-        periodeId,
-        studentCode,
+    .put(process.env.REACT_APP_BASE_URL + `/spp/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("TOKEN"),
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      }
-    )
+    })
     .then(() => {
       setSts({ type: "success" });
       AlertStatusSuccess(
@@ -113,6 +82,10 @@ export function updateSpp(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
+      }
     });
 }

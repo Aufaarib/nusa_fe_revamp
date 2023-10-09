@@ -16,6 +16,9 @@ export function getPendaftaran(setPendaftaranData, setStatus) {
     })
     .catch((error) => {
       setStatus({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -32,6 +35,9 @@ export function getActiveAdmission(setData, setStatus) {
     })
     .catch((error) => {
       setStatus({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -58,12 +64,23 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
       setSts({ type: "success" });
     })
     .catch((error) => {
-      AlertMessage(
-        "Gagal",
-        "Penambahan Calon Siswa Gagal, Silahkan Coba Lagi",
-        "Coba Lagi",
-        "error"
-      );
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else if (admissionPhaseId === "") {
+        AlertMessage(
+          "Tidak Dapat Mendaftar",
+          "Belum Ada Sesi Pendaftaran Yang Dibuka",
+          "Tutup",
+          "warning"
+        );
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Penambahan Calon Siswa Gagal, Silahkan Coba Lagi",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }

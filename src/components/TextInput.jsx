@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { FaEye, FaLowVision } from "react-icons/fa";
 
+const onKeyDown = (event) => {
+  if (event.keyCode === 13) {
+    //13 is the key code for Enter
+    event.preventDefault();
+    //Here you can even write the logic to select the value from the drop down or something.
+  }
+};
+
 export const TextInputModal = ({
   placeholder,
   label,
@@ -27,6 +35,7 @@ export const TextInputModal = ({
       )}
 
       <input
+        onKeyDown={onKeyDown}
         style={{
           border: "1px solid #EBEBEB",
           background: "#EBEBEB",
@@ -69,7 +78,12 @@ export const TextInput = ({
   disable,
   onInput,
   defaultValue,
+  validationMsg,
+  validation,
 }) => {
+  const numberInputOnWheelPreventChange = (e) => {
+    e.target.blur();
+  };
   return (
     <>
       <div>
@@ -83,9 +97,8 @@ export const TextInput = ({
           <span className="mt-1">:</span>
 
           <div
-            className="px-3 py-2 text-sm text-base font-normal text-gray-700 bg-white "
+            className="px-3 md:ml-10 py-2 text-sm text-base font-normal text-gray-700 bg-white "
             style={{
-              marginLeft: "40px",
               display: "flex",
               textAlign: "center",
               fontSize: "14px",
@@ -94,6 +107,7 @@ export const TextInput = ({
             }}
           >
             <input
+              onKeyDown={onKeyDown}
               style={{
                 width: "100%",
                 padding: "5px",
@@ -111,9 +125,18 @@ export const TextInput = ({
               disabled={disable}
               onInput={onInput}
               defaultValue={defaultValue}
+              onWheel={numberInputOnWheelPreventChange}
             />
           </div>
         </form>
+        {validation == false ? (
+          <p className="flex md:justify-end  md:mr-24 mb-1 text-red-400 italic text-xs">
+            <span className="ml-1 text-red-400">*</span>
+            {validationMsg}
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
@@ -153,6 +176,7 @@ export const TextInputPassword = ({
           }}
         >
           <input
+            onKeyDown={onKeyDown}
             style={{
               width: "100%",
               padding: "10px",
@@ -215,7 +239,7 @@ export const TextArea = ({
           <span>:</span>
 
           <textarea
-            className="w-auto ml-20 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
+            className="w-auto md:ml-10 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
             type={type}
             id={id}
             name={name}

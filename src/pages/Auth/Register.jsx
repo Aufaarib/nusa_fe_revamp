@@ -13,7 +13,7 @@ import { TextInputPassword } from "../../components/TextInput";
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
 const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
-const ONLY_NUMBER_REGEX = /^[0-9\b]+$/;
+// const ONLY_NUMBER_REGEX = /^[0-9\b]+$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -24,7 +24,7 @@ const Register = () => {
   const userRef = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
-  const errRef = useRef();
+  // const errRef = useRef();
 
   const [user, setUser] = useState(location.state?.fullname);
   const [validName, setValidName] = useState(false);

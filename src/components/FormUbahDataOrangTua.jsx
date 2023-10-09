@@ -133,19 +133,30 @@ const FormUbahDataOrangTua = () => {
           } Berhasil`
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage("Gagal", "Ubah Data Gagal", "Coba Lagi", "error");
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
 
-  const [validPhone, setValidPhone] = useState(false);
+  const [validPhone1, setValidPhone1] = useState(false);
+  const [validPhone2, setValidPhone2] = useState(false);
 
   const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
 
   useEffect(() => {
-    setValidPhone(PHONE_REGEX.test(parent.phoneNumber1));
-  }, [parent.phoneNumber1]);
+    setValidPhone1(PHONE_REGEX.test(phoneNumber1));
+    setValidPhone2(PHONE_REGEX.test(phoneNumber2));
+  }, [phoneNumber1, phoneNumber2]);
 
   return (
     <article>
@@ -157,10 +168,7 @@ const FormUbahDataOrangTua = () => {
         title="Form Ubah Data Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
-          // onSubmit={handleSubmit}
-          style={{ display: "block", gap: "22px", padding: "10px" }}
-        >
+        <div style={{ display: "block", gap: "22px", padding: "10px" }}>
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah capitalize">
               Ubah Data {location.state.relationship}
@@ -257,15 +265,25 @@ const FormUbahDataOrangTua = () => {
                 value={phoneNumber1}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone1}
               />
               <TextInput
                 label="Nomor Ponsel 2"
                 type="number"
                 id="phoneNumber2"
-                onChange={(e) => setPhoneNumber_2(e.target.value)}
+                onChange={(e) => setPhoneNumber_1(e.target.value)}
                 value={phoneNumber2}
                 disable={false}
                 required={false}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone2}
               />
               <TextInput
                 label="Propinsi"
@@ -379,7 +397,7 @@ const FormUbahDataOrangTua = () => {
               />
             </section>
           </section>
-        </form>
+        </div>
       </div>
 
       <button className="btn-merah" onClick={handleSubmitUpdate}>

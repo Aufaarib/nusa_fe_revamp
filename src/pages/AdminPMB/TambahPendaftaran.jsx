@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postGuru } from "../../api/Guru";
-import { Header } from "../../components";
-import { AlertEmpty, AlertMessage } from "../../components/ModalPopUp";
-import TextInput from "../../components/TextInput";
-import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
-import { getTahunAjaran } from "../../api/TahunAjaran";
 import { postAdmission } from "../../api/SetupPmb";
-import { BsHandIndexThumbFill } from "react-icons/bs";
+import { getTahunAjaran } from "../../api/TahunAjaran";
+import { Header } from "../../components";
+import { DropdownDatePickers, DropdownSiswa } from "../../components/Dropdown";
+import { AlertMessage } from "../../components/ModalPopUp";
+import TextInput from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function TambahPendaftaran() {
@@ -27,6 +25,7 @@ export default function TambahPendaftaran() {
   const [increment, setIncrement] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [testSchedule, setTestSchedule] = useState("");
   const [registrationAmount, setRegistrationAmount] = useState("");
   const [educationAmount, setEducationAmount] = useState("");
   const [description, setDescription] = useState("Detail Biaya Pendidikan");
@@ -68,6 +67,7 @@ export default function TambahPendaftaran() {
       gelombang_ke === 0 ||
       startDate === "" ||
       endDate === "" ||
+      testSchedule === "" ||
       description === "" ||
       jumlahBiayaPendaftaran === 0 ||
       jumlahBiayaPendidikan === 0
@@ -82,6 +82,7 @@ export default function TambahPendaftaran() {
         gelombang_ke,
         startDate,
         endDate,
+        testSchedule,
         jumlahBiayaPendaftaran,
         description,
         jumlahBiayaPendidikan
@@ -157,6 +158,11 @@ export default function TambahPendaftaran() {
             label="Tanggal Selesai"
             value={endDate}
             change={(e) => setEndDate(e.element.value)}
+          />
+          <DropdownDatePickers
+            label="Tanggal Tes"
+            value={testSchedule}
+            change={(e) => setTestSchedule(e.element.value)}
           />
           <TextInput
             label="Nominal Biaya Pendaftaran"

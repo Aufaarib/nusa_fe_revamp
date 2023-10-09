@@ -14,6 +14,9 @@ export function getAdmission(setData, setSts, setIsLoading) {
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -37,10 +40,13 @@ export function getAdmissionDetails(
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
-export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
+export function updateStatusAdmission(setSts, code, navigate) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
@@ -50,7 +56,7 @@ export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
       }
     )
     .then(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -61,9 +67,13 @@ export function updateStatusAdmission(setSts, code, navigate, setIsLoading) {
       );
     })
     .catch((error) => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Gagal Ubah Status Pendaftar", "Tutup", "error");
+      }
     });
 }
 
@@ -75,10 +85,11 @@ export function postAdmission(
   increment,
   startDate,
   endDate,
+  testSchedule,
   registrationAmount,
   description,
-  educationAmount,
-  setIsLoading
+  educationAmount
+  // setIsLoading
 ) {
   axios
     .post(
@@ -92,6 +103,7 @@ export function postAdmission(
             startDate: startDate,
             endDate: endDate,
             amount: registrationAmount,
+            testSchedule: testSchedule,
           },
         ],
       },
@@ -111,7 +123,7 @@ export function postAdmission(
           { headers: { authorization: localStorage.getItem("TOKEN") } }
         )
         .then(() => {
-          setIsLoading(false);
+          // setIsLoading(false);
           setSts({ type: "success" });
           AlertStatusSuccess(
             path,
@@ -122,19 +134,27 @@ export function postAdmission(
           );
         })
         .catch((error) => {
-          setIsLoading(false);
+          // setIsLoading(false);
           setSts({ type: "error", error });
-          AlertMessage(
-            "Gagal",
-            "Tambah Biaya Pendidikan Gagal",
-            "Coba Lagi",
-            "error"
-          );
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Gagal",
+              "Tambah Biaya Pendidikan Gagal",
+              "Coba Lagi",
+              "error"
+            );
+          }
         });
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
     });
+  // .catch((error) => {
+  //   // setIsLoading(false);
+  //   setSts({ type: "error", error });
+  //   if (error.code === "ERR_NETWORK") {
+  //     AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+  //   } else {
+  //     AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
+  //   }
+  // });
 }

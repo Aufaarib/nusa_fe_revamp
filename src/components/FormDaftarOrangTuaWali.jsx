@@ -4,10 +4,9 @@ import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
-import TextInput, { TextInputModal } from "./TextInput";
-import { useStateContext } from "../contexts/ContextProvider";
 import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
+import axios from "../api/axios";
+import { useStateContext } from "../contexts/ContextProvider";
 import {
   DropdownDatePickers,
   DropdownRadioInputBiological,
@@ -15,12 +14,8 @@ import {
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
 import Header from "./Header";
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-  AlertStatusTambahSuccess,
-} from "./ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
+import TextInput, { TextInputModal } from "./TextInput";
 
 const FormDaftarOrangTuaWali = () => {
   const token = localStorage.getItem("TOKEN");
@@ -171,16 +166,30 @@ const FormDaftarOrangTuaWali = () => {
           "Pendataan Wali Berhasil Terupload"
         );
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        AlertMessage(
-          "Gagal",
-          "Gagal Mengupload Data Wali",
-          "Coba Lagi",
-          "error"
-        );
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Tidak Sesuai",
+            "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+            "Tutup Pesan",
+            "warning"
+          );
+        }
       });
   };
+
+  const [validPhone1, setValidPhone1] = useState(false);
+  const [validPhone2, setValidPhone2] = useState(false);
+
+  const PHONE_REGEX = /^(\+62|62|0)8[1-9][0-9]{4,12}$/;
+
+  useEffect(() => {
+    setValidPhone1(PHONE_REGEX.test(parent.phoneNumber1));
+    setValidPhone2(PHONE_REGEX.test(parent.phoneNumber2));
+  }, [parent.phoneNumber1, parent.phoneNumber2]);
 
   return (
     <article>
@@ -192,7 +201,7 @@ const FormDaftarOrangTuaWali = () => {
         title="Form Pendataan Orang Tua"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
@@ -293,15 +302,25 @@ const FormDaftarOrangTuaWali = () => {
                 value={parent.phoneNumber1}
                 disable={false}
                 required={true}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone1}
               />
               <TextInput
                 label="Nomor Ponsel 2"
-                type="numer"
+                type="number"
                 id="phoneNumber2"
                 onChange={updateParents}
                 value={parent.phoneNumber2}
                 disable={false}
-                required={true}
+                required={false}
+                placeholder={"Contoh: 081234567892"}
+                validationMsg={
+                  "Diawali 08 atau 62, Minimal 7 dan maksimal 15 angka"
+                }
+                validation={validPhone2}
               />
               <TextInput
                 label="Propinsi"
@@ -401,7 +420,7 @@ const FormDaftarOrangTuaWali = () => {
                 required={true}
               />
               <TextInput
-                label="Penghasilan Tiap Bulan"
+                label="Penghasilan Tiap Bulan (Rp)"
                 type="number"
                 id="incomeGrade"
                 onChange={updateParents}
@@ -469,12 +488,14 @@ const FormDaftarOrangTuaWali = () => {
                   type="number"
                   value={admissionParentsData?.phoneNumber_1}
                   disable={true}
+                  placeholder={"Contoh: 081234567892"}
                 />
                 <TextInputModal
                   label="Nomor Ponsel 2"
                   type="numer"
                   value={admissionParentsData?.phoneNumber_2}
-                  disable={true}
+                  disable={false}
+                  placeholder={"Contoh: 081234567892"}
                 />
                 <TextInputModal
                   label="Propinsi"
@@ -534,14 +555,12 @@ const FormDaftarOrangTuaWali = () => {
                   )}
                   disable={true}
                 />
-
                 <TextInputModal
                   label="Pendidikan Terakhir"
                   type="text"
                   value={admissionParentsData?.lastEducation}
                   disable={true}
                 />
-
                 <TextInputModal
                   label="Perusahaan Tempat Bekerja"
                   type="text"
@@ -556,9 +575,8 @@ const FormDaftarOrangTuaWali = () => {
                   value={admissionParentsData?.occupation}
                   disable={true}
                 />
-
                 <TextInputModal
-                  label="Penghasilan Tiap Bulan"
+                  label="Penghasilan Tiap Bulan (Rp)"
                   type="number"
                   value={admissionParentsData?.incomeGrade}
                   disable={true}
@@ -566,7 +584,7 @@ const FormDaftarOrangTuaWali = () => {
               </section>
             </div>
           )}
-        </form>
+        </div>
       </div>
 
       {admissionParentsData !== null && (
@@ -580,7 +598,15 @@ const FormDaftarOrangTuaWali = () => {
         </button>
       )}
       {admissionParentsData === null && (
-        <button className="btn-merah" onClick={handleSubmit}>
+        <button
+          className={
+            validPhone1 == false || validPhone2 == false
+              ? "btn-abu"
+              : "btn-merah"
+          }
+          disabled={validPhone1 == false || validPhone2 == false ? true : false}
+          onClick={handleSubmit}
+        >
           {isLoading ? (
             <CgSpinner className="mr-2 text-xl animate-spin" />
           ) : (

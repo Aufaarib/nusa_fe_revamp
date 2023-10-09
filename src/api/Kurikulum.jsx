@@ -12,12 +12,20 @@ export function getKurikulum(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
-      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -42,8 +50,16 @@ export function updateKurikulum(setSts, path, code, name, description) {
       );
     })
     .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Kurikulum Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -62,12 +78,20 @@ export function updateStatusKurikulum(setSts, code, setData) {
       getKurikulum(setData, setSts);
     })
     .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Status Gagal", "Tutup", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          error.response.data.status.message,
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
-export function postKurikulum(setSts, path, name, description) {
+export function postKurikulum(path, name, description) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/curriculum",
@@ -78,7 +102,6 @@ export function postKurikulum(setSts, path, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
       AlertStatusSuccess(
         path,
         "Berhasil",
@@ -88,7 +111,19 @@ export function postKurikulum(setSts, path, name, description) {
       );
     })
     .catch((error) => {
-      setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Kurikulum Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage(
+            "Gagal",
+            error.response.data.status.message,
+            "Coba Lagi",
+            "error"
+          );
+        }
+      }
     });
 }

@@ -17,22 +17,9 @@ export function getMapel(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-    });
-}
-
-export function updateStatusMapel(setSts, status, id, setData) {
-  axios
-    .post(process.env.REACT_APP_NUSA + `/course/update/${id}`, {
-      status,
-    })
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
-      getMapel(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
     });
 }
 
@@ -61,12 +48,16 @@ export function updateMapel(setSts, code, path, name, description, type) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage(
-        "Gagal",
-        "Ubah Mata Pelajaran Berhasil",
-        "Coba Lagi",
-        "error"
-      );
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Ubah Mata Pelajaran Berhasil",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -93,11 +84,15 @@ export function postMapel(setSts, path, name, description, type) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage(
-        "Gagal",
-        "Tambah Mata Pelajaran Gagal",
-        "Coba Lagi",
-        "error"
-      );
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Tambah Mata Pelajaran Gagal",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }

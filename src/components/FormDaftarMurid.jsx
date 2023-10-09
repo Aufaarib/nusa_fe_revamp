@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -14,14 +15,8 @@ import {
   DropdownRadioInputGender,
 } from "./Dropdown";
 import Header from "./Header";
-import {
-  AlertEmpty,
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusTambahFailed,
-} from "./ModalPopUp";
+import { AlertMessage, AlertStatusSuccess } from "./ModalPopUp";
 import TextInput, { TextInputModal } from "./TextInput";
-import moment from "moment/moment";
 
 const FormDaftarMurid = () => {
   const path = "/pmb/tahapan-pmb";
@@ -145,7 +140,12 @@ const FormDaftarMurid = () => {
       firstName === ""
     ) {
       setIsLoading(false);
-      AlertEmpty();
+      AlertMessage(
+        "Tidak Sesuai",
+        "Terdapat Data Yang Kosong Atau Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+        "Tutup Pesan",
+        "warning"
+      );
     } else {
       axios
         .post(
@@ -187,21 +187,19 @@ const FormDaftarMurid = () => {
             "success",
             "Data Anak Berhasil Terkirim"
           );
-          // AlertMessage(
-          //   "Berhasil",
-          //   "Data Anak Berhasil Tersimpan",
-          //   "Tutup",
-          //   "success"
-          // );
         })
-        .catch(() => {
+        .catch((error) => {
           setIsLoading(false);
-          AlertMessage(
-            "Gagal",
-            "Data Anak Gagal Terkirim",
-            "Coba Lagi",
-            "error"
-          );
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Tidak Sesuai",
+              "Terdapat Data Yang Tidak Sesuai, Mohon Melakukan Pengecekan Kembali",
+              "Tutup Pesan",
+              "warning"
+            );
+          }
         });
     }
   };
@@ -216,7 +214,7 @@ const FormDaftarMurid = () => {
         title="Form Pendataan Anak"
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <form
+        <div
           // onSubmit={handleSubmit}
           style={{ display: "block", gap: "20px", padding: "20px" }}
         >
@@ -284,7 +282,6 @@ const FormDaftarMurid = () => {
                     value={anakKe}
                     disable={false}
                     required={true}
-                    min="1"
                   />
                 </section>
                 <section>
@@ -296,7 +293,6 @@ const FormDaftarMurid = () => {
                     value={tinggi}
                     disable={false}
                     required={true}
-                    min="1"
                   />
                   <TextInput
                     label="Tempat Lahir"
@@ -573,7 +569,7 @@ const FormDaftarMurid = () => {
               </div>
             )}
           </section>
-        </form>
+        </div>
       </div>
 
       {admissionApplicantData !== null && (

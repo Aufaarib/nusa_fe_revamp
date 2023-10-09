@@ -128,25 +128,6 @@ export default function ListLaporan() {
           selectedEnd={endDate}
           onChangeEnd={(e) => setEndDate(e.element.value)}
         />
-        {/* <DataTablesFinanceReport
-          columns={columns}
-          data={filteredItems}
-          filterText={filterText}
-          filterTipe={filterTipe}
-          filterMonth={filterMonth}
-          filterYear={filterYear}
-          setFilterTipe={setFilterTipe}
-          setFilterMonth={setFilterMonth}
-          setFilterYear={setFilterYear}
-          onChangeMonth={handleMonthFilter}
-          valueMonth={monthFilter}
-          onChangeTipe={handleTipeFilter}
-          valueTipe={tipeFilter}
-          onChangeYear={handleYearFilter}
-          valueYear={yearFilter}
-          onFilter={(e) => setFilterText(e.target.value)}
-          createdAt={data}
-        /> */}
       </div>
     </>
   );

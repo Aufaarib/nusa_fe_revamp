@@ -11,7 +11,10 @@ export function updateAdmissionPhase(
   startDate,
   endDate,
   testSchedule,
-  amount
+  amount,
+  educationAmount,
+  description,
+  eduId
 ) {
   axios
     .put(
@@ -27,18 +30,53 @@ export function updateAdmissionPhase(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
-      AlertStatusSuccess(
-        navigate,
-        "Berhasil",
-        "Kembali Ke Detail Pendaftaran",
-        "success",
-        "Ubah Gelombang Berhasil"
-      );
+      const sequence = 1;
+      axios
+        .put(
+          process.env.REACT_APP_BASE_URL + `/admission/${code}/detail/${eduId}`,
+          {
+            description,
+            amount: educationAmount,
+            sequence,
+          },
+          { headers: { authorization: localStorage.getItem("TOKEN") } }
+        )
+        .then(() => {
+          setSts({ type: "success" });
+          AlertStatusSuccess(
+            navigate,
+            "Berhasil",
+            "Kembali Ke Detail Pendaftaran",
+            "success",
+            "Ubah Gelombang Berhasil"
+          );
+        })
+        .catch((error) => {
+          setSts({ type: "error", error });
+          if (error.code === "ERR_NETWORK") {
+            AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+          } else {
+            AlertMessage(
+              "Gagal",
+              "Ubah Gelombang Gagal, Silahkan Coba Lagi",
+              "Coba Lagi",
+              "error"
+            );
+          }
+        });
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Ubah Gelombang Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage(
+          "Gagal",
+          "Ubah Gelombang Gagal, Silahkan Coba Lagi",
+          "Coba Lagi",
+          "error"
+        );
+      }
     });
 }
 
@@ -78,6 +116,10 @@ export function postAdmissionPhase(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Gelombang Gagal", "Coba Lagi", "error");
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      } else {
+        AlertMessage("Gagal", "Tambah Gelombang Gagal", "Coba Lagi", "error");
+      }
     });
 }

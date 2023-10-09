@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 
 export default function UbahKurikulum() {
@@ -21,11 +21,11 @@ export default function UbahKurikulum() {
     e.preventDefault();
     const code = location.state.code;
 
-    if (name.length === 0 || description.length === 0) {
-      AlertEmpty();
-    } else {
-      updateKurikulum(setSts, navigateKurikulum, code, name, description);
-    }
+    // if (name.length === 0 || description.length === 0) {
+    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+    // } else {
+    updateKurikulum(setSts, navigateKurikulum, code, name, description);
+    // }
   };
 
   return (

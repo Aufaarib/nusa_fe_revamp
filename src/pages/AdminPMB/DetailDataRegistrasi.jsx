@@ -122,14 +122,6 @@ const DetailDataRegistrasi = () => {
   };
 
   const columnsPayments = [
-    // {
-    //   cell: (data) => (
-    //     <div>
-    //       <Checkbox></Checkbox>
-    //     </div>
-    //   ),
-    //   width: "60px",
-    // },
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -206,14 +198,6 @@ const DetailDataRegistrasi = () => {
   ];
 
   const columnsEdu = [
-    // {
-    //   cell: (data) => (
-    //     <div>
-    //       <Checkbox></Checkbox>
-    //     </div>
-    //   ),
-    //   width: "60px",
-    // },
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -251,33 +235,9 @@ const DetailDataRegistrasi = () => {
       ),
       width: "auto",
     },
-    // {
-    //   name: <div>Status</div>,
-    //   cell: (data) => (
-
-    //   ),
-    //   width: "auto",
-    // },
-    // {
-    //   name: <div>Aksi</div>,
-    //   cell: (data) => (
-
-    //   ),
-    //   ignoreRowClick: true,
-    //   button: true,
-    //   width: "200px",
-    // },
   ];
 
   const columnTestResult = [
-    // {
-    //   cell: (data) => (
-    //     <div>
-    //       <Checkbox></Checkbox>
-    //     </div>
-    //   ),
-    //   width: "60px",
-    // },
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
@@ -881,7 +841,6 @@ const DetailDataRegistrasi = () => {
                             src={
                               process.env.REACT_APP_BASE_STATIC_FILE + data.file
                             }
-                            alt="Girl in a jacket"
                             width="200px"
                             height="200px"
                           ></img>
