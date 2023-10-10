@@ -168,19 +168,6 @@ export default function ListNews() {
           filterText={filterText}
           button="Tambah Berita"
         />
-        {/* <DataTablesSession
-          columns={columns}
-          data={filteredItems}
-          onClick={navigateTambahBerita}
-          onFilter={(e) => setFilterText(e.target.value)}
-          filterText={filterText}
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage} 
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pagination={pagination}
-          buttonText="Tambah Berita"
-        /> */}
       </div>
     </>
   );
