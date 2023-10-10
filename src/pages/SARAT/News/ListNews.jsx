@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
-import { DataTablesSession } from "../../../components/DataTables";
+import {
+  DataTablesListSpp,
+  DataTablesSession,
+} from "../../../components/DataTables";
 import { getNews, getSession } from "../../../api/Sarat";
 import moment from "moment/moment";
 import {
@@ -157,19 +160,27 @@ export default function ListNews() {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesSession
+        <DataTablesListSpp
+          columns={columns}
+          data={filteredItems}
+          onClick={navigateTambahBerita}
+          onFilter={(e) => setFilterText(e.target.value)}
+          filterText={filterText}
+          button="Tambah Berita"
+        />
+        {/* <DataTablesSession
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahBerita}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
+          setItemsPerPage={setItemsPerPage} 
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
           buttonText="Tambah Berita"
-        />
+        /> */}
       </div>
     </>
   );
