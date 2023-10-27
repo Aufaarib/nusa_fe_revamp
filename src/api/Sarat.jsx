@@ -177,7 +177,7 @@ export function postDonations(setSts, navigate, session_detail_id, total) {
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Pilihan Jawaban Berhasil"
+        "Tambah Infaq Berhasil"
       );
     })
     .catch((error) => {
@@ -185,7 +185,7 @@ export function postDonations(setSts, navigate, session_detail_id, total) {
       if (error.code === "ERR_NETWORK") {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
       } else {
-        AlertMessage("Gagal", "Tambah Answer Gagal", "Coba Lagi", "error");
+        AlertMessage("Gagal", "Tambah Infaq Gagal", "Coba Lagi", "error");
       }
     });
 }
@@ -220,7 +220,12 @@ export function postAnswers(setSts, navigate, question_id, fields) {
         if (error.code === "ERR_NETWORK") {
           AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
         } else {
-          AlertMessage("Gagal", "Tambah Answer Gagal", "Coba Lagi", "error");
+          AlertMessage(
+            "Gagal",
+            "Tambah Pilihan Jawaban Gagal",
+            "Coba Lagi",
+            "error"
+          );
         }
       });
   }
@@ -277,12 +282,7 @@ export function postQuestion(
             })
             .catch((error) => {
               setSts({ type: "error", error });
-              AlertMessage(
-                "Gagal",
-                "Tambah Pilihan Jawaban Gagal",
-                "Coba Lagi",
-                "error"
-              );
+              AlertMessage("Gagal", "Tambah Soal Gagal", "Coba Lagi", "error");
             });
         }
       })
@@ -472,7 +472,7 @@ export function updateNews(id, setSts, navigate, formData) {
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Pilihan Jawaban Berhasil"
+        "Edit Berita Berhasil"
       );
     })
     .catch((error) => {
@@ -480,12 +480,7 @@ export function updateNews(id, setSts, navigate, formData) {
       if (error.code === "ERR_NETWORK") {
         AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
       } else {
-        AlertMessage(
-          "Gagal",
-          "Edit Pilihan Jawaban Gagal",
-          "Coba Lagi",
-          "error"
-        );
+        AlertMessage("Gagal", "Edit Berita Gagal", "Coba Lagi", "error");
       }
     });
 }
