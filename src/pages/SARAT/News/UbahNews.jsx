@@ -170,16 +170,16 @@ export default function UbahNews() {
                   }
                   alt="Girl in a jacket"
                 />
-                <button
+                {/* <button
                   className="mt-2 px-2 text-merah border-solid border-1 border-merah rounded-full text-3xl fa fa-trash"
                   onClick={() => removeFiles(index)}
-                />
+                /> */}
               </div>
             ))}
           </div>
           <br />
           <p className="font-bold text-merah mr-8 underline flex justify-center">
-            Tambah Foto-Foto
+            Ganti Foto-Foto
           </p>
           <br />
           <div

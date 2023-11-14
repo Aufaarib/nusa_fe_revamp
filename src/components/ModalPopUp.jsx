@@ -686,11 +686,12 @@ export const AlertPaymentProof = (url) => {
   }
 };
 
-export const AlerNewsVideos = (url) => {
+export const AlerNewsVideos = (url, link) => {
   console.log(url);
   styledSweetAlert
     .fire({
-      width: "700px",
+      width: "400px",
+      title: url,
       showConfirmButton: true,
       confirmButtonText: "Lihat Video",
     })

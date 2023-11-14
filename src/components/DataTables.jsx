@@ -2163,6 +2163,7 @@ export function DataTablesListSpp({
   setFilterPaid,
   filterUnPaid,
   setFilterUnPaid,
+  button,
 }) {
   const CustomStylesTable = {
     table: {
@@ -2296,7 +2297,7 @@ export function DataTablesListSpp({
         setFilterPaid={setFilterPaid}
         filterUnPaid={filterUnPaid}
         setFilterUnPaid={setFilterUnPaid}
-        button="Tambah"
+        button={button}
       />
       {data ? (
         <div>

@@ -129,7 +129,8 @@ export default function ListFotoFoto() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
-          buttonText="Tambah Foto"
+          // buttonText="Tambah Foto"
+          showButton={false}
         />
         <div className="flex justify-start w-full">
           <button
