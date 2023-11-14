@@ -143,11 +143,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-pengeluaran`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Laporan",
-        path: `admin/list-laporan`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Laporan",
+      //   path: `admin/list-laporan`,
+      //   icon: <FaWpforms />,
+      // },
     ],
   },
   // {
