@@ -18,7 +18,6 @@ export default function UbahSpp() {
   const [studentsData, setStudentsData] = useState([]);
   const [amounts, setAmount] = useState(location.state.amount);
   const [months, setMonth] = useState({
-    label: location.state.month,
     value: location.state.month,
   });
   const [periodeIds, setPeriodeId] = useState({

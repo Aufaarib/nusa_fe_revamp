@@ -113,7 +113,7 @@ const ListRuangan = () => {
           onClick={navigateTambahRuangKelas}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          buttontxt="Tambah Ruangan Kelas"
+          buttontxt="Tambah Ruangan"
         />
       </div>
     </>

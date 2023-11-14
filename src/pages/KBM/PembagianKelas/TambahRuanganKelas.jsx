@@ -82,7 +82,7 @@ export default function TambahRuanganKelas() {
   };
 
   const academicYearOptions = academicYearData.map((c) => ({
-    label: `${c.name} : ${c.curriculum.code}`,
+    label: `${c.code} : ${c.name}`,
     value: c.id,
   }));
 

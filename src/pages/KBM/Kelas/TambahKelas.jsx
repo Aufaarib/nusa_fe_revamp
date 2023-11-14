@@ -50,7 +50,7 @@ export default function TambahKelas() {
         <article>
           <TextInput
             label="Kelas"
-            type="text"
+            type="number"
             name="code"
             onChange={(e) => setGrade(e.target.value)}
             required={true}

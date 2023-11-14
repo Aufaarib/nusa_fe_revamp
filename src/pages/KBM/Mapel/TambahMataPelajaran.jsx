@@ -4,6 +4,7 @@ import { postMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
 import { AlertEmpty } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { DropdownKurikulum } from "../../../components/Dropdown";
 
 export default function TambahMataPelajaran() {
   const [name, setName] = useState("");
@@ -27,6 +28,21 @@ export default function TambahMataPelajaran() {
   const navigateMapel = () => {
     navigate(path);
   };
+
+  const typeOptions = [
+    {
+      label: "Akademik",
+      value: "academic",
+    },
+    {
+      label: "Non-Akademik",
+      value: "non-academic",
+    },
+    {
+      label: "Akhlak",
+      value: "personality",
+    },
+  ];
 
   return (
     <div>
@@ -60,12 +76,21 @@ export default function TambahMataPelajaran() {
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
-          <TextInput
+          <DropdownKurikulum
+            label="Tipe"
+            required={true}
+            isClearable={true}
+            defaultValue={type}
+            isSearchable={false}
+            options={typeOptions}
+            onChange={(e) => setType(e.value)}
+          />
+          {/* <TextInput
             label="Tipe"
             type="text"
             onChange={(e) => setType(e.target.value)}
             required={true}
-          />
+          /> */}
 
           <div className="btn-form">
             <button

@@ -54,7 +54,7 @@ export default function UbahKelas() {
           <section>
             <TextInput
               label="Kelas"
-              type="text"
+              type="number"
               defaultValue={location.state.grade}
               onChange={(e) => setGrade(e.target.value)}
               required={true}

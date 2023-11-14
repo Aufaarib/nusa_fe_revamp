@@ -117,13 +117,13 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
-        name: "Kelompok Mata Pelajaran",
-        path: `admin/list-kelompok-mapel`,
+        name: "Ruangan Kelas",
+        path: `admin/list-ruang-kelas`,
         icon: <FaWpforms />,
       },
       {
-        name: "Ruangan Kelas",
-        path: `admin/list-ruang-kelas`,
+        name: "Kelompok Mata Pelajaran",
+        path: `admin/list-kelompok-mapel`,
         icon: <FaWpforms />,
       },
     ],
