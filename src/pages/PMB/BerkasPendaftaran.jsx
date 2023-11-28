@@ -159,7 +159,7 @@ const BerkasPendaftaran = () => {
                 allowedExtensions=".png,.jpg"
                 accept=".png,.jpg"
                 minFileSize={0}
-                maxFileSize={100000}
+                maxFileSize={5000000}
                 multiple={false}
                 buttons={{
                   browse: !fileAkte ? "Upload File" : "Ganti File",
@@ -192,7 +192,7 @@ const BerkasPendaftaran = () => {
                 allowedExtensions=".png,.jpg"
                 accept=".png,.jpg"
                 minFileSize={0}
-                maxFileSize={100000}
+                maxFileSize={5000000}
                 multiple={false}
                 buttons={{
                   browse: !fileKk ? "Upload File" : "Ganti File",
@@ -225,7 +225,7 @@ const BerkasPendaftaran = () => {
                 allowedExtensions=".png,.jpg"
                 accept=".png,.jpg"
                 minFileSize={0}
-                maxFileSize={100000}
+                maxFileSize={5000000}
                 multiple={false}
                 buttons={{
                   browse: !fileRapor ? "Upload File" : "Ganti File",
@@ -258,7 +258,7 @@ const BerkasPendaftaran = () => {
                 allowedExtensions=".png,.jpg"
                 accept=".png,.jpg"
                 minFileSize={0}
-                maxFileSize={100000}
+                maxFileSize={5000000}
                 multiple={false}
                 buttons={{
                   browse: !filePasPhoto ? "Upload File" : "Ganti File",
