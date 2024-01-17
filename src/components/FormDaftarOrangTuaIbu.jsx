@@ -202,10 +202,10 @@ const FormDaftarOrangTuaIbu = () => {
         at="Pendataan Ibu"
         title="Form Pendataan Orang Tua"
       />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex" }} className="md:justify-center">
         <div
           // onSubmit={handleSubmit}
-          style={{ display: "block", gap: "22px", padding: "10px" }}
+          style={{ display: "block", gap: "22px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">

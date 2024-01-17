@@ -56,7 +56,7 @@ const ListCalonSiswa = () => {
         at="Data Calon Siswa"
         title="Data Calon Siswa"
       />
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div className="flex justify-start md:justify-end">
         <button
           style={{
             fontSize: "12px",
@@ -75,20 +75,41 @@ const ListCalonSiswa = () => {
         <>
           {Object.entries(groupedCandidates).map(([year, candidates]) => (
             <>
-              <div className="text-wrapper-2 mt-5 underline">
+              <div className="text-wrapper-2 mt-10 mb-5">
                 Tahun Ajaran {year}
               </div>
-              <br />
-              <div key={year} className="child-card">
+              {/* <br /> */}
+              <div key={year} className="child-card ">
                 {candidates.map(({ childName, regNumber, status }) => (
                   <div className="frame">
                     <div className="overlap-group">
                       <div className="div-wrapper">
                         <div className="text-wrapper-3">PMB</div>
-                        {/* <div
-                          style={{ display: "inline-block", float: "right" }}
+                        <div
+                          style={{
+                            display: "inline-block",
+                            float: "right",
+                            paddingRight: "10px",
+                            paddingLeft: "10px",
+                            backgroundColor: "white",
+                            borderRadius: "14px",
+                          }}
                         >
-                          <button
+                          <div
+                            style={
+                              status === "valid"
+                                ? { color: "#15803D", fontWeight: "bold" }
+                                : {
+                                    color: "#8f0d1e",
+                                    fontWeight: "bold",
+                                  }
+                            }
+                          >
+                            {status !== "valid"
+                              ? "Belum Terverifikasi"
+                              : "Terverifikasi"}
+                          </div>
+                          {/* <button
                             style={{
                               backgroundColor: "white",
                               color: "#8f0d1e",
@@ -98,39 +119,30 @@ const ListCalonSiswa = () => {
                             className="btn-action-merah"
                           >
                             <i className="fa fa-edit" /> Ubah Nama Anak
-                          </button>
-                        </div> */}
-                      </div>
-                      <div className="frame-2" style={{ flex: 1 }}>
-                        <div className="text-wrapper-4 capitalize">
-                          {childName}
+                          </button> */}
                         </div>
-                        <div className="text-wrapper-5">{regNumber}</div>
+                      </div>
+                      <div className="flex flex-row gap-10 justify-between items-center p-9">
+                        <div className="flex flex-col gap-5">
+                          <div className="text-wrapper-4 capitalize">
+                            {childName}
+                          </div>
+                          <div className="text-wrapper-5">{regNumber}</div>
+                          <div>
+                            <button
+                              onClick={() => setRegNumbers(regNumber)}
+                              className="w-auto btn-action-merah px-5"
+                            >
+                              <i className="fa fa-eye" /> Lihat
+                            </button>
+                          </div>
+                        </div>
                         <div>
-                          <button
-                            onClick={() => setRegNumbers(regNumber)}
-                            className="w-auto btn-action-merah"
-                          >
-                            <i className="fa fa-eye" /> Lihat
-                          </button>
-                        </div>
-                      </div>
-                      <div className="frame-3">
-                        <img
-                          className="group"
-                          alt="Group"
-                          src="https://generation-sessions.s3.amazonaws.com/bc45777641ff997f7635a4fe39868a07/img/group-1-2@2x.png"
-                        />
-                        <div
-                          style={
-                            status === "valid"
-                              ? { color: "#15803D", fontWeight: "bold" }
-                              : { color: "#8f0d1e", fontWeight: "bold" }
-                          }
-                        >
-                          {status !== "valid"
-                            ? "Belum Terverifikasi"
-                            : "Terverifikasi"}
+                          <img
+                            className="group"
+                            alt="Group"
+                            src="https://generation-sessions.s3.amazonaws.com/bc45777641ff997f7635a4fe39868a07/img/group-1-2@2x.png"
+                          />
                         </div>
                       </div>
                     </div>

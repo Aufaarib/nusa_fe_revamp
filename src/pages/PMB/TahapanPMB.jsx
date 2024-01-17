@@ -56,7 +56,7 @@ const TahapanPMB = () => {
         </section>
       </div>
       <div>
-        <article className="grid grid-rows-3 gap-6 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">
+        <article className="grid md:grid-rows-3 gap-2 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">
           {Object.keys(stepsPMB).map((keyName, index) => (
             <motion.div layoutId={index + 1} key={index + 1}>
               <InfoTahapanPMB

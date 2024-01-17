@@ -197,8 +197,8 @@ const FormDaftarOrangTua = () => {
         at="Pendataan Ayah"
         title="Form Pendataan Orang Tua"
       />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ display: "block", gap: "22px", padding: "10px" }}>
+      <div style={{ display: "flex" }} className="md:justify-center">
+        <div style={{ display: "block", gap: "22px" }}>
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">
               {admissionParentsData == null ? "Pendataan Ayah" : "Data Ayah"}

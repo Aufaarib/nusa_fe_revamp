@@ -209,14 +209,14 @@ const FormDaftarMurid = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Pendataan Anak"
         title="Form Pendataan Anak"
       />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex" }} className="md:justify-center">
         <div
           // onSubmit={handleSubmit}
-          style={{ display: "block", gap: "20px", padding: "20px" }}
+          style={{ display: "block", gap: "20px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">

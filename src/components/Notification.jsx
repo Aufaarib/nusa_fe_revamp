@@ -43,11 +43,11 @@ const Notification = ({ notificationData, unreadTotal, newNotif }) => {
             key={index}
             className="flex items-center gap-3 p-3 leading-8 border-b-1 border-color"
           >
-            <img
+            {/* <img
               className="w-12 h-12 rounded-full"
               src={item.image}
               alt={item.message}
-            />
+            /> */}
             <div>
               <p
                 className={`text-sm ${

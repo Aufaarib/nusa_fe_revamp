@@ -990,8 +990,8 @@ const DetailDataRegistrasi = () => {
                     </strong>
                     <button
                       style={{ display: "inline-block", float: "right" }}
-                      className="btn-biru w-auto"
-                      title="Edit"
+                      className="btn-biru w-auto p-1 px-5"
+                      // title="Edit"
                       onClick={() => navigateUbahStatus(data.regNumber)}
                     >
                       <i className="fa fa-edit" /> Edit Status Tahapan

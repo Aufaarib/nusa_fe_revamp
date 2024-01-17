@@ -83,7 +83,7 @@ const RequireAuth = () => {
 
           {themeSettings && <ThemeSettings />}
 
-          <div className="p-10 xs:mt-20 md:mt-0 mb-7 mx-7 bg-white rounded-lg min-h-[80vh]">
+          <div className="p-10 xs:mt-20 md:mt-0 mb-7 mx-7 bg-white rounded-lg min-h-[100vh]">
             {/* ALL PAGES */}
             <Outlet />
           </div>
