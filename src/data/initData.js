@@ -150,33 +150,33 @@ export const sidebarMenusAdmin = [
       // },
     ],
   },
-  // {
-  //   title: "Admin SARAT",
-  //   path: `admin/sarat`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "Institusi",
-  //       path: `admin/list-institusi`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Resume",
-  //       path: `admin/list-resume`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: "Berita",
-  //       path: `admin/list-berita`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     // {
-  //     //   name: "Infaq",
-  //     //   path: `admin/list-infaq`,
-  //     //   icon: <FaWpforms />,
-  //     // },
-  //   ],
-  // },
+  {
+    title: "Admin SARAT",
+    path: `admin/sarat`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "Institusi",
+        path: `admin/list-institusi`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Resume",
+        path: `admin/list-resume`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Berita",
+        path: `admin/list-berita`,
+        icon: <FaWpforms />,
+      },
+      // {
+      //   name: "Infaq",
+      //   path: `admin/list-infaq`,
+      //   icon: <FaWpforms />,
+      // },
+    ],
+  },
 ];
 
 export const themeColors = [

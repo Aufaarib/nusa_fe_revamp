@@ -97,7 +97,7 @@ export const TextInput = ({
           <span className="mt-1">:</span>
 
           <div
-            className="px-3 md:ml-10 py-2 text-sm text-base font-normal text-gray-700 bg-white "
+            className="px-3 md:ml-10 py-2 text-sm font-normal text-gray-700 bg-white "
             style={{
               display: "flex",
               textAlign: "center",
@@ -238,20 +238,38 @@ export const TextArea = ({
 
           <span>:</span>
 
-          <textarea
-            className="w-auto md:ml-10 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-            type={type}
-            id={id}
-            name={name}
-            ref={ref}
-            autoComplete={autoComplete}
-            onInput={onInput}
-            onChange={onChange}
-            value={value}
-            required={required}
-            min={min}
-            max={max}
-          />
+          <div
+            className="px-3 md:ml-10 py-2 text-sm font-normal text-gray-700 bg-white "
+            style={{
+              display: "flex",
+              textAlign: "center",
+              fontSize: "14px",
+              borderRadius: "5px",
+              border: "1px solid #D1D5DB",
+            }}
+          >
+            <textarea
+              // className="w-auto md:ml-10 px-3 py-2 m-0 text-sm font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
+              style={{
+                width: "100%",
+                padding: "5px",
+                outline: "none",
+                borderRadius: "4px",
+                background: "white",
+              }}
+              type={type}
+              id={id}
+              name={name}
+              ref={ref}
+              autoComplete={autoComplete}
+              onInput={onInput}
+              onChange={onChange}
+              value={value}
+              required={required}
+              min={min}
+              max={max}
+            />
+          </div>
         </form>
       </div>
     </>
