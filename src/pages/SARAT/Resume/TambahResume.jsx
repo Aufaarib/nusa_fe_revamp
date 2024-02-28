@@ -4,7 +4,7 @@ import { getTahunAjaran } from "../../../api/TahunAjaran";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { postSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
-import TextInput from "../../../components/TextInput";
+import TextInput, { TextArea } from "../../../components/TextInput";
 import { DropdownSiswa } from "../../../components/Dropdown";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
@@ -22,8 +22,10 @@ export default function TambahResume() {
     getTahunAjaran(setData, setSts, setIsLoading);
   }, []);
 
+  console.log("name", name);
+
   const academicYearOptions = academicYearData.map((c) => ({
-    label: `${c.name} : ${c.curriculum.code}`,
+    label: `${c.name}`,
     value: c.id,
   }));
 
@@ -31,11 +33,16 @@ export default function TambahResume() {
     navigate(path);
   };
 
+  const onChangeAcademicYear = (e) => {
+    setName(e.label);
+    setacAdemicYearId(e.value);
+  };
+
   const postData = (e) => {
     e.preventDefault();
 
     const data = {
-      name: name,
+      name: `Resume SARAT T.A ${name}`,
       academic_year_id: academicYearId,
       details: fields,
     };
@@ -80,7 +87,7 @@ export default function TambahResume() {
         title="Tambah Resume"
       />
 
-      <div style={{ padding: "44px 104px 0" }}>
+      <div style={{ padding: "14px 104px 0" }}>
         <p
           style={{
             fontSize: "24px",
@@ -91,13 +98,13 @@ export default function TambahResume() {
           Form Tambah Resume
         </p>
         <article>
-          <TextInput
+          {/* <TextInput
             label="Nama Resume"
             type="text"
             onChange={(e) => setName(e.target.value)}
             value={name}
             required={true}
-          />
+          /> */}
           <DropdownSiswa
             label="Tahun Ajaran"
             required={true}
@@ -105,38 +112,40 @@ export default function TambahResume() {
             isClearable={false}
             options={academicYearOptions}
             isSearchable={false}
-            onChange={(e) => setacAdemicYearId(e.value)}
+            onChange={(e) => onChangeAcademicYear(e)}
           />
           <br />
-          <hr className="mr-10 mb-10" />
+          <hr className="mr-10 mb-5" />
           <p className="font-bold text-merah mr-8 underline flex justify-center">
             Tambah Sesi SARAT
           </p>
-          {fields.map((field, index) => (
-            <div key={index}>
-              <br />
-              <TextInput
-                label="Nama Sesi"
-                type="text"
-                onChange={(e) =>
-                  handleFieldChange(index, "title", e.target.value)
-                }
-                value={field.title}
-                required={true}
-              />
-              <TextInput
-                label="Deskripsi"
-                type="text"
-                onChange={(e) =>
-                  handleFieldChange(index, "description", e.target.value)
-                }
-                value={field.description}
-                required={true}
-              />
-              <br />
-              <hr className="mr-10 " />
-            </div>
-          ))}
+          <div>
+            {fields.map((field, index) => (
+              <div key={index}>
+                <br />
+                <TextInput
+                  label="Nama Sesi"
+                  type="text"
+                  onChange={(e) =>
+                    handleFieldChange(index, "title", e.target.value)
+                  }
+                  value={field.title}
+                  required={true}
+                />
+                <TextArea
+                  label="Deskripsi"
+                  type="text"
+                  onChange={(e) =>
+                    handleFieldChange(index, "description", e.target.value)
+                  }
+                  value={field.description}
+                  required={true}
+                />
+                <br />
+                <hr className="mr-10 " />
+              </div>
+            ))}
+          </div>
           <div className="mr-10 flex justify-end py-5 gap-2">
             <button
               className="btn-mrh w-10"

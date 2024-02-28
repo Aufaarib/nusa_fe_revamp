@@ -97,7 +97,7 @@ export const TextInput = ({
           <span className="mt-1">:</span>
 
           <div
-            className="px-3 md:ml-10 py-2 text-sm font-normal text-gray-700 bg-white "
+            className="px-3 md:ml-10 py-1 text-sm font-normal text-gray-700 bg-white "
             style={{
               display: "flex",
               textAlign: "center",

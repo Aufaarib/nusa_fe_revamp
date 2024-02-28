@@ -102,7 +102,7 @@ export default function TambahQuestion() {
         title="Tambah Soal"
       />
 
-      <div style={{ padding: "40px 104px 0" }}>
+      <div style={{ padding: "5px 104px 0" }}>
         <article>
           {q_fields.map((qfield, qindex) => (
             <div key={qindex}>
@@ -113,68 +113,80 @@ export default function TambahQuestion() {
               <br />
               <hr className="mr-10" />
               <br />
-              <TextArea
-                label="Soal"
-                type="text"
-                onChange={(e) =>
-                  handleQFieldChange(qindex, "description", e.target.value)
-                }
-                value={qfield.description}
-                required={true}
-              />
-              <DropdownRadioInputBiological
-                required={true}
-                label="Tampilkan Soal"
-                value1={1}
-                value2={0}
-                label2="Ya"
-                label3="Tidak"
-                onChange={(e) =>
-                  handleQFieldChange(
-                    qindex,
-                    "is_publish",
-                    parseInt(e.target.value)
-                  )
-                }
-                checked={qfield.is_publish}
-              />
+              <div className="flex flex-col items-center gap-2 border-2 border-gray-300 p-2 rounded-lg">
+                <TextArea
+                  label="Soal"
+                  type="text"
+                  onChange={(e) =>
+                    handleQFieldChange(qindex, "description", e.target.value)
+                  }
+                  value={qfield.description}
+                  required={true}
+                />
+                <DropdownRadioInputBiological
+                  required={true}
+                  label="Tampilkan Soal"
+                  value1={1}
+                  value2={0}
+                  label2="Ya"
+                  label3="Tidak"
+                  onChange={(e) =>
+                    handleQFieldChange(
+                      qindex,
+                      "is_publish",
+                      parseInt(e.target.value)
+                    )
+                  }
+                  checked={qfield.is_publish}
+                />
+              </div>
               <br />
-              <p className="font-bold text-merah mr-8 underline flex justify-center">
+              <p className="font-bold text-merah mr-8 mb-2 underline flex justify-center">
                 Kunci Jawaban
               </p>
-              {qfield.a_fields.map((afield, aindex) => (
-                <div key={aindex}>
-                  <br />
-                  <TextInput
-                    label="Jawaban"
-                    type="text"
-                    value={afield.description}
-                    required={true}
-                    onChange={(e) => {
-                      const newFields = [...q_fields];
-                      newFields[qindex].a_fields[aindex].description =
-                        e.target.value;
-                      setQFields(newFields);
-                    }}
-                  />
-                  <DropdownRadioInputBiological
-                    required={true}
-                    label="Benar"
-                    value1={1}
-                    value2={0}
-                    label2="Ya"
-                    label3="Tidak"
-                    onChange={(e) => {
-                      const newFields = [...q_fields];
-                      newFields[qindex].a_fields[aindex].correct_answer =
-                        parseInt(e.target.value);
-                      setQFields(newFields);
-                    }}
-                    checked={afield.correct_answer}
-                  />
-                  <br />
-                </div>
-              ))}
+              <div className="flex flex-col gap-1">
+                {qfield.a_fields.map((afield, aindex) => (
+                  <div
+                    key={aindex}
+                    className="flex flex-row items-center gap-2 border-2 border-gray-300 p-2 rounded-lg"
+                  >
+                    <div className="mb-10 border border-merah p-2 px-3 rounded-full">
+                      <p className="text-merah font-bold text-xs">
+                        {aindex + 1}
+                      </p>
+                    </div>
+                    <div>
+                      <TextInput
+                        label="Jawaban"
+                        type="text"
+                        value={afield.description}
+                        required={true}
+                        onChange={(e) => {
+                          const newFields = [...q_fields];
+                          newFields[qindex].a_fields[aindex].description =
+                            e.target.value;
+                          setQFields(newFields);
+                        }}
+                      />
+                      <DropdownRadioInputBiological
+                        required={true}
+                        label="Benar"
+                        value1={1}
+                        value2={0}
+                        label2="Ya"
+                        label3="Tidak"
+                        onChange={(e) => {
+                          const newFields = [...q_fields];
+                          newFields[qindex].a_fields[aindex].correct_answer =
+                            parseInt(e.target.value);
+                          setQFields(newFields);
+                        }}
+                        checked={afield.correct_answer}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
               <div className="mr-10 flex justify-end py-5 gap-2">
                 <button
                   className="btn-mrh w-auto flex items-center text-sm gap-1"
@@ -196,14 +208,14 @@ export default function TambahQuestion() {
           ))}
           <div className="mr-10 flex justify-center py-5 gap-2">
             <button
-              className="btn-mrh w-auto flex items-center text-sm gap-1"
+              className="btn-mrh w-36 flex items-center text-sm gap-1"
               title="Kurangi Kolom"
               onClick={removeQField}
             >
               <i className="mt-1 fa fa-minus" /> Kurangi Soal
             </button>
             <button
-              className="btn-hijau w-auto flex items-center text-sm gap-1"
+              className="btn-hijau w-36 flex items-center text-sm gap-1"
               title="Tambah Kolom "
               onClick={addQField}
             >

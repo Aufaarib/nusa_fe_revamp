@@ -81,14 +81,14 @@ export default function ListSession() {
           >
             <i className="fa fa-edit" /> Data Soal
           </button>
-          <button
+          {/* <button
             // style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
             onClick={() => navigateInfaq(data.id, data.title)}
           >
             <i className="fa fa-edit" /> Data Infaq
-          </button>
+          </button> */}
         </div>
       ),
       ignoreRowClick: true,
