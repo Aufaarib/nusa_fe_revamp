@@ -10,7 +10,7 @@ const Footer = () => {
       className="dark:text-gray-200 text-white text-center p-3"
       style={{ backgroundColor: currentColor }}
     >
-      © 2023 PT. Nafisha Universal Network
+      © 2024 PT. Nafisha Universal Network
     </div>
   );
 };
