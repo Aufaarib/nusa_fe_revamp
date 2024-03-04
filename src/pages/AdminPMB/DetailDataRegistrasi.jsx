@@ -384,7 +384,7 @@ const DetailDataRegistrasi = () => {
       <Header
         home="Admin PMB"
         prev="Data Registrasi"
-        navePrev={path}
+        navPrev={path}
         at={code}
         title={code + " - " + data.childName}
       />

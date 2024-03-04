@@ -352,7 +352,7 @@ const DataRegistrasi = () => {
       name: <div>Nama Anak</div>,
       selector: (data) => data.childName,
       cell: (data) => <div>{data.childName}</div>,
-      width: "140px",
+      width: "auto",
     },
     {
       name: <div>Tahun Ajaran</div>,

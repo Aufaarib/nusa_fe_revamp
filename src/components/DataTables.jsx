@@ -1328,7 +1328,7 @@ export function DataTablesRegistrations({
   const CustomStylesTable = {
     table: {
       style: {
-        maxWidth: "1000px", // set the width of the table wrapper
+        width: "auto", // set the width of the table wrapper
       },
     },
     cells: {
