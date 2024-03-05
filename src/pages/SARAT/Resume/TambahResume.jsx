@@ -82,7 +82,7 @@ export default function TambahResume() {
       <Header
         home="Admin SARAT"
         prev="Daftar Resume"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Resume"
         title="Tambah Resume"
       />

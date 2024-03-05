@@ -113,7 +113,7 @@ export default function TambahPendaftaran() {
       <Header
         home="Admin PMB"
         prev="Setup PMB"
-        navePrev={path}
+        navPrev={path}
         at="Pendaftaran"
         title="Tambah Pendaftaran"
       />

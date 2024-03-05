@@ -105,7 +105,7 @@ export default function UbahGelombang() {
       <Header
         home="Admin PMB"
         prev="Admission Details"
-        navePrev={path}
+        navPrev={path}
         at="Gelombang"
         title="Ubah Gelombang"
       />

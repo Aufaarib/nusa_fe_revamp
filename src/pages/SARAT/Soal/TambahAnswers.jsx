@@ -69,8 +69,8 @@ export default function TambahAnswers() {
     <>
       <Header
         home="Admin SARAT"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Jawaban"
+        navPrev={path}
         at="Tambah Pilihan Jawaban"
         title="Tambah Pilihan Jawaban"
       />

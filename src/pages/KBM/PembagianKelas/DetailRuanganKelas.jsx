@@ -216,7 +216,7 @@ const DetailRuanganKelas = () => {
       <Header
         home="Admin KBM"
         prev="Daftar Ruangan Kelas"
-        navePrev={path}
+        navPrev={path}
         at="Detail Ruangan Kelas"
         title={`Daftar Murid ${location.state.namaRuangan}`}
       />

@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
 import { getSession } from "../../../api/Sarat";
+import axios from "../../../api/axios";
+import {
+  AlertMessage,
+  AlertStatusSuccess,
+} from "../../../components/ModalPopUp";
 
 export default function ListResume() {
   const [data, setData] = useState([]);
@@ -78,13 +83,61 @@ export default function ListResume() {
           >
             <i className="fa fa-edit" /> Daftar Sesi
           </button>
+          <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            title="Edit"
+            onClick={() =>
+              onClickActivation(data.id, data.status === 0 ? 1 : 0)
+            }
+          >
+            {data.status === 0 ? (
+              <>
+                <i className="fa fa-edit" /> Aktifkan
+              </>
+            ) : (
+              <>
+                <i className="fa fa-edit" /> Non-Aktifkan
+              </>
+            )}
+          </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "450px",
     },
   ];
+
+  const onClickActivation = (id, status) => {
+    axios
+      .put(
+        process.env.REACT_APP_NUSA_SARAT + `/session/update/${id}`,
+        {
+          status,
+        },
+        { headers: { authorization: localStorage.getItem("TOKEN") } }
+      )
+      .then(() => {
+        setSts({ type: "success" });
+        getSession(currentPage, itemsPerPage, setData, setSts, setPagination);
+        AlertStatusSuccess(
+          navigate,
+          "Berhasil",
+          "Tutup",
+          "success",
+          "Edit Status Berhasil"
+        );
+      })
+      .catch((error) => {
+        setSts({ type: "error", error });
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage("Gagal", "Edit Status Gagal", "Coba Lagi", "error");
+        }
+      });
+  };
 
   const navigateListSession = (resume_id, resume_name) => {
     localStorage.setItem("RESUME_ID", resume_id);

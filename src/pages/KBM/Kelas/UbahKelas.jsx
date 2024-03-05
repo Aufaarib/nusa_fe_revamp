@@ -35,7 +35,7 @@ export default function UbahKelas() {
       <Header
         home="Admin KBM"
         prev="Kelas"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Kelas"
         title="Ubah Kelas"
       />

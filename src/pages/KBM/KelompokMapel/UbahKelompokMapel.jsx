@@ -154,7 +154,7 @@ export default function UbahKelompokMapel() {
       <Header
         home="Admin KBM"
         prev="Kelompok Mapel"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Kelompok Mata Pelajaran"
         title="Ubah Kelompok Mata Pelajaran"
       />

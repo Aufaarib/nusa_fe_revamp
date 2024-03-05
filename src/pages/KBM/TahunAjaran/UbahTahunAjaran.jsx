@@ -65,7 +65,7 @@ export default function UbahTahunAjaran() {
         <Header
           home="Admin PMB"
           prev="Daftar Tahun Ajaran"
-          navePrev={path}
+          navPrev={path}
           at="Ubah Tahun Ajaran"
           title="Ubah Tahun Ajaran"
         />

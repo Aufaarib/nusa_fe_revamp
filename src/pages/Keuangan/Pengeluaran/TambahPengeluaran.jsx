@@ -117,7 +117,7 @@ export default function TambahPengeluaran() {
       <Header
         home="Admin Keuangan"
         prev="List Pengeluaran"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Pengeluaran"
         title="Tambah Pengeluaran"
       />

@@ -110,7 +110,7 @@ export default function UbahNews() {
       <Header
         home="Admin SARAT"
         prev="List Berita"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Berita"
         title="Ubah Berita"
       />

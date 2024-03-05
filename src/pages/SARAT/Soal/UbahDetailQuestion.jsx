@@ -48,7 +48,7 @@ export default function UbahDetailQuestion() {
       <Header
         home="Admin SARAT"
         prev="Daftar Pilihan Jawaban"
-        navePrev={path}
+        navPrev={path}
         at="Edit Pilihan Jawaban"
         title="Edit Pilihan Jawaban"
       />

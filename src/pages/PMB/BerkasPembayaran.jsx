@@ -94,7 +94,7 @@ const BerkasPembayaran = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Bukti Pembayaran"
         title="Form Bukti Pembayaran"
       />

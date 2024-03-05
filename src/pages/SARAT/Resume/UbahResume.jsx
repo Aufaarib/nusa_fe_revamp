@@ -42,7 +42,7 @@ export default function UbahResume() {
       <Header
         home="Admin SARAT"
         prev="Daftar Resume"
-        navePrev={path}
+        navPrev={path}
         at="Edit Nama Resume"
         title="Edit Nama Resume"
       />

@@ -122,6 +122,48 @@ export function getSession(page, per_page, setData, setSts, setPagination) {
       }
     });
 }
+export function getSessionReport(
+  page,
+  per_page,
+  setData,
+  setSts,
+  setPagination
+) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setData(res.data.body);
+      setPagination(res.data.meta);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
+export function getSessionReportDetail(id, setData, setQuestion, setSts) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report/${id}`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      let data = [];
+      data.push(res.data.body);
+      setQuestion(res.data.body.question_details);
+      setData(data);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      if (error.code === "ERR_NETWORK") {
+        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+      }
+    });
+}
 export function getActiveSession(setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/active`, {

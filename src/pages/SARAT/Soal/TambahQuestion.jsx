@@ -96,8 +96,8 @@ export default function TambahQuestion() {
     <>
       <Header
         home="Admin SARAT"
-        // prev="Bank"
-        // navePrev={path}
+        prev="SARAT"
+        navPrev={path}
         at="Tambah Soal"
         title="Tambah Soal"
       />

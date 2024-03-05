@@ -4,6 +4,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DataTablesSession } from "../../../components/DataTables";
 import { Header } from "../../../components";
 import { getDetailSession } from "../../../api/Sarat";
+import axios from "../../../api/axios";
+import {
+  AlertMessage,
+  AlertStatusSuccess,
+} from "../../../components/ModalPopUp";
 
 export default function ListSession() {
   const [data, setData] = useState([]);
@@ -81,14 +86,24 @@ export default function ListSession() {
           >
             <i className="fa fa-edit" /> Data Soal
           </button>
-          {/* <button
-            // style={{ width: "auto", padding: "2px 10px" }}
+          <button
+            style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
-            onClick={() => navigateInfaq(data.id, data.title)}
+            onClick={() =>
+              onClickActivation(data.id, data.status === 0 ? 1 : 0)
+            }
           >
-            <i className="fa fa-edit" /> Data Infaq
-          </button> */}
+            {data.status === 0 ? (
+              <>
+                <i className="fa fa-edit" /> Aktifkan
+              </>
+            ) : (
+              <>
+                <i className="fa fa-edit" /> Non-Aktifkan
+              </>
+            )}
+          </button>
         </div>
       ),
       ignoreRowClick: true,
@@ -108,10 +123,40 @@ export default function ListSession() {
     });
   };
 
-  const navigateInfaq = (session_id, session_tittle) => {
-    localStorage.setItem("SESSION_ID", session_id);
-    localStorage.setItem("SESSION_TITTLE", session_tittle);
-    navigate("/admin/list-infaq");
+  const onClickActivation = (id, status) => {
+    axios
+      .put(
+        process.env.REACT_APP_NUSA_SARAT +
+          `/session/update-session-detail/${id}`,
+        {
+          status,
+        },
+        { headers: { authorization: localStorage.getItem("TOKEN") } }
+      )
+      .then(() => {
+        setSts({ type: "success" });
+        getDetailSession(
+          localStorage.getItem("RESUME_ID"),
+          setData,
+          setDetailsData,
+          setSts
+        );
+        AlertStatusSuccess(
+          navigate,
+          "Berhasil",
+          "Tutup",
+          "success",
+          "Edit Status Berhasil"
+        );
+      })
+      .catch((error) => {
+        setSts({ type: "error", error });
+        if (error.code === "ERR_NETWORK") {
+          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
+        } else {
+          AlertMessage("Gagal", "Edit Status Gagal", "Coba Lagi", "error");
+        }
+      });
   };
 
   const navigateSoal = (session_id, session_tittle) => {

@@ -45,7 +45,7 @@ export default function UbahMataPelajaran() {
       <Header
         home="Admin KBM"
         prev="Mata Pelajaran"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Mata Pelajaran"
         title="Ubah Mata Pelajaran"
       />

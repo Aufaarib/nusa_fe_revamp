@@ -173,8 +173,8 @@ export default function TambahMuridKeKelas() {
     <>
       <Header
         home="Admin KBM"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Ruangan Kelas"
+        navPrev={path}
         at="Tambah Murid Ke Ruangan Kelas"
         title={location.state.namaRuangan}
       />

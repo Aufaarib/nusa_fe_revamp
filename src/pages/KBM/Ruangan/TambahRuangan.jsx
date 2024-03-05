@@ -32,7 +32,7 @@ export default function TambahRuangan() {
       <Header
         home="Admin KBM"
         prev="Daftar Ruangan"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Ruangan"
         title="Tambah Ruangan "
       />

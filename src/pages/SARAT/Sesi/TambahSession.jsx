@@ -66,7 +66,7 @@ export default function TambahSession() {
       <Header
         home="Admin SARAT"
         prev="Daftar Sesi"
-        navePrev={path}
+        navPrev={path}
         at="Edit Sesi"
         title="Edit Sesi"
       />

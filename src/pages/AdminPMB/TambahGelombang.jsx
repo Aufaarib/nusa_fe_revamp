@@ -88,7 +88,7 @@ export default function TambahGelombang() {
       <Header
         home="Admin PMB"
         prev="Setup PMB"
-        navePrev={path}
+        navPrev={path}
         at="Gelombang"
         title="Tambah Gelombang"
       />

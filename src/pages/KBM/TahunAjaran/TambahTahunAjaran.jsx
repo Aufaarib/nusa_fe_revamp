@@ -57,7 +57,7 @@ export default function TambahTahunAjaran() {
         <Header
           home="Admin PMB"
           prev="List Tahun Ajaran"
-          navePrev={path}
+          navPrev={path}
           at="Tahun Ajaran"
           title="Tambah Tahun Ajaran"
         />

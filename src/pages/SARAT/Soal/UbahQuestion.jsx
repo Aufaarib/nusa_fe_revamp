@@ -44,7 +44,7 @@ export default function UbahQuestion() {
       <Header
         home="Admin SARAT"
         prev="Daftar Resume"
-        navePrev={path}
+        navPrev={path}
         at="Edit Pertanyaan"
         title="Edit Pertanyaan"
       />

@@ -116,7 +116,7 @@ export default function ListQuestion() {
       <Header
         home="Admin SARAT"
         prev="Daftar Soal"
-        // navePrev={path}
+        navPrev={path}
         at="Daftar Pilihan Jawaban"
         title="Daftar Pilihan Jawaban"
       />

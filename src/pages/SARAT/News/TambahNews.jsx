@@ -88,7 +88,7 @@ export default function TambahNews() {
       <Header
         home="Admin SARAT"
         prev="List Berita"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Berita"
         title="Tambah Berita"
       />

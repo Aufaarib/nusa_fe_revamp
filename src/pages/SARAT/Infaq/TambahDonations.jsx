@@ -57,7 +57,7 @@ export default function TambahDonations() {
       <Header
         home="Admin SARAT"
         prev="Daftar Infaq"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Infaq"
         title="Tambah Infaq"
       />

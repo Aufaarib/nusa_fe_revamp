@@ -49,7 +49,7 @@ export default function TambahMataPelajaran() {
       <Header
         home="Admin KBM"
         prev="Mata Pelajaran"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Mata Pelajaran"
         title="Tambah Mata Pelajaran"
       />

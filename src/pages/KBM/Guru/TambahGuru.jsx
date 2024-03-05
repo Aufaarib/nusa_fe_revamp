@@ -52,7 +52,7 @@ export default function TambahGuru() {
       <Header
         home="Admin KBM"
         prev="List Guru"
-        navePrev={path}
+        navPrev={path}
         at="Tambah Guru"
         title="Tambah Guru"
       />

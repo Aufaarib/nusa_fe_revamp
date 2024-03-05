@@ -93,6 +93,8 @@ import ListDonations from "./pages/SARAT/Infaq/ListDonations";
 import TambahDonations from "./pages/SARAT/Infaq/TambahDonations";
 import TambahAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/TambahAdmissionStatement";
 import ListAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/ListAdmissionStatement";
+import ListResumeReport from "./pages/SARAT/Resume/ListResumeReport";
+import ResumeReportDetail from "./pages/SARAT/Resume/ResumeReportDetail";
 
 const App = () => {
   return (
@@ -157,7 +159,14 @@ const App = () => {
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
           <Route path="/admin/list-resume" element={<ListResume />} />
-          <Route path="/admin/list-report-resume" element={<ListResume />} />
+          <Route
+            path="/admin/list-report-resume"
+            element={<ListResumeReport />}
+          />
+          <Route
+            path="/admin/detail-report-resume"
+            element={<ResumeReportDetail />}
+          />
           <Route path="/admin/list-sesi" element={<ListSession />} />
           <Route path="/admin/list-institusi" element={<ListInstitution />} />
           <Route path="/admin/list-berita" element={<ListNews />} />

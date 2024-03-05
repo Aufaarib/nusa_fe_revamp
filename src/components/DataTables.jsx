@@ -368,7 +368,7 @@ export function FilterComponentSession({
         >
           <Input
             id="search"
-            placeholder="Cari Nama Sesi..."
+            placeholder="Cari..."
             value={filterText}
             onChange={onFilter}
           />
@@ -2685,6 +2685,97 @@ export function DataTablesSession({
             </div>
           </div>
         </>
+      )}
+    </>
+  );
+}
+
+export function DataTablesDetailSession({
+  columns,
+  status,
+  data = [],
+  defaultSortFieldId,
+  filterText,
+  onFilter,
+  onClick,
+  itemsPerPage,
+  setItemsPerPage,
+  setCurrentPage,
+  currentPage,
+  pagination,
+  buttonText,
+  showButton,
+}) {
+  const CustomStylesTable = {
+    table: {
+      style: {
+        width: "auto", // set the width of the table wrapper
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for data cells
+        justifyContent: "center",
+        fontWeight: "bold",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#D5D5D540",
+        marginTop: "10px",
+        borderRadius: "10px",
+        border: "0px",
+        minHeight: "72px", // override the row height
+        "&:not(:last-of-type)": {
+          border: "0px",
+        },
+      },
+    },
+    denseStyle: {
+      minHeight: "32px",
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#8F0D1E",
+        minHeight: "52px",
+        borderRadius: "10px",
+      },
+      denseStyle: {
+        minHeight: "32px",
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "20px", // override the cell padding for head cells
+        paddingRight: "10px",
+        justifyContent: "center",
+        color: "rgb(243 241 241)",
+      },
+    },
+  };
+
+  return (
+    <>
+      {data ? (
+        <div>
+          {status == 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+            </div>
+          ) : (
+            <DataTable
+              columns={columns}
+              customStyles={CustomStylesTable}
+              data={data}
+              defaultSortAsc={false}
+              defaultSortFieldId={defaultSortFieldId}
+            />
+          )}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
+        </div>
       )}
     </>
   );

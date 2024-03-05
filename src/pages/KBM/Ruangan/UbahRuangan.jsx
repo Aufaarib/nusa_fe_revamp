@@ -40,7 +40,7 @@ export default function UbahRuangan() {
       <Header
         home="Admin KBM"
         prev="Daftar Ruangan"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Ruangan"
         title="Ubah Ruangan"
       />

@@ -32,7 +32,10 @@ export default function UbahKurikulum() {
     <div>
       <div style={{ marginBottom: "50px" }}>
         <Header
-          category="Admin KBM / Kurikulum / Ubah Kurikulum"
+          home="Admin KBM"
+          prev="Kurikulum"
+          navPrev={path}
+          at="Ubah Kurikulum"
           title="Ubah Kurikulum"
         />
       </div>

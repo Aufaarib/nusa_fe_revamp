@@ -190,7 +190,7 @@ const AdmissionDetails = () => {
       <Header
         home="Admin PMB"
         prev="Setup PMB"
-        navePrev={path}
+        navPrev={path}
         at="Detail Pendaftaran"
         title={code}
       />

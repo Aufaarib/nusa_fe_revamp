@@ -127,7 +127,7 @@ const BerkasPendaftaran = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Berkas Pendaftaran"
         title="Form Berkas Pendaftaran"
       />

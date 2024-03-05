@@ -57,7 +57,7 @@ export default function UbahGuru() {
       <Header
         home="Admin KBM"
         prev="Guru"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Guru"
         title="Ubah Guru"
       />

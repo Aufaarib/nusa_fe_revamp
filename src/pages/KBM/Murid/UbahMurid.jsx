@@ -74,7 +74,7 @@ export default function UbahMurid() {
       <Header
         home="Admin KBM"
         prev="Murid"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Murid"
         title="Ubah Murid"
       />

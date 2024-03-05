@@ -121,8 +121,8 @@ export default function UbahRuanganKelas() {
     <div>
       <Header
         home="Admin KBM"
-        // prev="Bank"
-        // navePrev={path}
+        prev="Ruangan Kelas"
+        navPrev={path}
         at="Ubah Ruangan Kelas"
         title="Ubah Ruangan Kelas"
       />
