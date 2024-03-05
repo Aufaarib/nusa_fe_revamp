@@ -157,6 +157,7 @@ const App = () => {
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
           <Route path="/admin/list-resume" element={<ListResume />} />
+          <Route path="/admin/list-report-resume" element={<ListResume />} />
           <Route path="/admin/list-sesi" element={<ListSession />} />
           <Route path="/admin/list-institusi" element={<ListInstitution />} />
           <Route path="/admin/list-berita" element={<ListNews />} />

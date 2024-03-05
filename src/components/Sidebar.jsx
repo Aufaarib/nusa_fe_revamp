@@ -71,7 +71,7 @@ const Sidebar = () => {
   }, [stepsPMB]);
 
   return (
-    <div className="h-screen pb-10 overflow-auto md:overflow-hidden md:hover:overflow-auto w-72">
+    <div className="h-screen pb-10 overflow-auto overflow-x-hidden w-72">
       {activeMenu && (
         <>
           {activeMenu == true && screenSize <= 900 && (
