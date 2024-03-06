@@ -46,7 +46,7 @@ export default function ListNews() {
     },
     {
       name: <div>Deskripsi</div>,
-      cell: (data) => <div className="truncate">{data.description}</div>,
+      cell: (data) => <div>{data.description}</div>,
       width: "220px",
     },
     {

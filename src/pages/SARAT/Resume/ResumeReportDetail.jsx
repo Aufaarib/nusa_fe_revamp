@@ -4,7 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getSessionReportDetail } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { DataTablesDetailSession } from "../../../components/DataTables";
-import { AlertMessage } from "../../../components/ModalPopUp";
+import {
+  AlerNewsFiles,
+  AlertEmpty,
+  AlertMessage,
+} from "../../../components/ModalPopUp";
+import { TextArea } from "../../../components/TextInput";
+import img from "../../../data/assalamualaikum.png";
 
 export default function ResumeReportDetail() {
   const [data, setData] = useState([]);
@@ -55,21 +61,28 @@ export default function ResumeReportDetail() {
       width: "auto",
     },
     {
-      name: <div>Resume</div>,
+      name: <div>File Resume</div>,
       cell: (data) => (
-        <button
-          onClick={() => handleViewResume(data.resume)}
-          className="truncate hover:text-blue-700"
-          title="Lihat Selengkapnya"
-        >
-          {data.resume}
-        </button>
+        <div className="flex flex-col gap-2">
+          <button
+            title="Lihat File"
+            onClick={() => {
+              AlerNewsFiles(data.resume_file);
+            }}
+          >
+            <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
+          </button>
+          <button
+            onClick={() => handleDownload(data.resume_file)}
+            type="button"
+            title="Unduh File"
+            className="flex flex-row items-center"
+          >
+            <i style={{ fontSize: "14px" }} className="fa fa-download" />
+            <p>Unduh</p>
+          </button>
+        </div>
       ),
-      width: "300px",
-    },
-    {
-      name: <div>Resume File</div>,
-      cell: (data) => <div>{data.resume_file}</div>,
       width: "auto",
     },
   ];
@@ -104,6 +117,41 @@ export default function ResumeReportDetail() {
     AlertMessage("Resume Detail", `${resume}`, "Tutup", "info");
   };
 
+  const download = (filename, content) => {
+    var element = document.createElement("a");
+    element.setAttribute("href", content);
+    element.setAttribute("download", filename);
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
+
+  const handleDownload = async (e) => {
+    try {
+      const result = await fetch(
+        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + e,
+        {
+          method: "GET",
+          headers: {},
+        }
+      );
+      const blob = await result.blob();
+      const url = URL.createObjectURL(blob);
+      download("test", url);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      AlertMessage(
+        "Tidak Dapat Mengunduh File",
+        "File Tidak Tesedia",
+        "Tutup",
+        "warning"
+      );
+    }
+  };
+
   return (
     <>
       <Header
@@ -123,6 +171,21 @@ export default function ResumeReportDetail() {
         }}
       >
         <DataTablesDetailSession columns={columns} data={data} />
+        <div className="flex flex-row items-center gap-5 justify-between px-10">
+          <div style={{ width: "100%" }}>
+            <p className="text-merah font-bold">Resume : </p>
+            <br />
+            <textarea
+              style={{
+                width: "50%",
+                border: "1px solid gray",
+                height: "100px",
+              }}
+              className="px-2 rounded-md"
+              value={data[0]?.resume}
+            />
+          </div>
+        </div>
         <p className="text-merah font-bold">Jawaban Soal : </p>
         <DataTablesDetailSession columns={columns2} data={question} />
         <div className="flex justify-start w-full">

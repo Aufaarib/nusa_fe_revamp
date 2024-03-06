@@ -239,7 +239,7 @@ export const TextArea = ({
           <span>:</span>
 
           <div
-            className="px-3 md:ml-10 py-2 text-sm font-normal text-gray-700 bg-white "
+            className="px-3 py-2 text-sm font-normal text-gray-700 bg-white "
             style={{
               display: "flex",
               textAlign: "center",
