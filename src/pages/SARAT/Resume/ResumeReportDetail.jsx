@@ -73,7 +73,7 @@ export default function ResumeReportDetail() {
             <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
           </button>
           <button
-            onClick={() => handleDownload(data.resume_file)}
+            onClick={() => handleDownload(data.resume_file, data.parent_name)}
             type="button"
             title="Unduh File"
             className="flex flex-row items-center"
@@ -129,10 +129,10 @@ export default function ResumeReportDetail() {
     document.body.removeChild(element);
   };
 
-  const handleDownload = async (e) => {
+  const handleDownload = async (file_name, parent_name) => {
     try {
       const result = await fetch(
-        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + e,
+        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + file_name,
         {
           method: "GET",
           headers: {},
@@ -140,7 +140,7 @@ export default function ResumeReportDetail() {
       );
       const blob = await result.blob();
       const url = URL.createObjectURL(blob);
-      download("test", url);
+      download(`file resume ${parent_name}`, url);
       URL.revokeObjectURL(url);
     } catch (error) {
       AlertMessage(
