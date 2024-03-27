@@ -23,7 +23,6 @@ const Input = styled.input.attrs((props) => ({
   border-radius: 5px;
   outline: none;
 `;
-
 // export const Date = ({
 //   selectedStart,
 //   onChangeStart,
@@ -71,7 +70,6 @@ const Input = styled.input.attrs((props) => ({
 //     </div>
 //   );
 // };
-
 export const FilterDate = ({
   selectedStart,
   onChangeStart,
@@ -106,7 +104,6 @@ export const FilterDate = ({
     </div>
   );
 };
-
 export function FilterComponent({ filterText, onFilter, onClick, button }) {
   return (
     <>
@@ -153,7 +150,6 @@ export function FilterComponent({ filterText, onFilter, onClick, button }) {
     </>
   );
 }
-
 export function FilterComponentPengeluaran({
   filterText,
   onFilter,
@@ -253,7 +249,6 @@ export function FilterComponentPengeluaran({
     </>
   );
 }
-
 export function FilterComponentSpp({
   filterText,
   onFilter,
@@ -340,14 +335,21 @@ export function FilterComponentSpp({
     </>
   );
 }
-
 export function FilterComponentSession({
+  data = [],
   filterText,
+  filter,
   onFilter,
+  academicYeardata = [],
+  onChangeAcademicYear,
+  valueAcademicYear,
+  filterAcademicYear,
+  SetFilterAcademicYear,
   onClick,
   button,
   showButton,
 }) {
+  const [isOpenFilter, SetIsOpenFilter] = useState("false");
   return (
     <>
       <div
@@ -374,28 +376,171 @@ export function FilterComponentSession({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        <div
-          style={{
-            display: "inline-block",
-            float: "right",
-            marginBottom: "20px",
-          }}
-        >
-          {showButton !== false && (
+        {filter ? (
+          <>
             <button
-              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-              className="btn-hijau font-bold"
-              onClick={onClick}
+              className="btn-hijau w-auto"
+              style={{
+                display: "inline-block",
+                float: "right",
+                padding: "2px 10px",
+                fontSize: "12px",
+                width: "auto",
+              }}
+              onClick={() => SetIsOpenFilter("true")}
             >
-              <i className="fa fa-plus mr-1 mt-1"></i> {button}
+              <i className="fa fa-filter mr-1"> </i> Filter
             </button>
-          )}
-        </div>
+            {isOpenFilter === "true" && (
+              <>
+                <div className="nav-item absolute right-20 mt-2 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
+                  <div className="flex justify-between">
+                    {data ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                          gap: "12px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "block",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <div style={{ display: "inline-block" }}>
+                            <h3>Filter Data</h3>
+                          </div>
+                          <button
+                            className="text-merah"
+                            onClick={() => SetIsOpenFilter("false")}
+                            style={{
+                              display: "inline-block",
+                              float: "right",
+                              fontSize: "25px",
+                            }}
+                          >
+                            <MdOutlineCancel />
+                          </button>
+                        </div>
+                        <strong className="text-merah">
+                          Filter Data Berdasarkan :
+                        </strong>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "start",
+                            gap: "5px",
+                          }}
+                        >
+                          <button
+                            onClick={() => {
+                              if (filterAcademicYear === "false") {
+                                SetFilterAcademicYear("true");
+                              } else SetFilterAcademicYear("false");
+                            }}
+                            className={
+                              filterAcademicYear === "true"
+                                ? "btn-modal-filter-true"
+                                : "btn-modal-filter-false"
+                            }
+                          >
+                            Tahun Ajaran{" "}
+                            {filterAcademicYear === "true" ? (
+                              <i className="fa fa-check text-hijau" />
+                            ) : (
+                              <i className="fa fa-angle-down" />
+                            )}
+                          </button>
+                          {filterAcademicYear === "true" && (
+                            <select
+                              style={{
+                                border: "1px solid grey",
+                                borderRadius: "10px",
+                                width: "auto",
+                                height: "32px",
+                                fontSize: "12px",
+                                padding: "5px",
+                                marginLeft: "10px",
+                                outline: "none",
+                              }}
+                              value={valueAcademicYear}
+                              onChange={onChangeAcademicYear}
+                            >
+                              <option>Pilih Tahun Ajaran</option>
+                              {Array.from(
+                                new Set(
+                                  academicYeardata.map(
+                                    (c) =>
+                                      c.session_detail?.session
+                                        ?.academic_year_id
+                                  )
+                                )
+                              ).map((academicYearId) => {
+                                const academicYear = academicYeardata.find(
+                                  (c) =>
+                                    c.session_detail?.session
+                                      ?.academic_year_id === academicYearId
+                                );
+                                return (
+                                  <option
+                                    key={academicYearId}
+                                    value={academicYearId}
+                                  >
+                                    {academicYear.session_detail?.session?.name}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <select
+                        style={{
+                          border: "1px solid grey",
+                          borderRadius: "10px",
+                          width: "auto",
+                          height: "30px",
+                          fontSize: "12px",
+                          padding: "5px",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        <option value="null">Data Tidak Tersedia</option>
+                      </select>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div
+            style={{
+              display: "inline-block",
+              float: "right",
+              marginBottom: "20px",
+            }}
+          >
+            {showButton !== false && (
+              <button
+                style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+                className="btn-hijau font-bold"
+                onClick={onClick}
+              >
+                <i className="fa fa-plus mr-1 mt-1"></i> {button}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
 }
-
 export function FilterComponentWithoutButton({
   filterText,
   onFilter,
@@ -439,7 +584,6 @@ export function FilterComponentWithoutButton({
     </>
   );
 }
-
 export function FilterComponentSaring({
   filterText,
   onFilter,
@@ -493,7 +637,6 @@ export function FilterComponentSaring({
     </>
   );
 }
-
 export function FilterComponentActivateAdmission({
   filterText,
   onFilter,
@@ -556,7 +699,6 @@ export function FilterComponentActivateAdmission({
     </>
   );
 }
-
 export function FilterComponentRegistrations({
   filterText,
   filterValidation,
@@ -861,7 +1003,6 @@ export function FilterComponentRegistrations({
     </>
   );
 }
-
 export function FilterComponentFinanceReport({
   filterText,
   onFilter,
@@ -937,7 +1078,6 @@ export function FilterComponentFinanceReport({
     </>
   );
 }
-
 export function FilterComponentMoveStudentToClassRoom({
   filterText,
   onFilter,
@@ -1030,7 +1170,6 @@ export function FilterComponentMoveStudentToClassRoom({
     </>
   );
 }
-
 // (AdmissionDetails, )
 export function DataTablesAdmissionDetail({
   columns,
@@ -1298,7 +1437,6 @@ export function DataTablesAdmissionDetail({
     </>
   );
 }
-
 // (DataRegistrasi)
 export function DataTablesRegistrations({
   columns,
@@ -1612,7 +1750,6 @@ export function DataTablesRegistrations({
     </>
   );
 }
-
 // (SetupPMB, TahunAjaran, ListGuru, ListRuangan, ListRuanganKelas)
 export function DataTablesPMB({
   columns,
@@ -1879,7 +2016,6 @@ export function DataTablesPMB({
     </>
   );
 }
-
 // (ListKurikulum, ListKelas, ListMataPelajaran, ListKelompokMapel, ListPengeluaran, )
 export function DataTables({
   columns,
@@ -2149,7 +2285,6 @@ export function DataTables({
     </>
   );
 }
-
 // (ListSpp)
 export function DataTablesListSpp({
   columns,
@@ -2427,6 +2562,7 @@ export function DataTablesSession({
   data = [],
   defaultSortFieldId,
   filterText,
+  filter,
   onFilter,
   onClick,
   itemsPerPage,
@@ -2436,6 +2572,11 @@ export function DataTablesSession({
   pagination,
   buttonText,
   showButton,
+  academicYeardata,
+  onChangeAcademicYear,
+  valueAcademicYear,
+  filterAcademicYear,
+  SetFilterAcademicYear,
 }) {
   const CustomStylesTable = {
     table: {
@@ -2560,7 +2701,13 @@ export function DataTablesSession({
       <FilterComponentSession
         data={data}
         filterText={filterText}
+        filter={filter}
         onFilter={onFilter}
+        academicYeardata={academicYeardata}
+        onChangeAcademicYear={onChangeAcademicYear}
+        valueAcademicYear={valueAcademicYear}
+        filterAcademicYear={filterAcademicYear}
+        SetFilterAcademicYear={SetFilterAcademicYear}
         onClick={onClick}
         button={buttonText}
         showButton={showButton}
@@ -2689,7 +2836,6 @@ export function DataTablesSession({
     </>
   );
 }
-
 export function DataTablesDetailSession({
   columns,
   status,
@@ -2780,7 +2926,6 @@ export function DataTablesDetailSession({
     </>
   );
 }
-
 // (ListPengeluaran)
 export function DataTablePengeluaran({
   columns,
@@ -3057,7 +3202,6 @@ export function DataTablePengeluaran({
     </>
   );
 }
-
 // (ListMurid)
 export function DataTablesWithoutButton({
   columns,
@@ -3327,7 +3471,6 @@ export function DataTablesWithoutButton({
     </>
   );
 }
-
 // (ListLaporan)
 export function DataTablesFinanceReport({
   columns,
@@ -3603,7 +3746,6 @@ export function DataTablesFinanceReport({
     </>
   );
 }
-
 export function DataTablesRegistrationDetail({
   columns,
   status,
@@ -3684,7 +3826,6 @@ export function DataTablesRegistrationDetail({
     </>
   );
 }
-
 export function DataTablesMoveStudentToClassRoom({
   columns,
   status,
@@ -3954,7 +4095,6 @@ export function DataTablesMoveStudentToClassRoom({
     </>
   );
 }
-
 export function DataTablesSaring({
   columns,
   data = [],

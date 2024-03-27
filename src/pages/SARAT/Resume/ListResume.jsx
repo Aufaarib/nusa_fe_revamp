@@ -180,6 +180,7 @@ export default function ListResume() {
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahSession}
+          filter={false}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           itemsPerPage={itemsPerPage}

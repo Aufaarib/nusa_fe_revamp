@@ -8,6 +8,8 @@ import {
   AlertMessage,
   AlertStatusSuccess,
 } from "../../../components/ModalPopUp";
+import moment from "moment";
+import { getTahunAjaran } from "../../../api/TahunAjaran";
 
 export default function ListResumeReport() {
   const [data, setData] = useState([]);
@@ -16,11 +18,28 @@ export default function ListResumeReport() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const year = moment().format("YYYY");
+  const [academicYearFilter, setAcademicYearFilter] = useState();
+  const [filterAcademicYear, SetFilterAcademicYear] = useState(
+    localStorage.getItem("FilterAcademicYear") == null
+      ? "false"
+      : localStorage.getItem("FilterAcademicYear")
+  );
   const navigate = useNavigate();
 
+  console.log("kk", data[0]?.session_detail?.session?.academic_year_id);
+  console.log("asdajs", academicYearFilter);
+  localStorage.setItem("FilterAcademicYear", filterAcademicYear);
+
   let filteredItems = data;
-  if (data !== null) {
-    filteredItems = data.filter((data) =>
+  let filteredAcademicYear = data;
+
+  if (filterAcademicYear === "true" && academicYearFilter !== undefined) {
+    filteredAcademicYear = data.filter(
+      (data) =>
+        data.session_detail.session.academic_year_id === academicYearFilter
+    );
+    filteredItems = filteredAcademicYear.filter((data) =>
       data.parent_name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
@@ -104,6 +123,11 @@ export default function ListResumeReport() {
     });
   };
 
+  const handleAcademicYearFilter = (event) => {
+    const val = parseInt(event.target.value);
+    setAcademicYearFilter(val);
+  };
+
   return (
     <>
       <Header
@@ -119,6 +143,7 @@ export default function ListResumeReport() {
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahSession}
+          filter={true}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           itemsPerPage={itemsPerPage}
@@ -127,6 +152,11 @@ export default function ListResumeReport() {
           setCurrentPage={setCurrentPage}
           pagination={pagination}
           showButton={false}
+          filterAcademicYear={filterAcademicYear}
+          SetFilterAcademicYear={SetFilterAcademicYear}
+          onChangeAcademicYear={handleAcademicYearFilter}
+          academicYeardata={data}
+          valueAcademicYear={academicYearFilter}
         />
       </div>
     </>

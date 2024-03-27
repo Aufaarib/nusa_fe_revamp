@@ -24,8 +24,10 @@ const BerkasPembayaran = () => {
 
   // Define your asyncSettings for the UploaderComponent (modify this as needed)
   const asyncSettings = {
-    saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
-    removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
+    saveUrl:
+      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
+    removeUrl:
+      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
   };
 
   // Define your minFileSize and maxFileSize (modify these as needed)

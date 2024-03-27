@@ -42,8 +42,10 @@ export default function TambahSpp() {
   }, []);
 
   const asyncSettings = {
-    saveUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
-    removeUrl: "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
+    saveUrl:
+      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
+    removeUrl:
+      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
   };
 
   const minFileSize = 0;

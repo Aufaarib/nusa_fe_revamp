@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logoSaim from "../../data/logo-saim.png";
-
 import Countdown from "react-countdown";
 import { revalidateEmail, validateOTP } from "../../api/Registrasi";
 

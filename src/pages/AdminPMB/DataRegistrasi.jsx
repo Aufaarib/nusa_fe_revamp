@@ -636,15 +636,15 @@ const DataRegistrasi = () => {
           }
           filterValidation={filterValidation}
           SetFilterValidation={SetFilterValidation}
-          filterAcademicYear={filterAcademicYear}
-          SetFilterAcademicYear={SetFilterAcademicYear}
           filterSteps={filterSteps}
           SetFilterSteps={SetFilterSteps}
           data={filteredItems}
-          academicYeardata={academicYeardata}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
+          filterAcademicYear={filterAcademicYear}
+          SetFilterAcademicYear={SetFilterAcademicYear}
           onChangeAcademicYear={handleAcademicYearFilter}
+          academicYeardata={academicYeardata}
           valueAcademicYear={academicYearFilter}
           onChangeValidation={handleValidationFilter}
           valueValidation={validationFilter}
