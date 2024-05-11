@@ -31,7 +31,7 @@ export default function TambahMuridKeKelas() {
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const path = "/admin/list-ruang-kelas";
+  const path = "/admin/detail-ruang-kelas";
 
   let filteredItems = studentData;
 
@@ -96,6 +96,7 @@ export default function TambahMuridKeKelas() {
     AlertConfirmation(
       handleSelectAll,
       "Tambahkan Semua Murid?",
+      "",
       "Tambahkan",
       "question"
     );
@@ -104,13 +105,19 @@ export default function TambahMuridKeKelas() {
     AlertConfirmation(
       handleSubmit,
       "Tambahkan Murid Terpilih?",
+      "",
       "Tambahkan",
       "question"
     );
   };
 
   const handleSubmit = () => {
-    moveStudentToClassRoom(setSts, path, selectedRows, location.state.id);
+    moveStudentToClassRoom(
+      setSts,
+      navigateDetailRuangKelas,
+      selectedRows,
+      location.state.id
+    );
   };
 
   const columns = [

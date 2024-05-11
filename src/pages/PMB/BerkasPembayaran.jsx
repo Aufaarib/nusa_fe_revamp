@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { Header } from "../../components";
 import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
-
+import { FileUpload } from "../../components/FileUpload";
 const BerkasPembayaran = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
@@ -22,34 +22,47 @@ const BerkasPembayaran = () => {
     window.location.href = "/pmb/tahapan-pmb";
   };
 
-  // Define your asyncSettings for the UploaderComponent (modify this as needed)
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
+  // const handleImagesChange = (event) => {
+  //   setFilesData(event.target.files[0]);
+  // };
+
+  console.log("d", filesData);
+
+  const handleInputChange = (e) => {
+    const files = e.target.files;
+    setFilesData(files);
+    // setFilesData(files);
+    console.log(files);
   };
 
-  // Define your minFileSize and maxFileSize (modify these as needed)
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
+  // // Define your asyncSettings for the UploaderComponent (modify this as needed)
+  // const asyncSettings = {
+  //   saveUrl:
+  //     "https://services.syncfusion.com/react/production/api/FileUploader/Save",
+  //   removeUrl:
+  //     "https://services.syncfusion.com/react/production/api/FileUploader/Save",
+  // };
 
-  // Function to handle removing a file
-  const onRemoveFile = (args) => {
-    // setFileInvoice(null);
-  };
+  // // Define your minFileSize and maxFileSize (modify these as needed)
+  // const minFileSize = 0;
+  // const maxFileSize = 5000000;
 
-  // Function to handle uploading a file
-  const onFileUpload = (args) => {};
+  // // Function to handle removing a file
+  // const onRemoveFile = (args) => {
+  //   // setFileInvoice(null);
+  // };
 
-  // Function to handle upload success
-  const onSuccess = (args) => {
-    setFilesData(args);
-  };
+  // // Function to handle uploading a file
+  // const onFileUpload = (args) => {};
+
+  // // Function to handle upload success
+  // const onSuccess = (args) => {
+  //   setFilesData(args);
+  // };
 
   // Function to handle file upload to the API using Axios
   const handleFileUpload = () => {
-    if (filesData === null) {
+    if (!filesData) {
       AlertMessage(
         "File Kosong",
         "Coba Lagi",
@@ -58,7 +71,7 @@ const BerkasPembayaran = () => {
       );
     }
 
-    const invoice = filesData.file.rawFile;
+    const invoice = filesData;
     axios
       .post(
         SUBMIT_URL,
@@ -108,32 +121,24 @@ const BerkasPembayaran = () => {
         }}
       >
         {/* COL 1 */}
-        <section style={{ width: "100%" }}>
-          <label htmlFor="invoice" className="block mt-4 mb-1">
-            Upload Bukti Pembayaran{" "}
-          </label>
-          <UploaderComponent
-            id="invoice"
-            type="file"
-            ref={uploaderRef}
-            asyncSettings={asyncSettings}
-            removing={onRemoveFile}
-            uploading={onFileUpload}
-            success={onSuccess.bind(this)}
-            locale="id-BAHASA"
-            allowedExtensions=".png,.jpg"
-            accept=".png,.jpg"
-            minFileSize={minFileSize}
-            maxFileSize={maxFileSize}
-            multiple={false}
-            buttons={{
-              browse: !filesData ? "Pilih File" : "Ganti File",
-            }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            marginTop: "20px",
+            width: "100%",
+            gap: "5px",
+          }}
+        >
+          <p className="">Upload Bukti Pembayaran</p>
+          <FileUpload
+            setFilesData={setFilesData}
+            filesData={filesData}
+            handleInputChange={handleInputChange}
+            fileInputId="fileInput1"
           />
-          <small className=" text-gray-400">
-            <i>Jenis berkas: .png / .jpg</i>
-          </small>
-        </section>
+        </div>
       </div>
 
       <button

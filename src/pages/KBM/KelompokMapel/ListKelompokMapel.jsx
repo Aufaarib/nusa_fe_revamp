@@ -161,7 +161,7 @@ export default function ListKelompokMapel() {
       <Header
         home="Admin KBM"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Kelompok Mapel"
         title="Daftar Kelompok Mata Pelajaran"
       />

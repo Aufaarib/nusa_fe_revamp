@@ -111,7 +111,7 @@ const TahunAjaran = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Tahun Ajaran"
         title="Tahun Ajaran"
       />

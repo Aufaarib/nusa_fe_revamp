@@ -142,7 +142,7 @@ const ListMurid = () => {
       <Header
         home="Admin KBM"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Murid"
         title="Daftar Murid"
       />

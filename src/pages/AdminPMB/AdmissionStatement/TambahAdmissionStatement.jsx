@@ -31,7 +31,7 @@ export default function TambahAdmissionStatement() {
       <Header
         home="Admin PMB"
         prev="Setup PMB"
-        navePrev={path}
+        navPrev={path}
         at="Pertanyaan Pernyataan"
         title="Tambah Pertanyaan Pernyataan"
       />

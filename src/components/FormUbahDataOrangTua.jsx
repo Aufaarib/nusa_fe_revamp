@@ -163,7 +163,7 @@ const FormUbahDataOrangTua = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at={`Ubah Data ${location.state.relationship}`}
         title="Form Ubah Data Orang Tua"
       />

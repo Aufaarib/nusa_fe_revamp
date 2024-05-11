@@ -320,7 +320,7 @@ const KonfirmasiPembayaran = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Data Pembayaran"
         title="Data Pembayaran"
       />

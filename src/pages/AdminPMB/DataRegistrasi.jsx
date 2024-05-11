@@ -622,7 +622,7 @@ const DataRegistrasi = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Data Registrasi"
         title="Data Registrasi"
       />

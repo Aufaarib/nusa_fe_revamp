@@ -96,7 +96,7 @@ const SetupPMB = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Setup PMB"
         title="Setup PMB"
       />

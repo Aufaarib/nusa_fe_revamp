@@ -68,7 +68,7 @@ export default function ListInstitution() {
       <Header
         home="Admin SARAT"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Institusi"
         title="Daftar Institusi"
       />

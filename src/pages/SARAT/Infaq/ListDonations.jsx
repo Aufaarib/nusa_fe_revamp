@@ -105,7 +105,7 @@ export default function ListDonations() {
       <Header
         home="Admin SARAT"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Infaq"
         title={
           data.length !== 0

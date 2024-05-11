@@ -52,7 +52,7 @@ const ListCalonSiswa = () => {
       <Header
         home="PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Data Calon Siswa"
         title="Data Calon Siswa"
       />

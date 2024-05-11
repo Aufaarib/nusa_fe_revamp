@@ -101,7 +101,7 @@ const ListRuangan = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Ruangan"
         title="Daftar Ruangan"
       />

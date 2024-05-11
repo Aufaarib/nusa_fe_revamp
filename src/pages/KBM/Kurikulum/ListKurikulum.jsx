@@ -124,7 +124,7 @@ export default function ListKurikulum() {
       <Header
         home="Admin KBM"
         // prev="Kelompok Mapel"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Kurikulum"
         title="Daftar Kurikulum"
       />

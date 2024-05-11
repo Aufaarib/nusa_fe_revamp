@@ -4,7 +4,6 @@ import axios from "./axios";
 
 export function getSemester(setData, setSts) {
   const year = moment().format("YYYY");
-  console.log(year);
   axios
     .get(process.env.REACT_APP_BASE_URL + `/academic/year/AC${year}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },

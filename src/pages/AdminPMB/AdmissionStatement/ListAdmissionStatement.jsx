@@ -54,7 +54,7 @@ export default function ListAdmissionStatement() {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Pertanyaan Pernyataan"
         title="Daftar Pertanyaan Pernyataan"
       />

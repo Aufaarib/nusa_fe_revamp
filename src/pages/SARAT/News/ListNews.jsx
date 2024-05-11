@@ -154,7 +154,7 @@ export default function ListNews() {
       <Header
         home="Admin SARAT"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Berita"
         title="Daftar Berita"
       />

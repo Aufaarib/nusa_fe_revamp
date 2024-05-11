@@ -122,7 +122,7 @@ const FormPernyataan = ({ indexMurid }) => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Pernyataan Orang Tua"
         title="Form Pernyataan Orang Tua"
       />

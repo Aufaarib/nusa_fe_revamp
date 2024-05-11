@@ -203,7 +203,7 @@ class DashboardKeuangan extends Component {
         <Header
           home="Admin Keuangan"
           // prev="Bank"
-          // navePrev={path}
+          // navPrev={path}
           at="Dashboard"
           title="Keuangan"
         />

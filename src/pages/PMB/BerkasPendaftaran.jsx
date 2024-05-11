@@ -12,6 +12,7 @@ import {
   AlertStatusSuccess,
 } from "../../components/ModalPopUp";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { FileUpload } from "../../components/FileUpload";
 
 const BerkasPendaftaran = () => {
   const token = localStorage.getItem("TOKEN");
@@ -26,48 +27,8 @@ const BerkasPendaftaran = () => {
   const [fileRapor, setFileRapor] = useState(null);
   const path = "/pmb/tahapan-pmb";
 
-  console.log("alsdlakdl === ", dataAdmissionRegistration);
-
   const navigateTahapan = () => {
     window.location.href = path;
-  };
-
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const onRemoveFile = (args) => {
-    // setFileInvoice(null);
-  };
-
-  const onFileUpload = (args) => {
-    // You can perform any custom actions before the file upload starts if needed
-  };
-
-  const onAkte = (args) => {
-    console.log("File uploaded successfully!", args);
-    setFileAkte(args);
-  };
-
-  const onRapor = (args) => {
-    // You can perform any custom actions after a successful upload if needed
-    console.log("File uploaded successfully!", args);
-    setFileRapor(args);
-  };
-
-  const onKK = (args) => {
-    // You can perform any custom actions after a successful upload if needed
-    console.log("File uploaded successfully!", args);
-    setFileKk(args);
-  };
-
-  const onPasPhoto = (args) => {
-    // You can perform any custom actions after a successful upload if needed
-    console.log("File uploaded successfully!", args);
-    setPasPhoto(args);
   };
 
   const handleFileUpload = () => {
@@ -77,10 +38,10 @@ const BerkasPendaftaran = () => {
       fileKk !== null ||
       filePasPhoto !== null
     ) {
-      const rapor = fileRapor.file.rawFile;
-      const akte = fileAkte.file.rawFile;
-      const kk = fileKk.file.rawFile;
-      const pasPhoto = filePasPhoto.file.rawFile;
+      const rapor = fileRapor;
+      const akte = fileAkte;
+      const kk = fileKk;
+      const pasPhoto = filePasPhoto;
       axios
         .post(
           SUBMIT_URL,
@@ -122,8 +83,6 @@ const BerkasPendaftaran = () => {
     }
   };
 
-  console.log("L === ", dataAdmissionRegistration.additionalFiles?.length);
-
   return (
     <>
       <Header
@@ -149,28 +108,12 @@ const BerkasPendaftaran = () => {
               <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
                 Akte Kelahiran <span className="text-merah">*</span>
               </label>
-              <UploaderComponent
-                id="invoice"
-                type="file"
-                ref={uploaderRef}
-                asyncSettings={asyncSettings}
-                removing={onRemoveFile}
-                uploading={onFileUpload}
-                success={onAkte.bind(this)}
-                locale="id-BAHASA"
-                allowedExtensions=".png,.jpg"
-                accept=".png,.jpg"
-                minFileSize={0}
-                maxFileSize={5000000}
-                multiple={false}
-                buttons={{
-                  browse: !fileAkte ? "Upload File" : "Ganti File",
-                }}
+              <FileUpload
+                setFilesData={setFileAkte}
+                filesData={fileAkte}
+                fileInputId="fileInput1"
               />
               <div className="flex justify-between">
-                <small className=" text-gray-400">
-                  <i>Jenis Berkas: .png / .jpg</i>
-                </small>
                 <small className=" text-gray-400">
                   <i>Ukuran Maksimal 10 MB</i>
                 </small>
@@ -182,28 +125,12 @@ const BerkasPendaftaran = () => {
               <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
                 Kartu Keluarga <span className="text-merah">*</span>
               </label>
-              <UploaderComponent
-                id="invoice"
-                type="file"
-                ref={uploaderRef}
-                asyncSettings={asyncSettings}
-                removing={onRemoveFile}
-                uploading={onFileUpload}
-                success={onKK.bind(this)}
-                locale="id-BAHASA"
-                allowedExtensions=".png,.jpg"
-                accept=".png,.jpg"
-                minFileSize={0}
-                maxFileSize={5000000}
-                multiple={false}
-                buttons={{
-                  browse: !fileKk ? "Upload File" : "Ganti File",
-                }}
+              <FileUpload
+                setFilesData={setFileKk}
+                filesData={fileKk}
+                fileInputId="fileInput2"
               />
               <div className="flex justify-between">
-                <small className=" text-gray-400">
-                  <i>Jenis Berkas: .png / .jpg</i>
-                </small>
                 <small className=" text-gray-400">
                   <i>Ukuran Maksimal 10 MB</i>
                 </small>
@@ -215,28 +142,12 @@ const BerkasPendaftaran = () => {
               <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
                 Rapor <span className="text-merah">*</span>
               </label>
-              <UploaderComponent
-                id="invoice"
-                type="file"
-                ref={uploaderRef}
-                asyncSettings={asyncSettings}
-                removing={onRemoveFile}
-                uploading={onFileUpload}
-                success={onRapor.bind(this)}
-                locale="id-BAHASA"
-                allowedExtensions=".png,.jpg"
-                accept=".png,.jpg"
-                minFileSize={0}
-                maxFileSize={5000000}
-                multiple={false}
-                buttons={{
-                  browse: !fileRapor ? "Upload File" : "Ganti File",
-                }}
+              <FileUpload
+                setFilesData={setFileRapor}
+                filesData={fileRapor}
+                fileInputId="fileInput3"
               />
               <div className="flex justify-between">
-                <small className=" text-gray-400">
-                  <i>Jenis Berkas: .png / .jpg</i>
-                </small>
                 <small className=" text-gray-400">
                   <i>Ukuran Maksimal 10 MB</i>
                 </small>
@@ -248,28 +159,12 @@ const BerkasPendaftaran = () => {
               <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
                 Pas Foto 3x4 <span className="text-merah">*</span>
               </label>
-              <UploaderComponent
-                id="invoice"
-                type="file"
-                ref={uploaderRef}
-                asyncSettings={asyncSettings}
-                removing={onRemoveFile}
-                uploading={onFileUpload}
-                success={onPasPhoto.bind(this)}
-                locale="id-BAHASA"
-                allowedExtensions=".png,.jpg"
-                accept=".png,.jpg"
-                minFileSize={0}
-                maxFileSize={5000000}
-                multiple={false}
-                buttons={{
-                  browse: !filePasPhoto ? "Upload File" : "Ganti File",
-                }}
+              <FileUpload
+                setFilesData={setPasPhoto}
+                filesData={filePasPhoto}
+                fileInputId="fileInput4"
               />
               <div className="flex justify-between">
-                <small className=" text-gray-400">
-                  <i>Jenis Berkas: .png / .jpg</i>
-                </small>
                 <small className=" text-gray-400">
                   <i>Ukuran Maksimal 10 MB</i>
                 </small>

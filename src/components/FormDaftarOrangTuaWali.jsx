@@ -196,7 +196,7 @@ const FormDaftarOrangTuaWali = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Pendataan Wali"
         title="Form Pendataan Orang Tua"
       />

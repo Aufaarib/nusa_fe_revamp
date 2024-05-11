@@ -32,7 +32,7 @@ const TahapanPMB = () => {
       <Header
         home="PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Tahapan Penerimaan Murid Baru"
         title="Tahapan Penerimaan Murid Baru"
       />

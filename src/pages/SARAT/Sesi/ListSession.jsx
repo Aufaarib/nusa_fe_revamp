@@ -170,7 +170,7 @@ export default function ListSession() {
       <Header
         home="Admin SARAT"
         prev="Daftar Resume"
-        navePrev={path}
+        navPrev={path}
         at="Daftar Sesi"
         title={`${localStorage.getItem("RESUME_NAME")}`}
       />

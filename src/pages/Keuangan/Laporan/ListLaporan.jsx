@@ -109,7 +109,7 @@ export default function ListLaporan() {
       <Header
         home="Admin Keuangan"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Laporan Keuangan"
         title="Data Laporan Keuangan"
       />

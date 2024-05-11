@@ -93,7 +93,7 @@ export default function ListKelas() {
       <Header
         home="Admin KBM"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Kelas"
         title="Daftar Kelas"
       />

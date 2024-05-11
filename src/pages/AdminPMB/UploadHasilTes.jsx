@@ -50,7 +50,7 @@ const UploadHasilTes = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at={code}
         title={code}
       />

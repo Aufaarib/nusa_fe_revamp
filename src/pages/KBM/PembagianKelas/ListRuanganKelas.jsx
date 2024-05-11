@@ -152,7 +152,7 @@ const ListRuanganKelas = () => {
       <Header
         home="Admin PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Ruangan Kelas"
         title="Daftar Ruangan Kelas"
       />

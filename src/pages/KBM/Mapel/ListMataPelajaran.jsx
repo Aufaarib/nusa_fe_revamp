@@ -133,7 +133,7 @@ export default function ListMataPelajaran() {
       <Header
         home="Admin KBM"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Mata Pelajaran"
         title="Daftar Mata Pelajaran"
       />

@@ -182,7 +182,7 @@ export default function ListPengeluaran() {
       <Header
         home="Admin Keuangan"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Pengeluaran"
         title="Data Pengeluaran"
       />

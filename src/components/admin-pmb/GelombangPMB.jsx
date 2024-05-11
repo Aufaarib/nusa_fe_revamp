@@ -252,7 +252,7 @@ const GelombangPMB = ({ indexGelombang }) => {
       <Header
         home="Admin PMB"
         prev="Setup PMB"
-        navePrev={path}
+        navPrev={path}
         at="Gelombang PMB"
         title="Tambah Gelombang PMB"
       />

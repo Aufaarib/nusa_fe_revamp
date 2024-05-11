@@ -64,7 +64,7 @@ const ProfilepPage = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Pendaftaran Murid"
         title="Profile"
       />

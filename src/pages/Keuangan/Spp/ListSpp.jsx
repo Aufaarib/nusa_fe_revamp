@@ -177,7 +177,7 @@ export default function ListSpp() {
       <Header
         home="Admin Keuangan"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Spp"
         title="Data Pembayaran SPP"
       />

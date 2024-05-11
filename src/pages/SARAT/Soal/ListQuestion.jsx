@@ -140,7 +140,7 @@ export default function ListQuestion() {
       <Header
         home="Admin SARAT"
         prev="Daftar Sesi"
-        navePrev={path}
+        navPrev={path}
         at="Daftar Soal"
         title={`Daftar Soal ${session_tittle}`}
       />

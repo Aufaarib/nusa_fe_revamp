@@ -133,7 +133,7 @@ export default function ListResumeReport() {
       <Header
         home="Admin SARAT"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Resume Report"
         title="Resume Report"
       />

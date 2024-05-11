@@ -1,4 +1,3 @@
-import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import { useRef, useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
@@ -12,48 +11,28 @@ import {
 } from "../../components/Dropdown";
 import { AlertMessage, AlertStatusSuccess } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { FileUpload } from "../../components/FileUpload";
 
 const BerkasPembayaranBiayaPendidikan = () => {
   const token = localStorage.getItem("TOKEN");
   const regNumber = localStorage.getItem("REG_NUMBER");
   const SUBMIT_URL = `/admission/registration/${regNumber}/payment`;
   const [isLoading, setIsLoading] = useState(false);
-
   const path = "/pmb/tahapan-pmb";
-
   const [fileInvoice, setFileInvoice] = useState(null);
   const uploaderRef = useRef(null);
   const [jumlah, setJumlah] = useState(null);
   const [tanggal, setTanggal] = useState(null);
   const [metode, setMetode] = useState(null);
-  const [filesData, setFilesData] = useState(null);
 
   const navigateTahapan = () => {
     window.location.href = path;
   };
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onRemoveFile = (args) => {};
-
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-    setFilesData(args);
-  };
-
   const handleFileUpload = () => {
-    const paymentRecipt = filesData.file.rawFile;
+    setIsLoading(true);
+    // const paymentRecipt = filesData.file.rawFile;
+    const paymentRecipt = fileInvoice;
     const amount = parseInt(jumlah.replace(/\./g, ""), 10);
     const paymentDatetime = new Date(tanggal).toISOString();
     const paymentMethod = metode;
@@ -75,6 +54,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
         }
       )
       .then((response) => {
+        setIsLoading(false);
         AlertStatusSuccess(
           navigateTahapan,
           "Berhasil",
@@ -84,7 +64,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
         );
       })
       .catch((error) => {
-        console.error("Error uploading file:", error);
+        setIsLoading(false);
         AlertMessage("Gagal", "Unggah Gagal", "Coba Lagi", "error");
       });
   };
@@ -112,7 +92,7 @@ const BerkasPembayaranBiayaPendidikan = () => {
       <Header
         home="PMB"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Bukti Pembayaran Biaya Pendidikan"
         title="Form Bukti Pembayaran Biaya Pendidikan"
       />
@@ -155,26 +135,11 @@ const BerkasPembayaranBiayaPendidikan = () => {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={onRemoveFile}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              multiple={false}
-              buttons={{
-                browse: !fileInvoice ? "Unggah Bukti Transfer" : "Ganti Berkas",
-              }}
+            <FileUpload
+              setFilesData={setFileInvoice}
+              filesData={fileInvoice}
+              fileInputId={"fileInput1"}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg </i>
-            </small>
           </div>
         </section>
       </div>

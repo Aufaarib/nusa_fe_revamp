@@ -133,7 +133,7 @@ const HasilTes = () => {
       <Header
         home="Admin KBM"
         // prev="Guru"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Guru"
         title="Daftar Guru"
       />

@@ -170,7 +170,7 @@ export default function UbahSpp() {
       <Header
         home="Admin Keuangan"
         prev="List Spp Terbayar"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Spp"
         title="Ubah Spp"
       />

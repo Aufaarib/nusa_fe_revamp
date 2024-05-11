@@ -11,6 +11,7 @@ import { getKelas } from "../../../api/Kelas";
 import { getRoom } from "../../../api/Ruangan";
 import { getGuru } from "../../../api/Guru";
 import { postClassRoom } from "../../../api/RuanganKelas";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function TambahRuanganKelas() {
   const [academicYearData, setAcademicYearData] = useState([]);
@@ -24,6 +25,7 @@ export default function TambahRuanganKelas() {
   const [capacitys, setCapacity] = useState("");
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
 
   const path = "/admin/list-ruang-kelas";
 
@@ -36,7 +38,7 @@ export default function TambahRuanganKelas() {
   };
 
   const fetchAcademicYear = () => {
-    getTahunAjaran(setAcademicYearData, setSts);
+    getTahunAjaran(setAcademicYearData, setSts, setIsLoading);
   };
 
   const fetchRoom = () => {
@@ -52,6 +54,7 @@ export default function TambahRuanganKelas() {
     fetchClass();
     fetchRoom();
     fetchTeacher();
+    console.log("asdads");
   }, []);
 
   const postData = (e) => {

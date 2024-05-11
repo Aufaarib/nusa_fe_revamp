@@ -181,7 +181,7 @@ const FormUbahDataMurid = () => {
       <Header
         home="PMB"
         prev="Tahapan"
-        navePrev={path}
+        navPrev={path}
         at="Ubah Data Anak"
         title="Form Ubah Data Anak"
       />

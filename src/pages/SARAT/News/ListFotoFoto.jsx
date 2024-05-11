@@ -112,7 +112,7 @@ export default function ListFotoFoto() {
       <Header
         home="Admin SARAT"
         // prev="Bank"
-        // navePrev={path}
+        // navPrev={path}
         at="Daftar Foto Berita"
         title="Daftar Foto Berita"
       />

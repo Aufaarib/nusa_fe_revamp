@@ -173,7 +173,7 @@ export default function TambahSpp() {
       <Header
         home="Admin Keuangan"
         prev="Data Pembayaran SPP"
-        navePrev={path}
+        navPrev={path}
         at="Pembayaran Spp"
         title="Pembayaran Spp"
       />

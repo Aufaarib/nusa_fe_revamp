@@ -63,17 +63,24 @@ input[type="number"]::-webkit-outer-spin-button {
   transition: color 0.2s ease-in-out;
 }
 
-input[type="file"] {
-  width: 350px;
+/* input[type="file"] {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100px;
   max-width: 100%;
   color: #444;
   padding: 5px;
   background: #fff;
   border-radius: 10px;
-  border: 1px solid #555;
+  border: 1px dotted;
+  background-color: aquamarine;
 }
 
 input[type="file"]::file-selector-button {
+  background-color: aqua;
   margin-right: 20px;
   border: none;
   background: #084cdf;
@@ -86,7 +93,7 @@ input[type="file"]::file-selector-button {
 
 input[type="file"]::file-selector-button:hover {
   background: #0d45a5;
-}
+} */
 
 .content-status {
   width: "15%";
