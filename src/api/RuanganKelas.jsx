@@ -6,37 +6,46 @@ import {
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getClassRoom(setData, setSts) {
+export function getClassRoom(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/classroom", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function getStudentListRoom(setData, setSts, id) {
+export function getStudentListRoom(setData, setSts, id, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + `/classroom/${id}/student`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function getKelompokMapelRoom(setData, setSts, roomClassesId) {
+export function getKelompokMapelRoom(
+  setData,
+  setSts,
+  roomClassesId,
+  setIsLoading
+) {
   const data = [];
   axios
     .get(process.env.REACT_APP_BASE_URL + "/subject/group", {
@@ -46,12 +55,14 @@ export function getKelompokMapelRoom(setData, setSts, roomClassesId) {
       res.data.body.forEach((element) => {
         if (element.roomClasses.id === roomClassesId) {
           data.push(element);
+          setIsLoading(false);
         }
       });
       setData(data);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -64,7 +75,8 @@ export function postClassRoom(
   classId,
   roomId,
   capacity,
-  teacherId
+  teacherId,
+  setIsLoading
 ) {
   axios
     .post(
@@ -79,6 +91,7 @@ export function postClassRoom(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -89,6 +102,7 @@ export function postClassRoom(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -101,7 +115,8 @@ export function updateClassRoom(
   classId,
   roomId,
   capacity,
-  teacherId
+  teacherId,
+  setIsLoading
 ) {
   axios
     .put(
@@ -116,6 +131,7 @@ export function updateClassRoom(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -126,6 +142,7 @@ export function updateClassRoom(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

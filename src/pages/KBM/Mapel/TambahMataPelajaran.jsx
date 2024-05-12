@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
-import { AlertEmpty } from "../../../components/ModalPopUp";
+import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { DropdownKurikulum } from "../../../components/Dropdown";
+import { CircularProgress } from "@mui/material";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function TambahMataPelajaran() {
   const [name, setName] = useState("");
@@ -12,16 +14,17 @@ export default function TambahMataPelajaran() {
   const [description, setDescription] = useState("");
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
-
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-mata-pelajaran";
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (name.length === 0 || description.length === 0 || type.length === 0) {
-      AlertEmpty();
+      setIsLoading(false);
+      AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postMapel(setSts, navigateMapel, name, description, type);
+      postMapel(setSts, navigateMapel, name, description, type, setIsLoading);
     }
   };
 
@@ -92,7 +95,8 @@ export default function TambahMataPelajaran() {
             required={true}
           /> */}
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

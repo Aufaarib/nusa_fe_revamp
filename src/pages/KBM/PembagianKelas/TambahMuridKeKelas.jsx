@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { postMapel } from "../../../api/MataPelajaran";
-import { getMurid, getMuridNotRegisteredToClass } from "../../../api/Murid";
-import { Header } from "../../../components";
-import { DropdownSiswa } from "../../../components/Dropdown";
-import { AlertConfirmation, AlertEmpty } from "../../../components/ModalPopUp";
-import {
-  DataTablesMoveStudentToClassRoom,
-  DataTablesWithoutButton,
-} from "../../../components/DataTables";
 import moment from "moment/moment";
+import React, { useEffect, useState } from "react";
 import { BsChevronBarLeft } from "react-icons/bs";
+import { useLocation, useNavigate } from "react-router-dom";
+import { postMapel } from "../../../api/MataPelajaran";
+import { getMuridNotRegisteredToClass } from "../../../api/Murid";
 import { moveStudentToClassRoom } from "../../../api/RuanganKelas";
+import { Header } from "../../../components";
+import { DataTablesMoveStudentToClassRoom } from "../../../components/DataTables";
+import { AlertConfirmation, AlertEmpty } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function TambahMuridKeKelas() {
   const [academicYearData, setAcademicYearData] = useState([]);
@@ -29,6 +26,7 @@ export default function TambahMuridKeKelas() {
   const [statusVal, setStatus] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const location = useLocation();
   const path = "/admin/detail-ruang-kelas";
@@ -51,7 +49,8 @@ export default function TambahMuridKeKelas() {
   };
 
   const fetchStudent = () => {
-    getMuridNotRegisteredToClass(setStudentData, setSts);
+    setIsLoading(true);
+    getMuridNotRegisteredToClass(setStudentData, setSts, setIsLoading);
   };
 
   useEffect(() => {
@@ -181,7 +180,7 @@ export default function TambahMuridKeKelas() {
       <Header
         home="Admin KBM"
         prev="Ruangan Kelas"
-        navPrev={path}
+        // navPrev={path}
         at="Tambah Murid Ke Ruangan Kelas"
         title={location.state.namaRuangan}
       />

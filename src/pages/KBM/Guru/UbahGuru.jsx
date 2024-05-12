@@ -9,6 +9,8 @@ import {
 } from "../../../components/Dropdown";
 import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahGuru() {
   const location = useLocation();
@@ -20,11 +22,13 @@ export default function UbahGuru() {
     moment(location.state.birthDate).format("YYYY-MM-DD")
   );
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-guru";
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const code = location.state.code;
     if (
       fullname === "" ||
@@ -34,6 +38,7 @@ export default function UbahGuru() {
       birthDate === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateGuru(
         setSts,
@@ -43,7 +48,8 @@ export default function UbahGuru() {
         gender,
         religion,
         birthPlace,
-        birthDate
+        birthDate,
+        setIsLoading
       );
     }
   };
@@ -116,7 +122,8 @@ export default function UbahGuru() {
             value={moment(location.state.birthDate).format("YYYY-MM-DD")}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

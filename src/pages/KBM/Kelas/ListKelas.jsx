@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { getKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListKelas() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = data;
   if (data !== null) {
@@ -17,7 +19,8 @@ export default function ListKelas() {
   }
 
   useEffect(() => {
-    getKelas(setData, setSts);
+    setIsLoading(true);
+    getKelas(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

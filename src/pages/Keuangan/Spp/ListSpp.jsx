@@ -4,6 +4,7 @@ import { getSpp, getUnpaidSpp } from "../../../api/Spp";
 import { Header } from "../../../components";
 import { DataTables, DataTablesListSpp } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListSpp() {
   const [data, setData] = useState([]);
@@ -12,6 +13,7 @@ export default function ListSpp() {
   const [filterText, setFilterText] = useState("");
   const [filterPaid, setFilterPaid] = useState(true);
   const [filterUnPaid, setFilterUnPaid] = useState(false);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   let filteredItems = data;
@@ -36,8 +38,9 @@ export default function ListSpp() {
   };
 
   useEffect(() => {
-    getSpp(setData, setSts);
-    getUnpaidSpp(setUnpaidData, setSts);
+    setIsLoading(true);
+    getSpp(setData, setSts, setIsLoading);
+    getUnpaidSpp(setUnpaidData, setSts, setIsLoading);
   }, []);
 
   const columns = [

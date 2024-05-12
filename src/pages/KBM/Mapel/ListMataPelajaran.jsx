@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getMapel } from "../../../api/MataPelajaran";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListMataPelajaran() {
   const [data, setData] = useState([]);
@@ -10,6 +11,7 @@ export default function ListMataPelajaran() {
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const path = "/admin/tambah-mata-pelajaran";
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = data;
   if (data !== null) {
@@ -19,7 +21,8 @@ export default function ListMataPelajaran() {
   }
 
   useEffect(() => {
-    getMapel(setData, setSts);
+    setIsLoading(true);
+    getMapel(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

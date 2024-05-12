@@ -4,6 +4,8 @@ import { updateKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahKelas() {
   const location = useLocation();
@@ -12,17 +14,28 @@ export default function UbahKelas() {
   const [name, setName] = useState(location.state.name);
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
 
   const path = "/admin/list-kelas";
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const id = location.state.id;
 
     if (grade === "" || name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      updateKelas(setSts, navigateKelas, grade, name, description, id);
+      updateKelas(
+        setSts,
+        navigateKelas,
+        grade,
+        name,
+        description,
+        id,
+        setIsLoading
+      );
     }
   };
 
@@ -75,7 +88,8 @@ export default function UbahKelas() {
             />
           </section>
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

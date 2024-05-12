@@ -1,28 +1,33 @@
-import {
-  AlertMessage,
-  AlertStatusSuccess,
-  AlertStatusUpdateFailed,
-  AlertStatusUpdateSuccess,
-} from "../components/ModalPopUp";
+import { AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getMapel(setData, setSts) {
+export function getMapel(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/subject", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function updateMapel(setSts, code, path, name, description, type) {
+export function updateMapel(
+  setSts,
+  code,
+  path,
+  name,
+  description,
+  type,
+  setIsLoading
+) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/subject/${code}`,
@@ -36,6 +41,7 @@ export function updateMapel(setSts, code, path, name, description, type) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -46,12 +52,13 @@ export function updateMapel(setSts, code, path, name, description, type) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function postMapel(setSts, path, name, description, type) {
+export function postMapel(setSts, path, name, description, type, setIsLoading) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/subject",
@@ -63,6 +70,7 @@ export function postMapel(setSts, path, name, description, type) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -73,6 +81,7 @@ export function postMapel(setSts, path, name, description, type) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

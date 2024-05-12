@@ -562,6 +562,7 @@ export const AlertStatusSuccess = (navigate, title, buttonText, icon, text) => {
       text: text,
       showConfirmButton: true,
       confirmButtonText: buttonText,
+      allowOutsideClick: false,
     })
     .then((result) => {
       if (result.isConfirmed) {

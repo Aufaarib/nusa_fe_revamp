@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { getMurid } from "../../../api/Murid";
 import { Header } from "../../../components";
 import { DataTablesWithoutButton } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 const ListMurid = () => {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-murid";
 
   let filteredItems = data;
@@ -21,7 +23,8 @@ const ListMurid = () => {
   }
 
   useEffect(() => {
-    getMurid(setData, setSts);
+    setIsLoading(true);
+    getMurid(setData, setSts, setIsLoading);
   }, []);
 
   const navigateUbahMurid = (

@@ -13,6 +13,8 @@ import {
 } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahKelompokMapel() {
   const location = useLocation();
@@ -56,26 +58,28 @@ export default function UbahKelompokMapel() {
   });
   const [status, setStatus] = useState(stats);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-kelompok-mapel";
 
   const fetchAcademicPeriode = () => {
-    getSemester(setAcademicPeriodeData, setSts);
+    getSemester(setAcademicPeriodeData, setSts, setIsLoading);
   };
 
   const fetchSubject = () => {
-    getMapel(setSubjectData, setSts);
+    getMapel(setSubjectData, setSts, setIsLoading);
   };
 
   const fetchClassRoom = () => {
-    getClassRoom(setClassRoomData, setSts);
+    getClassRoom(setClassRoomData, setSts, setIsLoading);
   };
 
   const fetchTeacher = () => {
-    getGuru(setTeacherData, setSts);
+    getGuru(setTeacherData, setSts, setIsLoading);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAcademicPeriode();
     fetchSubject();
     fetchClassRoom();
@@ -84,7 +88,7 @@ export default function UbahKelompokMapel() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (
       academicPeriodeIds === "" ||
       subjectIds === "" ||
@@ -95,6 +99,7 @@ export default function UbahKelompokMapel() {
       endTime === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       const academicPeriodeId = academicPeriodeIds.value;
       const subjectId = subjectIds.value;
@@ -112,7 +117,8 @@ export default function UbahKelompokMapel() {
         day,
         teacherId,
         startTime,
-        endTime
+        endTime,
+        setIsLoading
       );
     }
   };
@@ -178,16 +184,6 @@ export default function UbahKelompokMapel() {
             options={academicPeriodeOptions}
             onChange={setacademicPeriodeId}
           />
-          {/* <DropdownSiswa
-            label="Semester"
-            required={true}
-            defaultValue={smesterId}
-            isClearable={false}
-            options={academicYearOptions}
-            isSearchable={false}
-            onChange={(e) => setacademicPeriodeId(e.value)}
-            // placeholder={`Sm ${smester}`}
-          /> */}
           <DropdownKurikulum
             label="Hari"
             required={true}
@@ -197,22 +193,6 @@ export default function UbahKelompokMapel() {
             options={dayOptions}
             onChange={setDay}
           />
-          {/* <DropdownSiswa
-            label="Hari"
-            required={true}
-            defaultValue={day}
-            isClearable={false}
-            options={dayOptions}
-            isSearchable={false}
-            onChange={(e) => setDay(e.value)}
-            // placeholder={
-            //   (hari == 1 && "Senin") ||
-            //   (hari == 2 && "Selasa") ||
-            //   (hari == 3 && "Rabu") ||
-            //   (hari == 4 && "Kamis") ||
-            //   (hari == 5 && "Jumat")
-            // }
-          /> */}
           <DropdownKurikulum
             label="Mata Pelajaran"
             required={true}
@@ -222,16 +202,6 @@ export default function UbahKelompokMapel() {
             options={subjectOptions}
             onChange={setaSubjectId}
           />
-          {/* <DropdownSiswa
-            label="Mata Pelajaran"
-            required={true}
-            defaultValue={MapelId}
-            isClearable={false}
-            options={subjectOptions}
-            isSearchable={false}
-            onChange={(e) => setacSubjectId(e.value)}
-            // placeholder={mapel}
-          /> */}
           <DropdownKurikulum
             label="Ruangan Kelas"
             required={true}
@@ -241,16 +211,6 @@ export default function UbahKelompokMapel() {
             options={classRoomOptions}
             onChange={setClassRoomId}
           />
-          {/* <DropdownSiswa
-            label="Ruangan Kelas"
-            required={true}
-            defaultValue={roomId}
-            isClearable={false}
-            options={classRoomOptions}
-            isSearchable={false}
-            onChange={(e) => setClassRoomId(e.value)}
-            // placeholder={room}
-          /> */}
           <TextInput
             label="Jam Mulai"
             type="text"
@@ -276,26 +236,9 @@ export default function UbahKelompokMapel() {
             options={teacherOptions}
             onChange={setTeacherId}
           />
-          {/* <DropdownSiswa
-            label="Guru"
-            required={true}
-            defaultValue={teacherId}
-            isClearable={false}
-            options={teacherOptions}
-            isSearchable={false}
-            onChange={(e) => setTeacherId(e.value)}
-          /> */}
-          {/* <DropdownStatus
-            label="Status"
-            required={true}
-            isClearable={true}
-            defaultValue={status}
-            isSearchable={false}
-            onChange={setStatus}
-            // placeholder={status == 1 ? "Aktif" : "Non-Aktif"}
-          /> */}
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

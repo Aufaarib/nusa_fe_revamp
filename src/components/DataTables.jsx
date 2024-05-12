@@ -2445,7 +2445,7 @@ export function DataTablesListSpp({
         <div>
           {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -2950,6 +2950,7 @@ export function DataTablePengeluaran({
   selectedEnd,
   onChangeEnd,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -3090,9 +3091,9 @@ export function DataTablePengeluaran({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -3220,6 +3221,7 @@ export function DataTablesWithoutButton({
   onFilter,
   onClick,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -3359,9 +3361,9 @@ export function DataTablesWithoutButton({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -3858,6 +3860,7 @@ export function DataTablesMoveStudentToClassRoom({
   setAllSelected,
   selectedRows,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -3996,9 +3999,9 @@ export function DataTablesMoveStudentToClassRoom({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable

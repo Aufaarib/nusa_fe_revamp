@@ -2,29 +2,31 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getMurid(setData, setSts) {
+export function getMurid(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/student", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function getMuridNotRegisteredToClass(setData, setSts) {
+export function getMuridNotRegisteredToClass(setData, setSts, setIsLoading) {
   const data = [];
   axios
     .get(process.env.REACT_APP_BASE_URL + "/student", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       res.data.body.forEach((element) => {
         if (element.inRoomClasses == 0) {
           data.push(element);
@@ -34,6 +36,7 @@ export function getMuridNotRegisteredToClass(setData, setSts) {
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -52,7 +55,8 @@ export function updateMurid(
   gender,
   bloodType,
   distanceFromHome,
-  status
+  // status,
+  setIsLoading
 ) {
   axios
     .put(
@@ -67,12 +71,12 @@ export function updateMurid(
         gender,
         bloodType,
         distanceFromHome,
-        status,
+        // status,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
+      setIsLoading(false);
       AlertStatusSuccess(
         path,
         "Berhasil",
@@ -82,6 +86,7 @@ export function updateMurid(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

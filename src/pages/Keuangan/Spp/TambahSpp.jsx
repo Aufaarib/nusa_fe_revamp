@@ -1,4 +1,3 @@
-import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMurid } from "../../../api/Murid";
@@ -8,7 +7,9 @@ import { Header } from "../../../components";
 import { DropdownMultiple, DropdownSiswa } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
-import Select from "react-select";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { FileUpload } from "../../../components/FileUpload";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahSpp() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
@@ -20,16 +21,17 @@ export default function TambahSpp() {
   const [description, setDescription] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-spp";
   const uploaderRef = useRef(null);
 
   const fetchAcademicPeriode = () => {
-    getSemester(setAcademicPeriodeData, setSts);
+    getSemester(setAcademicPeriodeData, setSts, setIsLoading);
   };
 
   const fetchStudents = () => {
-    getMurid(setStudentsData, setSts);
+    getMurid(setStudentsData, setSts, setIsLoading);
   };
 
   const navigateListSpp = () => {
@@ -37,31 +39,13 @@ export default function TambahSpp() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAcademicPeriode();
     fetchStudents();
   }, []);
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onRemoveFile = (args) => {};
-
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-    setFilesData(args);
-  };
-
   const postData = (e) => {
-    const invoice = filesData?.file?.rawFile;
+    const invoice = filesData;
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
 
@@ -238,29 +222,15 @@ export default function TambahSpp() {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={onRemoveFile}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              multiple={false}
-              buttons={{
-                browse: !filesData ? "Unggah Berkas" : "Ganti Berkas",
-              }}
+            <FileUpload
+              setFilesData={setFilesData}
+              filesData={filesData}
+              fileInputId={"fileInput1"}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
           </div>
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

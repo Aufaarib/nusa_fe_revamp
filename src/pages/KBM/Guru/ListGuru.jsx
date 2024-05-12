@@ -5,11 +5,13 @@ import { updateStatusKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 const HasilTes = () => {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   let filteredItems = data;
@@ -20,7 +22,8 @@ const HasilTes = () => {
   }
 
   useEffect(() => {
-    getGuru(setData, setSts);
+    setIsLoading(true);
+    getGuru(setData, setSts, setIsLoading);
   }, []);
 
   const navigateUbahGuru = (

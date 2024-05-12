@@ -4,12 +4,15 @@ import { postRoom } from "../../../api/Ruangan";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahRuangan() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
 
   const path = "/admin/list-ruangan";
 
@@ -19,11 +22,12 @@ export default function TambahRuangan() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (name === "" || description === "") {
+      setIsLoading(false);
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      postRoom(setSts, navigateRuangan, name, description);
+      postRoom(setSts, navigateRuangan, name, description, setIsLoading);
     }
   };
 
@@ -60,7 +64,8 @@ export default function TambahRuangan() {
             required={true}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

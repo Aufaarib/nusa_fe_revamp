@@ -9,6 +9,8 @@ import { DropdownSiswa } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { updateClassRoom } from "../../../api/RuanganKelas";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahRuanganKelas() {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function UbahRuanganKelas() {
   });
   const [capacitys, setCapacity] = useState(location.state.kapasitas);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-ruang-kelas";
 
   const navigateRuangKelas = () => {
@@ -42,22 +45,23 @@ export default function UbahRuanganKelas() {
   };
 
   const fetchClass = async () => {
-    getKelas(setClassData, setSts);
+    getKelas(setClassData, setSts, setIsLoading);
   };
 
   const fetchAcademicYear = () => {
-    getTahunAjaran(setAcademicYearData, setSts);
+    getTahunAjaran(setAcademicYearData, setSts, setIsLoading);
   };
 
   const fetchRoom = () => {
-    getRoom(setRoomData, setSts);
+    getRoom(setRoomData, setSts, setIsLoading);
   };
 
   const fetchTeacher = () => {
-    getGuru(setTeacherData, setSts);
+    getGuru(setTeacherData, setSts, setIsLoading);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAcademicYear();
     fetchClass();
     fetchRoom();
@@ -66,7 +70,7 @@ export default function UbahRuanganKelas() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const capacity = parseInt(capacitys);
     const id = location.state.id;
 
@@ -78,6 +82,7 @@ export default function UbahRuanganKelas() {
       teacherIds === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       const academicYearId = academicYearIds.value;
       const classId = classIds.value;
@@ -92,7 +97,8 @@ export default function UbahRuanganKelas() {
         classId,
         roomId,
         capacity,
-        teacherId
+        teacherId,
+        setIsLoading
       );
     }
   };
@@ -181,7 +187,8 @@ export default function UbahRuanganKelas() {
             onChange={setTeacherId}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

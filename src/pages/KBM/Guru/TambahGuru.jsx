@@ -8,6 +8,8 @@ import {
   DropdownDatePickers,
   DropdownRadioInputGender,
 } from "../../../components/Dropdown";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahGuru() {
   const [fullname, setFullname] = useState("");
@@ -15,13 +17,14 @@ export default function TambahGuru() {
   const [religion, setReligion] = useState("");
   const [birthPlace, setBirthPlace] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
   const path = "/admin/list-guru";
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (
       fullname.length === 0 ||
       gender.length === 0 ||
@@ -38,7 +41,8 @@ export default function TambahGuru() {
         gender,
         religion,
         birthPlace,
-        birthDate
+        birthDate,
+        setIsLoading
       );
     }
   };
@@ -112,7 +116,8 @@ export default function TambahGuru() {
             change={(e) => setBirthDate(e.element.value)}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

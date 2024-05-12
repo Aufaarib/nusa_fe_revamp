@@ -24,7 +24,7 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [successMsgSendVerify, setSuccessMsgSendVerify] = useState("");
   const [errMsgSendVerify, setErrMsgSendVerify] = useState("");

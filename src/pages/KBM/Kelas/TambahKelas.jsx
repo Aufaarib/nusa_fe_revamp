@@ -4,6 +4,8 @@ import { postKelas } from "../../../api/Kelas";
 import { Header } from "../../../components";
 import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahKelas() {
   const [grade, setGrade] = useState("");
@@ -12,15 +14,24 @@ export default function TambahKelas() {
   const [status, setStatus] = useState(undefined);
   // const created_by = localStorage.getItem("NAMA");
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-kelas";
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (grade === "" || name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postKelas(setStatus, navigateKelas, grade, name, description);
+      postKelas(
+        setStatus,
+        navigateKelas,
+        grade,
+        name,
+        description,
+        setIsLoading
+      );
     }
   };
 
@@ -70,7 +81,8 @@ export default function TambahKelas() {
             required={true}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"
@@ -86,19 +98,6 @@ export default function TambahKelas() {
               Batal
             </button>
           </div>
-
-          {/* <ModalStatusTambah
-            isOpenStatus={isOpenStatus}
-            closeModalStatus={closeModalStatus}
-            status={status}
-            navigate={navigateKelas}
-          />
-
-          <ModalEmpty
-            isOpenEmpty={isOpenEmpty}
-            closeModalEmpty={closeModalEmpty}
-            onRequestCloseEmpty={closeModalEmpty}
-          /> */}
         </article>
       </div>
     </div>

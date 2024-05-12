@@ -9,6 +9,8 @@ import { Header } from "../../../components";
 import { DropdownSiswa, DropdownStatus } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahKelompokMapel() {
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
@@ -25,25 +27,27 @@ export default function TambahKelompokMapel() {
   const [statusVal, setStatus] = useState("");
   const [sts, setSts] = useState(undefined);
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-kelompok-mapel";
 
   const fetchAcademicPeriode = () => {
-    getSemester(setAcademicPeriodeData, setSts);
+    getSemester(setAcademicPeriodeData, setSts, setIsLoading);
   };
 
   const fetchSubject = () => {
-    getMapel(setSubjectData, setSts);
+    getMapel(setSubjectData, setSts, setIsLoading);
   };
 
   const fetchClassRoom = () => {
-    getClassRoom(setClassRoomData, setSts);
+    getClassRoom(setClassRoomData, setSts, setIsLoading);
   };
 
   const fetchTeacher = () => {
-    getGuru(setTeacherData, setSts);
+    getGuru(setTeacherData, setSts, setIsLoading);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAcademicPeriode();
     fetchSubject();
     fetchClassRoom();
@@ -52,7 +56,7 @@ export default function TambahKelompokMapel() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (
       academicPeriodeId === "" ||
       subjectId === "" ||
@@ -63,6 +67,7 @@ export default function TambahKelompokMapel() {
       endTime === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       postKelompokMapel(
         setSts,
@@ -73,7 +78,8 @@ export default function TambahKelompokMapel() {
         teacherId,
         day,
         startTime,
-        endTime
+        endTime,
+        setIsLoading
       );
     }
   };
@@ -198,7 +204,8 @@ export default function TambahKelompokMapel() {
             onChange={setStatus}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

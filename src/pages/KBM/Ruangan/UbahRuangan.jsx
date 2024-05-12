@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { updateRoom } from "../../../api/Ruangan";
+import { CircularProgress } from "@mui/material";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function UbahRuangan() {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ export default function UbahRuangan() {
   const [name, setName] = useState(location.state.name);
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
 
   const path = "/admin/list-ruangan";
 
@@ -21,16 +24,18 @@ export default function UbahRuangan() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (name === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateRoom(
         setSts,
         navigateRuangan,
         location.state.code,
         name,
-        description
+        description,
+        setIsLoading
       );
     }
   };
@@ -70,7 +75,8 @@ export default function UbahRuangan() {
             require
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

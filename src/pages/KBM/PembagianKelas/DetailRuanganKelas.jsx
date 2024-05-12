@@ -9,6 +9,7 @@ import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
 import moment from "moment/moment";
 import { BsChevronBarLeft } from "react-icons/bs";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 const DetailRuanganKelas = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ const DetailRuanganKelas = () => {
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-ruang-kelas";
 
   let filteredStudents = data;
@@ -35,18 +37,21 @@ const DetailRuanganKelas = () => {
   }
 
   const fetchStudents = () => {
+    setIsLoading(true);
     setFetched("1");
-    getStudentListRoom(setData, setSts, location.state.id);
+    getStudentListRoom(setData, setSts, location.state.id, setIsLoading);
   };
 
   const fetchSubjects = () => {
+    setIsLoading(true);
     setFetched("2");
-    getKelompokMapelRoom(setData, setSts, location.state.id);
+    getKelompokMapelRoom(setData, setSts, location.state.id, setIsLoading);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     setFetched("1");
-    getStudentListRoom(setData, setSts, location.state.id);
+    getStudentListRoom(setData, setSts, location.state.id, setIsLoading);
   }, []);
 
   const navigateTambahMurid = (id, namaRuangan) => {

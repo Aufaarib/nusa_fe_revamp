@@ -12,6 +12,7 @@ import { getRoom } from "../../../api/Ruangan";
 import { getGuru } from "../../../api/Guru";
 import { postClassRoom } from "../../../api/RuanganKelas";
 import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahRuanganKelas() {
   const [academicYearData, setAcademicYearData] = useState([]);
@@ -34,7 +35,7 @@ export default function TambahRuanganKelas() {
   };
 
   const fetchClass = async () => {
-    getKelas(setClassData, setSts);
+    getKelas(setClassData, setSts, setIsLoading);
   };
 
   const fetchAcademicYear = () => {
@@ -42,24 +43,24 @@ export default function TambahRuanganKelas() {
   };
 
   const fetchRoom = () => {
-    getRoom(setRoomData, setSts);
+    getRoom(setRoomData, setSts, setIsLoading);
   };
 
   const fetchTeacher = () => {
-    getGuru(setTeacherData, setSts);
+    getGuru(setTeacherData, setSts, setIsLoading);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAcademicYear();
     fetchClass();
     fetchRoom();
     fetchTeacher();
-    console.log("asdads");
   }, []);
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const capacity = parseInt(capacitys);
 
     if (
@@ -70,6 +71,7 @@ export default function TambahRuanganKelas() {
       teacherId === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       postClassRoom(
         setSts,
@@ -78,7 +80,8 @@ export default function TambahRuanganKelas() {
         classId,
         roomId,
         capacity,
-        teacherId
+        teacherId,
+        setIsLoading
       );
       // setisOpenStatus(true);
     }
@@ -168,7 +171,8 @@ export default function TambahRuanganKelas() {
             onChange={(e) => setTeacherId(e.value)}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

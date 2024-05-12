@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListKelompokMapel() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = data;
   if (data !== null) {
@@ -17,7 +19,16 @@ export default function ListKelompokMapel() {
   }
 
   useEffect(() => {
-    getKelompokMapel(setData, setSts);
+    if (isLoading && filteredItems.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  });
+
+  useEffect(() => {
+    setIsLoading(true);
+    getKelompokMapel(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

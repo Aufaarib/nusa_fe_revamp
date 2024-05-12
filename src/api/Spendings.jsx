@@ -2,16 +2,18 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getPengeluaran(setData, setSts) {
+export function getPengeluaran(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/spending", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

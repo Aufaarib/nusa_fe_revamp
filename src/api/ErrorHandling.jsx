@@ -16,7 +16,7 @@ export function ErrorHandling(error) {
   } else {
     AlertMessage(
       "Gagal",
-      "Kendala Server, Silahkan Coba Lagi",
+      "Data Tidak Ditemukan, Silahkan Coba Lagi",
       "Coba Lagi",
       "error"
     );

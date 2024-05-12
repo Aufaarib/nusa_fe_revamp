@@ -2,22 +2,31 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getRoom(setData, setSts) {
+export function getRoom(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/room", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function updateRoom(setSts, path, code, name, description) {
+export function updateRoom(
+  setSts,
+  path,
+  code,
+  name,
+  description,
+  setIsLoading
+) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/room/${code}`,
@@ -28,6 +37,7 @@ export function updateRoom(setSts, path, code, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -38,12 +48,13 @@ export function updateRoom(setSts, path, code, name, description) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function postRoom(setSts, path, name, description) {
+export function postRoom(setSts, path, name, description, setIsLoading) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/room",
@@ -54,6 +65,7 @@ export function postRoom(setSts, path, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -64,6 +76,7 @@ export function postRoom(setSts, path, name, description) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

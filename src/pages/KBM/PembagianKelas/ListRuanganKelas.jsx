@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { getClassRoom } from "../../../api/RuanganKelas";
 import { Header } from "../../../components";
 import { DataTablesPMB } from "../../../components/DataTables";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 const ListRuanganKelas = () => {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
 
   let filteredItems = data;
   if (data !== null) {
@@ -18,7 +20,8 @@ const ListRuanganKelas = () => {
   }
 
   useEffect(() => {
-    getClassRoom(setData, setSts);
+    setIsLoading(true);
+    getClassRoom(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

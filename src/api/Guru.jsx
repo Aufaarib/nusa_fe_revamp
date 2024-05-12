@@ -2,16 +2,18 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getGuru(setData, setSts) {
+export function getGuru(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/teacher", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -25,7 +27,8 @@ export function updateGuru(
   Gender,
   Religion,
   BirthPlace,
-  BirthDate
+  BirthDate,
+  setIsLoading
 ) {
   axios
     .put(
@@ -40,6 +43,7 @@ export function updateGuru(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -50,6 +54,7 @@ export function updateGuru(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -62,7 +67,8 @@ export function postGuru(
   gender,
   religion,
   birthPlace,
-  birthDate
+  birthDate,
+  setIsLoading
 ) {
   axios
     .post(
@@ -77,6 +83,7 @@ export function postGuru(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -87,6 +94,7 @@ export function postGuru(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

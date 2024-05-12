@@ -107,7 +107,7 @@ const TahunAjaran = () => {
   };
 
   useEffect(() => {
-    if (filteredItems.length === 0) {
+    if (isLoading && filteredItems.length === 0) {
       setIsLoading(true);
     } else {
       setIsLoading(false);

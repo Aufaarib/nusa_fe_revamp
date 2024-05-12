@@ -1,28 +1,33 @@
-import {
-  AlertMessage,
-  AlertStatusHapusFailed,
-  AlertStatusHapusSuccess,
-  AlertStatusSuccess,
-} from "../components/ModalPopUp";
+import { AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getKelas(setData, setSts) {
+export function getKelas(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/classes", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function updateKelas(setSts, path, grade, name, description, id) {
+export function updateKelas(
+  setSts,
+  path,
+  grade,
+  name,
+  description,
+  id,
+  setIsLoading
+) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/classes/${id}`,
@@ -36,6 +41,7 @@ export function updateKelas(setSts, path, grade, name, description, id) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -46,12 +52,20 @@ export function updateKelas(setSts, path, grade, name, description, id) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function postKelas(setSts, path, grade, name, description) {
+export function postKelas(
+  setSts,
+  path,
+  grade,
+  name,
+  description,
+  setIsLoading
+) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/classes",
@@ -65,6 +79,7 @@ export function postKelas(setSts, path, grade, name, description) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -75,6 +90,7 @@ export function postKelas(setSts, path, grade, name, description) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

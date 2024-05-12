@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { DropdownKurikulum } from "../../../components/Dropdown";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahMataPelajaran() {
   const location = useLocation();
@@ -16,17 +18,28 @@ export default function UbahMataPelajaran() {
   });
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-mata-pelajaran";
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const code = location.state.code;
     const type = types.value;
 
     if (name.length === 0 || description.length === 0 || type.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      updateMapel(setSts, code, navigateMapel, name, description, type);
+      updateMapel(
+        setSts,
+        code,
+        navigateMapel,
+        name,
+        description,
+        type,
+        setIsLoading
+      );
     }
   };
 
@@ -94,7 +107,8 @@ export default function UbahMataPelajaran() {
             /> */}
           </section>
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

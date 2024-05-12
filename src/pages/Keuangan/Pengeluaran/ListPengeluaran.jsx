@@ -1,14 +1,11 @@
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPengeluaran } from "../../../api/Spendings";
 import { Header } from "../../../components";
-import {
-  DataTablePengeluaran,
-  DataTables,
-  FilterDate,
-} from "../../../components/DataTables";
+import { DataTablePengeluaran } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
-import moment from "moment/moment";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListPengeluaran() {
   const [data, setData] = useState([]);
@@ -17,6 +14,7 @@ export default function ListPengeluaran() {
   const [filterType, setFilterType] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   const handleTypeFilter = (event) => {
@@ -56,12 +54,21 @@ export default function ListPengeluaran() {
     }
   }
 
+  useEffect(() => {
+    if (isLoading && filteredItems.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  });
+
   const openPaymentProof = (url) => {
     AlertPaymentProof(url);
   };
 
   useEffect(() => {
-    getPengeluaran(setData, setSts);
+    setIsLoading(true);
+    getPengeluaran(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [
