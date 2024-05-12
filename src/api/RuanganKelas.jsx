@@ -3,6 +3,7 @@ import {
   AlertStatusSuccess,
   AlertStatusTambahFailed,
 } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getClassRoom(setData, setSts) {
@@ -16,9 +17,7 @@ export function getClassRoom(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -33,9 +32,7 @@ export function getStudentListRoom(setData, setSts, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -56,9 +53,7 @@ export function getKelompokMapelRoom(setData, setSts, roomClassesId) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -95,16 +90,7 @@ export function postClassRoom(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Tambah Ruangan Kelas Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 export function updateClassRoom(
@@ -141,11 +127,7 @@ export function updateClassRoom(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah Ruangan Kelas Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -170,15 +152,6 @@ export function moveStudentToClassRoom(setSts, path, students, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Penambahan Murid Ke Kelas Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }

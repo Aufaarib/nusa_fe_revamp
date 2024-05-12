@@ -7,6 +7,7 @@ import TextInput, { TextArea } from "../../../components/TextInput";
 import { getActiveSession, postNews, updateNews } from "../../../api/Sarat";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { useEffect } from "react";
+import { FileUpload } from "../../../components/FileUpload";
 
 export default function UbahNews() {
   const location = useLocation();
@@ -24,13 +25,13 @@ export default function UbahNews() {
   const path = "/admin/list-berita";
   const uploaderRef = useRef(null);
 
+  console.log("asdasfsaf", updateFilesData);
+
   const removeFiles = (index) => {
     const newArray = [...filesData];
     newArray.splice(index, 1);
     setFilesData(newArray);
   };
-
-  console.log("filesData === ", filesData);
 
   useEffect(() => {
     getActiveSession(setData, setSts);
@@ -40,38 +41,12 @@ export default function UbahNews() {
     navigate(path);
   };
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onUploadChange = (args) => {
-    console.log("File uploaded successfully:", args);
-    setUpdateFilesData([...updateFilesData, args]);
-  };
-
-  const removeFile = (fileIndex) => {
-    const updatedFiles = [...updateFilesData];
-    updatedFiles.splice(fileIndex, 1);
-    setUpdateFilesData(updatedFiles);
-  };
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-  };
-
   const postData = (e) => {
     e.preventDefault();
     // const invoice = filesData?.filesData[0].rawFile;
     const formData = new FormData();
 
-    formData.append(`session_detail_id`, 103);
+    formData.append(`session_detail_id`, session_detail_id.value);
     formData.append(`description`, description);
     formData.append(`video_url`, video_url);
 
@@ -83,7 +58,7 @@ export default function UbahNews() {
     });
 
     updateFilesData.forEach((file, index) => {
-      formData.append(`images`, file.filesData[0].rawFile);
+      formData.append(`images`, file);
     });
 
     formData.forEach(function (value, key) {
@@ -194,27 +169,12 @@ export default function UbahNews() {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={removeFile}
-              selected={onUploadChange}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              // multiple={true}
-              buttons={{
-                browse: filesData.length === 0 ? "Unggah Foto" : "Tambah Foto",
-              }}
+            <FileUpload
+              setFilesData={setUpdateFilesData}
+              filesData={updateFilesData}
+              fileInputId={"fileInput1"}
+              multiple={true}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
           </div>
           <br />
           <hr className="mr-10 " />

@@ -512,14 +512,22 @@ const styledSweetAlert = Swal.mixin({
 });
 
 //Dynamic Text
-export const AlertMessage = (title, text, buttonText, icon) => {
-  styledSweetAlert.fire({
-    title: title,
-    text: text,
-    showConfirmButton: true,
-    confirmButtonText: buttonText,
-    icon: icon,
-  });
+export const AlertMessage = (title, text, buttonText, icon, navigate) => {
+  styledSweetAlert
+    .fire({
+      title: title,
+      text: text,
+      showConfirmButton: true,
+      confirmButtonText: buttonText,
+      icon: icon,
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        if (navigate) {
+          window.location.href = "/login";
+        }
+      }
+    });
 };
 
 export const AlertConfirmation = (

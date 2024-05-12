@@ -1,4 +1,5 @@
 import { AlertMessage } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import { getMyAdmission } from "./Registrasi";
 import axios from "./axios";
 
@@ -16,9 +17,7 @@ export function getPendaftaran(setPendaftaranData, setStatus) {
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -35,9 +34,7 @@ export function getActiveAdmission(setData, setStatus) {
     })
     .catch((error) => {
       setStatus({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -65,22 +62,15 @@ export function postCalonSiswa(setData, setSts, admissionPhaseId, childName) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else if (admissionPhaseId === "") {
+      if (admissionPhaseId === "") {
         AlertMessage(
           "Tidak Dapat Mendaftar",
-          "Belum Ada Sesi Pendaftaran Yang Dibuka",
+          "Belum Ada Gelombang Pendaftaran Yang Dibuka",
           "Tutup",
           "warning"
         );
       } else {
-        AlertMessage(
-          "Gagal",
-          "Penambahan Calon Siswa Gagal, Silahkan Coba Lagi",
-          "Coba Lagi",
-          "error"
-        );
+        ErrorHandling(error);
       }
     });
 }

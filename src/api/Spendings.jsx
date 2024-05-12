@@ -1,4 +1,5 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getPengeluaran(setData, setSts) {
@@ -12,9 +13,7 @@ export function getPengeluaran(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -38,11 +37,7 @@ export function postPengeluaran(setSts, navigate, formData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Pendaftaran Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -66,10 +61,6 @@ export function updatePengeluaran(setSts, navigate, formData, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah Pendaftaran Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }

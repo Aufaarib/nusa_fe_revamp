@@ -1,4 +1,5 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getSpp(setData, setSts) {
@@ -12,9 +13,7 @@ export function getSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getUnpaidSpp(setData, setSts) {
@@ -28,9 +27,7 @@ export function getUnpaidSpp(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -54,11 +51,7 @@ export function postSpp(setSts, navigate, formData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah SPP Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -82,10 +75,6 @@ export function updateSpp(setSts, navigate, formData, id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah SPP Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }

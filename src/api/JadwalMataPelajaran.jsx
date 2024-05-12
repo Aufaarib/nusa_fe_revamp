@@ -6,6 +6,7 @@ import {
   AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
 } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getJadwalMapel(setData, setSts) {
@@ -17,6 +18,7 @@ export function getJadwalMapel(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      ErrorHandling(error);
     });
 }
 
@@ -44,7 +46,7 @@ export function updateJadwalMapel(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
+      ErrorHandling(error);
     });
 }
 
@@ -79,7 +81,7 @@ export function postJadwalMapel(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertMessage("Gagal", "Tambah Guru Gagal", "Coba Lagi", "error");
+      ErrorHandling(error);
     });
 }
 
@@ -93,6 +95,6 @@ export function deleteJadwalMapel(setSts, deleteId, setData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusHapusFailed();
+      ErrorHandling(error);
     });
 }

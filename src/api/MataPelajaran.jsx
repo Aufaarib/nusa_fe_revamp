@@ -4,6 +4,7 @@ import {
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getMapel(setData, setSts) {
@@ -17,9 +18,7 @@ export function getMapel(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -48,16 +47,7 @@ export function updateMapel(setSts, code, path, name, description, type) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Ubah Mata Pelajaran Berhasil",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -84,15 +74,6 @@ export function postMapel(setSts, path, name, description, type) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Tambah Mata Pelajaran Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }

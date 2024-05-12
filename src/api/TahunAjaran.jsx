@@ -1,6 +1,7 @@
 import moment from "moment/moment";
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
+import { ErrorHandling } from "./ErrorHandling";
 
 export function getSemester(setData, setSts) {
   const year = moment().format("YYYY");
@@ -14,9 +15,7 @@ export function getSemester(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -33,9 +32,7 @@ export function getTahunAjaran(setData, setSts, setIsLoading) {
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -71,11 +68,7 @@ export function updateTahunAjaran(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah Tahun Ajaran Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -110,15 +103,6 @@ export function postTahunAjaran(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Tambah Tahun Ajaran Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }

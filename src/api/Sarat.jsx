@@ -1,4 +1,5 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getDonations(session_id, setData, setSts) {
@@ -12,9 +13,7 @@ export function getDonations(session_id, setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getNews(setData, setSts) {
@@ -28,9 +27,7 @@ export function getNews(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getNewsDetail(id, setData, setSts) {
@@ -44,9 +41,7 @@ export function getNewsDetail(id, setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getInstitution(setData, setSts) {
@@ -60,9 +55,7 @@ export function getInstitution(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getDetailQuestion(question_id, setData, setSts) {
@@ -76,9 +69,7 @@ export function getDetailQuestion(question_id, setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getQuestion(setData, setSts, session_id) {
@@ -96,9 +87,7 @@ export function getQuestion(setData, setSts, session_id) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getSession(page, per_page, setData, setSts, setPagination) {
@@ -117,9 +106,7 @@ export function getSession(page, per_page, setData, setSts, setPagination) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getSessionReport(
@@ -140,9 +127,7 @@ export function getSessionReport(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getSessionReportDetail(id, setData, setQuestion, setSts) {
@@ -159,9 +144,7 @@ export function getSessionReportDetail(id, setData, setQuestion, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getActiveSession(setData, setSts) {
@@ -176,9 +159,7 @@ export function getActiveSession(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getDetailSession(id, setData, setDetailsData, setSts) {
@@ -193,9 +174,7 @@ export function getDetailSession(id, setData, setDetailsData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function postDonations(setSts, navigate, session_detail_id, total) {
@@ -224,11 +203,7 @@ export function postDonations(setSts, navigate, session_detail_id, total) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Infaq Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function postAnswers(setSts, navigate, question_id, fields) {
@@ -259,16 +234,7 @@ export function postAnswers(setSts, navigate, question_id, fields) {
       })
       .catch((error) => {
         setSts({ type: "error", error });
-        if (error.code === "ERR_NETWORK") {
-          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-        } else {
-          AlertMessage(
-            "Gagal",
-            "Tambah Pilihan Jawaban Gagal",
-            "Coba Lagi",
-            "error"
-          );
-        }
+        ErrorHandling(error);
       });
   }
 }
@@ -324,17 +290,13 @@ export function postQuestion(
             })
             .catch((error) => {
               setSts({ type: "error", error });
-              AlertMessage("Gagal", "Tambah Soal Gagal", "Coba Lagi", "error");
+              ErrorHandling(error);
             });
         }
       })
       .catch((error) => {
         setSts({ type: "error", error });
-        if (error.code === "ERR_NETWORK") {
-          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-        } else {
-          AlertMessage("Gagal", "Tambah Soal Gagal", "Coba Lagi", "error");
-        }
+        ErrorHandling(error);
       });
   }
 }
@@ -357,11 +319,7 @@ export function postSession(setSts, navigate, data) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Sesi Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function postNews(setSts, navigate, formData) {
@@ -383,11 +341,7 @@ export function postNews(setSts, navigate, formData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Berita Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function updateSession(resume_id, setSts, navigate, data) {
@@ -413,11 +367,7 @@ export function updateSession(resume_id, setSts, navigate, data) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Edit Sesi Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function updateQuestion(
@@ -451,11 +401,7 @@ export function updateQuestion(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Edit Pertanyaan Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function updateDetailQuestion(
@@ -488,16 +434,7 @@ export function updateDetailQuestion(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Edit Pilihan Jawaban Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 export function updateNews(id, setSts, navigate, formData) {
@@ -519,10 +456,6 @@ export function updateNews(id, setSts, navigate, formData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Edit Berita Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }

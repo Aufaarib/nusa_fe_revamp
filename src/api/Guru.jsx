@@ -1,4 +1,5 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getGuru(setData, setSts) {
@@ -12,9 +13,7 @@ export function getGuru(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -52,11 +51,7 @@ export function updateGuru(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah Guru Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -93,10 +88,6 @@ export function postGuru(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Guru Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }

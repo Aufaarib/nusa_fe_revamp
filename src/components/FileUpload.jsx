@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-export function FileUpload({ setFilesData, filesData, fileInputId }) {
+export function FileUpload({ setFilesData, filesData, fileInputId, multiple }) {
   const [highlighted, setHighlighted] = useState(false);
+  const [inputArray, setInputArray] = useState([]);
+  console.log("input", inputArray);
 
   const preventDefaults = (e) => {
     e.preventDefault();
@@ -27,8 +29,12 @@ export function FileUpload({ setFilesData, filesData, fileInputId }) {
   const handleInputChange = (e) => {
     preventDefaults(e);
     const files = e.target.files[0];
-    setFilesData(files);
-    console.log(files);
+    if (multiple) {
+      setInputArray((prevArray) => [...prevArray, files]);
+      setFilesData((prevArray) => [...prevArray, files]);
+    } else {
+      setFilesData(files);
+    }
   };
 
   const handleClick = () => {
@@ -51,7 +57,29 @@ export function FileUpload({ setFilesData, filesData, fileInputId }) {
         }`}
       >
         <div className="flex flex-row items-center gap-2 ">
-          {!filesData?.name ? (
+          {multiple ? (
+            inputArray.length < 1 ? (
+              <>
+                <button
+                  onClick={handleClick}
+                  className="border-1 border-solid border-gray-400 p-1 px-4 rounded-md hover:bg-slate-100"
+                >
+                  Pilih File
+                </button>
+                <p className="text-gray-400">Atau arahkan file kedalam kotak</p>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleClick}
+                  className="border-1 border-solid border-gray-400 p-1 px-4 rounded-md hover:bg-slate-100"
+                >
+                  Tambah File
+                </button>
+                <p className="text-gray-400">Atau arahkan file kedalam kotak</p>
+              </>
+            )
+          ) : !filesData?.name ? (
             <>
               <button
                 onClick={handleClick}
@@ -81,6 +109,18 @@ export function FileUpload({ setFilesData, filesData, fileInputId }) {
           onChange={handleInputChange}
         />
       </div>
+      {multiple ? (
+        <div className="flex flex-col">
+          {inputArray.map((value, index) => (
+            <div className="border-1 border-t-0 border-dashed border-gray-400 flex flex-col gap-1 px-4 items-start p-3">
+              <p>{value.name}</p>
+              <p className="text-xs font-light ">{value.size} KB</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        ""
+      )}
       <small className=" text-gray-400">
         <i>Jenis berkas: .png / .jpg </i>
       </small>

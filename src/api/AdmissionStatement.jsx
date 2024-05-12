@@ -1,4 +1,5 @@
 import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 // export function getAdmissionStatement(setData, setSts) {
@@ -43,11 +44,7 @@ export function updateAdmissionStatement(setSts, navigate, id, question) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Answer Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function postAdmissionStatement(setSts, navigate, question) {
@@ -75,10 +72,6 @@ export function postAdmissionStatement(setSts, navigate, question) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Tambah Pertanyaan Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }

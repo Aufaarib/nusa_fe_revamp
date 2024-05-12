@@ -7,6 +7,7 @@ import {
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function ApproveEducationalPayment(id, setSts, setData) {
@@ -23,11 +24,7 @@ export function ApproveEducationalPayment(id, setSts, setData) {
       getRegistrationDetail(setSts, setData);
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Silahkan Coba Lagi", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -95,16 +92,7 @@ export function daftarUlangAgreement(path) {
       );
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Persetujuan Pendaftaran Ulang Gagal",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -124,16 +112,7 @@ export function revalidateEmail(setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Pengiriman Ulang Kode Verifikasi Gagal, Silahkan Coba Lagi",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -148,6 +127,7 @@ export function getAdmissionStatement(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      ErrorHandling(error);
     });
 }
 
@@ -167,9 +147,7 @@ export function getAdmissionAnswer(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -192,9 +170,7 @@ export function getAdmissionRegistration(setData, setSts, setIsLoading) {
     .catch((error) => {
       setIsLoading(false);
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -213,9 +189,7 @@ export function getRegistrationDetail(setSts, setData) {
     })
     .catch((error) => {
       setSts(error.code);
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -234,9 +208,7 @@ export function getAdmissionRegistrationByRegNumberUser(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -304,9 +276,7 @@ export function getAdmissionRegistrationByRegNumberAdmin(
     })
     .catch((error) => {
       setIsLoading(false);
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -321,9 +291,7 @@ export function getMyAdmission(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -343,9 +311,7 @@ export function getAdditionalFile(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -384,9 +350,7 @@ export function getAdmissionSteps(
     })
     .catch((error) => {
       setSts({ type: "error" });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -411,11 +375,7 @@ export function updateAdmissionSteps(setSts, code, step, status, note, path) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Ubah Tahapan Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -435,9 +395,7 @@ export function getAdmissionRegistrationApplicant(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error" });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -457,9 +415,7 @@ export function getAdmissionRegistrationParentsAyah(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error" });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 export function getAdmissionRegistrationParentsIbu(setData, setSts) {
@@ -478,9 +434,7 @@ export function getAdmissionRegistrationParentsIbu(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error" });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -500,9 +454,7 @@ export function getAdmissionRegistrationParentsWali(setData, setSts) {
     })
     .catch((error) => {
       setSts({ type: "error" });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -530,7 +482,8 @@ export function postAdmissionAnswer(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      // AlertStatusTambahFailed();
+      ErrorHandling(error);
+      ErrorHandling(error);
     });
 }
 
@@ -560,7 +513,7 @@ export function postAdmissionRegistration(
     })
     .catch((error) => {
       setSts({ type: "error", error });
-      AlertStatusTambahFailed();
+      ErrorHandling(error);
     });
 }
 
@@ -581,6 +534,7 @@ export function getPaymentInvoice(setData, setSts, code) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      ErrorHandling(error);
     });
 }
 
@@ -607,11 +561,7 @@ export function uploadHasilTest(isPassed, navigate) {
     })
     .catch((error) => {
       // setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage("Gagal", "Upload Hasil Test Gagal", "Coba Lagi", "error");
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -636,16 +586,7 @@ export function approvedRegistration(code, status, onReload) {
     })
     .catch((error) => {
       // setSts({ type: "error", error });
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Persetujuan Gagal, Silahkan Coba Lagi",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -670,16 +611,7 @@ export function moveApplicantToStudent(navigate, registrationNumbers) {
       // setData();
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          "Pendaftar Gagal Dijadikan Menjadi Murid",
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
       // setSts({ type: "error", error });
     });
 }

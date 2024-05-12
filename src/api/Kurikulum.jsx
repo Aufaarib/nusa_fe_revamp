@@ -4,6 +4,7 @@ import {
   AlertStatusHapusSuccess,
   AlertStatusSuccess,
 } from "../components/ModalPopUp";
+import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
 export function getKurikulum(setData, setSts) {
@@ -16,16 +17,7 @@ export function getKurikulum(setData, setSts) {
       setSts({ type: "success" });
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          error.response.data.status.message,
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -50,16 +42,7 @@ export function updateKurikulum(setSts, path, code, name, description) {
       );
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          error.response.data.status.message,
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -78,16 +61,7 @@ export function updateStatusKurikulum(setSts, code, setData) {
       getKurikulum(setData, setSts);
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        AlertMessage(
-          "Gagal",
-          error.response.data.status.message,
-          "Coba Lagi",
-          "error"
-        );
-      }
+      ErrorHandling(error);
     });
 }
 
@@ -111,19 +85,6 @@ export function postKurikulum(path, name, description) {
       );
     })
     .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-      } else {
-        if (error.code === "ERR_NETWORK") {
-          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-        } else {
-          AlertMessage(
-            "Gagal",
-            error.response.data.status.message,
-            "Coba Lagi",
-            "error"
-          );
-        }
-      }
+      ErrorHandling(error);
     });
 }
