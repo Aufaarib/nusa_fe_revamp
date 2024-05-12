@@ -37,7 +37,7 @@ export default function UbahPengeluaran() {
   const postData = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const invoice = filesData?.file?.rawFile;
+    const invoice = filesData;
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
 
     const formData = new FormData();
