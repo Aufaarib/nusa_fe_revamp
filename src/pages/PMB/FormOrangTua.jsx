@@ -17,10 +17,8 @@ const FormOrangTua = () => {
 
   useEffect(() => {
     getStepsPMBData();
-    console.log("PARENTS DATA FROM CONTEXT === ", parents);
     getParentsData();
     getFormCheck();
-    console.log("getFormCheck === ", formCheck);
   }, []);
 
   return (

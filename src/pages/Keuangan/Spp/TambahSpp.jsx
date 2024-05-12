@@ -45,9 +45,10 @@ export default function TambahSpp() {
   }, []);
 
   const postData = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     const invoice = filesData;
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
-    e.preventDefault();
 
     const formData = new FormData();
 
@@ -59,7 +60,6 @@ export default function TambahSpp() {
 
     months.forEach((item, index) => {
       formData.append(`month`, item.value);
-      console.log("dsa === ", item.value);
     });
 
     if (
@@ -70,8 +70,9 @@ export default function TambahSpp() {
       invoice == null
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postSpp(setSts, navigateListSpp, formData);
+      postSpp(setSts, navigateListSpp, formData, setIsLoading);
     }
   };
 

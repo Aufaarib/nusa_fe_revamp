@@ -29,7 +29,6 @@ const UploadHasilTes = () => {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       const isPassed = parseInt(isPasseds);
-      console.log("sdsd === ", isPassed);
       uploadHasilTest(isPassed, navigateRegistrationDetails);
     }
   };

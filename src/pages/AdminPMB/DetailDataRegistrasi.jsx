@@ -45,8 +45,6 @@ const DetailDataRegistrasi = () => {
   const [paid, setPaid] = useState("");
   const { isLoading, setIsLoading } = useStateContext();
 
-  console.log("-10", data);
-
   useEffect(() => {
     if (data.length === 0) {
       setIsLoading(true);

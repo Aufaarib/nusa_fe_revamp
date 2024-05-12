@@ -46,7 +46,6 @@ const FormPernyataan = ({ indexMurid }) => {
   const handleInputChange = (e, itemId) => {
     const value = e.currentTarget.value; // Retrieve the latest value
     const itemIndex = formData.findIndex((item) => item.statementId === itemId);
-    console.log("JAWABAN === ", admissionAnswerData.length);
 
     if (itemIndex !== -1) {
       const updatedFormData = [...formData];

@@ -81,7 +81,6 @@ const KonfirmasiPembayaran = () => {
 
   useEffect(() => {
     getAllPaymentRegister();
-    console.log("allPaymentRegister === ", allPaymentRegister);
   }, []);
 
   let subtitle;
@@ -119,12 +118,10 @@ const KonfirmasiPembayaran = () => {
     const status = args.rowData.status_pembayaran;
 
     if (args.commandColumn.buttonOption.id == "murid") {
-      console.log("args.rowData === ", args.rowData);
       setMurid(murid);
       setIsOpenModalMurid(true);
     }
     if (args.commandColumn.buttonOption.id == "status-pembayaran") {
-      console.log("args.rowData === ", args.rowData);
       setStatus(status);
       setIsOpenModalStatus(true);
     }
@@ -165,9 +162,6 @@ const KonfirmasiPembayaran = () => {
     args.postRawFile = false;
   }
   function onFileUpload(args) {
-    console.log("UPLOADING..");
-    console.log("onFileUpload === ", args);
-
     // const sizeInBytes = args.fileData.size;
     // alert("File size is: " + uploadObj.bytesToSize(sizeInBytes));
 
@@ -188,9 +182,7 @@ const KonfirmasiPembayaran = () => {
   }
   function onSuccess(args) {
     // getDocumentsData();
-    console.log("SUCCESS");
     getAllPaymentRegister();
-    console.log("AFTER UPLOAD: allPaymentRegister === ", allPaymentRegister);
     // const newBukti = allPaymentRegister.map((item, index) => {
     //   if(item.id == status.user_id){
     //     return item.status_pembayaran.bukti
@@ -237,7 +229,6 @@ const KonfirmasiPembayaran = () => {
 
   const updateTextInput = (e) => {
     const fieldName = e.target.name;
-    console.log("fieldName === ", fieldName);
     setStatus((draft) => {
       draft[fieldName] = e.target.value;
     });
@@ -245,14 +236,12 @@ const KonfirmasiPembayaran = () => {
 
   const updateDropDownCal = (e) => {
     const fieldName = e.element.ej2_instances[0].htmlattributes.name;
-    console.log("fieldName ===> ", fieldName);
     setStatus((draft) => {
       draft[fieldName] = e.element.value;
     });
   };
 
   const handleCheckbox = (e) => {
-    console.log(e.checked);
     setStatus((draft) => {
       draft["is_published"] = e.checked;
     });

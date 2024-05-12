@@ -35,7 +35,7 @@ export function getUnpaidSpp(setData, setSts, setIsLoading) {
     });
 }
 
-export function postSpp(setSts, navigate, formData) {
+export function postSpp(setSts, navigate, formData, setIsLoading) {
   axios
     .post(process.env.REACT_APP_BASE_URL + "/spp", formData, {
       headers: {
@@ -44,6 +44,7 @@ export function postSpp(setSts, navigate, formData) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -54,12 +55,13 @@ export function postSpp(setSts, navigate, formData) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function updateSpp(setSts, navigate, formData, id) {
+export function updateSpp(setSts, navigate, formData, id, setIsLoading) {
   axios
     .put(process.env.REACT_APP_BASE_URL + `/spp/${id}`, formData, {
       headers: {
@@ -68,6 +70,7 @@ export function updateSpp(setSts, navigate, formData, id) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -78,6 +81,7 @@ export function updateSpp(setSts, navigate, formData, id) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

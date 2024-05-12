@@ -26,13 +26,10 @@ const BerkasPembayaran = () => {
   //   setFilesData(event.target.files[0]);
   // };
 
-  console.log("d", filesData);
-
   const handleInputChange = (e) => {
     const files = e.target.files;
     setFilesData(files);
     // setFilesData(files);
-    console.log(files);
   };
 
   // // Define your asyncSettings for the UploaderComponent (modify this as needed)

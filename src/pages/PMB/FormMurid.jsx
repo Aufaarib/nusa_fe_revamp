@@ -19,9 +19,7 @@ const FormMurid = () => {
   useEffect(() => {
     getStepsPMBData();
     getStudentsData();
-    console.log("STEPS PMB DATA FROM CONTEXT === ", stepsPMB);
     getFormCheck();
-    console.log("getFormCheck === ", formCheck);
   }, []);
 
   return (

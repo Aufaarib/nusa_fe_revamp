@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 
 export function FileUpload({ setFilesData, filesData, fileInputId, multiple }) {
   const [highlighted, setHighlighted] = useState(false);
-  console.log("input", filesData);
 
   const preventDefaults = (e) => {
     e.preventDefault();

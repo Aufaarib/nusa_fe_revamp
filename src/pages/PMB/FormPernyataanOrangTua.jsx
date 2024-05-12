@@ -19,7 +19,6 @@ const FormPernyataanOrangTua = () => {
     getStepsPMBData();
     getParentsData();
     getFormCheck();
-    console.log("getFormCheck === ", formCheck);
   }, []);
 
   return (

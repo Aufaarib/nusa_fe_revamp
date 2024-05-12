@@ -9,6 +9,9 @@ import {
 } from "../../../components/Dropdown";
 import TextInput from "../../../components/TextInput";
 import { AlertMessage } from "../../../components/ModalPopUp";
+import { CircularProgress } from "@mui/material";
+import { FileUpload } from "../../../components/FileUpload";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function TambahPengeluaran() {
   const [amounts, setAmount] = useState("");
@@ -20,6 +23,7 @@ export default function TambahPengeluaran() {
   const [filesData, setFilesData] = useState(null);
   const [fields, setFields] = useState([{ name: "", amount: "", qty: "" }]);
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-pengeluaran";
   const uploaderRef = useRef(null);
 
@@ -27,31 +31,11 @@ export default function TambahPengeluaran() {
     navigate(path);
   };
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onRemoveFile = (args) => {};
-
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-    setFilesData(args);
-  };
-
   const postData = (e) => {
-    const invoice = filesData.file.rawFile;
-    const amount = parseInt(amounts.replace(/\./g, ""), 10);
     e.preventDefault();
-
-    console.log("ssddsd === ", transactionDate);
+    setIsLoading(true);
+    const invoice = filesData;
+    const amount = parseInt(amounts.replace(/\./g, ""), 10);
 
     const formData = new FormData();
 
@@ -68,14 +52,11 @@ export default function TambahPengeluaran() {
       formData.append(`items.${index}.qty`, item.qty);
     });
 
-    for (const entry of formData.entries()) {
-      console.log(entry[0], entry[1]);
-    }
-
     if (amount.length === 0 || description.length === 0 || type.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postPengeluaran(setSts, navigateListSpending, formData);
+      postPengeluaran(setSts, navigateListSpending, formData, setIsLoading);
     }
   };
 
@@ -177,26 +158,11 @@ export default function TambahPengeluaran() {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={onRemoveFile}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              multiple={false}
-              buttons={{
-                browse: !filesData ? "Unggah Berkas" : "Ganti Berkas",
-              }}
+            <FileUpload
+              setFilesData={setFilesData}
+              filesData={filesData}
+              fileInputId={"fileInput1"}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
           </div>
           <br />
           <hr className="mr-10 mb-10" />
@@ -257,7 +223,8 @@ export default function TambahPengeluaran() {
             </button>
           </div>
           <br />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

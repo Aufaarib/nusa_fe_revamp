@@ -2,7 +2,6 @@ import { AlertMessage } from "../components/ModalPopUp";
 
 export function ErrorHandling(error) {
   const message = error.response;
-  console.log(message.status);
   if (error.code === "ERR_NETWORK") {
     AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
   } else if (message.status === 401) {

@@ -21,7 +21,6 @@ const UserProfile = () => {
   } = useStateContext();
 
   const handleLogout = async () => {
-    console.log("LOG OUT");
     localStorage.clear();
     setAuth("");
     setIsClicked(initialState);

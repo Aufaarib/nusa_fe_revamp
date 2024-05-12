@@ -696,7 +696,6 @@ export const AlertPaymentProof = (url) => {
 };
 
 export const AlerNewsVideos = (url, link) => {
-  console.log(url);
   styledSweetAlert
     .fire({
       width: "400px",

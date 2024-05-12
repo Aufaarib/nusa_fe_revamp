@@ -65,7 +65,7 @@ const Sidebar = () => {
     if (role === "ADMIN") {
       setCurrentSidebarMenus(sidebarMenusAdmin);
     } else {
-      getFormCheck();
+      // getFormCheck();
       setCurrentSidebarMenus(sidebarMenus);
     }
   }, [stepsPMB]);

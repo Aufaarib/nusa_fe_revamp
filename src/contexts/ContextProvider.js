@@ -179,18 +179,20 @@ export const ContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    getAdmissionSteps(
-      setDataStep1,
-      setDataStep2,
-      setDataStep3,
-      setDataStep4,
-      setDataStep5,
-      setStsAdmissionSteps
-    );
-    getAdmissionRegistrationByRegNumberUser(
-      setDataAdmissionRegistration,
-      setStsGetAdmissionReg
-    );
+    if (window.location.pathname === "/pmb/tahapan-pmb") {
+      getAdmissionSteps(
+        setDataStep1,
+        setDataStep2,
+        setDataStep3,
+        setDataStep4,
+        setDataStep5,
+        setStsAdmissionSteps
+      );
+      getAdmissionRegistrationByRegNumberUser(
+        setDataAdmissionRegistration,
+        setStsGetAdmissionReg
+      );
+    }
   }, []);
 
   useEffect(() => {

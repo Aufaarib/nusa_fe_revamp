@@ -19,7 +19,7 @@ export function getPengeluaran(setData, setSts, setIsLoading) {
     });
 }
 
-export function postPengeluaran(setSts, navigate, formData) {
+export function postPengeluaran(setSts, navigate, formData, setIsLoading) {
   axios
     .post(process.env.REACT_APP_BASE_URL + "/spending", formData, {
       headers: {
@@ -28,6 +28,7 @@ export function postPengeluaran(setSts, navigate, formData) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -38,12 +39,19 @@ export function postPengeluaran(setSts, navigate, formData) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
 
-export function updatePengeluaran(setSts, navigate, formData, id) {
+export function updatePengeluaran(
+  setSts,
+  navigate,
+  formData,
+  id,
+  setIsLoading
+) {
   axios
     .put(process.env.REACT_APP_BASE_URL + `/spending/${id}`, formData, {
       headers: {
@@ -52,6 +60,7 @@ export function updatePengeluaran(setSts, navigate, formData, id) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -62,6 +71,7 @@ export function updatePengeluaran(setSts, navigate, formData, id) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

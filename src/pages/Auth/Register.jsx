@@ -47,8 +47,6 @@ const Register = () => {
   const [matchPwd, setMatchPwd] = useState(location.state?.matchPwd);
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
-
-  console.log(location.state?.password);
   const navigate = useNavigate();
 
   const [values, setValues] = useState({

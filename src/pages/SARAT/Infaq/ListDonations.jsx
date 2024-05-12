@@ -23,12 +23,6 @@ export default function ListDonations() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(
-    "location.state.session_id === ",
-    localStorage.getItem("SESSION_ID")
-  );
-  console.log("data === ", data);
-
   let filteredItems = data;
   if (data !== null) {
     filteredItems = data.donation_history?.filter((data) =>

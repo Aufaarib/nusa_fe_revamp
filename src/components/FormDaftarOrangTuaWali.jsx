@@ -74,7 +74,6 @@ const FormDaftarOrangTuaWali = () => {
       ...existingValues,
       [fieldName]: e.target.value,
     }));
-    console.log("PARENTS DATA === ", parent);
   };
 
   const updateParentsCal = (e) => {

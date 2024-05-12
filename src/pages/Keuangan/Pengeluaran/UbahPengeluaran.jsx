@@ -10,6 +10,9 @@ import {
 import TextInput from "../../../components/TextInput";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import moment from "moment/moment";
+import { FileUpload } from "../../../components/FileUpload";
+import { CircularProgress } from "@mui/material";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function UbahPengeluaran() {
   const location = useLocation();
@@ -26,33 +29,16 @@ export default function UbahPengeluaran() {
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
   const [fields, setFields] = useState([{ name: "", amount: "", qty: "" }]);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-pengeluaran";
   const uploaderRef = useRef(null);
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onRemoveFile = (args) => {};
-
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-    setFilesData(args);
-  };
-
   const postData = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     const invoice = filesData?.file?.rawFile;
     const amount = parseInt(amounts.replace(/\./g, ""), 10);
-    e.preventDefault();
 
     const formData = new FormData();
 
@@ -69,18 +55,16 @@ export default function UbahPengeluaran() {
       formData.append(`items.${index}.qty`, item.qty);
     });
 
-    for (const entry of formData.entries()) {
-      console.log(entry[0], entry[1]);
-    }
-
     if (amounts === "" || description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updatePengeluaran(
         setSts,
         navigatePengeluaran,
         formData,
-        location.state.id
+        location.state.id,
+        setIsLoading
       );
     }
   };
@@ -172,12 +156,6 @@ export default function UbahPengeluaran() {
             isSearchable={false}
             onChange={(e) => setType(e.value)}
           />
-          {/* <TextInput
-            label="Tipe Pengeluaran"
-            type="text"
-            onChange={(e) => setType(e.target.value)}
-            required={true}
-          /> */}
           <TextInput
             label="Catatan"
             type="text"
@@ -194,26 +172,11 @@ export default function UbahPengeluaran() {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={onRemoveFile}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              multiple={false}
-              buttons={{
-                browse: !filesData ? "Unggah Berkas" : "Ganti Berkas",
-              }}
+            <FileUpload
+              setFilesData={setFilesData}
+              filesData={filesData}
+              fileInputId={"fileInput1"}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
           </div>
           <br />
           <p
@@ -274,7 +237,8 @@ export default function UbahPengeluaran() {
             <i className="mt-1 fa fa-plus" />
           </button>
           <br />
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"
