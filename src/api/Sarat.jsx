@@ -30,49 +30,55 @@ export function getNews(setData, setSts) {
       ErrorHandling(error);
     });
 }
-export function getNewsDetail(id, setData, setSts) {
+export function getNewsDetail(id, setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/news/fetch/${id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body.images);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getInstitution(setData, setSts) {
+export function getInstitution(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/institution/filter`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getDetailQuestion(question_id, setData, setSts) {
+export function getDetailQuestion(question_id, setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/question/fetch/${question_id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body.question_details);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getQuestion(setData, setSts, session_id) {
+export function getQuestion(setData, setSts, session_id, setIsLoading) {
   axios
     .get(
       process.env.REACT_APP_NUSA_SARAT +
@@ -82,15 +88,24 @@ export function getQuestion(setData, setSts, session_id) {
       }
     )
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getSession(page, per_page, setData, setSts, setPagination) {
+export function getSession(
+  page,
+  per_page,
+  setData,
+  setSts,
+  setPagination,
+  setIsLoading
+) {
   axios
     .get(
       process.env.REACT_APP_NUSA_SARAT +
@@ -100,11 +115,13 @@ export function getSession(page, per_page, setData, setSts, setPagination) {
       }
     )
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setPagination(res.data.meta);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -114,28 +131,38 @@ export function getSessionReport(
   per_page,
   setData,
   setSts,
-  setPagination
+  setPagination,
+  setIsLoading
 ) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setPagination(res.data.meta);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getSessionReportDetail(id, setData, setQuestion, setSts) {
+export function getSessionReportDetail(
+  id,
+  setData,
+  setQuestion,
+  setSts,
+  setIsLoading
+) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report/${id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       let data = [];
       data.push(res.data.body);
       setQuestion(res.data.body.question_details);
@@ -143,41 +170,58 @@ export function getSessionReportDetail(id, setData, setQuestion, setSts) {
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getActiveSession(setData, setSts) {
+export function getActiveSession(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/active`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       // setAllData(res.data.body);
       setData(res.data.body.details);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function getDetailSession(id, setData, setDetailsData, setSts) {
+export function getDetailSession(
+  id,
+  setData,
+  setDetailsData,
+  setSts,
+  setIsLoading
+) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/fetch/${id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setDetailsData(res.data.body.details);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function postDonations(setSts, navigate, session_detail_id, total) {
+export function postDonations(
+  setSts,
+  navigate,
+  session_detail_id,
+  total,
+  setIsLoading
+) {
   axios
     .post(
       process.env.REACT_APP_NUSA_SARAT + "/donation/create",
@@ -192,6 +236,7 @@ export function postDonations(setSts, navigate, session_detail_id, total) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -202,11 +247,18 @@ export function postDonations(setSts, navigate, session_detail_id, total) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function postAnswers(setSts, navigate, question_id, fields) {
+export function postAnswers(
+  setSts,
+  navigate,
+  question_id,
+  fields,
+  setIsLoading
+) {
   for (const i of fields) {
     axios
       .post(
@@ -223,6 +275,7 @@ export function postAnswers(setSts, navigate, question_id, fields) {
         }
       )
       .then(() => {
+        setIsLoading(false);
         setSts({ type: "success" });
         AlertStatusSuccess(
           navigate,
@@ -233,6 +286,7 @@ export function postAnswers(setSts, navigate, question_id, fields) {
         );
       })
       .catch((error) => {
+        setIsLoading(false);
         setSts({ type: "error", error });
         ErrorHandling(error);
       });
@@ -243,7 +297,8 @@ export function postQuestion(
   navigate,
   session_detail_id,
   sequence,
-  q_fields
+  q_fields,
+  setIsLoading
 ) {
   for (const i of q_fields) {
     axios
@@ -279,6 +334,7 @@ export function postQuestion(
               }
             )
             .then(() => {
+              setIsLoading(false);
               setSts({ type: "success" });
               AlertStatusSuccess(
                 navigate,
@@ -289,18 +345,20 @@ export function postQuestion(
               );
             })
             .catch((error) => {
+              setIsLoading(false);
               setSts({ type: "error", error });
               ErrorHandling(error);
             });
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         setSts({ type: "error", error });
         ErrorHandling(error);
       });
   }
 }
-export function postSession(setSts, navigate, data) {
+export function postSession(setSts, navigate, data, setIsLoading) {
   axios
     .post(process.env.REACT_APP_NUSA_SARAT + "/session/create", data, {
       headers: {
@@ -308,6 +366,7 @@ export function postSession(setSts, navigate, data) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -318,11 +377,12 @@ export function postSession(setSts, navigate, data) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function postNews(setSts, navigate, formData) {
+export function postNews(setSts, navigate, formData, setIsLoading) {
   axios
     .post(process.env.REACT_APP_NUSA_SARAT + "/news/create", formData, {
       headers: {
@@ -330,6 +390,7 @@ export function postNews(setSts, navigate, formData) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -340,11 +401,12 @@ export function postNews(setSts, navigate, formData) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function updateSession(resume_id, setSts, navigate, data) {
+export function updateSession(resume_id, setSts, navigate, data, setIsLoading) {
   axios
     .put(
       process.env.REACT_APP_NUSA_SARAT + `/session/update/${resume_id}`,
@@ -356,6 +418,7 @@ export function updateSession(resume_id, setSts, navigate, data) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -366,6 +429,7 @@ export function updateSession(resume_id, setSts, navigate, data) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -377,7 +441,8 @@ export function updateQuestion(
   session_detail_id,
   sequence,
   description,
-  is_publish
+  is_publish,
+  setIsLoading
 ) {
   axios
     .put(
@@ -390,6 +455,7 @@ export function updateQuestion(
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -400,6 +466,7 @@ export function updateQuestion(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -410,7 +477,8 @@ export function updateDetailQuestion(
   setSts,
   navigate,
   description,
-  correct_answer
+  correct_answer,
+  setIsLoading
 ) {
   axios
     .put(
@@ -423,6 +491,7 @@ export function updateDetailQuestion(
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -433,11 +502,12 @@ export function updateDetailQuestion(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }
-export function updateNews(id, setSts, navigate, formData) {
+export function updateNews(id, setSts, navigate, formData, setIsLoading) {
   axios
     .put(process.env.REACT_APP_NUSA_SARAT + `/news/update/${id}`, formData, {
       headers: {
@@ -445,6 +515,7 @@ export function updateNews(id, setSts, navigate, formData) {
       },
     })
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -455,6 +526,7 @@ export function updateNews(id, setSts, navigate, formData) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

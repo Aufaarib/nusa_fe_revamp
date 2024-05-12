@@ -9,6 +9,8 @@ import {
   AlertMessage,
   AlertStatusSuccess,
 } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { ErrorHandling } from "../../../api/ErrorHandling";
 
 export default function ListSession() {
   const [data, setData] = useState([]);
@@ -17,14 +19,10 @@ export default function ListSession() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-resume";
   const location = useLocation();
-
-  console.log("detailsData === ", detailsData);
-  console.log("data === ", data);
-  console.log("resumeId === ", localStorage.getItem("RESUME_ID"));
-  console.log("resumeName === ", localStorage.getItem("RESUME_NAME"));
 
   let filteredItems = detailsData;
   if (detailsData !== null) {
@@ -34,11 +32,13 @@ export default function ListSession() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     getDetailSession(
       localStorage.getItem("RESUME_ID"),
       setData,
       setDetailsData,
-      setSts
+      setSts,
+      setIsLoading
     );
   }, []);
 
@@ -113,7 +113,7 @@ export default function ListSession() {
   ];
 
   const navigateTambahSession = () => {
-    navigate("/admin/tambah-sesi", {
+    navigate("/admin/edit-sesi", {
       state: {
         resume_id: localStorage.getItem("RESUME_ID"),
         resume_name: localStorage.getItem("RESUME_NAME"),
@@ -124,6 +124,7 @@ export default function ListSession() {
   };
 
   const onClickActivation = (id, status) => {
+    setIsLoading(true);
     axios
       .put(
         process.env.REACT_APP_NUSA_SARAT +
@@ -134,12 +135,14 @@ export default function ListSession() {
         { headers: { authorization: localStorage.getItem("TOKEN") } }
       )
       .then(() => {
+        setIsLoading(false);
         setSts({ type: "success" });
         getDetailSession(
           localStorage.getItem("RESUME_ID"),
           setData,
           setDetailsData,
-          setSts
+          setSts,
+          setIsLoading
         );
         AlertStatusSuccess(
           navigate,
@@ -150,12 +153,9 @@ export default function ListSession() {
         );
       })
       .catch((error) => {
+        setIsLoading(false);
         setSts({ type: "error", error });
-        if (error.code === "ERR_NETWORK") {
-          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-        } else {
-          AlertMessage("Gagal", "Edit Status Gagal", "Coba Lagi", "error");
-        }
+        ErrorHandling(error);
       });
   };
 

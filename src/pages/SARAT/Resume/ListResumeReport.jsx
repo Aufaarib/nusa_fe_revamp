@@ -10,6 +10,7 @@ import {
 } from "../../../components/ModalPopUp";
 import moment from "moment";
 import { getTahunAjaran } from "../../../api/TahunAjaran";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListResumeReport() {
   const [data, setData] = useState([]);
@@ -25,10 +26,8 @@ export default function ListResumeReport() {
       ? "false"
       : localStorage.getItem("FilterAcademicYear")
   );
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
-
-  console.log("kk", data[0]?.session_detail?.session?.academic_year_id);
-  console.log("asdajs", academicYearFilter);
   localStorage.setItem("FilterAcademicYear", filterAcademicYear);
 
   let filteredItems = data;
@@ -45,7 +44,15 @@ export default function ListResumeReport() {
   }
 
   useEffect(() => {
-    getSessionReport(currentPage, itemsPerPage, setData, setSts, setPagination);
+    setIsLoading(true);
+    getSessionReport(
+      currentPage,
+      itemsPerPage,
+      setData,
+      setSts,
+      setPagination,
+      setIsLoading
+    );
   }, []);
 
   const columns = [

@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { DropdownRadioInputBiological } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput, { TextArea } from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahQuestion() {
   const location = useLocation();
@@ -18,13 +20,10 @@ export default function TambahQuestion() {
     },
   ]);
   const [sts, setSts] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const session_tittle = localStorage.getItem("SESSION_TITTLE");
   const session_id = localStorage.getItem("SESSION_ID");
-
-  // console.log("q === ", q_fields);
-  // console.log("a === ", q_fields[0].a_fields);
-
   const navigateListSession = () => {
     navigate(path, {
       state: {
@@ -35,12 +34,12 @@ export default function TambahQuestion() {
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const sequence = questionSequence + 1;
     const session_detail_id = parseInt(session_id);
 
-    console.log("q_fields === ", q_fields);
-
     if (sequence === "" || session_detail_id === "") {
+      setIsLoading(false);
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       postQuestion(
@@ -48,7 +47,8 @@ export default function TambahQuestion() {
         navigateListSession,
         session_detail_id,
         sequence,
-        q_fields
+        q_fields,
+        setIsLoading
       );
     }
   };
@@ -223,7 +223,8 @@ export default function TambahQuestion() {
             </button>
           </div>
           <br />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

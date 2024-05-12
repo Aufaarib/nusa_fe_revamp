@@ -4,6 +4,8 @@ import { updateSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahResume() {
   const location = useLocation();
@@ -11,19 +13,16 @@ export default function UbahResume() {
   const [fields, setFields] = useState(location.state.details);
   const [name, setName] = useState(location.state.resumeName);
   const [sts, setSts] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   const navigateListResume = () => {
     navigate(path);
   };
 
-  console.log("resumename === ", location.state.resumeName);
-  console.log("resumeid === ", location.state.academicYearId);
-  console.log("resumeid === ", location.state.details);
-
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = {
       name: name,
       academic_year_id: location.state.academicYearId,
@@ -31,9 +30,16 @@ export default function UbahResume() {
     };
 
     if (name === "") {
+      setIsLoading(false);
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
-      updateSession(location.state.resumeId, setSts, navigateListResume, data);
+      updateSession(
+        location.state.resumeId,
+        setSts,
+        navigateListResume,
+        data,
+        setIsLoading
+      );
     }
   };
 
@@ -62,7 +68,8 @@ export default function UbahResume() {
           />
           <br />
 
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

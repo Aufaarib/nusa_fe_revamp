@@ -8,6 +8,8 @@ import { getActiveSession, postNews, updateNews } from "../../../api/Sarat";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { useEffect } from "react";
 import { FileUpload } from "../../../components/FileUpload";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahNews() {
   const location = useLocation();
@@ -21,6 +23,7 @@ export default function UbahNews() {
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(location.state.images);
   const [updateFilesData, setUpdateFilesData] = useState([]);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-berita";
   const uploaderRef = useRef(null);
@@ -32,7 +35,8 @@ export default function UbahNews() {
   };
 
   useEffect(() => {
-    getActiveSession(setData, setSts);
+    setIsLoading(true);
+    getActiveSession(setData, setSts, setIsLoading);
   }, []);
 
   const navigateListSpending = () => {
@@ -41,6 +45,7 @@ export default function UbahNews() {
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
 
     formData.append(`session_detail_id`, session_detail_id.value);
@@ -58,10 +63,6 @@ export default function UbahNews() {
       formData.append(`images`, file);
     });
 
-    formData.forEach(function (value, key) {
-      console.log(key, value);
-    });
-
     if (
       session_detail_id.value === "" ||
       description === "" ||
@@ -69,8 +70,15 @@ export default function UbahNews() {
       // filesData.length === 0
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      updateNews(location.state.id, setSts, navigateListSpending, formData);
+      updateNews(
+        location.state.id,
+        setSts,
+        navigateListSpending,
+        formData,
+        setIsLoading
+      );
     }
   };
 
@@ -175,7 +183,8 @@ export default function UbahNews() {
           </div>
           <br />
           <hr className="mr-10 " />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

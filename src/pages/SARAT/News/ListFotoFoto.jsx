@@ -6,6 +6,7 @@ import { getNews, getNewsDetail, getSession } from "../../../api/Sarat";
 import moment from "moment/moment";
 import { AlerNewsFiles, AlertFiles } from "../../../components/ModalPopUp";
 import { BsChevronBarLeft } from "react-icons/bs";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListFotoFoto() {
   const [data, setData] = useState([]);
@@ -14,6 +15,8 @@ export default function ListFotoFoto() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,7 +28,8 @@ export default function ListFotoFoto() {
   }
 
   useEffect(() => {
-    getNewsDetail(location.state.id, setData, setSts);
+    setIsLoading(true);
+    getNewsDetail(location.state.id, setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

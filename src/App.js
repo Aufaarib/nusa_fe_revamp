@@ -254,7 +254,7 @@ const App = () => {
             element={<TambahPengeluaran />}
           />
           <Route path="/admin/tambah-Resume" element={<TambahResume />} />
-          <Route path="/admin/tambah-sesi" element={<TambahSession />} />
+          <Route path="/admin/edit-sesi" element={<TambahSession />} />
           <Route path="/admin/tambah-soal" element={<TambahQuestion />} />
           <Route path="/admin/tambah-detail-soal" element={<TambahAnswers />} />
           <Route path="/admin/tambah-berita" element={<TambahNews />} />

@@ -8,6 +8,8 @@ import { getActiveSession, postNews } from "../../../api/Sarat";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { useEffect } from "react";
 import { FileUpload } from "../../../components/FileUpload";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahNews() {
   const [data, setData] = useState([]);
@@ -16,12 +18,14 @@ export default function TambahNews() {
   const [video_url, setVideoUrl] = useState("");
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState([]);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-berita";
   const uploaderRef = useRef(null);
 
   useEffect(() => {
-    getActiveSession(setData, setSts);
+    setIsLoading(true);
+    getActiveSession(setData, setSts, setIsLoading);
   }, []);
 
   const navigateListSpending = () => {
@@ -30,7 +34,7 @@ export default function TambahNews() {
 
   const postData = (e) => {
     e.preventDefault();
-    // const invoice = filesData?.filesData[0].rawFile;
+    setIsLoading(true);
     const formData = new FormData();
 
     formData.append(`session_detail_id`, 103);
@@ -48,8 +52,9 @@ export default function TambahNews() {
       filesData.length === 0
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postNews(setSts, navigateListSpending, formData);
+      postNews(setSts, navigateListSpending, formData, setIsLoading);
     }
   };
 
@@ -126,7 +131,8 @@ export default function TambahNews() {
           </div>
           <br />
           <hr className="mr-10 " />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

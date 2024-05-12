@@ -678,7 +678,7 @@ export const AlertStatusVerifiedFailed = () => {
 
 export const AlertPaymentProof = (url) => {
   const domain = process.env.REACT_APP_BASE_STATIC_FILE;
-  if (domain.length == 0) {
+  if (url === "") {
     styledSweetAlert.fire({
       title: "Loading...",
       showConfirmButton: true,

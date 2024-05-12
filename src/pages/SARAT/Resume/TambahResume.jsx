@@ -7,6 +7,7 @@ import { Header } from "../../../components";
 import TextInput, { TextArea } from "../../../components/TextInput";
 import { DropdownSiswa } from "../../../components/Dropdown";
 import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahResume() {
   const [academicYearData, setData] = useState([]);
@@ -19,10 +20,9 @@ export default function TambahResume() {
   const path = "/admin/list-resume";
 
   useEffect(() => {
+    setIsLoading(true);
     getTahunAjaran(setData, setSts, setIsLoading);
   }, []);
-
-  console.log("name", name);
 
   const academicYearOptions = academicYearData.map((c) => ({
     label: `${c.name}`,
@@ -40,7 +40,7 @@ export default function TambahResume() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = {
       name: `Resume SARAT T.A ${name}`,
       academic_year_id: academicYearId,
@@ -54,8 +54,9 @@ export default function TambahResume() {
       fields[0].description === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postSession(setSts, navigateListSession, data);
+      postSession(setSts, navigateListSession, data, setIsLoading);
     }
   };
 
@@ -98,13 +99,6 @@ export default function TambahResume() {
           Form Tambah Resume
         </p>
         <article>
-          {/* <TextInput
-            label="Nama Resume"
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            required={true}
-          /> */}
           <DropdownSiswa
             label="Tahun Ajaran"
             required={true}
@@ -163,7 +157,8 @@ export default function TambahResume() {
             </button>
           </div>
           <br />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
 import { getInstitution, getSession } from "../../../api/Sarat";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListInstitution() {
   const [data, setData] = useState([]);
@@ -11,6 +12,7 @@ export default function ListInstitution() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   let filteredItems = data;
@@ -21,7 +23,8 @@ export default function ListInstitution() {
   }
 
   useEffect(() => {
-    getInstitution(setData, setSts);
+    setIsLoading(true);
+    getInstitution(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

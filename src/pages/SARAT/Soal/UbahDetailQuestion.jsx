@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { DropdownRadioInputBiological } from "../../../components/Dropdown";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahDetailQuestion() {
   const location = useLocation();
@@ -14,9 +16,8 @@ export default function UbahDetailQuestion() {
     location.state.correct_answer
   );
   const [sts, setSts] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
-
-  console.log("ds ", correct_answer);
 
   const navigateListSession = () => {
     navigate(path, {
@@ -28,9 +29,10 @@ export default function UbahDetailQuestion() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (description === "" || correct_answer === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateDetailQuestion(
         location.state.id,
@@ -38,7 +40,8 @@ export default function UbahDetailQuestion() {
         setSts,
         navigateListSession,
         description,
-        correct_answer
+        correct_answer,
+        setIsLoading
       );
     }
   };
@@ -79,7 +82,8 @@ export default function UbahDetailQuestion() {
             checked={correct_answer}
           />
           <br />
-          <div className="btn-form mr-6">
+          <div className="btn-form mr-6 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { DropdownRadioInputBiological } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput, { TextArea } from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahAnswers() {
   const location = useLocation();
@@ -16,8 +18,9 @@ export default function TambahAnswers() {
     },
   ]);
   const [sts, setSts] = useState("");
-  const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
 
+  const navigate = useNavigate();
   const navigateListSession = () => {
     navigate(path, {
       state: {
@@ -28,17 +31,18 @@ export default function TambahAnswers() {
 
   const postData = (e) => {
     e.preventDefault();
-
-    console.log("fields === ", fields);
+    setIsLoading(true);
 
     if (fields.description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       postAnswers(
         setSts,
         navigateListSession,
         location.state.question_id,
-        fields
+        fields,
+        setIsLoading
       );
     }
   };
@@ -129,7 +133,8 @@ export default function TambahAnswers() {
             </button>
           </div>
           <br />
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

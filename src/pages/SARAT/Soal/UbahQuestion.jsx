@@ -4,6 +4,8 @@ import { updateQuestion, updateSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahQuestion() {
   const location = useLocation();
@@ -11,21 +13,19 @@ export default function UbahQuestion() {
   const [description, setDescription] = useState(location.state.description);
   const [is_publish, setPublish] = useState(location.state.is_publish);
   const [sts, setSts] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   const navigateListResume = () => {
     navigate(path);
   };
 
-  console.log("desc === ", description);
-  console.log("pub === ", is_publish);
-  console.log("seq === ", location.state.sequence);
-
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateQuestion(
         location.state.question_id,
@@ -34,7 +34,8 @@ export default function UbahQuestion() {
         location.state.session_detail_id,
         location.state.sequence,
         description,
-        is_publish
+        is_publish,
+        setIsLoading
       );
     }
   };
@@ -62,7 +63,8 @@ export default function UbahQuestion() {
           />
           <br />
 
-          <div className="btn-form mr-7">
+          <div className="btn-form mr-7 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

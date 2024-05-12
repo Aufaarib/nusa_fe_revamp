@@ -8,6 +8,8 @@ import {
   AlertMessage,
   AlertStatusSuccess,
 } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { ErrorHandling } from "../../../api/ErrorHandling";
 
 export default function ListResume() {
   const [data, setData] = useState([]);
@@ -16,6 +18,7 @@ export default function ListResume() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   let filteredItems = data;
@@ -26,7 +29,15 @@ export default function ListResume() {
   }
 
   useEffect(() => {
-    getSession(currentPage, itemsPerPage, setData, setSts, setPagination);
+    setIsLoading(true);
+    getSession(
+      currentPage,
+      itemsPerPage,
+      setData,
+      setSts,
+      setPagination,
+      setIsLoading
+    );
   }, []);
 
   const columns = [
@@ -110,6 +121,7 @@ export default function ListResume() {
   ];
 
   const onClickActivation = (id, status) => {
+    setIsLoading(true);
     axios
       .put(
         process.env.REACT_APP_NUSA_SARAT + `/session/update/${id}`,
@@ -120,7 +132,14 @@ export default function ListResume() {
       )
       .then(() => {
         setSts({ type: "success" });
-        getSession(currentPage, itemsPerPage, setData, setSts, setPagination);
+        getSession(
+          currentPage,
+          itemsPerPage,
+          setData,
+          setSts,
+          setPagination,
+          setIsLoading
+        );
         AlertStatusSuccess(
           navigate,
           "Berhasil",
@@ -130,12 +149,9 @@ export default function ListResume() {
         );
       })
       .catch((error) => {
+        setIsLoading(false);
         setSts({ type: "error", error });
-        if (error.code === "ERR_NETWORK") {
-          AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-        } else {
-          AlertMessage("Gagal", "Edit Status Gagal", "Coba Lagi", "error");
-        }
+        ErrorHandling(error);
       });
   };
 

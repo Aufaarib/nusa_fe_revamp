@@ -4,6 +4,7 @@ import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
 import { getDetailQuestion, getQuestion, getSession } from "../../../api/Sarat";
 import { BsChevronBarLeft } from "react-icons/bs";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListQuestion() {
   const [data, setData] = useState([]);
@@ -13,11 +14,9 @@ export default function ListQuestion() {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-soal";
   const session_tittle = localStorage.getItem("SESSION_TITTLE");
-
-  console.log("Answers Data === ", data);
-  // console.log(location.state.question_id);
 
   let filteredItems = data;
   if (data !== null) {
@@ -27,7 +26,13 @@ export default function ListQuestion() {
   }
 
   useEffect(() => {
-    getDetailQuestion(location.state.question_id, setData, setSts);
+    setIsLoading(true);
+    getDetailQuestion(
+      location.state.question_id,
+      setData,
+      setSts,
+      setIsLoading
+    );
   }, []);
 
   const columns = [

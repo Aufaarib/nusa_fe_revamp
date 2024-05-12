@@ -1,17 +1,11 @@
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getNews } from "../../../api/Sarat";
 import { Header } from "../../../components";
-import {
-  DataTablesListSpp,
-  DataTablesSession,
-} from "../../../components/DataTables";
-import { getNews, getSession } from "../../../api/Sarat";
-import moment from "moment/moment";
-import {
-  AlerNewsFiles,
-  AlerNewsVideos,
-  AlertFiles,
-} from "../../../components/ModalPopUp";
+import { DataTablesListSpp } from "../../../components/DataTables";
+import { AlerNewsFiles, AlerNewsVideos } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ListNews() {
   const [data, setData] = useState([]);
@@ -20,6 +14,7 @@ export default function ListNews() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   let filteredItems = data;
@@ -30,7 +25,16 @@ export default function ListNews() {
   }
 
   useEffect(() => {
-    getNews(setData, setSts);
+    if (isLoading && filteredItems.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  });
+
+  useEffect(() => {
+    setIsLoading(true);
+    getNews(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

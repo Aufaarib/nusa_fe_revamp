@@ -4,12 +4,15 @@ import { updateSession } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahSession() {
   const location = useLocation();
   const path = "/admin/list-sesi";
   const [fields, setFields] = useState(location.state.details);
   const [sts, setSts] = useState("");
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
   const handleFieldChange = (index, fieldName, value) => {
@@ -42,7 +45,7 @@ export default function TambahSession() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = {
       name: localStorage.getItem("RESUME_NAME"),
       academic_year_id: location.state.academicYearId,
@@ -50,13 +53,15 @@ export default function TambahSession() {
     };
 
     if (data.details.title === "" || data.details.description === "") {
+      setIsLoading(false);
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
     } else {
       updateSession(
         localStorage.getItem("RESUME_ID"),
         setSts,
         navigateListSession,
-        data
+        data,
+        setIsLoading
       );
     }
   };
@@ -117,7 +122,8 @@ export default function TambahSession() {
           </div>
           <br />
 
-          <div className="btn-form mr-6">
+          <div className="btn-form mr-6 flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -4,13 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getSessionReportDetail } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { DataTablesDetailSession } from "../../../components/DataTables";
-import {
-  AlerNewsFiles,
-  AlertEmpty,
-  AlertMessage,
-} from "../../../components/ModalPopUp";
-import { TextArea } from "../../../components/TextInput";
-import img from "../../../data/assalamualaikum.png";
+import { AlerNewsFiles, AlertMessage } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
 export default function ResumeReportDetail() {
   const [data, setData] = useState([]);
@@ -20,19 +15,20 @@ export default function ResumeReportDetail() {
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const location = useLocation();
-  // if (data !== null) {
-  //   filteredItems = data.filter((data) =>
-  //     data.parent_name.toLowerCase().includes(filterText.toLowerCase())
-  //   );
-  // }
 
   useEffect(() => {
-    getSessionReportDetail(location.state.id, setData, setQuestion, setSts);
+    setIsLoading(true);
+    getSessionReportDetail(
+      location.state.id,
+      setData,
+      setQuestion,
+      setSts,
+      setIsLoading
+    );
   }, []);
-
-  console.log("data", question);
 
   const columns = [
     {
