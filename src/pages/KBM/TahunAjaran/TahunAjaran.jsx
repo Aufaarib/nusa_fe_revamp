@@ -67,7 +67,7 @@ const TahunAjaran = () => {
               data.code,
               data.name,
               data.year,
-              data.curriculumId,
+              data.curriculum.id,
               data.curriculum.name,
               data.status
             )
@@ -105,6 +105,14 @@ const TahunAjaran = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (filteredItems.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  });
 
   return (
     <>

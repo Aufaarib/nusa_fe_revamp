@@ -23,6 +23,7 @@ const RequireAuthAdmin = () => {
     setSuccessMsg,
     successMsgSendVerify,
     setSuccessMsgSendVerify,
+    isLoading,
   } = useStateContext();
 
   const { auth, setAuth } = useAuth();

@@ -4,21 +4,24 @@ import { postKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahKurikulum() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const path = "/admin/list-kurikulum";
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (name.length === 0 || description.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postKurikulum(navigateKurikulum, name, description);
+      postKurikulum(navigateKurikulum, name, description, setIsLoading);
     }
   };
 
@@ -65,7 +68,8 @@ export default function TambahKurikulum() {
             required={true}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

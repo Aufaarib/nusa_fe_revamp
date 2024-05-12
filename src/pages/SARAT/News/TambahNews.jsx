@@ -7,6 +7,7 @@ import TextInput from "../../../components/TextInput";
 import { getActiveSession, postNews } from "../../../api/Sarat";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import { useEffect } from "react";
+import { FileUpload } from "../../../components/FileUpload";
 
 export default function TambahNews() {
   const [data, setData] = useState([]);
@@ -27,33 +28,6 @@ export default function TambahNews() {
     navigate(path);
   };
 
-  const asyncSettings = {
-    saveUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Save",
-    removeUrl:
-      "https://services.syncfusion.com/react/production/api/FileUploader/Remove",
-  };
-
-  const minFileSize = 0;
-  const maxFileSize = 5000000;
-
-  const onUploadChange = (args) => {
-    console.log("File uploaded successfully:", args);
-    setFilesData([...filesData, args]);
-  };
-  console.log("filesData", filesData);
-
-  const removeFile = (fileIndex) => {
-    const updatedFiles = [...filesData];
-    updatedFiles.splice(fileIndex, 1);
-    setFilesData(updatedFiles);
-  };
-  const onFileUpload = (args) => {};
-
-  const onSuccess = (args) => {
-    console.log("File uploaded successfully!", args);
-  };
-
   const postData = (e) => {
     e.preventDefault();
     // const invoice = filesData?.filesData[0].rawFile;
@@ -64,8 +38,7 @@ export default function TambahNews() {
     formData.append(`video_url`, video_url);
 
     filesData.forEach((file, index) => {
-      formData.append(`images`, file.filesData[0].rawFile);
-      console.log("dasdfv === ", file.filesData[0].rawFile);
+      formData.append(`images`, file);
     });
 
     if (
@@ -144,27 +117,12 @@ export default function TambahNews() {
               width: "auto",
             }}
           >
-            <UploaderComponent
-              type="file"
-              ref={uploaderRef}
-              asyncSettings={asyncSettings}
-              removing={removeFile}
-              selected={onUploadChange}
-              uploading={onFileUpload}
-              success={onSuccess.bind(this)}
-              locale="id-BAHASA"
-              allowedExtensions=".png,.jpg"
-              accept=".png,.jpg"
-              minFileSize={minFileSize}
-              maxFileSize={maxFileSize}
-              // multiple={true}
-              buttons={{
-                browse: filesData.length === 0 ? "Unggah Foto" : "Tambah Foto",
-              }}
+            <FileUpload
+              setFilesData={setFilesData}
+              filesData={filesData}
+              fileInputId={"fileInput1"}
+              multiple={true}
             />
-            <small className=" text-gray-400">
-              <i>Jenis berkas: .png / .jpg</i>
-            </small>
           </div>
           <br />
           <hr className="mr-10 " />

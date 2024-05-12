@@ -4,10 +4,13 @@ import { getKurikulum, updateStatusKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { DataTables } from "../../../components/DataTables";
 import { AlertUbahStatus } from "../../../components/ModalPopUp";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function ListKurikulum() {
   const [data, setData] = useState([]);
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   const path = "/admin/tambah-kurikulum";
@@ -18,18 +21,18 @@ export default function ListKurikulum() {
       data.name.toLowerCase().includes(filterText.toLowerCase())
     );
   }
-
   useEffect(() => {
-    getKurikulum(setData, setSts);
+    setIsLoading(true);
+    getKurikulum(setData, setSts, setIsLoading);
   }, []);
 
-  const handleStatus = (code, description, status) => {
-    AlertUbahStatus(description, code, status, onUpdateStatus);
-  };
+  // const handleStatus = (code, description, status) => {
+  //   AlertUbahStatus(description, code, status, onUpdateStatus);
+  // };
 
-  const onUpdateStatus = (code) => {
-    updateStatusKurikulum(setSts, code, setData);
-  };
+  // const onUpdateStatus = (code) => {
+  //   updateStatusKurikulum(setSts, code, setData);
+  // };
 
   const columns = [
     {
@@ -129,7 +132,11 @@ export default function ListKurikulum() {
         title="Daftar Kurikulum"
       />
 
-      <div style={{ marginTop: "50px" }}>
+      <div
+        style={{
+          marginTop: "50px",
+        }}
+      >
         <DataTables
           columns={columns}
           data={filteredItems}

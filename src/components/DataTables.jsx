@@ -8,6 +8,7 @@ import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import { useStateContext } from "../contexts/ContextProvider";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { CircularProgress } from "@mui/material";
 
 //Filter Components
 const Input = styled.input.attrs((props) => ({
@@ -1319,7 +1320,7 @@ export function DataTablesAdmissionDetail({
         <div>
           {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -1631,18 +1632,22 @@ export function DataTablesRegistrations({
         selectedRows={selectedRows}
       />
       <div>
-        {isLoading ? (
-          <div style={{ textAlign: "center" }}>
-            <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+        {data ? (
+          <div>
+            {isLoading ? (
+              <div style={{ textAlign: "center" }}>
+                <CircularProgress size={24} />
+              </div>
+            ) : (
+              <DataTable
+                columns={columns}
+                customStyles={CustomStylesTable}
+                data={currentPageData}
+                defaultSortAsc={false}
+                defaultSortFieldId={defaultSortFieldId}
+              />
+            )}
           </div>
-        ) : data ? (
-          <DataTable
-            columns={columns}
-            customStyles={CustomStylesTable}
-            data={currentPageData}
-            defaultSortAsc={false}
-            defaultSortFieldId={defaultSortFieldId}
-          />
         ) : (
           <div style={{ textAlign: "center" }}>
             <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
@@ -1897,7 +1902,7 @@ export function DataTablesPMB({
         <div>
           {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -2026,6 +2031,7 @@ export function DataTables({
   onFilter,
   onClick,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -2165,9 +2171,9 @@ export function DataTables({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -2300,6 +2306,7 @@ export function DataTablesListSpp({
   setFilterUnPaid,
   button,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -2436,7 +2443,7 @@ export function DataTablesListSpp({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
               <h1 style={{ fontSize: "24px" }}>Loading...</h1>
             </div>
@@ -2578,6 +2585,7 @@ export function DataTablesSession({
   filterAcademicYear,
   SetFilterAcademicYear,
 }) {
+  const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
     table: {
       style: {
@@ -2714,9 +2722,9 @@ export function DataTablesSession({
       />
       {data ? (
         <div>
-          {status == 0 ? (
+          {isLoading ? (
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ fontSize: "24px" }}>Loading...</h1>
+              <CircularProgress size={24} />
             </div>
           ) : (
             <DataTable
@@ -3812,15 +3820,28 @@ export function DataTablesRegistrationDetail({
             padding: "30px 30px 30px",
           }}
         >
-          <div>
-            <DataTable
-              columns={columns}
-              customStyles={CustomStylesTable}
-              data={data}
-              defaultSortAsc={false}
-              defaultSortFieldId={defaultSortFieldId}
-            />
-          </div>
+          {data ? (
+            <div>
+              {isLoading ? (
+                <div style={{ textAlign: "center" }}>
+                  <CircularProgress size={24} />
+                </div>
+              ) : (
+                <DataTable
+                  columns={columns}
+                  customStyles={CustomStylesTable}
+                  data={data}
+                  defaultSortAsc={false}
+                  defaultSortFieldId={defaultSortFieldId}
+                />
+              )}
+            </div>
+          ) : (
+            <div style={{ textAlign: "center" }}>
+              <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
+            </div>
+          )}
+          <div></div>
         </div>
       </div>
     </>

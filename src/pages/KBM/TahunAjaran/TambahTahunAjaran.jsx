@@ -6,12 +6,15 @@ import { Header } from "../../../components";
 import { DropdownKurikulum } from "../../../components/Dropdown";
 import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahTahunAjaran() {
   const [year, setYear] = useState("");
   const [name, setName] = useState("");
   const [curriculumId, setKurikulum] = useState("");
   const [status] = useState(1);
+  const { isLoading, setIsLoading } = useStateContext();
   const [sts, setSts] = useState(undefined);
   const [curriculumData, setCurriculumData] = useState([]);
   const path = "/admin/list-tahun-ajaran";
@@ -19,9 +22,10 @@ export default function TambahTahunAjaran() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (path.length === 0 || year.length === 0 || name.length === 0) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       postTahunAjaran(
         setSts,
@@ -29,7 +33,8 @@ export default function TambahTahunAjaran() {
         year,
         name,
         status,
-        curriculumId
+        curriculumId,
+        setIsLoading
       );
     }
   };
@@ -39,7 +44,8 @@ export default function TambahTahunAjaran() {
   };
 
   const fetchCurriculum = async () => {
-    getKurikulum(setCurriculumData, setSts);
+    setIsLoading(true);
+    getKurikulum(setCurriculumData, setSts, setIsLoading);
   };
 
   useEffect(() => {
@@ -106,7 +112,8 @@ export default function TambahTahunAjaran() {
             onChange={(e) => setKurikulum(e.value)}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

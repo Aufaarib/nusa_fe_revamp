@@ -15,7 +15,8 @@ export function updateAdmissionPhase(
   amount,
   educationAmount,
   description,
-  eduId
+  eduId,
+  setIsLoading
 ) {
   axios
     .put(
@@ -43,6 +44,7 @@ export function updateAdmissionPhase(
           { headers: { authorization: localStorage.getItem("TOKEN") } }
         )
         .then(() => {
+          setIsLoading(false);
           setSts({ type: "success" });
           AlertStatusSuccess(
             navigate,
@@ -53,11 +55,13 @@ export function updateAdmissionPhase(
           );
         })
         .catch((error) => {
+          setIsLoading(false);
           setSts({ type: "error", error });
           ErrorHandling(error);
         });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -72,7 +76,8 @@ export function postAdmissionPhase(
   startDate,
   endDate,
   testSchedule,
-  amount
+  amount,
+  setIsLoading
 ) {
   axios
     .post(
@@ -88,6 +93,7 @@ export function postAdmissionPhase(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -98,6 +104,7 @@ export function postAdmissionPhase(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

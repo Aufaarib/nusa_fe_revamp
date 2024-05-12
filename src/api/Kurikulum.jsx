@@ -7,21 +7,30 @@ import {
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getKurikulum(setData, setSts) {
+export function getKurikulum(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/curriculum", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       ErrorHandling(error);
     });
 }
 
-export function updateKurikulum(setSts, path, code, name, description) {
+export function updateKurikulum(
+  setSts,
+  path,
+  code,
+  name,
+  description,
+  setIsLoading
+) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL + `/curriculum/${code}`,
@@ -32,6 +41,7 @@ export function updateKurikulum(setSts, path, code, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -42,6 +52,7 @@ export function updateKurikulum(setSts, path, code, name, description) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       ErrorHandling(error);
     });
 }
@@ -65,7 +76,7 @@ export function updateStatusKurikulum(setSts, code, setData) {
     });
 }
 
-export function postKurikulum(path, name, description) {
+export function postKurikulum(path, name, description, setIsLoading) {
   axios
     .post(
       process.env.REACT_APP_BASE_URL + "/curriculum",
@@ -76,6 +87,7 @@ export function postKurikulum(path, name, description) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       AlertStatusSuccess(
         path,
         "Berhasil",
@@ -85,6 +97,7 @@ export function postKurikulum(path, name, description) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       ErrorHandling(error);
     });
 }

@@ -3,17 +3,19 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 import { ErrorHandling } from "./ErrorHandling";
 
-export function getSemester(setData, setSts) {
+export function getSemester(setData, setSts, setIsLoading) {
   const year = moment().format("YYYY");
   axios
     .get(process.env.REACT_APP_BASE_URL + `/academic/year/AC${year}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body.periode);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -43,7 +45,8 @@ export function updateTahunAjaran(
   name,
   status,
   curriculumId,
-  code
+  code,
+  setIsLoading
 ) {
   axios
     .put(
@@ -57,6 +60,7 @@ export function updateTahunAjaran(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         path,
@@ -67,6 +71,7 @@ export function updateTahunAjaran(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -78,7 +83,8 @@ export function postTahunAjaran(
   year,
   name,
   status,
-  curriculumId
+  curriculumId,
+  setIsLoading
 ) {
   axios
     .post(
@@ -92,6 +98,7 @@ export function postTahunAjaran(
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -102,6 +109,7 @@ export function postTahunAjaran(
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

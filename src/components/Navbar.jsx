@@ -39,11 +39,11 @@ const Navbar = () => {
     isClicked,
     setScreenSize,
     screenSize,
-    getNotifications,
+    // getNotifications,
     notifications,
     notificationNew,
     notificationUnreadLength,
-    listenBroadcast,
+    // listenBroadcast,
   } = useStateContext();
   const notifDotColor = notificationNew ? currentColor : "";
 
@@ -65,11 +65,11 @@ const Navbar = () => {
     }
   }, [screenSize]);
 
-  useEffect(() => {
-    getNotifications();
-    // console.log("getNotifications === ", notifications);
-    listenBroadcast();
-  }, []);
+  // useEffect(() => {
+  //   getNotifications();
+  //   // console.log("getNotifications === ", notifications);
+  //   listenBroadcast();
+  // }, []);
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 

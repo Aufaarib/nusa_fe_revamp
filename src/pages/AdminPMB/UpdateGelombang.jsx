@@ -7,13 +7,13 @@ import { DropdownDatePickers } from "../../components/Dropdown";
 import { AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahGelombang() {
   const location = useLocation();
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
   const { isLoading, setIsLoading } = useStateContext();
-
   const [name, setName] = useState(location.state.name);
   const [startDate, setStartDate] = useState(
     moment(location.state.startDate).format("YYYY-MM-DD")
@@ -35,11 +35,9 @@ export default function UbahGelombang() {
   const eduId = location.state.eduId;
   const code = location.state.code;
 
-  console.log("EDU === ", eduId);
-  console.log("id === ", id);
-
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const amount = parseInt(jumlah.replace(/\./g, ""), 10);
     const eduAmount = parseInt(educationAmount.replace(/\./g, ""), 10);
 
@@ -52,6 +50,7 @@ export default function UbahGelombang() {
       amount === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateAdmissionPhase(
         setSts,
@@ -76,6 +75,7 @@ export default function UbahGelombang() {
     navigate("/admin/admission-detail", {
       state: {
         code: code,
+        status: location.state.status,
         theresActive: location.state.theresActive,
       },
     });
@@ -170,7 +170,8 @@ export default function UbahGelombang() {
             required={true}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -4,6 +4,7 @@ import { getAdmissionStatement } from "../../../api/Registrasi";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useStateContext } from "../../../contexts/ContextProvider";
 // import { getAdmissionStatement } from "../../../api/Registrasi";
 
 export default function ListAdmissionStatement() {
@@ -13,6 +14,7 @@ export default function ListAdmissionStatement() {
   const [pagination, setPagination] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,7 +26,8 @@ export default function ListAdmissionStatement() {
     );
   }
   useEffect(() => {
-    getAdmissionStatement(setData, setSts);
+    setIsLoading(true);
+    getAdmissionStatement(setData, setSts, setIsLoading);
   }, []);
 
   const columns = [

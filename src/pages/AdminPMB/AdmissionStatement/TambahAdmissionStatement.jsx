@@ -4,9 +4,12 @@ import { postAdmissionStatement } from "../../../api/AdmissionStatement";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahAdmissionStatement() {
   const [sts, setSts] = useState(undefined);
+  const { isLoading, setIsLoading } = useStateContext();
   const [question, setQuestion] = useState("");
   const navigate = useNavigate();
 
@@ -14,11 +17,17 @@ export default function TambahAdmissionStatement() {
 
   const postData = (e) => {
     e.preventDefault();
-
-    if (question === 0) {
+    setIsLoading(true);
+    if (question === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
-      postAdmissionStatement(setSts, navigateDataPendaftaran, question);
+      postAdmissionStatement(
+        setSts,
+        navigateDataPendaftaran,
+        question,
+        setIsLoading
+      );
     }
   };
 
@@ -53,7 +62,8 @@ export default function TambahAdmissionStatement() {
             value={question}
             required={true}
           />
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -4,10 +4,13 @@ import { updateKurikulum } from "../../../api/Kurikulum";
 import { Header } from "../../../components";
 import { AlertEmpty, AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahKurikulum() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const [name, setName] = useState(location.state.name);
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
@@ -19,13 +22,17 @@ export default function UbahKurikulum() {
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const code = location.state.code;
 
-    // if (name.length === 0 || description.length === 0) {
-    //   AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
-    // } else {
-    updateKurikulum(setSts, navigateKurikulum, code, name, description);
-    // }
+    updateKurikulum(
+      setSts,
+      navigateKurikulum,
+      code,
+      name,
+      description,
+      setIsLoading
+    );
   };
 
   return (
@@ -66,10 +73,11 @@ export default function UbahKurikulum() {
               required={true}
             />
           </section>
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-merah flex flex-row justify-center mb-5"
               onClick={postData}
             >
               Ubah

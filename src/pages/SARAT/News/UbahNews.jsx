@@ -25,8 +25,6 @@ export default function UbahNews() {
   const path = "/admin/list-berita";
   const uploaderRef = useRef(null);
 
-  console.log("asdasfsaf", updateFilesData);
-
   const removeFiles = (index) => {
     const newArray = [...filesData];
     newArray.splice(index, 1);
@@ -43,7 +41,6 @@ export default function UbahNews() {
 
   const postData = (e) => {
     e.preventDefault();
-    // const invoice = filesData?.filesData[0].rawFile;
     const formData = new FormData();
 
     formData.append(`session_detail_id`, session_detail_id.value);
@@ -111,7 +108,7 @@ export default function UbahNews() {
             isSearchable={false}
             onChange={(e) => setSessionDetailId(e.value)}
           />
-          <TextArea
+          <TextInput
             label="Deskripsi"
             type="text"
             value={description}

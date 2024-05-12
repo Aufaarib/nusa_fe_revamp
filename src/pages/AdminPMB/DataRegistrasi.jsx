@@ -19,7 +19,6 @@ const DataRegistrasi = () => {
   const navigate = useNavigate();
   const year = moment().format("YYYY");
   const { isLoading, setIsLoading } = useStateContext();
-
   const [validationFilter, setValidationFilter] = useState(
     localStorage.getItem("ValidationFilter") == null
       ? "inreview"
@@ -616,6 +615,14 @@ const DataRegistrasi = () => {
       width: "130px",
     },
   ];
+
+  useEffect(() => {
+    if (filteredItems.length !== 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  });
 
   return (
     <>

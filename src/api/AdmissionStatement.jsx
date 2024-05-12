@@ -47,7 +47,12 @@ export function updateAdmissionStatement(setSts, navigate, id, question) {
       ErrorHandling(error);
     });
 }
-export function postAdmissionStatement(setSts, navigate, question) {
+export function postAdmissionStatement(
+  setSts,
+  navigate,
+  question,
+  setIsLoading
+) {
   axios
     .post(
       process.env.REACT_APP_NUSA + "/admission/statement",
@@ -61,6 +66,7 @@ export function postAdmissionStatement(setSts, navigate, question) {
       }
     )
     .then(() => {
+      setIsLoading(false);
       setSts({ type: "success" });
       AlertStatusSuccess(
         navigate,
@@ -71,6 +77,7 @@ export function postAdmissionStatement(setSts, navigate, question) {
       );
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

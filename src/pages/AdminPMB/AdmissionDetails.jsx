@@ -151,6 +151,7 @@ const AdmissionDetails = () => {
     navigate("/admin/ubah-gelombang", {
       state: {
         id: id,
+        status: status,
         code: code,
         increment: increment,
         name: name,

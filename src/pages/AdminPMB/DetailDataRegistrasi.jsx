@@ -45,6 +45,16 @@ const DetailDataRegistrasi = () => {
   const [paid, setPaid] = useState("");
   const { isLoading, setIsLoading } = useStateContext();
 
+  console.log("-10", data);
+
+  useEffect(() => {
+    if (data.length === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  });
+
   const fetchEducationPayment = () => {
     setFetched("5");
     fetchAdmissionRegistration();
@@ -98,7 +108,7 @@ const DetailDataRegistrasi = () => {
       setFetched(updatedFetched);
       fetchAdmissionRegistration();
     }
-    fetchAdmissionRegistration();
+    // fetchAdmissionRegistration();
   }, []);
 
   const openPaymentProof = (url) => {
@@ -130,7 +140,7 @@ const DetailDataRegistrasi = () => {
     {
       name: <div>Tanggal</div>,
       cell: (data) => (
-        <div>{moment(dataStep1.createdAt).format("DD-MM-YYYY")}</div>
+        <div>{moment(dataStep1?.createdAt).format("DD-MM-YYYY")}</div>
       ),
       width: "auto",
     },
@@ -166,11 +176,11 @@ const DetailDataRegistrasi = () => {
       cell: (data) => (
         <div>
           {fetched === "1"
-            ? dataStep1.status === "valid"
+            ? dataStep1?.status === "valid"
               ? "Terverifikasi"
-              : dataStep1.status === "inreview"
+              : dataStep1?.status === "inreview"
               ? "Sedang Di Tinjau"
-              : dataStep1.status === "invalid" && "Gagal Terverifikasi"
+              : dataStep1?.status === "invalid" && "Gagal Terverifikasi"
             : dataStep5.status === "valid"
             ? "Terverifikasi"
             : dataStep5.status === "inreview"
@@ -386,7 +396,7 @@ const DetailDataRegistrasi = () => {
         prev="Data Registrasi"
         navPrev={path}
         at={code}
-        title={code + " - " + data.childName}
+        title={code + " - " + `${data.childName ? data.childName : ""}`}
       />
 
       <div style={{ marginTop: "20px" }}>
@@ -571,23 +581,10 @@ const DetailDataRegistrasi = () => {
 
         {fetched === "1" && (
           <>
-            {dataStep1 !== null ? (
-              <DataTablesRegistrationDetail
-                columns={columnsPayments}
-                data={[data]}
-              />
-            ) : (
-              <div
-                style={{
-                  borderRadius: "6px",
-                  backgroundColor: "#F3F4F6",
-                  padding: "30px 30px 30px",
-                  textAlign: "center",
-                }}
-              >
-                <h1>Data Tidak Ditemukan</h1>
-              </div>
-            )}
+            <DataTablesRegistrationDetail
+              columns={columnsPayments}
+              data={[data]}
+            />
           </>
         )}
         {fetched === "2" && (
@@ -820,8 +817,9 @@ const DetailDataRegistrasi = () => {
                     padding: "20px",
                   }}
                 >
-                  {data.additionalFiles?.map((data) => (
+                  {data.additionalFiles?.map((data, index) => (
                     <div
+                      key={index}
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -957,67 +955,41 @@ const DetailDataRegistrasi = () => {
         )}
         {fetched === "5" && (
           <>
-            {dataStep5 ? (
-              isLoading ? (
-                <div style={{ textAlign: "center" }}>
-                  <h1 style={{ fontSize: "24px" }}>Loading...</h1>
-                </div>
-              ) : (
-                <>
-                  <strong className="mb-3 flex">
-                    Status Pembayaran :{" "}
-                    <p className="ml-1 text-merah">
-                      {totalPaid >= edu ? "Lunas" : "Cicil"}
-                    </p>
-                  </strong>
+            <strong className="mb-3 flex">
+              Status Pembayaran :{" "}
+              <p className="ml-1 text-merah">
+                {totalPaid >= edu ? "Lunas" : "Cicil"}
+              </p>
+            </strong>
 
-                  <div className="block mb-7">
-                    <strong>Status Tahapan : </strong>
-                    <strong
-                      className={
-                        dataStep5.status === "valid"
-                          ? "text-hijau"
-                          : "text-kuning"
-                      }
-                      style={{ display: "inline-block" }}
-                    >
-                      {dataStep5.status === "valid"
-                        ? " Terverifikasi"
-                        : dataStep5.status === "inreview"
-                        ? " Sedang Di Tinjau"
-                        : dataStep5.status === "invalid" &&
-                          " Gagal Terverifikasi"}
-                    </strong>
-                    <button
-                      style={{ display: "inline-block", float: "right" }}
-                      className="btn-biru w-auto p-1 px-5"
-                      // title="Edit"
-                      onClick={() => navigateUbahStatus(data.regNumber)}
-                    >
-                      <i className="fa fa-edit" /> Edit Status Tahapan
-                    </button>
-                  </div>
-                  <DataTablesRegistrationDetail
-                    columns={columnsEdu}
-                    data={paid}
-                  />
-                </>
-              )
-            ) : (
-              <div
-                style={{
-                  borderRadius: "6px",
-                  backgroundColor: "#F3F4F6",
-                  padding: "30px 30px 30px",
-                  textAlign: "center",
-                }}
+            <div className="block mb-7">
+              <strong>Status Tahapan : </strong>
+              <strong
+                className={
+                  dataStep5.status === "valid" ? "text-hijau" : "text-kuning"
+                }
+                style={{ display: "inline-block" }}
               >
-                <h1>Data Tidak Ditemukan</h1>
-              </div>
-            )}
+                {dataStep5.status === "valid"
+                  ? " Terverifikasi"
+                  : dataStep5.status === "inreview"
+                  ? " Sedang Di Tinjau"
+                  : dataStep5.status === "invalid" && " Gagal Terverifikasi"}
+              </strong>
+              <button
+                style={{ display: "inline-block", float: "right" }}
+                className="btn-biru w-auto p-1 px-5"
+                // title="Edit"
+                onClick={() => navigateUbahStatus(data.regNumber)}
+              >
+                <i className="fa fa-edit" /> Edit Status Tahapan
+              </button>
+            </div>
+            <DataTablesRegistrationDetail columns={columnsEdu} data={paid} />
           </>
         )}
       </div>
+
       <div className="flex justify-start w-full">
         <Link
           to={path}

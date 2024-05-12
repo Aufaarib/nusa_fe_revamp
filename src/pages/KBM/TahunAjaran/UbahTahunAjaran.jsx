@@ -7,10 +7,13 @@ import TextInput from "../../../components/TextInput";
 import { getKurikulum } from "../../../api/Kurikulum";
 import { useEffect } from "react";
 import { DropdownKurikulum } from "../../../components/Dropdown";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function UbahTahunAjaran() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useStateContext();
   const [year, setYear] = useState(location.state.year);
   const [name, setName] = useState(location.state.name);
   const [curriculums, setCurriculum] = useState({
@@ -22,7 +25,8 @@ export default function UbahTahunAjaran() {
   const path = "/admin/list-tahun-ajaran";
 
   const fetchCurriculum = async () => {
-    getKurikulum(setCurriculumData, setStatus);
+    setIsLoading(true);
+    getKurikulum(setCurriculumData, setStatus, setIsLoading);
   };
 
   useEffect(() => {
@@ -31,12 +35,14 @@ export default function UbahTahunAjaran() {
 
   const postData = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const code = location.state.code;
     const status = location.state.status;
     const curriculum = curriculums.value;
 
     if (year === "" || name === "" || curriculum === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       updateTahunAjaran(
         setStatus,
@@ -45,7 +51,8 @@ export default function UbahTahunAjaran() {
         name,
         status,
         curriculum,
-        code
+        code,
+        setIsLoading
       );
     }
   };
@@ -82,7 +89,7 @@ export default function UbahTahunAjaran() {
           Form Ubah Tahun Ajaran
         </p>
         <article>
-          <form
+          <section
             className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
             style={{ zIndex: -1 }}
           >
@@ -112,9 +119,10 @@ export default function UbahTahunAjaran() {
                 onChange={setCurriculum}
               />
             </section>
-          </form>
+          </section>
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

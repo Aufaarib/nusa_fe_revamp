@@ -6,6 +6,7 @@ import { DropdownDatePickers } from "../../components/Dropdown";
 import { AlertMessage } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { CircularProgress } from "@mui/material";
 
 export default function TambahGelombang() {
   const [name, setName] = useState("");
@@ -34,7 +35,7 @@ export default function TambahGelombang() {
 
   const postData = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (
       name.length === "" ||
       increment === "" ||
@@ -44,6 +45,7 @@ export default function TambahGelombang() {
       amount === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
+      setIsLoading(false);
     } else {
       const jumlah = parseInt(amount.replace(/\./g, ""), 10);
       setIsLoading(true);
@@ -66,6 +68,7 @@ export default function TambahGelombang() {
     navigate("/admin/admission-detail", {
       state: {
         code: code,
+        status: status,
         theresActive: location.state.theresActive,
       },
     });
@@ -140,7 +143,8 @@ export default function TambahGelombang() {
             required={true}
           />
 
-          <div className="btn-form">
+          <div className="btn-form flex justify-center items-center">
+            {isLoading && <CircularProgress size={24} className="mr-8" />}
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"

@@ -116,16 +116,18 @@ export function revalidateEmail(setSts) {
     });
 }
 
-export function getAdmissionStatement(setData, setSts) {
+export function getAdmissionStatement(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission/statement", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
+      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
+      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -158,13 +160,13 @@ export function getAdmissionRegistration(setData, setSts, setIsLoading) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
       res.data.body.forEach((element) => {
         if (element.steps.length > 0 && element.isStudent != 1) {
           data.push(element);
         }
       });
       setData(data);
+      // setIsLoading(false);
       setSts({ type: "success" });
     })
     .catch((error) => {
