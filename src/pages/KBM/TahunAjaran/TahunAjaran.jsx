@@ -19,7 +19,6 @@ const TahunAjaran = () => {
       data.code.toLowerCase().includes(filterText.toLowerCase())
     );
   }
-
   useEffect(() => {
     setIsLoading(true);
     getTahunAjaran(setData, setSts, setIsLoading);
@@ -107,7 +106,7 @@ const TahunAjaran = () => {
   };
 
   useEffect(() => {
-    if (isLoading && filteredItems.length === 0) {
+    if (filteredItems.length === 0) {
       setIsLoading(true);
     } else {
       setIsLoading(false);

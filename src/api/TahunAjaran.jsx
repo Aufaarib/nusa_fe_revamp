@@ -27,14 +27,14 @@ export function getTahunAjaran(setData, setSts, setIsLoading) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 
