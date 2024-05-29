@@ -139,15 +139,15 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
+        name: "Report Spp",
+        path: `admin/report-spp`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Pengeluaran",
         path: `admin/list-pengeluaran`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: "Laporan",
-      //   path: `admin/list-laporan`,
-      //   icon: <FaWpforms />,
-      // },
     ],
   },
   {

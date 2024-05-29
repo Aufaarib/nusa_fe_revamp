@@ -183,7 +183,7 @@ export function FilterComponentPengeluaran({
         >
           <Input
             id="search"
-            placeholder="Cari Nama Barang..."
+            placeholder="Cari..."
             value={filterText}
             onChange={onFilter}
           />
@@ -255,6 +255,7 @@ export function FilterComponentSpp({
   onFilter,
   onClick,
   button,
+  showButton,
   filterPaid,
   setFilterPaid,
   filterUnPaid,
@@ -286,52 +287,60 @@ export function FilterComponentSpp({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
-        {/* <button
-          onClick={() => {
-            if (filterPaid === false) {
-              setFilterPaid(true);
-            } else setFilterPaid(false);
-          }}
-          className={
-            filterPaid === true
-              ? "ml-2 btn-modal-filter-true"
-              : "ml-2 btn-modal-filter-false"
-          }
-        >
-          Tampilkan Telah Membayar{" "}
-          {filterPaid === true && <i className="fa fa-check text-hijau" />}
-        </button>
+        {showButton && (
+          <>
+            <button
+              onClick={() => {
+                if (filterPaid === false) {
+                  setFilterPaid(true);
+                } else setFilterPaid(false);
+              }}
+              className={
+                filterPaid === true
+                  ? "ml-2 btn-modal-filter-true"
+                  : "ml-2 btn-modal-filter-false"
+              }
+            >
+              Tampilkan Telah Membayar{" "}
+              {filterPaid === true && <i className="fa fa-check text-hijau" />}
+            </button>
 
-        <button
-          onClick={() => {
-            if (filterUnPaid === false) {
-              setFilterUnPaid(true);
-            } else setFilterUnPaid(false);
-          }}
-          className={
-            filterUnPaid === true
-              ? "ml-2 btn-modal-filter-true"
-              : "ml-2 btn-modal-filter-false"
-          }
-        >
-          Tampilkan Belum Membayar{" "}
-          {filterUnPaid === true && <i className="fa fa-check text-hijau" />}
-        </button> */}
-        <div
-          style={{
-            display: "inline-block",
-            float: "right",
-            marginBottom: "20px",
-          }}
-        >
-          <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-hijau"
-            onClick={onClick}
+            <button
+              onClick={() => {
+                if (filterUnPaid === false) {
+                  setFilterUnPaid(true);
+                } else setFilterUnPaid(false);
+              }}
+              className={
+                filterUnPaid === true
+                  ? "ml-2 btn-modal-filter-true"
+                  : "ml-2 btn-modal-filter-false"
+              }
+            >
+              Tampilkan Belum Membayar{" "}
+              {filterUnPaid === true && (
+                <i className="fa fa-check text-hijau" />
+              )}
+            </button>
+          </>
+        )}
+        {showButton && (
+          <div
+            style={{
+              display: "inline-block",
+              float: "right",
+              marginBottom: "20px",
+            }}
           >
-            <i className="fa fa-plus mr-1 mt-1"></i> {button}
-          </button>
-        </div>
+            <button
+              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+              className="btn-hijau"
+              onClick={onClick}
+            >
+              <i className="fa fa-plus mr-1 mt-1"></i> {button}
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
@@ -2305,6 +2314,7 @@ export function DataTablesListSpp({
   filterUnPaid,
   setFilterUnPaid,
   button,
+  showButton,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
@@ -2440,6 +2450,7 @@ export function DataTablesListSpp({
         filterUnPaid={filterUnPaid}
         setFilterUnPaid={setFilterUnPaid}
         button={button}
+        showButton={showButton}
       />
       {data ? (
         <div>

@@ -95,6 +95,7 @@ import TambahAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/Tambah
 import ListAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/ListAdmissionStatement";
 import ListResumeReport from "./pages/SARAT/Resume/ListResumeReport";
 import ResumeReportDetail from "./pages/SARAT/Resume/ResumeReportDetail";
+import ReportSpp from "./pages/Keuangan/Spp/ReportSpp";
 
 const App = () => {
   return (
@@ -172,11 +173,11 @@ const App = () => {
           <Route path="/admin/list-berita" element={<ListNews />} />
           <Route path="/admin/list-foto-berita" element={<ListFotoFoto />} />
           <Route path="/admin/list-infaq" element={<ListDonations />} />
+          <Route path="/admin/report-spp" element={<ReportSpp />} />
           <Route
             path="/admin/list-pertanyaan-pernyataan"
             element={<ListAdmissionStatement />}
           />
-
           {/* ubah */}
           <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route

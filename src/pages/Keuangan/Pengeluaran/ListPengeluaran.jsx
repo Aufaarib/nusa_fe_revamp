@@ -48,8 +48,11 @@ export default function ListPengeluaran() {
         );
       }
     } else {
-      filteredItems = filteredType.filter((data) =>
-        data.description.toLowerCase().includes(filterText.toLowerCase())
+      filteredItems = filteredType.filter(
+        (data) =>
+          data.description.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.name.toLowerCase().includes(filterText.toLowerCase()) ||
+          data.type.toLowerCase().includes(filterText.toLowerCase())
       );
     }
   }

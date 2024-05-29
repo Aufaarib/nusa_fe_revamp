@@ -197,6 +197,7 @@ export default function ListSpp() {
           filterUnPaid={filterUnPaid}
           setFilterUnPaid={setFilterUnPaid}
           button="Tambah Spp"
+          showButton={true}
         />
       </div>
     </>

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMurid } from "../../../api/Murid";
+import { getMurid, getMuridbyAcademicId } from "../../../api/Murid";
 import { postSpp } from "../../../api/Spp";
-import { getSemester } from "../../../api/TahunAjaran";
+import { getSemester, getTahunAjaran } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
 import { DropdownMultiple, DropdownSiswa } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
@@ -12,10 +12,13 @@ import { FileUpload } from "../../../components/FileUpload";
 import { CircularProgress } from "@mui/material";
 
 export default function TambahSpp() {
+  const [academicYearData, setAcademicYearData] = useState([]);
   const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
   const [amounts, setAmount] = useState("");
   const [months, setMonth] = useState([]);
+  const [academicYearCode, setAcademicYearCode] = useState("");
+  const [academicYearId, setAcademicYearId] = useState("");
   const [periodeId, setPeriodeId] = useState("");
   const [studentCode, setStudentCode] = useState("");
   const [description, setDescription] = useState("");
@@ -26,12 +29,16 @@ export default function TambahSpp() {
   const path = "/admin/list-spp";
   const uploaderRef = useRef(null);
 
-  const fetchAcademicPeriode = () => {
-    getSemester(setAcademicPeriodeData, setSts, setIsLoading);
+  const fetchAcademicYear = () => {
+    getTahunAjaran(setAcademicYearData, setSts, setIsLoading);
   };
 
-  const fetchStudents = () => {
-    getMurid(setStudentsData, setSts, setIsLoading);
+  const fetchAcademicPeriode = (year) => {
+    getSemester(setAcademicPeriodeData, setSts, setIsLoading, year);
+  };
+
+  const fetchStudents = (year) => {
+    getMuridbyAcademicId(setStudentsData, setSts, setIsLoading, year);
   };
 
   const navigateListSpp = () => {
@@ -40,8 +47,9 @@ export default function TambahSpp() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchAcademicPeriode();
-    fetchStudents();
+    fetchAcademicYear();
+    // fetchAcademicPeriode();
+    // fetchStudents();
   }, []);
 
   const postData = (e) => {
@@ -55,7 +63,8 @@ export default function TambahSpp() {
     formData.append(`amount`, amount);
     formData.append(`description`, description);
     formData.append(`invoice`, invoice);
-    formData.append(`periodeId`, periodeId);
+    formData.append(`academicPeriodeId`, periodeId);
+    formData.append(`academicYearId`, academicYearId);
     formData.append(`studentCode`, studentCode);
 
     months.forEach((item, index) => {
@@ -88,7 +97,13 @@ export default function TambahSpp() {
     setAmount(inputVal);
   };
 
-  const academicYearOptions = academicPeriodeData.map((c) => ({
+  const academicYearOptions = academicYearData.map((c) => ({
+    label: `Tahun Ajaran : ${c.name}`,
+    value: c.code,
+    id: c.id,
+  }));
+
+  const academicPeriodeOptions = academicPeriodeData?.map((c) => ({
     label: `Semester : ${c.increment}`,
     value: c.id,
   }));
@@ -144,9 +159,9 @@ export default function TambahSpp() {
     },
   ];
 
-  const studentsOptions = studentsData.map((c) => ({
-    label: `${c.code} : ${c.firstName} ${c.middleName} ${c.lastName}`,
-    value: c.code,
+  const studentsOptions = studentsData?.map((c) => ({
+    label: `${c.student.code} : ${c.student.firstName} ${c.student.middleName} ${c.student.lastName}`,
+    value: c.student.code,
   }));
 
   const handleSelectChange = (selectedValues) => {
@@ -174,23 +189,41 @@ export default function TambahSpp() {
         </p>
         <article>
           <DropdownSiswa
-            label="Semester"
+            label="Tahun Ajaran"
             required={true}
-            defaultValue={periodeId}
+            defaultValue={academicYearCode}
             isClearable={false}
             options={academicYearOptions}
             isSearchable={false}
-            onChange={(e) => setPeriodeId(e.value)}
+            onChange={(e) => {
+              fetchAcademicPeriode(e.value);
+              setAcademicYearId(e.id);
+              setAcademicYearCode(e.value);
+              fetchStudents(e.id);
+            }}
           />
-          <DropdownSiswa
-            label="Murid"
-            required={true}
-            defaultValue={studentCode}
-            isClearable={false}
-            options={studentsOptions}
-            isSearchable={true}
-            onChange={(e) => setStudentCode(e.value)}
-          />
+          {academicYearId && (
+            <>
+              <DropdownSiswa
+                label="Semester"
+                required={true}
+                defaultValue={periodeId}
+                isClearable={false}
+                options={academicPeriodeOptions}
+                isSearchable={false}
+                onChange={(e) => setPeriodeId(e.value)}
+              />
+              <DropdownSiswa
+                label="Murid"
+                required={true}
+                defaultValue={studentCode}
+                isClearable={false}
+                options={studentsOptions}
+                isSearchable={true}
+                onChange={(e) => setStudentCode(e.value)}
+              />
+            </>
+          )}
           <DropdownMultiple
             label="Spp Bulan"
             required={true}

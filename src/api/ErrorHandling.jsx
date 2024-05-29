@@ -4,7 +4,7 @@ export function ErrorHandling(error) {
   const message = error.response;
   if (error.code === "ERR_NETWORK") {
     AlertMessage("Gagal", "Koneksi Bermasalah", "Coba Lagi", "error");
-  } else if (message.status === 401) {
+  } else if (message?.status === 401) {
     AlertMessage(
       "Gagal",
       "Sesi Berakhir, Silahkan Login Kembali",

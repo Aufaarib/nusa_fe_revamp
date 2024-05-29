@@ -19,6 +19,36 @@ export function getMurid(setData, setSts, setIsLoading) {
     });
 }
 
+export function getMuridbyAcademicId(
+  setData,
+  setSts,
+  setIsLoading,
+  academicYearId
+) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/spp/unpaid", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+      params: { academicYearId: academicYearId },
+    })
+    .then((res) => {
+      setIsLoading(false);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      setSts({ type: "error", error });
+      // ErrorHandling(error);
+      AlertMessage(
+        "Murid Tidak Ditemukan",
+        "Mohon Pilih Tahun Ajaran Lain",
+        "Tutup",
+        "warning",
+        false
+      );
+    });
+}
+
 export function getMuridNotRegisteredToClass(setData, setSts, setIsLoading) {
   const data = [];
   axios

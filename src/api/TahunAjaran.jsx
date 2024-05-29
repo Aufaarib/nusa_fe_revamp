@@ -3,15 +3,14 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import axios from "./axios";
 import { ErrorHandling } from "./ErrorHandling";
 
-export function getSemester(setData, setSts, setIsLoading) {
-  const year = moment().format("YYYY");
+export function getSemester(setData, setSts, setIsLoading, year) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + `/academic/year/AC${year}`, {
+    .get(process.env.REACT_APP_BASE_URL + `/academic/year/${year}/periode`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
       setIsLoading(false);
-      setData(res.data.body.periode);
+      setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {

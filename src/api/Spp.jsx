@@ -20,7 +20,7 @@ export function getSpp(setData, setSts, setIsLoading) {
 }
 export function getUnpaidSpp(setData, setSts, setIsLoading) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/unpaid-spp", {
+    .get(process.env.REACT_APP_BASE_URL + "/spp/unpaid", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
