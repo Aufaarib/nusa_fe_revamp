@@ -103,7 +103,7 @@ export default function TambahSpp() {
         `payment.${index}.taawun`,
         parseInt(item.replace(/\./g, ""), 10)
       );
-      formData.append(`payment.${index}.other`, 1000);
+      formData.append(`payment.${index}.other`, 0);
     });
 
     formData.append(`invoice`, invoice);

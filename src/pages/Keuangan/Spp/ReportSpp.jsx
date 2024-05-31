@@ -425,7 +425,7 @@ export default function ReportSpp() {
           style: "currency",
           currency: "IDR",
           minimumFractionDigits: 0,
-        }).format(data.other),
+        }).format(data.total),
     },
     {
       style: styles.col3,
