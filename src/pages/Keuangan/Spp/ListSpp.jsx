@@ -5,6 +5,8 @@ import { Header } from "../../../components";
 import { DataTables, DataTablesListSpp } from "../../../components/DataTables";
 import { AlertPaymentProof } from "../../../components/ModalPopUp";
 import { useStateContext } from "../../../contexts/ContextProvider";
+import { getMurid } from "../../../api/Murid";
+import moment from "moment/moment";
 
 export default function ListSpp() {
   const [data, setData] = useState([]);
@@ -17,21 +19,21 @@ export default function ListSpp() {
   const navigate = useNavigate();
 
   let filteredItems = data;
-  if (data !== null) {
-    if (filterPaid === true) {
-      filteredItems = data.filter((data) =>
-        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
-      );
-    } else if (filterUnPaid === true) {
-      filteredItems = unpaidData.filter((data) =>
-        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
-      );
-    } else {
-      filteredItems = data.filter((data) =>
-        data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
-      );
-    }
-  }
+  // if (data !== null) {
+  //   if (filterPaid === true) {
+  //     filteredItems = data.filter((data) =>
+  //       data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+  //     );
+  //   } else if (filterUnPaid === true) {
+  //     filteredItems = unpaidData.filter((data) =>
+  //       data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+  //     );
+  //   } else {
+  //     filteredItems = data.filter((data) =>
+  //       data.student.firstName.toLowerCase().includes(filterText.toLowerCase())
+  //     );
+  //   }
+  // }
 
   const openPaymentProof = (url) => {
     AlertPaymentProof(url);
@@ -39,8 +41,9 @@ export default function ListSpp() {
 
   useEffect(() => {
     setIsLoading(true);
-    getSpp(setData, setSts, setIsLoading);
-    getUnpaidSpp(setUnpaidData, setSts, setIsLoading);
+    getMurid(setData, setSts, setIsLoading);
+    // getSpp(setData, setSts, setIsLoading);
+    // getUnpaidSpp(setUnpaidData, setSts, setIsLoading);
   }, []);
 
   const columns = [
@@ -50,98 +53,49 @@ export default function ListSpp() {
       width: "55px",
     },
     {
-      name: <div>Nama Murid</div>,
-      cell: (data) => (
-        <div>{`${data.student.firstName} ${data.student.middleName} ${data.student.lastName}`}</div>
-      ),
-      width: "190px",
+      name: <div>Kode</div>,
+      cell: (data) => <div>{data.code}</div>,
+      width: "200px",
     },
     {
-      name: <div>Spp Bulan</div>,
+      name: <div>Nama Lengkap</div>,
       cell: (data) => (
-        <div>
-          {(data.month == 1 && "Januari") ||
-            (data.month == 2 && "Februari") ||
-            (data.month == 3 && "Maret") ||
-            (data.month == 4 && "April") ||
-            (data.month == 5 && "Mei") ||
-            (data.month == 6 && "Juni") ||
-            (data.month == 7 && "Juli") ||
-            (data.month == 8 && "Agustus") ||
-            (data.month == 9 && "September") ||
-            (data.month == 10 && "Oktober") ||
-            (data.month == 11 && "November") ||
-            (data.month == 12 && "Desember")}
-        </div>
-      ),
-      width: "90px",
-    },
-    {
-      name: <div>Semester</div>,
-      cell: (data) => <div>{`Semester ${data.academicPeriode.increment}`}</div>,
-      width: "130px",
-    },
-    {
-      name: <div>Jumlah</div>,
-      cell: (data) => (
-        <div>
-          {new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-          }).format(data.amount)}
-        </div>
+        <div>{`${data.firstName} ${data.middleName} ${data.lastName}`}</div>
       ),
       width: "auto",
     },
     {
-      name: <div>Bukti Pembayaran</div>,
+      name: <div>Jenis Kelamin</div>,
+      selector: (data) => data.gender,
       cell: (data) => (
-        <button
-          title="Tampil Bukti Pembayaran"
-          onClick={() => {
-            openPaymentProof(data.invoice);
-          }}
-        >
-          <i style={{ fontSize: "21px" }} className="fa fa-file" />
-        </button>
+        <div>{data.gender === "male" ? "Laki-Laki" : "Perempuan"}</div>
       ),
-      width: "100px",
-    },
-    {
-      name: <div>Deskripsi</div>,
-      cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() =>
-              navigateUbahSpp(
-                data.id,
-                data.amount,
-                data.month,
-                data.description,
-                data.invoice,
-                data.academicPeriode.id,
-                data.academicPeriode.increment,
-                data.student.code,
-                data.student.firstName
-              )
-            }
-          >
-            <i className="fa fa-edit" /> Edit
-          </button>
-        </div>
+        <button
+          style={{ width: "auto", padding: "2px 10px" }}
+          className="btn-biru"
+          title="Edit"
+          onClick={() =>
+            navigateDetailSpp(
+              data.id,
+              data.firstName,
+              data.code,
+              data.academicYear?.code,
+              data.academicYear?.id,
+              data.academicYear?.name
+            )
+          }
+        >
+          <i className="fa fa-eye" /> Detail
+        </button>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "110px",
+      width: "120px",
     },
   ];
 
@@ -149,28 +103,24 @@ export default function ListSpp() {
     navigate("/admin/tambah-spp");
   };
 
-  const navigateUbahSpp = (
+  const navigateDetailSpp = (
     id,
-    amount,
-    month,
-    description,
-    invoice,
-    periodeId,
-    increment,
-    code,
-    studentName
+    studentName,
+    studentCode,
+    academicYearCode,
+    academicYearId,
+    academicYearName,
+    academicYear
   ) => {
-    navigate("/admin/ubah-spp", {
+    navigate("/admin/report-spp", {
       state: {
         id: id,
-        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
-        month: month,
-        description: description,
-        invoice: invoice,
-        periodeId: periodeId,
-        increment: increment,
-        code: code,
         studentName: studentName,
+        studentCode: studentCode,
+        academicYearCode: academicYearCode,
+        academicYearId: academicYearId,
+        academicYearName: academicYearName,
+        academicYear: academicYear,
       },
     });
   };
@@ -196,8 +146,6 @@ export default function ListSpp() {
           setFilterPaid={setFilterPaid}
           filterUnPaid={filterUnPaid}
           setFilterUnPaid={setFilterUnPaid}
-          button="Tambah Spp"
-          showButton={true}
         />
       </div>
     </>

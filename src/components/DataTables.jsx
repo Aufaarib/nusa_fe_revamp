@@ -256,6 +256,8 @@ export function FilterComponentSpp({
   onClick,
   button,
   showButton,
+  showDownloadButton,
+  onClickDownload,
   filterPaid,
   setFilterPaid,
   filterUnPaid,
@@ -288,43 +290,24 @@ export function FilterComponentSpp({
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
         {showButton && (
-          <>
+          <div
+            style={{
+              display: "inline-block",
+              float: "right",
+              marginBottom: "20px",
+              marginLeft: "10px",
+            }}
+          >
             <button
-              onClick={() => {
-                if (filterPaid === false) {
-                  setFilterPaid(true);
-                } else setFilterPaid(false);
-              }}
-              className={
-                filterPaid === true
-                  ? "ml-2 btn-modal-filter-true"
-                  : "ml-2 btn-modal-filter-false"
-              }
+              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+              className="btn-hijau"
+              onClick={onClick}
             >
-              Tampilkan Telah Membayar{" "}
-              {filterPaid === true && <i className="fa fa-check text-hijau" />}
+              <i className="fa fa-plus mr-1 mt-1"></i> {button}
             </button>
-
-            <button
-              onClick={() => {
-                if (filterUnPaid === false) {
-                  setFilterUnPaid(true);
-                } else setFilterUnPaid(false);
-              }}
-              className={
-                filterUnPaid === true
-                  ? "ml-2 btn-modal-filter-true"
-                  : "ml-2 btn-modal-filter-false"
-              }
-            >
-              Tampilkan Belum Membayar{" "}
-              {filterUnPaid === true && (
-                <i className="fa fa-check text-hijau" />
-              )}
-            </button>
-          </>
+          </div>
         )}
-        {showButton && (
+        {showDownloadButton && (
           <div
             style={{
               display: "inline-block",
@@ -335,9 +318,9 @@ export function FilterComponentSpp({
             <button
               style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
               className="btn-hijau"
-              onClick={onClick}
+              onClick={onClickDownload}
             >
-              <i className="fa fa-plus mr-1 mt-1"></i> {button}
+              <i className="fa fa-download mr-1 mt-1"></i> Download Report
             </button>
           </div>
         )}
@@ -2315,6 +2298,8 @@ export function DataTablesListSpp({
   setFilterUnPaid,
   button,
   showButton,
+  showDownloadButton,
+  onClickDownload,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
@@ -2451,6 +2436,8 @@ export function DataTablesListSpp({
         setFilterUnPaid={setFilterUnPaid}
         button={button}
         showButton={showButton}
+        showDownloadButton={showDownloadButton}
+        onClickDownload={onClickDownload}
       />
       {data ? (
         <div>

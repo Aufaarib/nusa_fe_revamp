@@ -4,7 +4,7 @@ import axios from "./axios";
 
 export function getSpp(setData, setSts, setIsLoading) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/spp", {
+    .get(process.env.REACT_APP_BASE_URL + `/spp`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
@@ -18,6 +18,34 @@ export function getSpp(setData, setSts, setIsLoading) {
       ErrorHandling(error);
     });
 }
+
+export function getSppByStudent(
+  setData,
+  setSts,
+  setIsLoading,
+  studentCode,
+  yearCode
+) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        `/spp/student/${studentCode}/year/${yearCode}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      setIsLoading(false);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      setSts({ type: "error", error });
+      ErrorHandling(error);
+    });
+}
+
 export function getUnpaidSpp(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/spp/unpaid", {

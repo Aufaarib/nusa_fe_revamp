@@ -96,36 +96,36 @@ export const sidebarMenusAdmin = [
         path: `admin/list-murid`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Guru",
-        path: `admin/list-guru`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelas",
-        path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Mata Pelajaran",
-        path: `admin/list-mata-pelajaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan",
-        path: `admin/list-ruangan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan Kelas",
-        path: `admin/list-ruang-kelas`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Kelompok Mata Pelajaran",
-        path: `admin/list-kelompok-mapel`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Guru",
+      //   path: `admin/list-guru`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Kelas",
+      //   path: `admin/list-kelas`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Mata Pelajaran",
+      //   path: `admin/list-mata-pelajaran`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Ruangan",
+      //   path: `admin/list-ruangan`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Ruangan Kelas",
+      //   path: `admin/list-ruang-kelas`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Kelompok Mata Pelajaran",
+      //   path: `admin/list-kelompok-mapel`,
+      //   icon: <FaWpforms />,
+      // },
     ],
   },
   {
@@ -138,11 +138,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-spp`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Report Spp",
-        path: `admin/report-spp`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Report Spp",
+      //   path: `admin/report-spp`,
+      //   icon: <FaWpforms />,
+      // },
       {
         name: "Pengeluaran",
         path: `admin/list-pengeluaran`,
