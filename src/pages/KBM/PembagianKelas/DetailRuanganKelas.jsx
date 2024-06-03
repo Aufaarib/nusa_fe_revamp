@@ -21,16 +21,18 @@ const DetailRuanganKelas = () => {
   const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-ruang-kelas";
 
-  let filteredStudents = data;
+  console.log(data);
+
+  let filteredStudents = data.students;
   let filteredSubjects = data;
 
   if (data !== null) {
     {
       fetched === "1"
-        ? (filteredStudents = data.filter((data) =>
+        ? (filteredStudents = data.students?.filter((data) =>
             data.firstName?.toLowerCase().includes(filterText.toLowerCase())
           ))
-        : (filteredSubjects = data.filter((data) =>
+        : (filteredSubjects = data?.filter((data) =>
             data.subject?.name.toLowerCase().includes(filterText.toLowerCase())
           ));
     }
@@ -108,13 +110,13 @@ const DetailRuanganKelas = () => {
     },
     // {
     //   name: <div>Status</div>,
-    //   selector: (data) => data.status,
-    //   cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+    //   selector: (data.students) => data.status,
+    //   cell: (data.students) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
     //   width: "90px",
     // },
     // {
     //   name: <div>Aksi</div>,
-    //   cell: (data) => (
+    //   cell: (data.students) => (
     //     <button
     //       className="btn-action-merah"
     //       title="Edit"

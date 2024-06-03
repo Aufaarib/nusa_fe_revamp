@@ -73,6 +73,11 @@ export default function ListSpp() {
       width: "auto",
     },
     {
+      name: <div>Kelas</div>,
+      cell: (data) => <div>{data.classroom[0].classes.name}</div>,
+      width: "auto",
+    },
+    {
       name: <div>Aksi</div>,
       cell: (data) => (
         <button
@@ -86,7 +91,8 @@ export default function ListSpp() {
               data.code,
               data.academicYear?.code,
               data.academicYear?.id,
-              data.academicYear?.name
+              data.academicYear?.name,
+              data.classroom[0].classes.name
             )
           }
         >
@@ -110,7 +116,7 @@ export default function ListSpp() {
     academicYearCode,
     academicYearId,
     academicYearName,
-    academicYear
+    kelas
   ) => {
     navigate("/admin/report-spp", {
       state: {
@@ -120,7 +126,7 @@ export default function ListSpp() {
         academicYearCode: academicYearCode,
         academicYearId: academicYearId,
         academicYearName: academicYearName,
-        academicYear: academicYear,
+        kelas: kelas,
       },
     });
   };

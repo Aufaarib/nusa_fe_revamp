@@ -54,6 +54,12 @@ const ListRuanganKelas = () => {
       cell: (data) => <div>{data.capacity}</div>,
       width: "auto",
     },
+    {
+      name: <div>Kelas</div>,
+      selector: (data) => data.capacity,
+      cell: (data) => <div>{data.classes.name}</div>,
+      width: "auto",
+    },
     // {
     //   name: <div>Status</div>,
     //   selector: (data) => data.status,

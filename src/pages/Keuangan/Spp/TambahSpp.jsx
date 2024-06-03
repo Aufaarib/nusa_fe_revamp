@@ -19,6 +19,7 @@ export default function TambahSpp() {
   const [sppData, setSppData] = useState([]);
   const [amounts, setAmount] = useState("");
   const [taawunAmounts, setTaawunAmounts] = useState([]);
+  const [lainLainAmount, setLainLainAmount] = useState("");
   const [months, setMonth] = useState([]);
   const [academicYearCode, setAcademicYearCode] = useState(
     location.state.academicYearCode
@@ -26,7 +27,7 @@ export default function TambahSpp() {
   const [academicYearId, setAcademicYearId] = useState(
     location.state.academicYearId
   );
-  const [periodeId, setPeriodeId] = useState("");
+  const [namaPembayaran, setNamaPembayaran] = useState("");
   const [studentId, setStudentId] = useState(location.state.id);
   const [studentCode, setStudentCode] = useState(location.state.studentCode);
   const [description, setDescription] = useState("");
@@ -68,6 +69,7 @@ export default function TambahSpp() {
         academicYearId: location.state.academicYearId,
         academicYearName: location.state.academicYearName,
         academicYear: location.state.academicYear,
+        kelas: location.state.kelas,
       },
     });
   };
@@ -80,22 +82,34 @@ export default function TambahSpp() {
     // fetchStudents();
   }, []);
 
+  // console.log(parseInt(lainLainAmount[0].replace(/\./g, ""), 10));
+
   const postData = (e) => {
     e.preventDefault();
     setIsLoading(true);
     const invoice = filesData;
     const formData = new FormData();
+    const lainLainAmounts = parseInt(lainLainAmount);
 
     formData.append(`description`, description);
     formData.append(`studentId`, studentId);
     formData.append(`academicYearId`, academicYearId);
 
     months.forEach((item, index) => {
-      formData.append(`payment.${index}.month`, item.value);
-      formData.append(
-        `payment.${index}.infaq`,
-        parseInt(amounts.replace(/\./g, ""), 10)
-      );
+      if (namaPembayaran) {
+        formData.append(`payment.${index}.name`, namaPembayaran);
+        formData.append(`payment.${index}.month`, 0);
+        formData.append(`payment.${index}.infaq`, 0);
+        formData.append(`payment.${index}.other`, lainLainAmounts);
+      } else {
+        formData.append(`payment.${index}.name`, item.label);
+        formData.append(`payment.${index}.month`, item.value);
+        formData.append(
+          `payment.${index}.infaq`,
+          parseInt(amounts.replace(/\./g, ""), 10)
+        );
+        formData.append(`payment.${index}.other`, 0);
+      }
     });
 
     taawunAmounts.forEach((item, index) => {
@@ -103,14 +117,12 @@ export default function TambahSpp() {
         `payment.${index}.taawun`,
         parseInt(item.replace(/\./g, ""), 10)
       );
-      formData.append(`payment.${index}.other`, 0);
     });
 
     formData.append(`invoice`, invoice);
 
     if (
       academicYearId === "" ||
-      amounts === "" ||
       months === "" ||
       studentCode === "" ||
       invoice == null
@@ -138,6 +150,14 @@ export default function TambahSpp() {
     setTaawunAmounts(newFields);
   };
 
+  const handleInputLainLainChange = (val, index) => {
+    let inputVal = val.replace(/\D/g, "");
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const newFields = [...taawunAmounts];
+    newFields[index] = inputVal;
+    setLainLainAmount(newFields);
+  };
+
   // const academicYearOptions = academicYearData.map((c) => ({
   //   label: `Tahun Ajaran : ${c.name}`,
   //   value: c.code,
@@ -162,32 +182,39 @@ export default function TambahSpp() {
     value: months.value,
     label: `${
       months.value == 1
-        ? "Januari"
+        ? "Spp Januari"
         : months.value == 2
-        ? "Februari"
+        ? "Spp Februari"
         : months.value == 3
-        ? "Maret"
+        ? "Spp Maret"
         : months.value == 4
-        ? "April"
+        ? "Spp April"
         : months.value == 5
-        ? "Mei"
+        ? "Spp Mei"
         : months.value == 6
-        ? "Juni"
+        ? "Spp Juni"
         : months.value == 7
-        ? "Juli"
+        ? "Spp Juli"
         : months.value == 8
-        ? "Agustus"
+        ? "Spp Agustus"
         : months.value == 9
-        ? "September"
+        ? "Spp September"
         : months.value == 10
-        ? "Oktober"
+        ? "Spp Oktober"
         : months.value == 11
-        ? "November"
+        ? "Spp November"
         : months.value == 12
-        ? "Desember"
+        ? "Spp Desember"
         : ""
     }`,
   }));
+
+  const newMonthOption = {
+    value: "lain-lain",
+    label: "Lain-lain",
+  };
+
+  const updatedMonthOptions = [newMonthOption, ...monthOptions];
 
   // const studentsOptions = studentsData?.map((c) => ({
   //   label: `${c.code} : ${c.firstName} ${c.middleName} ${c.lastName}`,
@@ -219,58 +246,60 @@ export default function TambahSpp() {
           Form Pembayaran Spp
         </p>
         <article>
-          {/* <DropdownSiswa
-            label="Tahun Ajaran"
-            required={true}
-            defaultValue={academicYearCode}
-            isClearable={false}
-            options={academicYearOptions}
-            isSearchable={false}
-            onChange={(e) => {
-              fetchAcademicPeriode(e.value);
-              setAcademicYearId(e.id);
-              setAcademicYearCode(e.value);
-            }}
-          />
-          <DropdownSiswa
-            label="Murid"
-            required={true}
-            defaultValue={studentCode}
-            isClearable={false}
-            options={studentsOptions}
-            isSearchable={true}
-            onChange={(e) => {
-              fetchSppByStudent(e.value);
-              setStudentId(e.id);
-              setStudentCode(e.value);
-            }}
-          /> */}
           <DropdownMultiple
-            label="Bulan"
+            label="Jenis Pembayaran"
             required={true}
             defaultValue={months}
             isClearable={false}
-            options={monthOptions}
+            options={updatedMonthOptions}
             isSearchable={false}
             onChange={handleSelectChange}
           />
-          <TextInput
-            label="Jumlah Spp Yang Di Bayarkan"
-            type="text"
-            onChange={handleInputChange}
-            value={amounts}
-            required={true}
-          />
-          {months?.map((labels, index) => (
+          {months
+            ?.filter((items) => items.value === "lain-lain")
+            .map((labels, index) => (
+              <>
+                <TextInput
+                  label="Nama Pembayaran"
+                  type="text"
+                  value={namaPembayaran}
+                  onChange={(e) => setNamaPembayaran(e.target.value)}
+                />
+                <TextInput
+                  key={index}
+                  label={`Jumlah ${labels.label}`}
+                  type="text"
+                  onChange={(e) =>
+                    handleInputLainLainChange(e.target.value, index)
+                  }
+                  value={lainLainAmount[index]}
+                  required={true}
+                />
+              </>
+            ))}
+          {months.some((option) => option.value !== "lain-lain") ? (
             <TextInput
-              key={index}
-              label={`Jumlah Ta'awun ${labels.label}`}
+              label="Jumlah Spp"
               type="text"
-              onChange={(e) => handleInputTaawunChange(e.target.value, index)}
-              value={taawunAmounts[index]}
+              onChange={handleInputChange}
+              value={amounts}
               required={true}
             />
-          ))}
+          ) : (
+            ""
+          )}
+          {months
+            ?.filter((items) => items.value !== "lain-lain")
+            .map((labels, index) => (
+              <TextInput
+                key={index}
+                label={`Jumlah Ta'awun ${labels.label}`}
+                type="text"
+                onChange={(e) => handleInputTaawunChange(e.target.value, index)}
+                value={taawunAmounts[index]}
+                required={true}
+              />
+            ))}
           <TextInput
             label="Deskripsi"
             type="text"

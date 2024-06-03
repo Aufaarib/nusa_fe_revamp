@@ -61,21 +61,22 @@ export default function ReportSpp() {
     //   width: "190px",
     // },
     {
-      name: <div>Spp Bulan</div>,
+      name: <div>Jenis Pembayaran</div>,
       selector: (data) => (
         <div>
-          {(data.month == 1 && "Januari") ||
-            (data.month == 2 && "Februari") ||
-            (data.month == 3 && "Maret") ||
-            (data.month == 4 && "April") ||
-            (data.month == 5 && "Mei") ||
-            (data.month == 6 && "Juni") ||
-            (data.month == 7 && "Juli") ||
-            (data.month == 8 && "Agustus") ||
-            (data.month == 9 && "September") ||
-            (data.month == 10 && "Oktober") ||
-            (data.month == 11 && "November") ||
-            (data.month == 12 && "Desember")}
+          {(data.month == 0 && data.name) ||
+            (data.month == 1 && "Spp Januari") ||
+            (data.month == 2 && "Spp Februari") ||
+            (data.month == 3 && "Spp Maret") ||
+            (data.month == 4 && "Spp April") ||
+            (data.month == 5 && "Spp Mei") ||
+            (data.month == 6 && "Spp Juni") ||
+            (data.month == 7 && "Spp Juli") ||
+            (data.month == 8 && "Spp Agustus") ||
+            (data.month == 9 && "Spp September") ||
+            (data.month == 10 && "Spp Oktober") ||
+            (data.month == 11 && "Spp November") ||
+            (data.month == 12 && "Spp Desember")}
         </div>
       ),
       width: "120px",
@@ -205,6 +206,7 @@ export default function ReportSpp() {
         academicYearId: location.state.academicYearId,
         academicYearName: location.state.academicYearName,
         academicYear: location.state.academicYear,
+        kelas: location.state.kelas,
       },
     });
   };
@@ -243,27 +245,6 @@ export default function ReportSpp() {
   const filteredUnpaid = filteredItems.filter(
     (items) => items.description !== "Belum Lunas"
   );
-
-  // const generatePdf = () => {
-  //   // Convert JSON to a pretty-printed string
-  //   const jsonString = JSON.stringify(data, null, 2);
-
-  //   // Create a temporary element to hold the JSON data
-  //   const tempElement = document.createElement("div");
-  //   tempElement.style.whiteSpace = "pre-wrap";
-  //   tempElement.innerHTML = jsonString;
-  //   document.body.appendChild(tempElement);
-
-  //   html2canvas(tempElement).then((canvas) => {
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF();
-  //     pdf.addImage(imgData, "PNG", 10, 10);
-  //     pdf.save("download.pdf");
-
-  //     // Clean up the temporary element
-  //     document.body.removeChild(tempElement);
-  //   });
-  // };
 
   const styles = StyleSheet.create({
     viewer: {
@@ -373,6 +354,7 @@ export default function ReportSpp() {
       name: "Pembayaran Untuk Bulan",
       selector: (data) =>
         `${
+          (data.month == 0 && data.name) ||
           (data.month == 1 && "Jan") ||
           (data.month == 2 && "Feb") ||
           (data.month == 3 && "Mar") ||
@@ -385,7 +367,7 @@ export default function ReportSpp() {
           (data.month == 10 && "Okt") ||
           (data.month == 11 && "Nov") ||
           (data.month == 12 && "Des")
-        }/${moment(location.state.academicYear).format("YY")}`,
+        }`,
     },
     {
       style: styles.col4,
@@ -441,7 +423,7 @@ export default function ReportSpp() {
         prev="List Murid"
         navPrev={"/admin/list-spp"}
         at="Report Spp"
-        title={`Data Report SPP - ${location.state.studentName} - ${location.state.academicYearName}`}
+        title={`Data Report SPP - ${location.state.studentName} - ${location.state.kelas} - ${location.state.academicYearName}`}
       />
 
       <div style={{ marginTop: "50px" }}>
@@ -538,7 +520,7 @@ export default function ReportSpp() {
                           >
                             <Text>Kelas</Text>
                             <Text>:</Text>
-                            <Text></Text>
+                            <Text>{location.state.kelas}</Text>
                           </View>
                         </View>
                         <Image style={{ width: "100px" }} src={reportLogo} />
