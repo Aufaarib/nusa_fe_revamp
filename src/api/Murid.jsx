@@ -58,7 +58,7 @@ export function getMuridNotRegisteredToClass(setData, setSts, setIsLoading) {
     .then((res) => {
       setIsLoading(false);
       res.data.body.forEach((element) => {
-        if (element.inRoomClasses == 0) {
+        if (element.inClassroom == 0) {
           data.push(element);
         }
       });

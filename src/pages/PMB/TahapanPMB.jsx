@@ -57,18 +57,18 @@ const TahapanPMB = () => {
       </div>
       <div>
         <article className="grid md:grid-rows-3 gap-2 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">
-          {Object.keys(stepsPMB).map((keyName, index) => (
+          {Object.keys(stepsPMB)?.map((keyName, index) => (
             <motion.div layoutId={index + 1} key={index + 1}>
               <InfoTahapanPMB
                 onClick={() => {
                   handleSelected(
                     index + 1,
-                    stepsPMB[keyName].status,
-                    stepsPMB[keyName].details
+                    stepsPMB[keyName]?.status,
+                    stepsPMB[keyName]?.details
                   );
                 }}
                 step={index + 1}
-                status={stepsPMB[keyName].status}
+                status={stepsPMB[keyName]?.status}
               />
             </motion.div>
           ))}

@@ -122,12 +122,12 @@ export function getAdmissionStatement(setData, setSts, setIsLoading) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
-      setIsLoading(false);
+      // setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });
@@ -352,7 +352,7 @@ export function getAdmissionSteps(
     })
     .catch((error) => {
       setSts({ type: "error" });
-      ErrorHandling(error);
+      // ErrorHandling(error);
     });
 }
 

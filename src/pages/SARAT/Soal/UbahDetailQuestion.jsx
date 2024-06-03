@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { updateDetailQuestion, updateSession } from "../../../api/Sarat";
+import {
+  updateDetailQuestion,
+  updateQuestion,
+  updateSession,
+} from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
@@ -13,34 +17,62 @@ export default function UbahDetailQuestion() {
   const path = "/admin/detail-soal";
   const [description, setDescription] = useState(location.state.description);
   const [correct_answer, setCorrectAnswer] = useState(
-    location.state.correct_answer
+    location.state.is_correct
   );
   const [sts, setSts] = useState("");
   const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
-  const navigateListSession = () => {
+  const navigateDetailQuestion = () => {
     navigate(path, {
       state: {
+        id: location.state.id,
+        sequence: location.state.detail_question_sequence,
         question_id: location.state.question_id,
+        description: location.state.description,
+        is_correct: location.state.is_correct,
+        session_detail_id: location.state.session_detail_id,
+        question: location.state.question,
+        is_publish: location.state.is_publish,
       },
     });
   };
 
+  console.log("last", location.state.sequence);
+
   const postData = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const questions = [
+      {
+        id: location.state.question_id,
+        question: location.state.question,
+        question_type: "PG",
+        flag: `${localStorage.getItem("FLAG")}`,
+        sequence: location.state.detail_question_sequence,
+        is_publish: location.state.is_publish,
+        question_lists: [
+          {
+            id: location.state.id,
+            answer_choice: description,
+            is_correct: correct_answer,
+            sequence: location.state.sequence,
+          },
+        ],
+      },
+    ];
+
     if (description === "" || correct_answer === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
     } else {
-      updateDetailQuestion(
-        location.state.id,
+      updateQuestion(
         location.state.question_id,
         setSts,
-        navigateListSession,
-        description,
-        correct_answer,
+        navigateDetailQuestion,
+        location.state.session_detail_id,
+        questions,
         setIsLoading
       );
     }
@@ -94,7 +126,7 @@ export default function UbahDetailQuestion() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateListSession}
+              onClick={navigateDetailQuestion}
             >
               Batal
             </button>

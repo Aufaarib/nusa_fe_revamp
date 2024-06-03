@@ -171,6 +171,7 @@ export default function ListNews() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
           button="Tambah Berita"
+          showButton={true}
         />
       </div>
     </>

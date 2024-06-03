@@ -78,11 +78,11 @@ export function getDetailQuestion(question_id, setData, setSts, setIsLoading) {
       ErrorHandling(error);
     });
 }
-export function getQuestion(setData, setSts, session_id, setIsLoading) {
+export function getQuestion(setData, setSts, session_id, setIsLoading, flag) {
   axios
     .get(
       process.env.REACT_APP_NUSA_SARAT +
-        `/question/filter?session_detail=${session_id}`,
+        `/question/filter?session_detail=${session_id}&flag=${flag}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
       }
@@ -292,72 +292,111 @@ export function postAnswers(
       });
   }
 }
+
 export function postQuestion(
   setSts,
   navigate,
   session_detail_id,
-  sequence,
-  q_fields,
+  question,
   setIsLoading
 ) {
-  for (const i of q_fields) {
-    axios
-      .post(
-        process.env.REACT_APP_NUSA_SARAT + "/question/create",
-        {
-          session_detail_id,
-          sequence,
-          description: i.description,
-          is_publish: i.is_publish,
+  axios
+    .post(
+      process.env.REACT_APP_NUSA_SARAT + "/question/create",
+      {
+        session_detail_id,
+        questions: question,
+      },
+      {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
         },
-        {
-          headers: {
-            authorization: localStorage.getItem("TOKEN"),
-          },
-        }
-      )
-      .then((res) => {
-        const question_id = res.data.body.id;
-        for (const a of i.a_fields) {
-          axios
-            .post(
-              process.env.REACT_APP_NUSA_SARAT + "/question_detail/create",
-              {
-                question_id,
-                description: a.description,
-                correct_answer: a.correct_answer,
-              },
-              {
-                headers: {
-                  authorization: localStorage.getItem("TOKEN"),
-                },
-              }
-            )
-            .then(() => {
-              setIsLoading(false);
-              setSts({ type: "success" });
-              AlertStatusSuccess(
-                navigate,
-                "Berhasil",
-                "Tutup",
-                "success",
-                "Tambah Soal Berhasil"
-              );
-            })
-            .catch((error) => {
-              setIsLoading(false);
-              setSts({ type: "error", error });
-              ErrorHandling(error);
-            });
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setSts({ type: "error", error });
-        ErrorHandling(error);
-      });
-  }
+      }
+    )
+    .then((res) => {
+      setIsLoading(false);
+      setSts({ type: "success" });
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Tambah Soal Berhasil"
+      );
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      setSts({ type: "error", error });
+      ErrorHandling(error);
+    });
 }
+
+// export function postQuestion(
+//   setSts,
+//   navigate,
+//   session_detail_id,
+//   sequence,
+//   q_fields,
+//   setIsLoading
+// ) {
+//   for (const i of q_fields) {
+//     axios
+//       .post(
+//         process.env.REACT_APP_NUSA_SARAT + "/question/create",
+//         {
+//           session_detail_id,
+//           sequence,
+//           description: i.description,
+//           is_publish: i.is_publish,
+//         },
+//         {
+//           headers: {
+//             authorization: localStorage.getItem("TOKEN"),
+//           },
+//         }
+//       )
+//       .then((res) => {
+//         const question_id = res.data.body.id;
+//         for (const a of i.a_fields) {
+//           axios
+//             .post(
+//               process.env.REACT_APP_NUSA_SARAT + "/question_detail/create",
+//               {
+//                 question_id,
+//                 description: a.description,
+//                 correct_answer: a.correct_answer,
+//               },
+//               {
+//                 headers: {
+//                   authorization: localStorage.getItem("TOKEN"),
+//                 },
+//               }
+//             )
+//             .then(() => {
+//               setIsLoading(false);
+//               setSts({ type: "success" });
+//               AlertStatusSuccess(
+//                 navigate,
+//                 "Berhasil",
+//                 "Tutup",
+//                 "success",
+//                 "Tambah Soal Berhasil"
+//               );
+//             })
+//             .catch((error) => {
+//               setIsLoading(false);
+//               setSts({ type: "error", error });
+//               ErrorHandling(error);
+//             });
+//         }
+//       })
+//       .catch((error) => {
+//         setIsLoading(false);
+//         setSts({ type: "error", error });
+//         ErrorHandling(error);
+//       });
+//   }
+// }
 export function postSession(setSts, navigate, data, setIsLoading) {
   axios
     .post(process.env.REACT_APP_NUSA_SARAT + "/session/create", data, {
@@ -439,15 +478,13 @@ export function updateQuestion(
   setSts,
   navigate,
   session_detail_id,
-  sequence,
-  description,
-  is_publish,
+  question,
   setIsLoading
 ) {
   axios
     .put(
       process.env.REACT_APP_NUSA_SARAT + `/question/update/${question_id}`,
-      { session_detail_id, sequence, description, is_publish },
+      { session_detail_id, questions: question },
       {
         headers: {
           authorization: localStorage.getItem("TOKEN"),

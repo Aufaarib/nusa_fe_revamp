@@ -16,11 +16,11 @@ const FormMurid = () => {
 
   const [indexMurid, setIndexMurid] = useState(0);
 
-  useEffect(() => {
-    getStepsPMBData();
-    getStudentsData();
-    getFormCheck();
-  }, []);
+  // useEffect(() => {
+  //   // getStepsPMBData();
+  //   getStudentsData();
+  //   getFormCheck();
+  // }, []);
 
   return (
     <>

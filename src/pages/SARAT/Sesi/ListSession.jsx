@@ -51,7 +51,7 @@ export default function ListSession() {
     {
       name: <div>Nama Sesi</div>,
       cell: (data) => <div>{data.title}</div>,
-      width: "240px",
+      width: "140px",
     },
     {
       name: <div>Deskripsi</div>,
@@ -79,12 +79,20 @@ export default function ListSession() {
       cell: (data) => (
         <div className="flex gap-1">
           <button
-            // style={{ width: "auto", padding: "2px 10px" }}
+            style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
-            onClick={() => navigateSoal(data.id, data.title)}
+            onClick={() => navigateSoalPreTest(data.id, data.title)}
           >
-            <i className="fa fa-edit" /> Data Soal
+            <i className="fa fa-edit" /> Data Soal Pre-Test
+          </button>
+          <button
+            style={{ width: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            title="Edit"
+            onClick={() => navigateSoalPresensi(data.id, data.title)}
+          >
+            <i className="fa fa-edit" /> Data Soal Presensi
           </button>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
@@ -108,7 +116,7 @@ export default function ListSession() {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "450px",
     },
   ];
 
@@ -159,9 +167,17 @@ export default function ListSession() {
       });
   };
 
-  const navigateSoal = (session_id, session_tittle) => {
+  const navigateSoalPreTest = (session_id, session_tittle) => {
     localStorage.setItem("SESSION_ID", session_id);
     localStorage.setItem("SESSION_TITTLE", session_tittle);
+    localStorage.setItem("FLAG", "PRE_TEST");
+    navigate("/admin/list-soal");
+  };
+
+  const navigateSoalPresensi = (session_id, session_tittle) => {
+    localStorage.setItem("SESSION_ID", session_id);
+    localStorage.setItem("SESSION_TITTLE", session_tittle);
+    localStorage.setItem("FLAG", "ATTENDANCE");
     navigate("/admin/list-soal");
   };
 

@@ -143,11 +143,11 @@ export const sidebarMenusAdmin = [
       //   path: `admin/report-spp`,
       //   icon: <FaWpforms />,
       // },
-      {
-        name: "Pengeluaran",
-        path: `admin/list-pengeluaran`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Pengeluaran",
+      //   path: `admin/list-pengeluaran`,
+      //   icon: <FaWpforms />,
+      // },
     ],
   },
   {
@@ -165,11 +165,11 @@ export const sidebarMenusAdmin = [
         path: `admin/list-resume`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Report Resume",
-        path: `admin/list-report-resume`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Report Resume",
+      //   path: `admin/list-report-resume`,
+      //   icon: <FaWpforms />,
+      // },
       {
         name: "Berita",
         path: `admin/list-berita`,

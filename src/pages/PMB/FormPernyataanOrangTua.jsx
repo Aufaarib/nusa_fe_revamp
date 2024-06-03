@@ -15,11 +15,11 @@ const FormPernyataanOrangTua = () => {
   } = useStateContext();
   const [indexMurid, setIndexMurid] = useState(0);
 
-  useEffect(() => {
-    getStepsPMBData();
-    getParentsData();
-    getFormCheck();
-  }, []);
+  // useEffect(() => {
+  //   getStepsPMBData();
+  //   getParentsData();
+  //   getFormCheck();
+  // }, []);
 
   return (
     <>

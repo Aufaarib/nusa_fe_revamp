@@ -354,7 +354,7 @@ export default function ReportSpp() {
       name: "Pembayaran Untuk Bulan",
       selector: (data) =>
         `${
-          (data.month == 0 && data.name) ||
+          (data.month == 0 && data.name === "" ? "lain-lain" : data.name) ||
           (data.month == 1 && "Jan") ||
           (data.month == 2 && "Feb") ||
           (data.month == 3 && "Mar") ||
@@ -539,18 +539,20 @@ export default function ReportSpp() {
                         ))}
                       </View>
                       {/* Table Rows */}
-                      {data.map((row, rowIndex) => (
-                        <View key={rowIndex} style={styles.tableRow}>
-                          {columnsPdf.map((col, colIndex) => (
-                            <View
-                              key={colIndex}
-                              style={[styles.tableCell, col.style]}
-                            >
-                              <Text>{col.selector(row)}</Text>
-                            </View>
-                          ))}
-                        </View>
-                      ))}
+                      {data
+                        .filter((items) => items.description !== "Belum Lunas")
+                        .map((row, rowIndex) => (
+                          <View key={rowIndex} style={styles.tableRow}>
+                            {columnsPdf.map((col, colIndex) => (
+                              <View
+                                key={colIndex}
+                                style={[styles.tableCell, col.style]}
+                              >
+                                <Text>{col.selector(row)}</Text>
+                              </View>
+                            ))}
+                          </View>
+                        ))}
                     </View>
                     <View
                       style={{

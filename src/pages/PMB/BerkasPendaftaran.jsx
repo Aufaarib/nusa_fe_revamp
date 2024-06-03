@@ -31,6 +31,8 @@ const BerkasPendaftaran = () => {
     window.location.href = path;
   };
 
+  console.log(dataAdmissionRegistration);
+
   const handleFileUpload = () => {
     if (
       fileRapor !== null ||
@@ -93,7 +95,7 @@ const BerkasPendaftaran = () => {
         title="Form Berkas Pendaftaran"
       />
 
-      {dataAdmissionRegistration.additionalFiles?.length === 0 ? (
+      {dataAdmissionRegistration?.length === 0 ? (
         <article>
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
             <h1 className="mt-3 text-merah">Pendataan Berkas Pendaftaran</h1>

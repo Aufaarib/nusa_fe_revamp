@@ -964,15 +964,15 @@ const DetailDataRegistrasi = () => {
               <strong>Status Tahapan : </strong>
               <strong
                 className={
-                  dataStep5.status === "valid" ? "text-hijau" : "text-kuning"
+                  dataStep5?.status === "valid" ? "text-hijau" : "text-kuning"
                 }
                 style={{ display: "inline-block" }}
               >
-                {dataStep5.status === "valid"
+                {dataStep5?.status === "valid"
                   ? " Terverifikasi"
-                  : dataStep5.status === "inreview"
+                  : dataStep5?.status === "inreview"
                   ? " Sedang Di Tinjau"
-                  : dataStep5.status === "invalid" && " Gagal Terverifikasi"}
+                  : dataStep5?.status === "invalid" && " Gagal Terverifikasi"}
               </strong>
               <button
                 style={{ display: "inline-block", float: "right" }}

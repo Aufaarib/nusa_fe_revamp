@@ -262,6 +262,7 @@ export const DropdownSiswa = ({
   isClearable,
   isSearchable,
   defaultValue,
+  value,
   placeholder,
 }) => {
   return (
@@ -287,6 +288,7 @@ export const DropdownSiswa = ({
           <Select
             className="w-full"
             isClearable={isClearable}
+            value={value}
             defaultValue={defaultValue}
             placeholder="Pilih Salah Satu..."
             options={options}

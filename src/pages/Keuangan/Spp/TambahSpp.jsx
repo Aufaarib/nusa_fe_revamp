@@ -82,14 +82,12 @@ export default function TambahSpp() {
     // fetchStudents();
   }, []);
 
-  // console.log(parseInt(lainLainAmount[0].replace(/\./g, ""), 10));
-
   const postData = (e) => {
     e.preventDefault();
     setIsLoading(true);
     const invoice = filesData;
     const formData = new FormData();
-    const lainLainAmounts = parseInt(lainLainAmount);
+    const lainLainAmounts = parseInt(lainLainAmount[0]?.replace(/\./g, ""), 10);
 
     formData.append(`description`, description);
     formData.append(`studentId`, studentId);
@@ -153,7 +151,7 @@ export default function TambahSpp() {
   const handleInputLainLainChange = (val, index) => {
     let inputVal = val.replace(/\D/g, "");
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    const newFields = [...taawunAmounts];
+    const newFields = [...lainLainAmount];
     newFields[index] = inputVal;
     setLainLainAmount(newFields);
   };

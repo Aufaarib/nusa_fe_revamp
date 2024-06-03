@@ -99,7 +99,12 @@ export default function ListResume() {
             className="btn-biru"
             title="Edit"
             onClick={() =>
-              onClickActivation(data.id, data.status === 0 ? 1 : 0)
+              onClickActivation(
+                data.id,
+                data.status === 0 ? 1 : 0,
+                data.name,
+                data.academic_year_id
+              )
             }
           >
             {data.status === 0 ? (
@@ -120,12 +125,14 @@ export default function ListResume() {
     },
   ];
 
-  const onClickActivation = (id, status) => {
+  const onClickActivation = (id, status, name, academic_year_id) => {
     setIsLoading(true);
     axios
       .put(
         process.env.REACT_APP_NUSA_SARAT + `/session/update/${id}`,
         {
+          name,
+          academic_year_id,
           status,
         },
         { headers: { authorization: localStorage.getItem("TOKEN") } }

@@ -48,16 +48,16 @@ export default function ListQuestion() {
     },
     {
       name: <div>Kunci Jawaban</div>,
-      selector: (data) => data.correct_answer,
+      selector: (data) => data.is_correct,
       cell: (data) => (
         <div
           className={
-            data.correct_answer === 1
+            data.is_correct === 1
               ? "capitalize text-hijau"
               : "capitalize text-merah"
           }
         >
-          {data.correct_answer == 1 ? "Benar" : "Salah"}
+          {data.is_correct == 1 ? "Benar" : "Salah"}
         </div>
       ),
       width: "auto",
@@ -75,7 +75,8 @@ export default function ListQuestion() {
               navigateUbahDetailQuestion(
                 data.id,
                 data.description,
-                data.correct_answer
+                data.is_correct,
+                data.sequence
               )
             }
           >
@@ -97,13 +98,25 @@ export default function ListQuestion() {
     });
   };
 
-  const navigateUbahDetailQuestion = (id, description, correct_answer) => {
+  console.log(location.state.session_detail_id);
+
+  const navigateUbahDetailQuestion = (
+    id,
+    description,
+    is_correct,
+    sequence
+  ) => {
     navigate("/admin/ubah-detail-soal", {
       state: {
         id: id,
-        description: description,
-        correct_answer: correct_answer,
+        sequence: sequence,
         question_id: location.state.question_id,
+        description: description,
+        is_correct: is_correct,
+        session_detail_id: location.state.session_detail_id,
+        question: location.state.question,
+        is_publish: location.state.is_publish,
+        detail_question_sequence: location.state.sequence,
       },
     });
   };

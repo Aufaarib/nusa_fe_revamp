@@ -252,7 +252,7 @@ const DetailRuanganKelas = () => {
           >
             <i className="fa fa-bank" /> Daftar Murid
           </button>
-          <button
+          {/* <button
             style={{
               borderRadius: "6px",
               padding: "20px 20px",
@@ -270,7 +270,7 @@ const DetailRuanganKelas = () => {
             // }
           >
             <i className="fa fa-user" /> Daftar Jadwal Pelajaran
-          </button>
+          </button> */}
         </div>
         {fetched === "1" ? (
           <DataTablesPMB

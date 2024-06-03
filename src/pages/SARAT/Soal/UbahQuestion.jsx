@@ -6,6 +6,7 @@ import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { useStateContext } from "../../../contexts/ContextProvider";
 import { CircularProgress } from "@mui/material";
+import { DropdownRadioInputBiological } from "../../../components/Dropdown";
 
 export default function UbahQuestion() {
   const location = useLocation();
@@ -23,6 +24,19 @@ export default function UbahQuestion() {
   const postData = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const questions = [
+      {
+        id: location.state.question_id,
+        question: description,
+        question_type: `${location.state.question_type}`,
+        flag: `${localStorage.getItem("FLAG")}`,
+        sequence: 1,
+        is_publish: is_publish,
+        question_lists: null,
+      },
+    ];
+
     if (description === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
@@ -32,9 +46,7 @@ export default function UbahQuestion() {
         setSts,
         navigateListResume,
         location.state.session_detail_id,
-        location.state.sequence,
-        description,
-        is_publish,
+        questions,
         setIsLoading
       );
     }
@@ -60,6 +72,18 @@ export default function UbahQuestion() {
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             required={true}
+          />
+          <DropdownRadioInputBiological
+            required={true}
+            label="Tampilkan Soal"
+            value1={1}
+            value2={0}
+            label2="Ya"
+            label3="Tidak"
+            onChange={(e) => {
+              setPublish(parseInt(e.target.value));
+            }}
+            checked={is_publish}
           />
           <br />
 

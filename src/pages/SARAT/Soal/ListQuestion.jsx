@@ -16,19 +16,20 @@ export default function ListQuestion() {
   const location = useLocation();
   const { isLoading, setIsLoading } = useStateContext();
   const path = "/admin/list-sesi";
+  const flag = localStorage.getItem("FLAG");
   const session_id = localStorage.getItem("SESSION_ID");
   const session_tittle = localStorage.getItem("SESSION_TITTLE");
 
   let filteredItems = data;
-  if (data !== null) {
-    filteredItems = data.filter((data) =>
-      data.description.toLowerCase().includes(filterText.toLowerCase())
-    );
-  }
+  // if (data !== null) {
+  //   filteredItems = data.filter((data) =>
+  //     data.description.toLowerCase().includes(filterText.toLowerCase())
+  //   );
+  // }
 
   useEffect(() => {
     setIsLoading(true);
-    getQuestion(setData, setSts, session_id, setIsLoading);
+    getQuestion(setData, setSts, session_id, setIsLoading, flag);
   }, []);
 
   const columns = [
@@ -39,7 +40,12 @@ export default function ListQuestion() {
     },
     {
       name: <div>Pertanyaan</div>,
-      cell: (data) => <div>{data.description}</div>,
+      cell: (data) => <div>{data.question}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Jenis Soal</div>,
+      cell: (data) => <div>{data.question_type}</div>,
       width: "auto",
     },
     {
@@ -70,22 +76,33 @@ export default function ListQuestion() {
               navigateUbahQuestion(
                 data.id,
                 data.session_detail_id,
-                data.description,
+                data.question,
                 data.is_publish,
-                data.sequence
+                data.sequence,
+                data.question_type
               )
             }
           >
             <i className="fa fa-edit" /> Edit Pertanyaan
           </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() => navigateDetailQuestion(data.id)}
-          >
-            <i className="fa fa-edit" /> Detail Pilihan Jawaban
-          </button>
+          {data.question_type === "PG" && (
+            <button
+              style={{ width: "auto", padding: "2px 10px" }}
+              className="btn-biru"
+              title="Edit"
+              onClick={() =>
+                navigateDetailQuestion(
+                  data.id,
+                  data.session_detail_id,
+                  data.question,
+                  data.is_publish,
+                  data.sequence
+                )
+              }
+            >
+              <i className="fa fa-edit" /> Detail Pilihan Jawaban
+            </button>
+          )}
         </div>
       ),
       ignoreRowClick: true,
@@ -94,11 +111,21 @@ export default function ListQuestion() {
     },
   ];
 
-  const navigateDetailQuestion = (question_id) => {
+  const navigateDetailQuestion = (
+    question_id,
+    session_detail_id,
+    question,
+    is_publish,
+    sequence
+  ) => {
     navigate("/admin/detail-soal", {
       state: {
         question_id: question_id,
         session_tittle: session_tittle,
+        session_detail_id: session_detail_id,
+        question: question,
+        is_publish: is_publish,
+        sequence: sequence,
       },
     });
   };
@@ -108,7 +135,8 @@ export default function ListQuestion() {
     session_detail_id,
     description,
     is_publish,
-    sequence
+    sequence,
+    question_type
   ) => {
     navigate("/admin/ubah-soal", {
       state: {
@@ -118,6 +146,7 @@ export default function ListQuestion() {
         is_publish: is_publish,
         sequence: sequence,
         session_tittle: session_tittle,
+        question_type: question_type,
       },
     });
   };
@@ -143,7 +172,7 @@ export default function ListQuestion() {
         prev="Daftar Sesi"
         navPrev={path}
         at="Daftar Soal"
-        title={`Daftar Soal ${session_tittle}`}
+        title={`Daftar Soal ${localStorage.getItem("FLAG")} ${session_tittle}`}
       />
 
       <div style={{ marginTop: "50px" }}>
