@@ -98,8 +98,6 @@ export default function ListQuestion() {
     });
   };
 
-  console.log(location.state.session_detail_id);
-
   const navigateUbahDetailQuestion = (
     id,
     description,
@@ -124,7 +122,12 @@ export default function ListQuestion() {
   const navigateTambahDetailQuestion = () => {
     navigate("/admin/tambah-detail-soal", {
       state: {
+        sequence: data.length + 1,
         question_id: location.state.question_id,
+        session_detail_id: location.state.session_detail_id,
+        question: location.state.question,
+        is_publish: location.state.is_publish,
+        detail_question_sequence: location.state.sequence,
       },
     });
   };

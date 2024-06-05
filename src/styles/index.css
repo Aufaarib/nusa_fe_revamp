@@ -655,6 +655,29 @@
     @apply bg-green-700;
   }
 
+  .btn-abu2 {
+    /* @apply flex; */
+    @apply justify-center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* @apply font-medium; */
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-gray-300;
+  }
+  .btn-abu2:hover {
+    @apply bg-gray-400;
+  }
+
   .btn-biru {
     /* @apply flex; */
     @apply justify-center;

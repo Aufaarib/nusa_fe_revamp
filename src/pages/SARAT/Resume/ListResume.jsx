@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components";
 import { DataTablesSession } from "../../../components/DataTables";
-import { getSession } from "../../../api/Sarat";
+import { getDetailSession, getSession } from "../../../api/Sarat";
 import axios from "../../../api/axios";
 import {
   AlertMessage,

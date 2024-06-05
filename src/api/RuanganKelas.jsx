@@ -148,9 +148,9 @@ export function updateClassRoom(
     });
 }
 
-export function moveStudentToClassRoom(setSts, path, students, id) {
+export function moveStudentToClassRoom(path, students, id) {
   axios
-    .post(
+    .put(
       process.env.REACT_APP_BASE_URL + `/classroom/${id}/student`,
       {
         students,
@@ -158,17 +158,15 @@ export function moveStudentToClassRoom(setSts, path, students, id) {
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
     .then(() => {
-      setSts({ type: "success" });
       AlertStatusSuccess(
         path,
         "Berhasil",
         "Tutup",
         "success",
-        "Penambahan Murid Ke Kelas Berhasil"
+        "Pemindahan Murid Ke Kelas Lain Berhasil"
       );
     })
     .catch((error) => {
-      setSts({ type: "error", error });
       ErrorHandling(error);
     });
 }

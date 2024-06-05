@@ -77,14 +77,14 @@ export default function ListSession() {
     {
       name: <div>Aksi</div>,
       cell: (data) => (
-        <div className="flex gap-1">
+        <div className="flex flex-col gap-1">
           <button
             style={{ width: "auto", padding: "2px 10px" }}
             className="btn-biru"
             title="Edit"
             onClick={() => navigateSoalPreTest(data.id, data.title)}
           >
-            <i className="fa fa-edit" /> Data Soal Pre-Test
+            <i className="fa fa-eye" /> Daftar Soal Pre-Test
           </button>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
@@ -92,11 +92,11 @@ export default function ListSession() {
             title="Edit"
             onClick={() => navigateSoalPresensi(data.id, data.title)}
           >
-            <i className="fa fa-edit" /> Data Soal Presensi
+            <i className="fa fa-eye" /> Daftar Soal Presensi
           </button>
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
+            className={data.status === 0 ? "btn-hijau" : "btn-mrh"}
             title="Edit"
             onClick={() =>
               onClickActivation(data.id, data.status === 0 ? 1 : 0)
@@ -104,11 +104,11 @@ export default function ListSession() {
           >
             {data.status === 0 ? (
               <>
-                <i className="fa fa-edit" /> Aktifkan
+                <i className="fa fa-check" /> Aktifkan
               </>
             ) : (
               <>
-                <i className="fa fa-edit" /> Non-Aktifkan
+                <i className="fa fa-times" /> Non-Aktifkan
               </>
             )}
           </button>
@@ -116,7 +116,33 @@ export default function ListSession() {
       ),
       ignoreRowClick: true,
       button: true,
-      width: "450px",
+      width: "180px",
+    },
+    {
+      name: <div>Report</div>,
+      cell: (data) => (
+        <div className="flex flex-col text-center gap-1">
+          <a
+            href={`${process.env.REACT_APP_NUSA_SARAT}/session/report-export?session_detail_id=${data.id}&flag=PRE_TEST`}
+            style={{ width: "150px", height: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            title="Edit"
+          >
+            <i className="fa fa-download" /> Download Report Pre-Test
+          </a>
+          <a
+            href={`${process.env.REACT_APP_NUSA_SARAT}/session/report-export?session_detail_id=${data.id}&flag=ATTENDANCE`}
+            style={{ width: "150px", height: "auto", padding: "2px 10px" }}
+            className="btn-biru"
+            title="Edit"
+          >
+            <i className="fa fa-download" /> Download Report Presensi
+          </a>
+        </div>
+      ),
+      ignoreRowClick: true,
+      button: true,
+      width: "180px",
     },
   ];
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { postAnswers, postQuestion } from "../../../api/Sarat";
+import { postAnswers, postQuestion, updateQuestion } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { DropdownRadioInputBiological } from "../../../components/Dropdown";
 import { AlertMessage } from "../../../components/ModalPopUp";
@@ -13,15 +13,17 @@ export default function TambahAnswers() {
   const path = "/admin/detail-soal";
   const [fields, setFields] = useState([
     {
-      description: "",
-      correct_answer: { value: "" },
+      id: 0,
+      answer_choice: "",
+      is_correct: "",
+      sequence: location.state.sequence,
     },
   ]);
   const [sts, setSts] = useState("");
   const { isLoading, setIsLoading } = useStateContext();
 
   const navigate = useNavigate();
-  const navigateListSession = () => {
+  const navigateListAnswers = () => {
     navigate(path, {
       state: {
         question_id: location.state.question_id,
@@ -33,18 +35,44 @@ export default function TambahAnswers() {
     e.preventDefault();
     setIsLoading(true);
 
-    if (fields.description === "") {
+    const questions = [
+      {
+        id: location.state.question_id,
+        question: location.state.question,
+        question_type: "PG",
+        flag: `${localStorage.getItem("FLAG")}`,
+        sequence: location.state.detail_question_sequence,
+        is_publish: location.state.is_publish,
+        question_lists: fields,
+      },
+    ];
+
+    if (fields.answer_choice === "") {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
     } else {
-      postAnswers(
-        setSts,
-        navigateListSession,
+      updateQuestion(
         location.state.question_id,
-        fields,
+        setSts,
+        navigateDetailQuestion,
+        location.state.session_detail_id,
+        questions,
         setIsLoading
       );
     }
+  };
+
+  const navigateDetailQuestion = () => {
+    navigate(path, {
+      state: {
+        id: location.state.id,
+        sequence: location.state.detail_question_sequence,
+        question_id: location.state.question_id,
+        session_detail_id: location.state.session_detail_id,
+        question: location.state.question,
+        is_publish: location.state.is_publish,
+      },
+    });
   };
 
   const handleFieldChange = (index, fieldName, value) => {
@@ -57,8 +85,10 @@ export default function TambahAnswers() {
     setFields([
       ...fields,
       {
-        description: "",
-        correct_answer: { value: "" },
+        id: 0,
+        answer_choice: "",
+        is_correct: "",
+        sequence: location.state.sequence,
       },
     ]);
   };
@@ -91,10 +121,10 @@ export default function TambahAnswers() {
               <TextInput
                 label="Jawaban"
                 type="text"
-                value={field.description}
+                value={field.answer_choice}
                 required={true}
                 onChange={(e) => {
-                  handleFieldChange(index, "description", e.target.value);
+                  handleFieldChange(index, "answer_choice", e.target.value);
                 }}
               />
               <DropdownRadioInputBiological
@@ -107,11 +137,11 @@ export default function TambahAnswers() {
                 onChange={(e) => {
                   handleFieldChange(
                     index,
-                    "correct_answer",
+                    "is_correct",
                     parseInt(e.target.value)
                   );
                 }}
-                checked={field.correct_answer}
+                checked={field.is_correct}
               />
               <br />
             </div>
@@ -145,7 +175,7 @@ export default function TambahAnswers() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateListSession}
+              onClick={navigateDetailQuestion}
             >
               Batal
             </button>

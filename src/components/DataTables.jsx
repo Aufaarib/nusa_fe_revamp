@@ -105,7 +105,17 @@ export const FilterDate = ({
     </div>
   );
 };
-export function FilterComponent({ filterText, onFilter, onClick, button }) {
+export function FilterComponent({
+  filterText,
+  onFilter,
+  onClick,
+  onClickMove,
+  button,
+  buttonMoveStudents,
+  selectedRows,
+  setSelected,
+  selectedClassRoom,
+}) {
   return (
     <>
       <div
@@ -139,13 +149,44 @@ export function FilterComponent({ filterText, onFilter, onClick, button }) {
             marginBottom: "20px",
           }}
         >
-          <button
-            style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
-            className="btn-hijau"
-            onClick={onClick}
-          >
-            <i className="fa fa-plus mr-1 mt-1"></i> {button}
-          </button>
+          {selectedRows &&
+            selectedRows.length !== 0 &&
+            selectedClassRoom !== 0 && (
+              <button
+                style={{
+                  fontSize: "12px",
+                  width: "auto",
+                  padding: "2px 10px",
+                }}
+                className="btn-hijau"
+                onClick={() => setSelected()}
+              >
+                <i className="fa fa-reply mr-1 mt-1"> </i> Pindahkan Murid
+              </button>
+            )}
+          {buttonMoveStudents && (
+            <button
+              style={{
+                fontSize: "12px",
+                width: "auto",
+                padding: "2px 10px",
+                marginRight: "5px",
+              }}
+              className="btn-hijau"
+              onClick={onClickMove}
+            >
+              <i className="fa fa-arrows mr-1 mt-1"></i> {buttonMoveStudents}
+            </button>
+          )}
+          {button && (
+            <button
+              style={{ fontSize: "12px", width: "auto", padding: "2px 10px" }}
+              className="btn-hijau"
+              onClick={onClick}
+            >
+              <i className="fa fa-plus mr-1 mt-1"></i> {button}
+            </button>
+          )}
         </div>
       </div>
     </>
@@ -333,14 +374,24 @@ export function FilterComponentSession({
   filterText,
   filter,
   onFilter,
-  academicYeardata = [],
-  onChangeAcademicYear,
-  valueAcademicYear,
-  filterAcademicYear,
-  SetFilterAcademicYear,
+  TAData = [],
+  onChangeTA,
+  valueTA,
+  filterTA,
+  SetFilterTA,
+  sessionData = [],
+  onChangeSession,
+  valueSession,
+  filterSession,
+  SetFilterSession,
   onClick,
   button,
   showButton,
+  filterPreTest,
+  setFilterPreTest,
+  filterPresensi,
+  setFilterPresensi,
+  setFilterFlag,
 }) {
   const [isOpenFilter, SetIsOpenFilter] = useState("false");
   return (
@@ -363,7 +414,7 @@ export function FilterComponentSession({
         >
           <Input
             id="search"
-            placeholder="Cari..."
+            placeholder="Cari Nama Orang Tua..."
             value={filterText}
             onChange={onFilter}
           />
@@ -372,7 +423,7 @@ export function FilterComponentSession({
         {filter ? (
           <>
             <button
-              className="btn-hijau w-auto"
+              className="btn-hijau w-auto ml-2"
               style={{
                 display: "inline-block",
                 float: "right",
@@ -384,43 +435,135 @@ export function FilterComponentSession({
             >
               <i className="fa fa-filter mr-1"> </i> Filter
             </button>
+            <button
+              className={`${
+                filterPreTest ? "btn-biru" : "btn-abu2"
+              } w-auto ml-2`}
+              style={{
+                display: "inline-block",
+                float: "right",
+                padding: "2px 10px",
+                fontSize: "12px",
+                width: "auto",
+              }}
+              onClick={() => {
+                setFilterPresensi(false);
+                setFilterPreTest(true);
+                setFilterFlag("PRE_TEST");
+              }}
+            >
+              <i className="fa fa-filter mr-1"> </i> Pre-Test
+            </button>
+            <button
+              className={`${
+                filterPresensi ? "btn-biru" : "btn-abu2"
+              } w-auto ml-2`}
+              style={{
+                display: "inline-block",
+                float: "right",
+                padding: "2px 10px",
+                fontSize: "12px",
+                width: "auto",
+              }}
+              onClick={() => {
+                setFilterPresensi(true);
+                setFilterPreTest(false);
+                setFilterFlag("ATTENDANCE");
+              }}
+            >
+              <i className="fa fa-filter mr-1"> </i> Presensi
+            </button>
+
             {isOpenFilter === "true" && (
               <>
                 <div className="nav-item absolute right-20 mt-2 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
                   <div className="flex justify-between">
-                    {data ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                        gap: "12px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "block",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <div style={{ display: "inline-block" }}>
+                          <h3>Filter Data</h3>
+                        </div>
+                        <button
+                          className="text-merah"
+                          onClick={() => SetIsOpenFilter("false")}
+                          style={{
+                            display: "inline-block",
+                            float: "right",
+                            fontSize: "25px",
+                          }}
+                        >
+                          <MdOutlineCancel />
+                        </button>
+                      </div>
+                      <strong className="text-merah">
+                        Filter Data Berdasarkan :
+                      </strong>
                       <div
                         style={{
                           display: "flex",
                           flexDirection: "column",
-                          width: "100%",
-                          gap: "12px",
+                          alignItems: "start",
+                          gap: "5px",
                         }}
                       >
-                        <div
-                          style={{
-                            display: "block",
-                            marginBottom: "10px",
+                        <button
+                          onClick={() => {
+                            {
+                              filterTA === "true"
+                                ? SetFilterTA("false")
+                                : SetFilterTA("true");
+                            }
                           }}
+                          className={
+                            filterTA === "true"
+                              ? "btn-modal-filter-true"
+                              : "btn-modal-filter-false"
+                          }
                         >
-                          <div style={{ display: "inline-block" }}>
-                            <h3>Filter Data</h3>
-                          </div>
-                          <button
-                            className="text-merah"
-                            onClick={() => SetIsOpenFilter("false")}
+                          Tahun Ajaran{" "}
+                          {filterTA === "true" ? (
+                            <i className="fa fa-check text-hijau" />
+                          ) : (
+                            <i className="fa fa-angle-down" />
+                          )}
+                        </button>
+                        {filterTA === "true" && (
+                          <select
                             style={{
-                              display: "inline-block",
-                              float: "right",
-                              fontSize: "25px",
+                              border: "1px solid grey",
+                              borderRadius: "10px",
+                              width: "auto",
+                              height: "32px",
+                              fontSize: "12px",
+                              padding: "5px",
+                              marginLeft: "10px",
+                              outline: "none",
                             }}
+                            value={valueTA}
+                            onChange={onChangeTA}
                           >
-                            <MdOutlineCancel />
-                          </button>
-                        </div>
-                        <strong className="text-merah">
-                          Filter Data Berdasarkan :
-                        </strong>
+                            <option value="">Pilih Tahun Ajaran</option>
+                            {TAData.map((items, index) => (
+                              <option key={items.id} value={items.id}>
+                                {items.name}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </div>
+                      {valueTA && (
                         <div
                           style={{
                             display: "flex",
@@ -431,24 +574,26 @@ export function FilterComponentSession({
                         >
                           <button
                             onClick={() => {
-                              if (filterAcademicYear === "false") {
-                                SetFilterAcademicYear("true");
-                              } else SetFilterAcademicYear("false");
+                              {
+                                filterSession === "true"
+                                  ? SetFilterSession("false")
+                                  : SetFilterSession("true");
+                              }
                             }}
                             className={
-                              filterAcademicYear === "true"
+                              filterSession === "true"
                                 ? "btn-modal-filter-true"
                                 : "btn-modal-filter-false"
                             }
                           >
-                            Tahun Ajaran{" "}
-                            {filterAcademicYear === "true" ? (
+                            Sesi{" "}
+                            {filterSession === "true" ? (
                               <i className="fa fa-check text-hijau" />
                             ) : (
                               <i className="fa fa-angle-down" />
                             )}
                           </button>
-                          {filterAcademicYear === "true" && (
+                          {filterSession === "true" && (
                             <select
                               style={{
                                 border: "1px solid grey",
@@ -460,52 +605,20 @@ export function FilterComponentSession({
                                 marginLeft: "10px",
                                 outline: "none",
                               }}
-                              value={valueAcademicYear}
-                              onChange={onChangeAcademicYear}
+                              value={valueSession}
+                              onChange={onChangeSession}
                             >
-                              <option>Pilih Tahun Ajaran</option>
-                              {Array.from(
-                                new Set(
-                                  academicYeardata.map(
-                                    (c) =>
-                                      c.session_detail?.session
-                                        ?.academic_year_id
-                                  )
-                                )
-                              ).map((academicYearId) => {
-                                const academicYear = academicYeardata.find(
-                                  (c) =>
-                                    c.session_detail?.session
-                                      ?.academic_year_id === academicYearId
-                                );
-                                return (
-                                  <option
-                                    key={academicYearId}
-                                    value={academicYearId}
-                                  >
-                                    {academicYear.session_detail?.session?.name}
-                                  </option>
-                                );
-                              })}
+                              <option value="">Pilih Sesi</option>
+                              {sessionData.map((items, index) => (
+                                <option key={items.id} value={items.id}>
+                                  {items.title}
+                                </option>
+                              ))}
                             </select>
                           )}
                         </div>
-                      </div>
-                    ) : (
-                      <select
-                        style={{
-                          border: "1px solid grey",
-                          borderRadius: "10px",
-                          width: "auto",
-                          height: "30px",
-                          fontSize: "12px",
-                          padding: "5px",
-                          marginLeft: "10px",
-                        }}
-                      >
-                        <option value="null">Data Tidak Tersedia</option>
-                      </select>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </>
@@ -1756,7 +1869,12 @@ export function DataTablesPMB({
   filterText,
   onFilter,
   onClick,
+  onClickMove,
   buttontxt,
+  buttonMoveStudents,
+  selectedRows,
+  setSelected,
+  selectedClassRoom,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
 
@@ -1888,7 +2006,12 @@ export function DataTablesPMB({
         filterText={filterText}
         onFilter={onFilter}
         onClick={onClick}
+        onClickMove={onClickMove}
         button={buttontxt}
+        buttonMoveStudents={buttonMoveStudents}
+        selectedRows={selectedRows}
+        setSelected={setSelected}
+        selectedClassRoom={selectedClassRoom}
       />
       {data ? (
         <div>
@@ -2577,11 +2700,21 @@ export function DataTablesSession({
   pagination,
   buttonText,
   showButton,
-  academicYeardata,
-  onChangeAcademicYear,
-  valueAcademicYear,
-  filterAcademicYear,
-  SetFilterAcademicYear,
+  sessionData,
+  onChangeSession,
+  valueSession,
+  filterSession,
+  SetFilterSession,
+  TAData,
+  onChangeTA,
+  valueTA,
+  filterTA,
+  SetFilterTA,
+  filterPreTest,
+  setFilterPreTest,
+  filterPresensi,
+  setFilterPresensi,
+  setFilterFlag,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
@@ -2709,14 +2842,24 @@ export function DataTablesSession({
         filterText={filterText}
         filter={filter}
         onFilter={onFilter}
-        academicYeardata={academicYeardata}
-        onChangeAcademicYear={onChangeAcademicYear}
-        valueAcademicYear={valueAcademicYear}
-        filterAcademicYear={filterAcademicYear}
-        SetFilterAcademicYear={SetFilterAcademicYear}
+        TAData={TAData}
+        onChangeTA={onChangeTA}
+        valueTA={valueTA}
+        filterTA={filterTA}
+        SetFilterTA={SetFilterTA}
+        sessionData={sessionData}
+        onChangeSession={onChangeSession}
+        valueSession={valueSession}
+        filterSession={filterSession}
+        SetFilterSession={SetFilterSession}
         onClick={onClick}
         button={buttonText}
         showButton={showButton}
+        filterPreTest={filterPreTest}
+        setFilterPreTest={setFilterPreTest}
+        filterPresensi={filterPresensi}
+        setFilterPresensi={setFilterPresensi}
+        setFilterFlag={setFilterFlag}
       />
       {data ? (
         <div>

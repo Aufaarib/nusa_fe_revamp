@@ -709,7 +709,41 @@ export const AlerNewsVideos = (url, link) => {
       }
     });
 };
-export const AlerNewsFiles = (url) => {
+export const AlerNewsFiles = (url, downloads, name) => {
+  const download = (filename, content) => {
+    var element = document.createElement("a");
+    element.setAttribute("href", content);
+    element.setAttribute("download", filename);
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
+
+  const handleDownload = async (file_name, name) => {
+    try {
+      const result = await fetch(
+        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + file_name,
+        {
+          method: "GET",
+          headers: {},
+        }
+      );
+      const blob = await result.blob();
+      const url = URL.createObjectURL(blob);
+      download(`file resume ${name}`, url);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      AlertMessage(
+        "Tidak Dapat Mengunduh File",
+        "File Tidak Tesedia",
+        "Tutup",
+        "warning"
+      );
+    }
+  };
   const domain = process.env.REACT_APP_BASE_STATIC_SARAT_FILE;
   if (domain.length == 0) {
     styledSweetAlert.fire({

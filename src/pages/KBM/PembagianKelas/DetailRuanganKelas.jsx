@@ -64,6 +64,15 @@ const DetailRuanganKelas = () => {
       },
     });
   };
+  const navigatePindahMurid = (id, namaRuangan) => {
+    navigate("/admin/pindah-murid-ke-kelas", {
+      state: {
+        id: id,
+        namaRuangan: namaRuangan,
+      },
+    });
+  };
+
   const navigateTambahKelompokMapel = () => {
     navigate("/admin/tambah-kelompok-mapel");
   };
@@ -279,9 +288,13 @@ const DetailRuanganKelas = () => {
             onClick={() =>
               navigateTambahMurid(location.state.id, location.state.namaRuangan)
             }
+            onClickMove={() =>
+              navigatePindahMurid(location.state.id, location.state.namaRuangan)
+            }
             onFilter={(e) => setFilterText(e.target.value)}
             filterText={filterText}
             buttontxt="Tambahkan Murid Ke Kelas"
+            buttonMoveStudents="Pindah Murid Ke Kelas Lain"
           />
         ) : (
           <DataTablesPMB

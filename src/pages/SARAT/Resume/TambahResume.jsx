@@ -44,7 +44,12 @@ export default function TambahResume() {
     const data = {
       name: `Resume SARAT T.A ${name}`,
       academic_year_id: academicYearId,
-      details: fields,
+      details: [
+        {
+          title: "Sesi 01",
+          description: "-",
+        },
+      ],
     };
 
     if (

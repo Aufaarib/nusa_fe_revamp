@@ -347,11 +347,12 @@ export default function ReportSpp() {
     {
       style: styles.col1,
       name: "Tanggal",
-      selector: (data) => moment(data.createdAt).format("d/MMM/YY"),
+      selector: (data) =>
+        moment(data.createdAt).add(2, "hours").format("D/MMM/YY"),
     },
     {
       style: styles.col2,
-      name: "Pembayaran Untuk Bulan",
+      name: "Pembayaran",
       selector: (data) =>
         `${
           (data.month == 0 && data.name === "" ? "lain-lain" : data.name) ||

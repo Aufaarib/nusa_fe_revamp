@@ -2,6 +2,48 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
+export function updateConfig(navigate, data, setIsLoading) {
+  axios
+    .put(process.env.REACT_APP_NUSA_SARAT + `/config/update/1`, data, {
+      headers: {
+        authorization: localStorage.getItem("TOKEN"),
+      },
+    })
+    .then(() => {
+      setIsLoading(false);
+      AlertStatusSuccess(
+        navigate,
+        "Berhasil",
+        "Tutup",
+        "success",
+        "Edit Sesi Berhasil"
+      );
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      ErrorHandling(error);
+    });
+}
+
+export function getConfig(setData, setSts, setIsLoading) {
+  axios
+    .get(process.env.REACT_APP_NUSA_SARAT + `/config/filter`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      setIsLoading(false);
+      let data = [];
+      data.push(res.data.body);
+      setData(data);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      setSts({ type: "error", error });
+      ErrorHandling(error);
+    });
+}
+
 export function getDonations(session_id, setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/donation/fetch/${session_id}`, {
@@ -16,6 +58,7 @@ export function getDonations(session_id, setData, setSts) {
       ErrorHandling(error);
     });
 }
+
 export function getNews(setData, setSts) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/news/filter`, {
@@ -132,12 +175,20 @@ export function getSessionReport(
   setData,
   setSts,
   setPagination,
-  setIsLoading
+  setIsLoading,
+  session_id,
+  session_detail_id,
+  parentName,
+  flag
 ) {
   axios
-    .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report`, {
-      headers: { authorization: localStorage.getItem("TOKEN") },
-    })
+    .get(
+      process.env.REACT_APP_NUSA_SARAT +
+        `/session/report?session_id=${session_id}&session_detail_id=${session_detail_id}&parent=${parentName}&flag=${flag}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then((res) => {
       setIsLoading(false);
       setData(res.data.body);
@@ -158,14 +209,14 @@ export function getSessionReportDetail(
   setIsLoading
 ) {
   axios
-    .get(process.env.REACT_APP_NUSA_SARAT + `/session/resume/report/${id}`, {
+    .get(process.env.REACT_APP_NUSA_SARAT + `/session/report/${id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
       setIsLoading(false);
       let data = [];
       data.push(res.data.body);
-      setQuestion(res.data.body.question_details);
+      setQuestion(res.data.body.answer_result);
       setData(data);
       setSts({ type: "success" });
     })

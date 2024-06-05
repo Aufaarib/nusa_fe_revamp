@@ -56,31 +56,23 @@ export default function ResumeReportDetail() {
       cell: (data) => <div>{data.end_time}</div>,
       width: "auto",
     },
-    {
-      name: <div>File Resume</div>,
-      cell: (data) => (
-        <div className="flex flex-col gap-2">
-          <button
-            title="Lihat File"
-            onClick={() => {
-              AlerNewsFiles(data.resume_file);
-            }}
-          >
-            <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
-          </button>
-          <button
-            onClick={() => handleDownload(data.resume_file, data.parent_name)}
-            type="button"
-            title="Unduh File"
-            className="flex flex-row items-center"
-          >
-            <i style={{ fontSize: "14px" }} className="fa fa-download" />
-            <p>Unduh</p>
-          </button>
-        </div>
-      ),
-      width: "auto",
-    },
+    // {
+    //   name: <div>File Resume</div>,
+    //   cell: (data) => (
+    //     <div className="flex flex-row gap-2">
+    //       <button
+    //         title="Lihat File"
+    //         onClick={() => {
+    //           const downloads = true;
+    //           AlerNewsFiles(data.resume_file, downloads, location.state.name);
+    //         }}
+    //       >
+    //         <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
+    //       </button>
+    //     </div>
+    //   ),
+    //   width: "auto",
+    // },
   ];
   const columns2 = [
     {
@@ -90,19 +82,42 @@ export default function ResumeReportDetail() {
     },
     {
       name: <div>Pertanyaan</div>,
-      cell: (data) => <div>{data.question?.description}</div>,
+      cell: (data) => <div>{data.question?.question}</div>,
       width: "auto",
     },
     {
       name: <div>Jawaban</div>,
-      cell: (data) => <div>{data.question_detail?.description}</div>,
+      cell: (data) => (
+        <div>
+          {data.question.question_type !== "UPLOAD" ? (
+            data.answer_description !== "" ? (
+              data.answer_description
+            ) : (
+              data.answer
+            )
+          ) : (
+            <button
+              title="Lihat File"
+              onClick={() => {
+                AlerNewsFiles(data.answer);
+              }}
+            >
+              <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
+            </button>
+          )}
+        </div>
+      ),
       width: "auto",
     },
     {
       name: <div>Hasil</div>,
       cell: (data) => (
         <div>
-          {data.question_detail?.correct_answer == 1 ? "Benar" : "Salah"}
+          {data.correct_answer !== ""
+            ? data.is_correct
+              ? "Benar"
+              : "Salah"
+            : "-"}
         </div>
       ),
       width: "auto",
@@ -113,41 +128,6 @@ export default function ResumeReportDetail() {
     AlertMessage("Resume Detail", `${resume}`, "Tutup", "info");
   };
 
-  const download = (filename, content) => {
-    var element = document.createElement("a");
-    element.setAttribute("href", content);
-    element.setAttribute("download", filename);
-    element.style.display = "none";
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-  };
-
-  const handleDownload = async (file_name, parent_name) => {
-    try {
-      const result = await fetch(
-        process.env.REACT_APP_BASE_STATIC_SARAT_FILE + file_name,
-        {
-          method: "GET",
-          headers: {},
-        }
-      );
-      const blob = await result.blob();
-      const url = URL.createObjectURL(blob);
-      download(`file resume ${parent_name}`, url);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      AlertMessage(
-        "Tidak Dapat Mengunduh File",
-        "File Tidak Tesedia",
-        "Tutup",
-        "warning"
-      );
-    }
-  };
-
   return (
     <>
       <Header
@@ -155,7 +135,7 @@ export default function ResumeReportDetail() {
         prev="Resume Report"
         navPrev="/admin/list-report-resume"
         at="Detail Resume Report"
-        title={location.state.name + " - " + location.state.student}
+        title={`${location.state.flag} Resume Report - ${location.state.name}`}
       />
 
       <div
@@ -167,7 +147,7 @@ export default function ResumeReportDetail() {
         }}
       >
         <DataTablesDetailSession columns={columns} data={data} />
-        <div className="flex flex-row items-center gap-5 justify-between px-10">
+        {/* <div className="flex flex-row items-center gap-5 justify-between px-10">
           <div style={{ width: "100%" }}>
             <p className="text-merah font-bold">Resume : </p>
             <br />
@@ -181,7 +161,7 @@ export default function ResumeReportDetail() {
               value={data[0]?.resume}
             />
           </div>
-        </div>
+        </div> */}
         <p className="text-merah font-bold">Jawaban Soal : </p>
         <DataTablesDetailSession columns={columns2} data={question} />
         <div className="flex justify-start w-full">

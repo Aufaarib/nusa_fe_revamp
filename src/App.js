@@ -96,6 +96,9 @@ import ListAdmissionStatement from "./pages/AdminPMB/AdmissionStatement/ListAdmi
 import ListResumeReport from "./pages/SARAT/Resume/ListResumeReport";
 import ResumeReportDetail from "./pages/SARAT/Resume/ResumeReportDetail";
 import ReportSpp from "./pages/Keuangan/Spp/ReportSpp";
+import Config from "./pages/SARAT/Config/Config";
+import UbahConfig from "./pages/SARAT/Config/UbahConfig";
+import MoveStudents from "./pages/KBM/PembagianKelas/MoveStudents";
 
 const App = () => {
   return (
@@ -160,6 +163,7 @@ const App = () => {
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
           <Route path="/admin/list-resume" element={<ListResume />} />
+          <Route path="/admin/config" element={<Config />} />
           <Route
             path="/admin/list-report-resume"
             element={<ListResumeReport />}
@@ -215,6 +219,7 @@ const App = () => {
             element={<UbahDetailQuestion />}
           />
           <Route path="/admin/ubah-berita" element={<UbahNews />} />
+          <Route path="/admin/ubah-config" element={<UbahConfig />} />
 
           {/* tambah */}
           <Route path="/admin/tambah-guru" element={<TambahGuru />} />
@@ -248,6 +253,10 @@ const App = () => {
           <Route
             path="/admin/tambah-murid-ke-kelas"
             element={<TambahMuridKeKelas />}
+          />
+          <Route
+            path="/admin/pindah-murid-ke-kelas"
+            element={<MoveStudents />}
           />
           <Route path="/admin/tambah-spp" element={<TambahSpp />} />
           <Route

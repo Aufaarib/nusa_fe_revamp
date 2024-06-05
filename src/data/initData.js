@@ -165,14 +165,19 @@ export const sidebarMenusAdmin = [
         path: `admin/list-resume`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: "Report Resume",
-      //   path: `admin/list-report-resume`,
-      //   icon: <FaWpforms />,
-      // },
+      {
+        name: "Report Resume",
+        path: `admin/list-report-resume`,
+        icon: <FaWpforms />,
+      },
       {
         name: "Berita",
         path: `admin/list-berita`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: "Config",
+        path: `admin/config`,
         icon: <FaWpforms />,
       },
     ],
