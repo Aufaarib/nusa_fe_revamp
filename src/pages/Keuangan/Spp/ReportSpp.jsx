@@ -249,7 +249,7 @@ export default function ReportSpp() {
   const styles = StyleSheet.create({
     viewer: {
       width: "160vh",
-      height: "400px",
+      height: "500px",
     },
     page: {
       display: "flex",
@@ -461,8 +461,12 @@ export default function ReportSpp() {
         ariaHideApp={false}
       >
         <Box sx={{ padding: "30px", width: "auto" }}>
+          <button
+            className="fa fa-times float-right pb-5 text-merah text-3xl"
+            onClick={() => setIsOpen(false)}
+          />
           <PDFViewer style={styles.viewer}>
-            <Document>
+            <Document title={`Report Spp ${location.state.studentName}`}>
               <Page size="A3" orientation="landscape" style={styles.page}>
                 <View style={styles.section}>
                   <View style={styles.table}>
@@ -554,6 +558,33 @@ export default function ReportSpp() {
                             ))}
                           </View>
                         ))}
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: "10px",
+                          paddingTop: "10px",
+                          paddingLeft: "71vh",
+                        }}
+                      >
+                        <Text>Total</Text>
+                        <Text
+                          style={{
+                            paddingLeft: "61px",
+                          }}
+                        >
+                          :
+                        </Text>
+                        <Text>
+                          {new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            minimumFractionDigits: 0,
+                          }).format(
+                            data.reduce((acc, obj) => acc + obj.total, 0)
+                          )}
+                        </Text>
+                      </View>
                     </View>
                     <View
                       style={{
