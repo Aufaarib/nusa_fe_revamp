@@ -86,7 +86,7 @@ const RequireAuthAdmin = () => {
 
           {themeSettings && <ThemeSettings />}
 
-          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh]">
+          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh] max-w-[165vh]">
             <Outlet />
           </div>
 

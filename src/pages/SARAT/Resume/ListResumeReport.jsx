@@ -95,49 +95,6 @@ export default function ListResumeReport() {
       width: "55px",
     },
     {
-      name: <div>Sesi</div>,
-      cell: (data) => (
-        <div>{`${data.session_detail.session.name} - ${data.session_detail.title} - ${data.session_detail.description}`}</div>
-      ),
-      width: "300px",
-    },
-    {
-      name: <div>Resume</div>,
-      cell: (data) => <div>{data.flag}</div>,
-    },
-    {
-      name: <div>Kehadiran</div>,
-      cell: (data) => <div>{data.attendance_type}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Nama Orang Tua</div>,
-      cell: (data) => (
-        <div>
-          {data.parent_type === "MOTHER"
-            ? data.user.parent.mother_name
-            : data.user.parent.father_name}
-        </div>
-      ),
-      width: "auto",
-    },
-    {
-      name: <div>Status Orang Tua</div>,
-      cell: (data) => <div className="capitalize">{data.parent_type}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Nama Siswa</div>,
-      cell: (data) =>
-        data.user.parent.students.map((items, index) => (
-          <div>
-            {items.student_name}
-            {index + 1 !== data.user.parent.students.length && ","}
-          </div>
-        )),
-      width: "auto",
-    },
-    {
       name: <div>Aksi</div>,
       cell: (data) => (
         <div className="flex gap-2">
@@ -168,6 +125,50 @@ export default function ListResumeReport() {
       ignoreRowClick: true,
       button: true,
       width: "180px",
+    },
+    {
+      name: <div>Sesi</div>,
+      cell: (data) => (
+        <div>{`${data.session_detail.session.name} - ${data.session_detail.title} - ${data.session_detail.description}`}</div>
+      ),
+      width: "300px",
+    },
+    {
+      name: <div>Resume</div>,
+      cell: (data) => <div>{data.flag}</div>,
+      width: "150px",
+    },
+    {
+      name: <div>Kehadiran</div>,
+      cell: (data) => <div>{data.attendance_type}</div>,
+      width: "180px",
+    },
+    {
+      name: <div>Nama Orang Tua</div>,
+      cell: (data) => (
+        <div>
+          {data.parent_type === "MOTHER"
+            ? data.user.parent.mother_name
+            : data.user.parent.father_name}
+        </div>
+      ),
+      width: "270px",
+    },
+    {
+      name: <div>Status Orang Tua</div>,
+      cell: (data) => <div className="capitalize">{data.parent_type}</div>,
+      width: "140px",
+    },
+    {
+      name: <div>Nama Siswa</div>,
+      cell: (data) =>
+        data.user.parent.students.map((items, index) => (
+          <div>
+            {items.student_name}
+            {index + 1 !== data.user.parent.students.length && ","}
+          </div>
+        )),
+      width: "300px",
     },
   ];
 
