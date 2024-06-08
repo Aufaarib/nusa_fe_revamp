@@ -99,6 +99,7 @@ import ReportSpp from "./pages/Keuangan/Spp/ReportSpp";
 import Config from "./pages/SARAT/Config/Config";
 import UbahConfig from "./pages/SARAT/Config/UbahConfig";
 import MoveStudents from "./pages/KBM/PembagianKelas/MoveStudents";
+import ListScores from "./pages/SARAT/Sesi/ListScores";
 
 const App = () => {
   return (
@@ -163,6 +164,7 @@ const App = () => {
           <Route path="/admin/list-pengeluaran" element={<ListPengeluaran />} />
           <Route path="/admin/list-laporan" element={<ListLaporan />} />
           <Route path="/admin/list-resume" element={<ListResume />} />
+          <Route path="/admin/list-scores" element={<ListScores />} />
           <Route path="/admin/config" element={<Config />} />
           <Route
             path="/admin/list-report-resume"

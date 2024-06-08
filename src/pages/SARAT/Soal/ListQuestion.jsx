@@ -49,6 +49,11 @@ export default function ListQuestion() {
       width: "auto",
     },
     {
+      name: <div>Skor</div>,
+      cell: (data) => <div>{data.score}</div>,
+      width: "auto",
+    },
+    {
       name: <div>Status</div>,
       selector: (data) => data.is_publish,
       cell: (data) => (
@@ -79,7 +84,8 @@ export default function ListQuestion() {
                 data.question,
                 data.is_publish,
                 data.sequence,
-                data.question_type
+                data.question_type,
+                data.score
               )
             }
           >
@@ -136,7 +142,8 @@ export default function ListQuestion() {
     description,
     is_publish,
     sequence,
-    question_type
+    question_type,
+    score
   ) => {
     navigate("/admin/ubah-soal", {
       state: {
@@ -147,6 +154,7 @@ export default function ListQuestion() {
         sequence: sequence,
         session_tittle: session_tittle,
         question_type: question_type,
+        score: score,
       },
     });
   };

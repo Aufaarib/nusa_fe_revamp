@@ -14,6 +14,7 @@ export default function UbahQuestion() {
   const [description, setDescription] = useState(location.state.description);
   const [is_publish, setPublish] = useState(location.state.is_publish);
   const [sts, setSts] = useState("");
+  const [poin, setPoin] = useState(location.state.score);
   const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ export default function UbahQuestion() {
         flag: `${localStorage.getItem("FLAG")}`,
         sequence: 1,
         is_publish: is_publish,
+        score: poin,
         question_lists: null,
       },
     ];
@@ -71,6 +73,13 @@ export default function UbahQuestion() {
             type="text"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
+            required={true}
+          />
+          <TextInput
+            label="Skor"
+            type="number"
+            onChange={(e) => setPoin(parseInt(e.target.value))}
+            value={poin}
             required={true}
           />
           <DropdownRadioInputBiological

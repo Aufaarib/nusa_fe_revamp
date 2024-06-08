@@ -76,7 +76,7 @@ const RequireAuthAdmin = () => {
         <div
           className={
             activeMenu
-              ? "dark:bg-gelap  bg-krem min-h-screen md:ml-72 w-full  "
+              ? "dark:bg-gelap bg-krem min-h-screen md:ml-72 w-full"
               : "bg-krem dark:bg-gelap  w-full min-h-screen flex-2 "
           }
         >
@@ -86,7 +86,7 @@ const RequireAuthAdmin = () => {
 
           {themeSettings && <ThemeSettings />}
 
-          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh] max-w-[165vh]">
+          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh] max-w-[163vh]">
             <Outlet />
           </div>
 

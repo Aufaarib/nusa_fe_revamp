@@ -99,7 +99,7 @@ export default function Config() {
         title="Config SARAT"
       />
 
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "5px" }}>
         <DataTablesSession
           columns={columns}
           data={filteredItems}

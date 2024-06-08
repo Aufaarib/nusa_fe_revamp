@@ -11,11 +11,13 @@ import {
 } from "../../../components/ModalPopUp";
 import { useStateContext } from "../../../contexts/ContextProvider";
 import { ErrorHandling } from "../../../api/ErrorHandling";
+import { CgChevronDown, CgChevronUp } from "react-icons/cg";
 
 export default function ListSession() {
   const [data, setData] = useState([]);
   const [detailsData, setDetailsData] = useState([]);
   const [sts, setSts] = useState(undefined);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -24,10 +26,14 @@ export default function ListSession() {
   const path = "/admin/list-resume";
   const location = useLocation();
 
+  const toggleMenu = (id) => {
+    setOpenMenuId(openMenuId === id ? null : id);
+  };
+
   let filteredItems = detailsData;
   if (detailsData !== null) {
     filteredItems = detailsData.filter((data) =>
-      data.title.toLowerCase().includes(filterText.toLowerCase())
+      data.description.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
@@ -80,22 +86,6 @@ export default function ListSession() {
         <div className="flex flex-col gap-1">
           <button
             style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() => navigateSoalPreTest(data.id, data.title)}
-          >
-            <i className="fa fa-eye" /> Daftar Soal Pre-Test
-          </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() => navigateSoalPresensi(data.id, data.title)}
-          >
-            <i className="fa fa-eye" /> Daftar Soal Presensi
-          </button>
-          <button
-            style={{ width: "auto", padding: "2px 10px" }}
             className={data.status === 0 ? "btn-hijau" : "btn-mrh"}
             title="Edit"
             onClick={() =>
@@ -112,6 +102,53 @@ export default function ListSession() {
               </>
             )}
           </button>
+          <button
+            onClick={() => toggleMenu(data.id)}
+            className="text-left flex flex-row items-center justify-between border-1 border-gray-500 p-1 rounded-md"
+          >
+            <p>Menu</p>
+            <p className="mt-1">
+              {openMenuId === data.id ? <CgChevronUp /> : <CgChevronDown />}
+            </p>
+          </button>
+          {openMenuId === data.id && (
+            <div className="absolute flex flex-col h-[110px] overflow-auto bg-white p-4 gap-2 w-[200px] right-[155px] rounded-md z-50 bottom-[10px]">
+              <button
+                style={{ width: "auto", padding: "2px 10px" }}
+                className="btn-biru"
+                title="Edit"
+                onClick={() => navigateSoalPreTest(data.id, data.title)}
+              >
+                <i className="fa fa-eye" /> Daftar Soal Pre-Test
+              </button>
+              <button
+                style={{ width: "auto", padding: "2px 10px" }}
+                className="btn-biru"
+                title="Edit"
+                onClick={() => navigateSoalPresensi(data.id, data.title)}
+              >
+                <i className="fa fa-eye" /> Daftar Soal Presensi
+              </button>
+              <button
+                style={{ width: "auto", padding: "2px 10px" }}
+                className="btn-biru"
+                title="Edit"
+                onClick={() =>
+                  navigateScores(data.id, data.title, "ATTENDANCE")
+                }
+              >
+                <i className="fa fa-list-ol" /> List Skor Presensi
+              </button>
+              <button
+                style={{ width: "auto", padding: "2px 10px" }}
+                className="btn-biru"
+                title="Edit"
+                onClick={() => navigateScores(data.id, data.title, "PRE_TEST")}
+              >
+                <i className="fa fa-list-ol" /> List Skor Pre-Test
+              </button>
+            </div>
+          )}
         </div>
       ),
       ignoreRowClick: true,
@@ -207,6 +244,13 @@ export default function ListSession() {
     navigate("/admin/list-soal");
   };
 
+  const navigateScores = (session_id, session_tittle, flag) => {
+    localStorage.setItem("SESSION_ID", session_id);
+    localStorage.setItem("SESSION_TITTLE", session_tittle);
+    localStorage.setItem("FLAG", flag);
+    navigate("/admin/list-scores");
+  };
+
   return (
     <>
       <Header
@@ -217,7 +261,7 @@ export default function ListSession() {
         title={`${localStorage.getItem("RESUME_NAME")}`}
       />
 
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "50px", zIndex: 0 }}>
         <DataTablesSession
           columns={columns}
           data={filteredItems}
@@ -230,6 +274,7 @@ export default function ListSession() {
           setCurrentPage={setCurrentPage}
           pagination
           buttonText="Edit Sesi"
+          searchText="Cari Deskripsi"
         />
       </div>
       <div className="flex justify-start w-full">

@@ -423,7 +423,7 @@ export default function ReportSpp() {
         home="Admin Keuangan"
         prev="List Murid"
         navPrev={"/admin/list-spp"}
-        at="Report Spp"
+        at="Report SPP"
         title={`Data Report SPP - ${location.state.studentName} - ${location.state.kelas} - ${location.state.academicYearName}`}
       />
 

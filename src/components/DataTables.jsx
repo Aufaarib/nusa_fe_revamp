@@ -392,8 +392,14 @@ export function FilterComponentSession({
   filterPresensi,
   setFilterPresensi,
   setFilterFlag,
+  reportFilter,
+  searchOptions,
+  valueOption,
+  onChangeOption,
+  searchText,
 }) {
-  const [isOpenFilter, SetIsOpenFilter] = useState("false");
+  const [isOpenFilter, SetIsOpenFilter] = useState(false);
+  const [filterFlag, SetfilterFlag] = useState("");
   return (
     <>
       <div
@@ -412,13 +418,51 @@ export function FilterComponentSession({
             display: "inline-block",
           }}
         >
-          <Input
-            id="search"
-            placeholder="Cari Nama Orang Tua..."
-            value={filterText}
-            onChange={onFilter}
-          />
-          <i style={{ padding: "7px 6px" }} className="fa fa-search" />
+          {reportFilter ? (
+            <div className="flex flex-row pr-1">
+              <select
+                style={{
+                  border: "1px solid grey",
+                  borderRadius: "5px",
+                  width: "auto",
+                  height: "32px",
+                  fontSize: "12px",
+                  padding: "5px",
+                  outline: "none",
+                }}
+                value={valueOption.value}
+                onChange={onChangeOption}
+              >
+                <option disabled value="">
+                  Pilih Pencarian
+                </option>
+                {searchOptions.map((items, index) => (
+                  <option key={items.id} value={items.value}>
+                    {items.label}
+                  </option>
+                ))}
+              </select>
+              <Input
+                id="search"
+                placeholder={`Cari ${valueOption.label}...`}
+                value={filterText}
+                onChange={onFilter}
+              />
+              <i style={{ padding: "7px 6px" }} className="fa fa-search" />
+            </div>
+          ) : (
+            searchText && (
+              <>
+                <Input
+                  id="search"
+                  placeholder={searchText}
+                  value={filterText}
+                  onChange={onFilter}
+                />
+                <i style={{ padding: "7px 6px" }} className="fa fa-search" />
+              </>
+            )
+          )}
         </div>
         {filter ? (
           <>
@@ -431,14 +475,18 @@ export function FilterComponentSession({
                 fontSize: "12px",
                 width: "auto",
               }}
-              onClick={() => SetIsOpenFilter("true")}
+              onClick={() => SetIsOpenFilter(true)}
             >
-              <i className="fa fa-filter mr-1"> </i> Filter
+              <i className="fa fa-filter mr-1"> </i> Pilih Filter Tahun Ajaran
             </button>
             <button
-              className={`${
-                filterPreTest ? "btn-biru" : "btn-abu2"
-              } w-auto ml-2`}
+              className={`ml-2
+                ${
+                  filterFlag === "PRE_TEST"
+                    ? "btn-modal-filter-true"
+                    : "btn-modal-filter-false"
+                }
+                `}
               style={{
                 display: "inline-block",
                 float: "right",
@@ -449,15 +497,30 @@ export function FilterComponentSession({
               onClick={() => {
                 setFilterPresensi(false);
                 setFilterPreTest(true);
-                setFilterFlag("PRE_TEST");
+                if (filterPreTest && filterFlag !== "") {
+                  setFilterFlag("");
+                  SetfilterFlag("");
+                } else {
+                  SetfilterFlag("PRE_TEST");
+                  setFilterFlag("PRE_TEST");
+                }
               }}
             >
-              <i className="fa fa-filter mr-1"> </i> Pre-Test
+              <i
+                className={`${
+                  filterFlag === "PRE_TEST"
+                    ? "fa fa-check text-hijau"
+                    : "fa fa-filter"
+                } mr-1`}
+              ></i>{" "}
+              Filter Pre-Test
             </button>
             <button
-              className={`${
-                filterPresensi ? "btn-biru" : "btn-abu2"
-              } w-auto ml-2`}
+              className={
+                filterFlag === "ATTENDANCE"
+                  ? "btn-modal-filter-true"
+                  : "btn-modal-filter-false"
+              }
               style={{
                 display: "inline-block",
                 float: "right",
@@ -468,13 +531,28 @@ export function FilterComponentSession({
               onClick={() => {
                 setFilterPresensi(true);
                 setFilterPreTest(false);
-                setFilterFlag("ATTENDANCE");
+                if (filterPresensi && filterFlag !== "") {
+                  setFilterFlag("");
+                  SetfilterFlag("");
+                } else {
+                  setFilterFlag("ATTENDANCE");
+                  SetfilterFlag("ATTENDANCE");
+                }
               }}
             >
-              <i className="fa fa-filter mr-1"> </i> Presensi
+              <i
+                className={`${
+                  filterFlag === "ATTENDANCE"
+                    ? "fa fa-check text-hijau"
+                    : "fa fa-filter"
+                } mr-1`}
+              >
+                {" "}
+              </i>{" "}
+              Filter Presensi
             </button>
 
-            {isOpenFilter === "true" && (
+            {isOpenFilter && (
               <>
                 <div className="nav-item absolute right-20 mt-2 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
                   <div className="flex justify-between">
@@ -497,7 +575,7 @@ export function FilterComponentSession({
                         </div>
                         <button
                           className="text-merah"
-                          onClick={() => SetIsOpenFilter("false")}
+                          onClick={() => SetIsOpenFilter(false)}
                           style={{
                             display: "inline-block",
                             float: "right",
@@ -521,25 +599,23 @@ export function FilterComponentSession({
                         <button
                           onClick={() => {
                             {
-                              filterTA === "true"
-                                ? SetFilterTA("false")
-                                : SetFilterTA("true");
+                              SetFilterTA(!filterTA);
                             }
                           }}
                           className={
-                            filterTA === "true"
+                            filterTA
                               ? "btn-modal-filter-true"
                               : "btn-modal-filter-false"
                           }
                         >
                           Tahun Ajaran{" "}
-                          {filterTA === "true" ? (
+                          {filterTA ? (
                             <i className="fa fa-check text-hijau" />
                           ) : (
                             <i className="fa fa-angle-down" />
                           )}
                         </button>
-                        {filterTA === "true" && (
+                        {filterTA && (
                           <select
                             style={{
                               border: "1px solid grey",
@@ -554,7 +630,9 @@ export function FilterComponentSession({
                             value={valueTA}
                             onChange={onChangeTA}
                           >
-                            <option value="">Pilih Tahun Ajaran</option>
+                            <option disabled value="">
+                              Pilih Tahun Ajaran
+                            </option>
                             {TAData.map((items, index) => (
                               <option key={items.id} value={items.id}>
                                 {items.name}
@@ -575,25 +653,23 @@ export function FilterComponentSession({
                           <button
                             onClick={() => {
                               {
-                                filterSession === "true"
-                                  ? SetFilterSession("false")
-                                  : SetFilterSession("true");
+                                SetFilterSession(!filterSession);
                               }
                             }}
                             className={
-                              filterSession === "true"
+                              filterSession
                                 ? "btn-modal-filter-true"
                                 : "btn-modal-filter-false"
                             }
                           >
                             Sesi{" "}
-                            {filterSession === "true" ? (
+                            {filterSession ? (
                               <i className="fa fa-check text-hijau" />
                             ) : (
                               <i className="fa fa-angle-down" />
                             )}
                           </button>
-                          {filterSession === "true" && (
+                          {filterSession && (
                             <select
                               style={{
                                 border: "1px solid grey",
@@ -608,7 +684,9 @@ export function FilterComponentSession({
                               value={valueSession}
                               onChange={onChangeSession}
                             >
-                              <option value="">Pilih Sesi</option>
+                              <option disabled value="">
+                                Pilih Sesi
+                              </option>
                               {sessionData.map((items, index) => (
                                 <option key={items.id} value={items.id}>
                                   {items.title}
@@ -2715,6 +2793,11 @@ export function DataTablesSession({
   filterPresensi,
   setFilterPresensi,
   setFilterFlag,
+  reportFilter,
+  searchOptions,
+  valueOption,
+  onChangeOption,
+  searchText,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
@@ -2860,6 +2943,11 @@ export function DataTablesSession({
         filterPresensi={filterPresensi}
         setFilterPresensi={setFilterPresensi}
         setFilterFlag={setFilterFlag}
+        reportFilter={reportFilter}
+        searchOptions={searchOptions}
+        valueOption={valueOption}
+        onChangeOption={onChangeOption}
+        searchText={searchText}
       />
       {data ? (
         <div>

@@ -25,6 +25,7 @@ export default function TambahQuestion() {
       flag: `${localStorage.getItem("FLAG")}`,
       sequence: qsequence,
       is_publish: "",
+      score: null,
       question_lists: [],
     },
   ]);
@@ -40,9 +41,6 @@ export default function TambahQuestion() {
       },
     });
   };
-
-  console.log("a", asequence);
-  console.log("q", qsequence);
 
   const postData = (e) => {
     e.preventDefault();
@@ -104,6 +102,7 @@ export default function TambahQuestion() {
         flag: `${localStorage.getItem("FLAG")}`,
         sequence: qsequence + 1,
         is_publish: "",
+        score: null,
         question_lists: [],
       },
     ]);
@@ -356,6 +355,19 @@ export default function TambahQuestion() {
                     handleQFieldChange(qindex, "question", e.target.value)
                   }
                   value={qfield.question}
+                  required={true}
+                />
+                <TextInput
+                  label="Skor"
+                  type="number"
+                  onChange={(e) =>
+                    handleQFieldChange(
+                      qindex,
+                      "score",
+                      parseInt(e.target.value)
+                    )
+                  }
+                  value={qfield.score}
                   required={true}
                 />
                 <DropdownRadioInputBiological

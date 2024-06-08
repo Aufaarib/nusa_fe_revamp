@@ -76,7 +76,7 @@ export default function ListInstitution() {
         title="Daftar Institusi"
       />
 
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "5px" }}>
         <DataTablesSession
           columns={columns}
           data={filteredItems}
@@ -88,7 +88,6 @@ export default function ListInstitution() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pagination={pagination}
-          buttonText="Tambah Resume"
           showButton={false}
         />
       </div>

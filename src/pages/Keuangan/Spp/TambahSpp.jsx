@@ -277,7 +277,7 @@ export default function TambahSpp() {
             ))}
           {months.some((option) => option.value !== "lain-lain") ? (
             <TextInput
-              label="Jumlah Spp"
+              label="Jumlah SPP"
               type="text"
               onChange={handleInputChange}
               value={amounts}

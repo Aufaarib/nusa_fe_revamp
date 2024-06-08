@@ -212,6 +212,7 @@ export default function ListResume() {
           setCurrentPage={setCurrentPage}
           pagination={pagination}
           buttonText="Tambah Resume"
+          searchText="Cari Nama Resume..."
         />
       </div>
     </>

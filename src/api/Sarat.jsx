@@ -25,6 +25,33 @@ export function updateConfig(navigate, data, setIsLoading) {
     });
 }
 
+export function getScores(
+  setData,
+  setSts,
+  setIsLoading,
+  session_detail_id,
+  flag
+) {
+  axios
+    .get(
+      process.env.REACT_APP_NUSA_SARAT +
+        `/session/live-score?session_detail_id=${session_detail_id}&flag=${flag}`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      setIsLoading(false);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      setSts({ type: "error", error });
+      ErrorHandling(error);
+    });
+}
+
 export function getConfig(setData, setSts, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/config/filter`, {

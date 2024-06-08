@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNews } from "../../../api/Sarat";
 import { Header } from "../../../components";
-import { DataTablesListSpp } from "../../../components/DataTables";
+import {
+  DataTablesListSpp,
+  DataTablesSession,
+} from "../../../components/DataTables";
 import { AlerNewsFiles, AlerNewsVideos } from "../../../components/ModalPopUp";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
@@ -164,13 +167,18 @@ export default function ListNews() {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesListSpp
+        <DataTablesSession
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahBerita}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          button="Tambah Berita"
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pagination={pagination}
+          buttonText="Tambah Berita"
           showButton={true}
         />
       </div>
