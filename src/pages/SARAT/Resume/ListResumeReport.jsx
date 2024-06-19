@@ -38,25 +38,8 @@ export default function ListResumeReport() {
   let filteredItems = data;
   let filteredAcademicYear = data;
 
-  // if (filterAcademicYear === "true" && academicYearFilter !== undefined) {
-  //   filteredAcademicYear = data.filter(
-  //     (data) =>
-  //       data.session_detail.session.academic_year_id === academicYearFilter
-  //   );
-  //   filteredItems = filteredAcademicYear.filter((data) =>
-  //     data.parent_name.toLowerCase().includes(filterText.toLowerCase())
-  //   );
-  // }
-
-  useEffect(() => {
-    if (filterTA === "false") {
-      setTAFilter("");
-    } else if (filterSession === "false") {
-      setSessionFilter("");
-    }
-  });
-
   const fetchReport = (TAFilter, sessionFilter, filterText, filterFlag) => {
+    setIsLoading(true);
     getSessionReport(
       currentPage,
       itemsPerPage,
@@ -84,7 +67,8 @@ export default function ListResumeReport() {
       setDataTA,
       setSts,
       setPagination,
-      setIsLoading
+      setIsLoading,
+      true
     );
   }, []);
 
@@ -92,7 +76,7 @@ export default function ListResumeReport() {
     {
       name: <div>No</div>,
       selector: (_row, i) => i + 1,
-      width: "55px",
+      width: "65px",
     },
     {
       name: <div>Aksi</div>,

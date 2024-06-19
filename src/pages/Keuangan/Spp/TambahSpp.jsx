@@ -21,12 +21,6 @@ export default function TambahSpp() {
   const [taawunAmounts, setTaawunAmounts] = useState([]);
   const [lainLainAmount, setLainLainAmount] = useState("");
   const [months, setMonth] = useState([]);
-  const [academicYearCode, setAcademicYearCode] = useState(
-    location.state.academicYearCode
-  );
-  const [academicYearId, setAcademicYearId] = useState(
-    location.state.academicYearId
-  );
   const [namaPembayaran, setNamaPembayaran] = useState("");
   const [studentId, setStudentId] = useState(location.state.id);
   const [studentCode, setStudentCode] = useState(location.state.studentCode);
@@ -55,11 +49,11 @@ export default function TambahSpp() {
       setSts,
       setIsLoading,
       studentCode,
-      academicYearCode
+      localStorage.getItem("TA-CODE")
     );
   };
 
-  const navigateListSpp = () => {
+  const navigateReportSpp = () => {
     navigate(path, {
       state: {
         id: location.state.id,
@@ -91,7 +85,7 @@ export default function TambahSpp() {
 
     formData.append(`description`, description);
     formData.append(`studentId`, studentId);
-    formData.append(`academicYearId`, academicYearId);
+    formData.append(`academicYearId`, localStorage.getItem("TA-ID"));
 
     months.forEach((item, index) => {
       if (namaPembayaran) {
@@ -119,16 +113,11 @@ export default function TambahSpp() {
 
     formData.append(`invoice`, invoice);
 
-    if (
-      academicYearId === "" ||
-      months === "" ||
-      studentCode === "" ||
-      invoice == null
-    ) {
+    if (months === "" || studentCode === "" || invoice == null) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
     } else {
-      postSpp(setSts, navigateListSpp, formData, setIsLoading);
+      postSpp(setSts, navigateReportSpp, formData, setIsLoading);
     }
   };
 
@@ -231,7 +220,9 @@ export default function TambahSpp() {
         prev="Data Pembayaran SPP"
         navPrev={path}
         at="Pembayaran Spp"
-        title="Pembayaran Spp"
+        title={`Pembayaran Spp - ${
+          location.state.studentName
+        } - ${localStorage.getItem("TA-CODE")}`}
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -299,7 +290,7 @@ export default function TambahSpp() {
               />
             ))}
           <TextInput
-            label="Deskripsi"
+            label="Keterangan"
             type="text"
             onChange={(e) => setDescription(e.target.value)}
             required={true}
@@ -331,7 +322,7 @@ export default function TambahSpp() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateListSpp}
+              onClick={navigateReportSpp}
             >
               Batal
             </button>

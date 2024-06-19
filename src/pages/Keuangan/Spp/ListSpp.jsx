@@ -7,12 +7,17 @@ import { AlertPaymentProof } from "../../../components/ModalPopUp";
 import { useStateContext } from "../../../contexts/ContextProvider";
 import { getMurid } from "../../../api/Murid";
 import moment from "moment/moment";
+import { getTahunAjaran } from "../../../api/TahunAjaran";
 
 export default function ListSpp() {
   const [data, setData] = useState([]);
+  const [TAdata, setTAData] = useState([]);
   const [unpaidData, setUnpaidData] = useState([]);
   const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
+  const [selectedTA, setSelectedTA] = useState(
+    `AC${moment(new Date()).format("YYYY")}`
+  );
   const [filterPaid, setFilterPaid] = useState(true);
   const [filterUnPaid, setFilterUnPaid] = useState(false);
   const { isLoading, setIsLoading } = useStateContext();
@@ -40,8 +45,21 @@ export default function ListSpp() {
   };
 
   useEffect(() => {
+    localStorage.setItem(
+      "TA-ID",
+      TAdata.filter((items) => items.code === selectedTA)[0]?.id
+    );
+    localStorage.setItem(
+      "TA-NAME",
+      TAdata.filter((items) => items.code === selectedTA)[0]?.name
+    );
+    localStorage.setItem("TA-CODE", selectedTA);
+  });
+
+  useEffect(() => {
     setIsLoading(true);
     getMurid(setData, setSts, setIsLoading);
+    getTahunAjaran(setTAData, setSts, setIsLoading);
     // getSpp(setData, setSts, setIsLoading);
     // getUnpaidSpp(setUnpaidData, setSts, setIsLoading);
   }, []);
@@ -131,6 +149,30 @@ export default function ListSpp() {
     });
   };
 
+  const TAoptions = TAdata.map((c) => ({
+    label: `${c.name}`,
+    value: c.code,
+  }));
+
+  const onChangeTAOption = (e) => {
+    getMurid(
+      setData,
+      setSts,
+      setIsLoading,
+      TAdata.filter((items) => items.code === e.target.value)[0]?.id
+    );
+    localStorage.setItem(
+      "TA-ID",
+      TAdata.filter((items) => items.code === e.target.value)[0]?.id
+    );
+    localStorage.setItem(
+      "TA-NAME",
+      TAdata.filter((items) => items.code === e.target.value)[0]?.name
+    );
+    localStorage.setItem("TA-CODE", e.target.value);
+    setSelectedTA(e.target.value);
+  };
+
   return (
     <>
       <Header
@@ -152,6 +194,9 @@ export default function ListSpp() {
           setFilterPaid={setFilterPaid}
           filterUnPaid={filterUnPaid}
           setFilterUnPaid={setFilterUnPaid}
+          selectedTA={selectedTA}
+          TAoptions={TAoptions}
+          onChangeTAOption={onChangeTAOption}
         />
       </div>
     </>

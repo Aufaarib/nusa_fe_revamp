@@ -16,7 +16,7 @@ export default function TambahQuestion() {
   const location = useLocation();
   const questionSequence = location.state.questions;
   const [qsequence, setqsequence] = useState(1);
-  const [asequence, setasequence] = useState(0);
+  const [asequence, setasequence] = useState(1);
   const path = "/admin/list-soal";
   const [q_fields, setQFields] = useState([
     {

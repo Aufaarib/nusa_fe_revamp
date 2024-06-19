@@ -299,6 +299,9 @@ export function FilterComponentSpp({
   showButton,
   showDownloadButton,
   onClickDownload,
+  selectedTA,
+  TAoptions,
+  onChangeTAOption,
   filterPaid,
   setFilterPaid,
   filterUnPaid,
@@ -330,6 +333,40 @@ export function FilterComponentSpp({
           />
           <i style={{ padding: "7px 6px" }} className="fa fa-search" />
         </div>
+        {TAoptions && (
+          <div
+            style={{
+              display: "inline-block",
+              float: "right",
+              marginBottom: "20px",
+              marginLeft: "10px",
+            }}
+          >
+            <label className="mr-4">Tahun Ajaran : </label>
+            <select
+              style={{
+                border: "1px solid grey",
+                borderRadius: "5px",
+                width: "auto",
+                height: "32px",
+                fontSize: "12px",
+                padding: "5px",
+                outline: "none",
+              }}
+              value={selectedTA}
+              onChange={onChangeTAOption}
+            >
+              <option disabled value="">
+                Pilih Tahun Ajaran
+              </option>
+              {TAoptions.map((items, index) => (
+                <option key={items.id} value={items.value}>
+                  {items.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         {showButton && (
           <div
             style={{
@@ -2501,6 +2538,9 @@ export function DataTablesListSpp({
   showButton,
   showDownloadButton,
   onClickDownload,
+  selectedTA,
+  TAoptions,
+  onChangeTAOption,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
   const CustomStylesTable = {
@@ -2639,6 +2679,9 @@ export function DataTablesListSpp({
         showButton={showButton}
         showDownloadButton={showDownloadButton}
         onClickDownload={onClickDownload}
+        selectedTA={selectedTA}
+        TAoptions={TAoptions}
+        onChangeTAOption={onChangeTAOption}
       />
       {data ? (
         <div>
@@ -2800,6 +2843,7 @@ export function DataTablesSession({
   searchText,
 }) {
   const { isLoading, setIsLoading } = useStateContext();
+
   const CustomStylesTable = {
     table: {
       style: {
@@ -2915,7 +2959,11 @@ export function DataTablesSession({
   if (data !== null) {
     currentPageData =
       itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
-    pageCount = Math.ceil(pagination?.total / itemsPerPage);
+    pageCount = Math.ceil(
+      pagination?.total_data / itemsPerPage ||
+        pagination?.total / itemsPerPage ||
+        currentPageData.length / itemsPerPage
+    );
   }
 
   return (
@@ -2949,27 +2997,28 @@ export function DataTablesSession({
         onChangeOption={onChangeOption}
         searchText={searchText}
       />
-      {data ? (
-        <div>
-          {isLoading ? (
+      <div>
+        {isLoading ? (
+          <div style={{ textAlign: "center" }}>
+            <CircularProgress size={24} />
+          </div>
+        ) : currentPageData.length !== 0 ? (
+          <DataTable
+            columns={columns}
+            customStyles={CustomStylesTable}
+            data={currentPageData}
+            defaultSortAsc={false}
+            defaultSortFieldId={defaultSortFieldId}
+          />
+        ) : (
+          currentPageData.length == 0 ||
+          (!isLoading && (
             <div style={{ textAlign: "center" }}>
-              <CircularProgress size={24} />
+              <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
             </div>
-          ) : (
-            <DataTable
-              columns={columns}
-              customStyles={CustomStylesTable}
-              data={currentPageData}
-              defaultSortAsc={false}
-              defaultSortFieldId={defaultSortFieldId}
-            />
-          )}
-        </div>
-      ) : (
-        <div style={{ textAlign: "center" }}>
-          <h1 style={{ fontSize: "24px" }}>Data Tidak Tersedia</h1>
-        </div>
-      )}
+          ))
+        )}
+      </div>
       {itemsPerPage !== "all" && (
         <>
           <div
@@ -2996,7 +3045,10 @@ export function DataTablesSession({
                   Jumlah Data Per Halaman
                 </strong>
                 <button
-                  onClick={() => setItemsPerPage(20)}
+                  onClick={() => {
+                    setCurrentPage(0);
+                    setItemsPerPage(20);
+                  }}
                   className={
                     itemsPerPage === 20
                       ? "btn-rows-per-page-active"
@@ -3006,7 +3058,10 @@ export function DataTablesSession({
                   20
                 </button>
                 <button
-                  onClick={() => setItemsPerPage(50)}
+                  onClick={() => {
+                    setCurrentPage(0);
+                    setItemsPerPage(50);
+                  }}
                   className={
                     itemsPerPage === 50
                       ? "btn-rows-per-page-active"
@@ -3016,7 +3071,10 @@ export function DataTablesSession({
                   50
                 </button>
                 <button
-                  onClick={() => setItemsPerPage(100)}
+                  onClick={() => {
+                    setCurrentPage(0);
+                    setItemsPerPage(100);
+                  }}
                   className={
                     itemsPerPage === 100
                       ? "btn-rows-per-page-active"
@@ -3024,6 +3082,19 @@ export function DataTablesSession({
                   }
                 >
                   100
+                </button>
+                <button
+                  onClick={() => {
+                    setCurrentPage(0);
+                    setItemsPerPage(500);
+                  }}
+                  className={
+                    itemsPerPage === 500
+                      ? "btn-rows-per-page-active"
+                      : "btn-rows-per-page"
+                  }
+                >
+                  500
                 </button>
               </div>
             </div>
@@ -3141,7 +3212,7 @@ export function DataTablesDetailSession({
     <>
       {data ? (
         <div>
-          {status == 0 ? (
+          {data.length == 0 ? (
             <div style={{ textAlign: "center" }}>
               <h1 style={{ fontSize: "24px" }}>Loading...</h1>
             </div>

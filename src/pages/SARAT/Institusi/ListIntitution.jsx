@@ -8,7 +8,6 @@ import { useStateContext } from "../../../contexts/ContextProvider";
 export default function ListInstitution() {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState("");
-  const [sts, setSts] = useState(undefined);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -24,7 +23,7 @@ export default function ListInstitution() {
 
   useEffect(() => {
     setIsLoading(true);
-    getInstitution(setData, setSts, setIsLoading);
+    getInstitution(setData, setIsLoading);
   }, []);
 
   const columns = [
@@ -40,30 +39,8 @@ export default function ListInstitution() {
     },
   ];
 
-  const navigateListSession = (resume_id, resume_name) => {
-    localStorage.setItem("RESUME_ID", resume_id);
-    localStorage.setItem("RESUME_NAME", resume_name);
-    navigate("/admin/list-sesi");
-  };
-
   const navigateTambahSession = () => {
     navigate("/admin/tambah-resume");
-  };
-
-  const navigateUbahSession = (
-    resume_id,
-    resume_name,
-    academicYearId,
-    detailsData
-  ) => {
-    navigate("/admin/ubah-resume", {
-      state: {
-        resumeId: resume_id,
-        resumeName: resume_name,
-        academicYearId: academicYearId,
-        details: detailsData,
-      },
-    });
   };
 
   return (
@@ -89,6 +66,7 @@ export default function ListInstitution() {
           setCurrentPage={setCurrentPage}
           pagination={pagination}
           showButton={false}
+          isLoading={isLoading}
         />
       </div>
     </>

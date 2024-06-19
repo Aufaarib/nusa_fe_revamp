@@ -54,38 +54,38 @@ export const sidebarMenusAdmin = [
   //   icon: <AiOutlineBarChart />,
   //   links: [],
   // },
-  {
-    title: "Admin PMB",
-    path: `admin/pmb`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Kurikulum",
-        path: `admin/list-kurikulum`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Tahun Ajaran",
-        path: `admin/list-tahun-ajaran`,
-        icon: <FaWpforms />,
-      },
-      // {
-      //   name: "Setup PMB",
-      //   path: `admin/list-setup-pmb`,
-      //   icon: <FaWpforms />,
-      // },
-      // {
-      //   name: "Pertanyaan Pernyataan",
-      //   path: `admin/list-pertanyaan-pernyataan`,
-      //   icon: <FaWpforms />,
-      // },
-      // {
-      //   name: "Data Registrasi",
-      //   path: `admin/list-data-registrasi`,
-      //   icon: <FaWpforms />,
-      // },
-    ],
-  },
+  // {
+  //   title: "Admin PMB",
+  //   path: `admin/pmb`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Kurikulum",
+  //       path: `admin/list-kurikulum`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Tahun Ajaran",
+  //       path: `admin/list-tahun-ajaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Setup PMB",
+  //       path: `admin/list-setup-pmb`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Pertanyaan Pernyataan",
+  //       path: `admin/list-pertanyaan-pernyataan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Data Registrasi",
+  //       path: `admin/list-data-registrasi`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
   // {
   //   title: "Admin KBM",
   //   path: `admin/kbm`,
@@ -128,28 +128,28 @@ export const sidebarMenusAdmin = [
   //     // },
   //   ],
   // },
-  // {
-  //   title: "Admin Keuangan",
-  //   path: `admin/keuangan`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: "SPP",
-  //       path: `admin/list-spp`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     // {
-  //     //   name: "Report Spp",
-  //     //   path: `admin/report-spp`,
-  //     //   icon: <FaWpforms />,
-  //     // },
-  //     // {
-  //     //   name: "Pengeluaran",
-  //     //   path: `admin/list-pengeluaran`,
-  //     //   icon: <FaWpforms />,
-  //     // },
-  //   ],
-  // },
+  {
+    title: "Admin Keuangan",
+    path: `admin/keuangan`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: "SPP",
+        path: `admin/list-spp`,
+        icon: <FaWpforms />,
+      },
+      // {
+      //   name: "Report Spp",
+      //   path: `admin/report-spp`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Pengeluaran",
+      //   path: `admin/list-pengeluaran`,
+      //   icon: <FaWpforms />,
+      // },
+    ],
+  },
   {
     title: "Admin SARAT",
     path: `admin/sarat`,

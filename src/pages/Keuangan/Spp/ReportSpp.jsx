@@ -45,7 +45,7 @@ export default function ReportSpp() {
       setSts,
       setIsLoading,
       location.state.studentCode,
-      location.state.academicYearCode
+      localStorage.getItem("TA-CODE")
     );
   }, []);
 
@@ -87,7 +87,7 @@ export default function ReportSpp() {
     //   width: "130px",
     // },
     {
-      name: <div>Jumlah Spp</div>,
+      name: <div>Infak Bulanan</div>,
       selector: (data) => (
         <div>
           {new Intl.NumberFormat("id-ID", {
@@ -100,7 +100,7 @@ export default function ReportSpp() {
       width: "auto",
     },
     {
-      name: <div>Jumlah Ta'awun</div>,
+      name: <div>Infak Ta'awun</div>,
       selector: (data) => (
         <div>
           {new Intl.NumberFormat("id-ID", {
@@ -155,38 +155,22 @@ export default function ReportSpp() {
             onClick={() =>
               navigateUbahSpp(
                 data.id,
-                data.amount,
                 data.month,
-                data.description,
-                data.invoice,
-                data.academicPeriode.id,
-                data.academicPeriode.increment,
-                data.student.code,
-                data.student.firstName
+                data.name,
+                data.infaq,
+                data.taawun,
+                data.other,
+                data.description
+                // data.description,
+                // data.invoice,
+                // data.academicPeriode.id,
+                // data.academicPeriode.increment,
+                // data.student.code,
+                // data.student.firstName
               )
             }
           >
-            <i className="fa fa-edit" /> Edit
-          </button>
-          <button
-            style={{ width: "80px", padding: "2px 10px" }}
-            className="btn-biru"
-            title="Edit"
-            onClick={() =>
-              navigateUbahSpp(
-                data.id,
-                data.amount,
-                data.month,
-                data.description,
-                data.invoice,
-                data.academicPeriode.id,
-                data.academicPeriode.increment,
-                data.student.code,
-                data.student.firstName
-              )
-            }
-          >
-            <i className="fa fa-eye" /> Detail
+            <i className="fa fa-edit" /> Ubah
           </button>
         </div>
       ),
@@ -213,26 +197,33 @@ export default function ReportSpp() {
 
   const navigateUbahSpp = (
     id,
-    amount,
     month,
-    description,
-    invoice,
-    periodeId,
-    increment,
-    code,
-    studentName
+    name,
+    infaq,
+    taawun,
+    other,
+    description
+    // periodeId,
+    // increment,
+    // code,
+    // studentName
   ) => {
     navigate("/admin/ubah-spp", {
       state: {
-        id: id,
-        amount: amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+        sppId: id,
         month: month,
+        name: name,
+        infaq: infaq,
+        taawun: taawun,
+        other: other,
         description: description,
-        invoice: invoice,
-        periodeId: periodeId,
-        increment: increment,
-        code: code,
-        studentName: studentName,
+        studentName: location.state.studentName,
+        studentCode: location.state.studentCode,
+        academicYearCode: location.state.academicYearCode,
+        academicYearId: location.state.academicYearId,
+        academicYearName: location.state.academicYearName,
+        academicYear: location.state.academicYear,
+        kelas: location.state.kelas,
       },
     });
   };
@@ -424,7 +415,9 @@ export default function ReportSpp() {
         prev="List Murid"
         navPrev={"/admin/list-spp"}
         at="Report SPP"
-        title={`Data Report SPP - ${location.state.studentName} - ${location.state.kelas} - ${location.state.academicYearName}`}
+        title={`Data Report SPP - ${location.state.studentName} - ${
+          location.state.kelas
+        } - ${localStorage.getItem("TA-CODE")}`}
       />
 
       <div style={{ marginTop: "50px" }}>

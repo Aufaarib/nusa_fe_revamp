@@ -2,7 +2,7 @@ import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getMurid } from "../../../api/Murid";
-import { updateSpp } from "../../../api/Spp";
+import { getSppByStudent, updateSpp } from "../../../api/Spp";
 import { getSemester } from "../../../api/TahunAjaran";
 import { Header } from "../../../components";
 import { DropdownMultiple, DropdownSiswa } from "../../../components/Dropdown";
@@ -14,18 +14,36 @@ import { CircularProgress } from "@mui/material";
 
 export default function UbahSpp() {
   const navigate = useNavigate();
-  const path = "/admin/list-spp";
+  const path = "/admin/report-spp";
   const uploaderRef = useRef(null);
   const location = useLocation();
-  const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
+  // const [academicPeriodeData, setAcademicPeriodeData] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
-  const [amounts, setAmount] = useState(location.state.amount);
+  const [infaq, setInfaq] = useState(
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(location.state.infaq)
+  );
+  const [taawun, setTaawun] = useState(
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(location.state.taawun)
+  );
+  const [other, setOther] = useState(
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(location.state.other)
+  );
+  const [otherName, setOtherName] = useState(location.state.name);
   const [months, setMonth] = useState({
+    label: location.state.name,
     value: location.state.month,
-  });
-  const [periodeIds, setPeriodeId] = useState({
-    label: location.state.increment,
-    value: location.state.periodeId,
   });
   const [studentCodes, setStudentCode] = useState({
     label: location.state.studentName,
@@ -34,11 +52,8 @@ export default function UbahSpp() {
   const [description, setDescription] = useState(location.state.description);
   const [sts, setSts] = useState(undefined);
   const [filesData, setFilesData] = useState(null);
+  const [sppData, setSppData] = useState([]);
   const { isLoading, setIsLoading } = useStateContext();
-
-  const fetchAcademicPeriode = () => {
-    getSemester(setAcademicPeriodeData, setSts, setIsLoading);
-  };
 
   const fetchStudents = () => {
     getMurid(setStudentsData, setSts, setIsLoading);
@@ -46,7 +61,6 @@ export default function UbahSpp() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchAcademicPeriode();
     fetchStudents();
   }, []);
 
@@ -54,47 +68,74 @@ export default function UbahSpp() {
     e.preventDefault();
     setIsLoading(true);
     const invoice = filesData;
-    const amount = parseInt(amounts.replace(/\./g, ""), 10);
+    const amount = parseInt(infaq.replace(/\./g, ""), 10);
 
     const formData = new FormData();
 
     formData.append(`amount`, amount);
     formData.append(`description`, description);
-    formData.append(`invoice`, invoice);
-    formData.append(`periodeId`, periodeIds.value);
+    // formData.append(`invoice`, invoice);
+    // formData.append(`periodeId`, periodeIds.value);
     formData.append(`studentCode`, studentCodes.value);
     formData.append(`month`, months);
 
     if (
-      amounts === "" ||
+      infaq === "" ||
       months === "" ||
-      periodeIds === "" ||
       studentCodes === "" ||
       description === ""
     ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
     } else {
-      updateSpp(setSts, navigateSpp, formData, location.state.id, setIsLoading);
+      updateSpp(
+        setSts,
+        navigateReportSpp,
+        formData,
+        location.state.sppId,
+        setIsLoading
+      );
     }
   };
 
-  const navigateSpp = () => {
-    navigate(path);
+  const navigateReportSpp = () => {
+    navigate(path, {
+      state: {
+        id: location.state.id,
+        studentName: location.state.studentName,
+        studentCode: location.state.studentCode,
+        academicYearCode: location.state.academicYearCode,
+        academicYearId: location.state.academicYearId,
+        academicYearName: location.state.academicYearName,
+        academicYear: location.state.academicYear,
+        kelas: location.state.kelas,
+      },
+    });
   };
 
-  const handleInputChange = (event) => {
+  const handleInputInfaqChange = (event) => {
     let inputVal = event.target.value;
     inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
     inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
     // const value = parseInt(inputVal);
-    setAmount(inputVal);
+    setInfaq(inputVal);
   };
 
-  const academicYearOptions = academicPeriodeData.map((c) => ({
-    label: `Semester : ${c.increment}`,
-    value: c.id,
-  }));
+  const handleInputTaawunChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    // const value = parseInt(inputVal);
+    setTaawun(inputVal);
+  };
+
+  const handleInputOtherChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    // const value = parseInt(inputVal);
+    setTaawun(inputVal);
+  };
 
   const studentsOptions = studentsData.map((c) => ({
     label: `${c.code} : ${c.firstName} ${c.middleName} ${c.lastName}`,
@@ -103,51 +144,51 @@ export default function UbahSpp() {
 
   const monthOptions = [
     {
-      label: "Januari",
+      label: "SPP Januari",
       value: 1,
     },
     {
-      label: "Februari",
+      label: "SPP Februari",
       value: 2,
     },
     {
-      label: "Maret",
+      label: "SPP Maret",
       value: 3,
     },
     {
-      label: "April",
+      label: "SPP April",
       value: 4,
     },
     {
-      label: "Mei",
+      label: "SPP Mei",
       value: 5,
     },
     {
-      label: "Juni",
+      label: "SPP Juni",
       value: 6,
     },
     {
-      label: "Juli",
+      label: "SPP Juli",
       value: 7,
     },
     {
-      label: "Agustus",
+      label: "SPP Agustus",
       value: 8,
     },
     {
-      label: "September",
+      label: "SPP September",
       value: 9,
     },
     {
-      label: "Oktober",
+      label: "SPP Oktober",
       value: 10,
     },
     {
-      label: "November",
+      label: "SPP November",
       value: 11,
     },
     {
-      label: "Desember",
+      label: "SPP Desember",
       value: 12,
     },
   ];
@@ -156,10 +197,10 @@ export default function UbahSpp() {
     <div>
       <Header
         home="Admin Keuangan"
-        prev="List Spp Terbayar"
+        prev="List SPP Terbayar"
         navPrev={path}
-        at="Ubah Spp"
-        title="Ubah Spp"
+        at="Ubah SPP"
+        title="Ubah SPP"
       />
       <div style={{ padding: "44px 104px 0" }}>
         <p
@@ -169,45 +210,55 @@ export default function UbahSpp() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Ubah Spp
+          Form Ubah SPP
         </p>
         <article>
-          <DropdownSiswa
-            label="Semester"
-            required={true}
-            defaultValue={periodeIds}
-            isClearable={false}
-            options={academicYearOptions}
-            isSearchable={false}
-            onChange={(e) => setPeriodeId(e.value)}
-          />
-          <DropdownSiswa
-            label="Spp Bulan"
-            required={true}
-            defaultValue={months}
-            isClearable={false}
-            options={monthOptions}
-            isSearchable={false}
-            onChange={(e) => setMonth(e.value)}
-          />
-          <DropdownSiswa
-            label="Murid"
-            required={true}
-            defaultValue={studentCodes}
-            isClearable={false}
-            options={studentsOptions}
-            isSearchable={true}
-            onChange={(e) => setStudentCode(e)}
-          />
+          {location.state.other === 0 ? (
+            <>
+              <DropdownSiswa
+                label="Jenis Pembayaran"
+                required={true}
+                defaultValue={months}
+                isClearable={false}
+                options={monthOptions}
+                isSearchable={false}
+                onChange={(e) => setMonth(e.value)}
+              />
+              <TextInput
+                label="Jumlah SPP"
+                type="text"
+                onChange={handleInputInfaqChange}
+                value={infaq}
+                required={true}
+              />
+              <TextInput
+                label="Jumlah Taawun"
+                type="text"
+                onChange={handleInputTaawunChange}
+                value={taawun}
+                required={true}
+              />
+            </>
+          ) : (
+            <>
+              <TextInput
+                label="Jenis Pembayaran"
+                type="text"
+                onChange={(e) => setOtherName(e.target.value)}
+                value={otherName}
+                required={true}
+              />
+              <TextInput
+                label="Jumlah Lain-lain"
+                type="text"
+                onChange={handleInputOtherChange}
+                value={other}
+                required={true}
+              />
+            </>
+          )}
           <TextInput
-            label="Jumlah"
-            type="text"
-            onChange={handleInputChange}
-            value={amounts}
-            required={true}
-          />
-          <TextInput
-            label="Deskripsi"
+            label="Keterangan"
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -245,7 +296,7 @@ export default function UbahSpp() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSpp}
+              onClick={navigateReportSpp}
             >
               Batal
             </button>

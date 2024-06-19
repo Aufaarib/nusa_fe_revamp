@@ -2,10 +2,11 @@ import { AlertMessage, AlertStatusSuccess } from "../components/ModalPopUp";
 import { ErrorHandling } from "./ErrorHandling";
 import axios from "./axios";
 
-export function getMurid(setData, setSts, setIsLoading) {
+export function getMurid(setData, setSts, setIsLoading, ACId) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/student", {
+    .get(process.env.REACT_APP_BASE_URL + `/student`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
+      params: { academicYearId: ACId },
     })
     .then((res) => {
       setIsLoading(false);
@@ -14,6 +15,7 @@ export function getMurid(setData, setSts, setIsLoading) {
     })
     .catch((error) => {
       setIsLoading(false);
+      setData(error.data.body);
       setSts({ type: "error", error });
       ErrorHandling(error);
     });

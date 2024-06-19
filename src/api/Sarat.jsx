@@ -116,20 +116,18 @@ export function getNewsDetail(id, setData, setSts, setIsLoading) {
       ErrorHandling(error);
     });
 }
-export function getInstitution(setData, setSts, setIsLoading) {
+export function getInstitution(setData, setIsLoading) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/institution/filter`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body);
-      setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
-      setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 export function getDetailQuestion(question_id, setData, setSts, setIsLoading) {
@@ -138,14 +136,14 @@ export function getDetailQuestion(question_id, setData, setSts, setIsLoading) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body.question_details);
       setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 export function getQuestion(setData, setSts, session_id, setIsLoading, flag) {
@@ -158,14 +156,14 @@ export function getQuestion(setData, setSts, session_id, setIsLoading, flag) {
       }
     )
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body);
       setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 export function getSession(
@@ -174,7 +172,8 @@ export function getSession(
   setData,
   setSts,
   setPagination,
-  setIsLoading
+  setIsLoading,
+  onReport
 ) {
   axios
     .get(
@@ -185,15 +184,19 @@ export function getSession(
       }
     )
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body);
       setPagination(res.data.meta);
       setSts({ type: "success" });
+      if (!onReport) {
+        setIsLoading(false);
+      }
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      if (!onReport) {
+        setIsLoading(false);
+      }
     });
 }
 export function getSessionReport(
