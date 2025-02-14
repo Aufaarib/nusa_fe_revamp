@@ -415,9 +415,7 @@ export default function ReportSpp() {
         prev="List Murid"
         navPrev={"/admin/list-spp"}
         at="Report SPP"
-        title={`Data Report SPP - ${location.state.studentName} - ${
-          location.state.kelas
-        } - ${localStorage.getItem("TA-CODE")}`}
+        title={`Data Report SPP`}
       />
 
       <div style={{ marginTop: "50px" }}>

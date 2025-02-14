@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.7",
     "@react-pdf-viewer/core": "^3.12.0",
-    "@react-pdf/renderer": "^3.4.4",
+    "@react-pdf/renderer": "^3.4.5",
     "@syncfusion/ej2-react-base": "^20.4.38",
     "@syncfusion/ej2-react-buttons": "^20.4.38",
     "@syncfusion/ej2-react-calendars": "^20.4.38",
