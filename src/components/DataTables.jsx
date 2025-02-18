@@ -2847,6 +2847,7 @@ export function DataTablesSession({
   const CustomStylesTable = {
     table: {
       style: {
+        // maxWidth: "",
         width: "auto", // set the width of the table wrapper
       },
     },

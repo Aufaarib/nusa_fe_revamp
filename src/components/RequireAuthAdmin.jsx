@@ -59,34 +59,30 @@ const RequireAuthAdmin = () => {
   }, [successMsg, successMsgSendVerify]);
 
   return role === "ADMIN" ? (
-    <div
-      className={currentMode === "Dark" ? "dark" : " min-h-screen bg-slate-500"}
-    >
-      <div className="relative flex min-h-screen dark:bg-gelap bg-slate-500">
-        {activeMenu ? (
-          <div className="fixed bg-white w-72 sidebar dark:bg-terang ">
-            <Sidebar />
-          </div>
-        ) : (
-          <div className="w-0 dark:bg-terang">
-            <Sidebar />
-          </div>
-        )}
+    <div className={currentMode === "Dark" ? "dark" : " min-h-screen w-full"}>
+      <div className="w-full flex flex-row justify-between min-h-screen dark:bg-gelap overflow-hidden max-h-screen">
+        <div
+          className={`${
+            !activeMenu && "hidden"
+          } bg-white w-72 sidebar dark:bg-terang z-[9999999]`}
+        >
+          <Sidebar />
+        </div>
 
         <div
-          className={
+          className={`max-w-[82%] h-screen overflow-auto w-full ${
             activeMenu
-              ? "dark:bg-gelap bg-krem min-h-screen md:ml-72 w-full"
-              : "bg-krem dark:bg-gelap  w-full min-h-screen flex-2 "
-          }
+              ? "dark:bg-gelap bg-krem min-h-screen"
+              : "bg-krem dark:bg-gelap min-h-screen flex-2 "
+          }`}
         >
-          <div className="fixed w-full md:static bg-krem dark:bg-gelap navbar ">
+          <div className="fixed md:static bg-krem dark:bg-gelap navbar">
             <Navbar />
           </div>
 
           {themeSettings && <ThemeSettings />}
 
-          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh] w-screen max-w-[1087px]">
+          <div className="p-10 mb-7 mx-7 bg-white rounded-lg min-h-[100vh]">
             <Outlet />
           </div>
 

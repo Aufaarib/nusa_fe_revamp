@@ -71,7 +71,7 @@ const Sidebar = () => {
   }, [stepsPMB]);
 
   return (
-    <div className="h-screen pb-10 overflow-auto overflow-x-hidden w-72">
+    <div className="h-screen pb-10 overflow-auto overflow-x-hidden w-72 z-[9999999]">
       {activeMenu && (
         <>
           {activeMenu == true && screenSize <= 900 && (
@@ -82,7 +82,7 @@ const Sidebar = () => {
               icon={<AiOutlineMenu />}
             />
           )}
-          <div className="flex items-center justify-center mt-6 w-72 ">
+          <div className="flex items-center justify-center mt-6 w-72">
             <Link
               // to="/"
               onClick={handleCloseSideBar}

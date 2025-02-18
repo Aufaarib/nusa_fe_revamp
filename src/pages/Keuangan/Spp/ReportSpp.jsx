@@ -430,7 +430,7 @@ export default function ReportSpp() {
           filterUnPaid={filterUnPaid}
           setFilterUnPaid={setFilterUnPaid}
           button="Tambah Spp"
-          showButton={true}
+          showButton={false}
           showDownloadButton={true}
           onClickDownload={() => setIsOpen(true)}
         />
