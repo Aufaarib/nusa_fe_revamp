@@ -90,21 +90,48 @@ export default function ResumeReportDetail() {
       cell: (data) => (
         <div>
           {data.question.question_type !== "UPLOAD" ? (
+            data.answer || "-"
+          ) : data.answer !== "" ? (
+            <button
+              title="Lihat File"
+              onClick={() => {
+                data.answer?.toLowerCase().endsWith(".pdf")
+                  ? window.open(
+                      `${process.env.REACT_APP_BASE_STATIC_SARAT_FILE}${data.answer}`,
+                      "_blank"
+                    )
+                  : AlerNewsFiles(data.answer);
+              }}
+            >
+              <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
+            </button>
+          ) : (
+            "-"
+          )}
+          {/* {data.question.question_type !== "UPLOAD" ? (
             data.answer_description !== "" ? (
               data.answer_description
             ) : (
               data.answer
             )
-          ) : (
+          ) : data.answer !== "" ? (
             <button
               title="Lihat File"
               onClick={() => {
-                AlerNewsFiles(data.answer);
+                data.question?.question_type === "UPLOAD" &&
+                data.question?.answer !== ""
+                  ? window.open(
+                      `${process.env.REACT_APP_BASE_STATIC_SARAT_FILE}${data.answer}`,
+                      "_blank"
+                    )
+                  : AlerNewsFiles(data.answer);
               }}
             >
               <i style={{ fontSize: "21px" }} className="fa fa-file-image-o" />
             </button>
-          )}
+          ) : (
+            ""
+          )} */}
         </div>
       ),
       width: "auto",
@@ -128,6 +155,8 @@ export default function ResumeReportDetail() {
     AlertMessage("Resume Detail", `${resume}`, "Tutup", "info");
   };
 
+  // const filteredDataQuestion = question.filter((val) => val.question?.question_type === "UPLOAD" && val.q)
+
   return (
     <>
       <Header
@@ -147,22 +176,8 @@ export default function ResumeReportDetail() {
         }}
       >
         <DataTablesDetailSession columns={columns} data={data} />
-        {/* <div className="flex flex-row items-center gap-5 justify-between px-10">
-          <div style={{ width: "100%" }}>
-            <p className="text-merah font-bold">Resume : </p>
-            <br />
-            <textarea
-              style={{
-                width: "50%",
-                border: "1px solid gray",
-                height: "100px",
-              }}
-              className="px-2 rounded-md"
-              value={data[0]?.resume}
-            />
-          </div>
-        </div> */}
         <p className="text-merah font-bold">Jawaban Soal : </p>
+
         <DataTablesDetailSession columns={columns2} data={question} />
         <div className="flex justify-start w-full">
           <Link

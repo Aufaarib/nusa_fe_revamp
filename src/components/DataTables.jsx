@@ -1,7 +1,6 @@
 import moment from "moment/moment";
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdOutlineCancel } from "react-icons/md";
 import ReactPaginate from "react-paginate";
@@ -9,6 +8,8 @@ import styled from "styled-components";
 import { useStateContext } from "../contexts/ContextProvider";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { CircularProgress } from "@mui/material";
+import * as XLSX from "xlsx";
+import DatePicker from "react-date-picker";
 
 //Filter Components
 const Input = styled.input.attrs((props) => ({
@@ -407,6 +408,7 @@ export function FilterComponentSpp({
   );
 }
 export function FilterComponentSession({
+  download,
   data = [],
   filterText,
   filter,
@@ -501,6 +503,7 @@ export function FilterComponentSession({
             )
           )}
         </div>
+
         {filter ? (
           <>
             <button
@@ -587,6 +590,19 @@ export function FilterComponentSession({
                 {" "}
               </i>{" "}
               Filter Presensi
+            </button>
+            <button
+              className="btn-hijau w-auto mr-2"
+              style={{
+                display: "inline-block",
+                float: "right",
+                padding: "2px 10px",
+                fontSize: "12px",
+                width: "auto",
+              }}
+              onClick={download}
+            >
+              <i className="fa fa-download mr-1"> </i> Download Report
             </button>
 
             {isOpenFilter && (
@@ -2967,9 +2983,117 @@ export function DataTablesSession({
     );
   }
 
+  const downloadExcel = async () => {
+    setIsLoading(true);
+
+    try {
+      // Step 1: Get all unique questions
+      const allQuestions = new Set();
+      data.forEach((val) => {
+        val.answer_result?.forEach((q) => {
+          if (q.question?.question) {
+            allQuestions.add(q.question.question);
+          }
+        });
+      });
+
+      const questionHeaders = Array.from(allQuestions);
+
+      // Step 2: Map data into organized format
+      const organizedData = data.map((val) => {
+        const answers = {};
+        val.answer_result?.forEach((q) => {
+          if (q.question?.question) {
+            answers[q.question.question] =
+              q.question?.question_type !== "UPLOAD" &&
+              q.answer_description !== ""
+                ? q.answer_description
+                : q.answer || "-";
+          }
+        });
+
+        // Extract file URL from answer_result where question_type is UPLOAD
+        let fileUrl = "-";
+        val.answer_result?.forEach((q) => {
+          if (q.question?.question_type === "UPLOAD" && q.answer) {
+            fileUrl = `${process.env.REACT_APP_BASE_STATIC_SARAT_FILE}${q.answer}`;
+          }
+        });
+
+        return {
+          "Asal Cabang": val.institution?.name || "-",
+          Status: val.user?.role === "mother" ? "Bunda" : "Ayah" || "-",
+          "Nama Wali Murid": val.user?.fullname || "-",
+          "Nama Murid":
+            val.user?.students
+              ?.map((student) => student.student_name)
+              .join(", ") || "-",
+          Kelas:
+            val.user?.students?.map((student) => student.class).join(", ") ||
+            "-",
+          Tanggal: moment(val.created_at).format("DD MMM YYYY") || "-",
+          Jam: moment(val.created_at).format("hh:mm") || "-",
+          Kehadiran: val.attendance_type || "-",
+          "Alasan hadir terlambat": val.reason_late || "-",
+          ...questionHeaders.reduce((acc, question) => {
+            acc[question] = answers[question] || "-";
+            return acc;
+          }, {}),
+          "Link Resume": fileUrl, // Store raw URL for now
+        };
+      });
+
+      // Step 3: Convert to XLSX format
+      const worksheet = XLSX.utils.json_to_sheet(organizedData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Users Report");
+
+      const linkColumnIndex = Object.keys(organizedData[0]).indexOf(
+        "Link Resume"
+      );
+
+      organizedData.forEach((row, rowIndex) => {
+        if (row["Link Resume"] && row["Link Resume"] !== "-") {
+          const cellRef = XLSX.utils.encode_cell({
+            r: rowIndex + 1,
+            c: linkColumnIndex,
+          });
+
+          // Apply hyperlink styling
+          worksheet[cellRef] = {
+            t: "s",
+            v: row["Link Resume"], // Display text
+            l: { Target: row["Link Resume"], Tooltip: "Click to open" }, // Hyperlink
+            s: { font: { color: { rgb: "0000FF" }, underline: true } }, // Blue & underlined
+          };
+        }
+      });
+
+      // Step 4: Auto-adjust column widths
+      const columnWidths = Object.keys(organizedData[0]).map((key) => ({
+        wch: Math.max(
+          key.length, // Header length
+          ...organizedData.map((row) =>
+            row[key] ? row[key].toString().length : 0
+          ) // Longest cell
+        ),
+      }));
+
+      worksheet["!cols"] = columnWidths;
+
+      // Step 5: Trigger download
+      XLSX.writeFile(workbook, "resume-report.xlsx");
+    } catch (error) {
+      console.error("Error generating Excel file:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <FilterComponentSession
+        download={() => downloadExcel()}
         data={data}
         filterText={filterText}
         filter={filter}
@@ -3145,6 +3269,7 @@ export function DataTablesSession({
     </>
   );
 }
+
 export function DataTablesDetailSession({
   columns,
   status,

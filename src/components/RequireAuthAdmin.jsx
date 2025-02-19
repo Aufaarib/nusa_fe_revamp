@@ -70,9 +70,9 @@ const RequireAuthAdmin = () => {
         </div>
 
         <div
-          className={`max-w-[82%] h-screen overflow-auto w-full ${
+          className={`h-screen overflow-auto w-full ${
             activeMenu
-              ? "dark:bg-gelap bg-krem min-h-screen"
+              ? "dark:bg-gelap bg-krem min-h-screen max-w-[82%]"
               : "bg-krem dark:bg-gelap min-h-screen flex-2 "
           }`}
         >

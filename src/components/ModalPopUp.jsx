@@ -745,6 +745,7 @@ export const AlerNewsFiles = (url, downloads, name) => {
     }
   };
   const domain = process.env.REACT_APP_BASE_STATIC_SARAT_FILE;
+
   if (domain.length == 0) {
     styledSweetAlert.fire({
       title: "Loading...",
