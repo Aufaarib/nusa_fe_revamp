@@ -48,12 +48,12 @@ export const sidebarMenus = [
 ];
 
 export const sidebarMenusAdmin = [
-  {
-    title: "Dashboard",
-    path: `admin/dashboard`,
-    icon: <AiOutlineBarChart />,
-    links: [],
-  },
+  // {
+  //   title: "Dashboard",
+  //   path: `admin/dashboard`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [],
+  // },
   {
     title: "Admin PMB",
     path: `admin/pmb`,
@@ -69,87 +69,87 @@ export const sidebarMenusAdmin = [
         path: `admin/list-tahun-ajaran`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Setup PMB",
-        path: `admin/list-setup-pmb`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Pertanyaan Pernyataan",
-        path: `admin/list-pertanyaan-pernyataan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Data Registrasi",
-        path: `admin/list-data-registrasi`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
-  {
-    title: "Admin KBM",
-    path: `admin/kbm`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "Murid",
-        path: `admin/list-murid`,
-        icon: <FaWpforms />,
-      },
       // {
-      //   name: "Guru",
-      //   path: `admin/list-guru`,
+      //   name: "Setup PMB",
+      //   path: `admin/list-setup-pmb`,
       //   icon: <FaWpforms />,
       // },
-      {
-        name: "Kelas",
-        path: `admin/list-kelas`,
-        icon: <FaWpforms />,
-      },
       // {
-      //   name: "Mata Pelajaran",
-      //   path: `admin/list-mata-pelajaran`,
+      //   name: "Pertanyaan Pernyataan",
+      //   path: `admin/list-pertanyaan-pernyataan`,
       //   icon: <FaWpforms />,
       // },
-      {
-        name: "Ruangan",
-        path: `admin/list-ruangan`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Ruangan Kelas",
-        path: `admin/list-ruang-kelas`,
-        icon: <FaWpforms />,
-      },
       // {
-      //   name: "Kelompok Mata Pelajaran",
-      //   path: `admin/list-kelompok-mapel`,
+      //   name: "Data Registrasi",
+      //   path: `admin/list-data-registrasi`,
       //   icon: <FaWpforms />,
       // },
     ],
   },
-  {
-    title: "Admin Keuangan",
-    path: `admin/keuangan`,
-    icon: <AiOutlineBarChart />,
-    links: [
-      {
-        name: "SPP",
-        path: `admin/list-spp`,
-        icon: <FaWpforms />,
-      },
-      // {
-      //   name: "Report Spp",
-      //   path: `admin/report-spp`,
-      //   icon: <FaWpforms />,
-      // },
-      {
-        name: "Pengeluaran",
-        path: `admin/list-pengeluaran`,
-        icon: <FaWpforms />,
-      },
-    ],
-  },
+  // {
+  //   title: "Admin KBM",
+  //   path: `admin/kbm`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "Murid",
+  //       path: `admin/list-murid`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     // {
+  //     //   name: "Guru",
+  //     //   path: `admin/list-guru`,
+  //     //   icon: <FaWpforms />,
+  //     // },
+  //     {
+  //       name: "Kelas",
+  //       path: `admin/list-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     // {
+  //     //   name: "Mata Pelajaran",
+  //     //   path: `admin/list-mata-pelajaran`,
+  //     //   icon: <FaWpforms />,
+  //     // },
+  //     {
+  //       name: "Ruangan",
+  //       path: `admin/list-ruangan`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     {
+  //       name: "Ruangan Kelas",
+  //       path: `admin/list-ruang-kelas`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     // {
+  //     //   name: "Kelompok Mata Pelajaran",
+  //     //   path: `admin/list-kelompok-mapel`,
+  //     //   icon: <FaWpforms />,
+  //     // },
+  //   ],
+  // },
+  // {
+  //   title: "Admin Keuangan",
+  //   path: `admin/keuangan`,
+  //   icon: <AiOutlineBarChart />,
+  //   links: [
+  //     {
+  //       name: "SPP",
+  //       path: `admin/list-spp`,
+  //       icon: <FaWpforms />,
+  //     },
+  //     // {
+  //     //   name: "Report Spp",
+  //     //   path: `admin/report-spp`,
+  //     //   icon: <FaWpforms />,
+  //     // },
+  //     {
+  //       name: "Pengeluaran",
+  //       path: `admin/list-pengeluaran`,
+  //       icon: <FaWpforms />,
+  //     },
+  //   ],
+  // },
   {
     title: "Admin SARAT",
     path: `admin/sarat`,
