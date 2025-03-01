@@ -13,6 +13,11 @@ export function ErrorHandling(error) {
       true
     );
   } else {
-    AlertMessage("Info", "Data Tidak Ditemukan", "Tutup", "info");
+    AlertMessage(
+      "Info",
+      "Data Tidak Ditemukan atau Input Data Tidak Lengkap",
+      "Tutup",
+      "info"
+    );
   }
 }

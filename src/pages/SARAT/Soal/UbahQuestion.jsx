@@ -75,13 +75,13 @@ export default function UbahQuestion() {
             value={description}
             required={true}
           />
-          <TextInput
+          {/* <TextInput
             label="Skor"
             type="number"
             onChange={(e) => setPoin(parseInt(e.target.value))}
             value={poin}
             required={true}
-          />
+          /> */}
           <DropdownRadioInputBiological
             required={true}
             label="Tampilkan Soal"

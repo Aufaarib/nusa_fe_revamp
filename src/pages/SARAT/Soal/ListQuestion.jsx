@@ -48,11 +48,11 @@ export default function ListQuestion() {
       cell: (data) => <div>{data.question_type}</div>,
       width: "auto",
     },
-    {
-      name: <div>Skor</div>,
-      cell: (data) => <div>{data.score}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Skor</div>,
+    //   cell: (data) => <div>{data.score}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Status</div>,
       selector: (data) => data.is_publish,
