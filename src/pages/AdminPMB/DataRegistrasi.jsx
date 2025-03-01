@@ -355,9 +355,9 @@ const DataRegistrasi = () => {
     },
     {
       name: <div>Tahun Ajaran</div>,
-      selector: (data) => data.admissionPhase.admission.academicYear.name,
+      selector: (data) => data?.admissionPhase?.admission?.academicYear?.name,
       cell: (data) => (
-        <div>{data.admissionPhase.admission.academicYear.name}</div>
+        <div>{data?.admissionPhase?.admission?.academicYear?.name}</div>
       ),
       width: "110px",
     },
