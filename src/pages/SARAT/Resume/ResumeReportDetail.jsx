@@ -90,7 +90,11 @@ export default function ResumeReportDetail() {
       cell: (data) => (
         <div>
           {data.question.question_type !== "UPLOAD" ? (
-            data.answer_description || "-"
+            data.question.question_type == "ESSAY" ? (
+              data.answer || "-"
+            ) : (
+              data.answer_description || "-"
+            )
           ) : data.answer !== "" ? (
             <button
               title="Lihat File"
