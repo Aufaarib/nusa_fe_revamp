@@ -16,7 +16,7 @@ export function updateConfig(navigate, data, setIsLoading) {
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Sesi Berhasil"
+        "Edit Sesi Berhasil",
       );
     })
     .catch((error) => {
@@ -30,7 +30,7 @@ export function getScores(
   setSts,
   setIsLoading,
   session_detail_id,
-  flag
+  flag,
 ) {
   axios
     .get(
@@ -38,7 +38,7 @@ export function getScores(
         `/session/live-score?session_detail_id=${session_detail_id}&flag=${flag}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
-      }
+      },
     )
     .then((res) => {
       setIsLoading(false);
@@ -153,7 +153,7 @@ export function getQuestion(setData, setSts, session_id, setIsLoading, flag) {
         `/question/filter?session_detail=${session_id}&flag=${flag}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
-      }
+      },
     )
     .then((res) => {
       setData(res.data.body);
@@ -173,7 +173,7 @@ export function getSession(
   setSts,
   setPagination,
   setIsLoading,
-  onReport
+  onReport,
 ) {
   axios
     .get(
@@ -181,7 +181,7 @@ export function getSession(
         `/session/filter?page=${page}&per_page=${per_page}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
-      }
+      },
     )
     .then((res) => {
       setData(res.data.body);
@@ -209,7 +209,7 @@ export function getSessionReport(
   session_id,
   session_detail_id,
   parentName,
-  flag
+  flag,
 ) {
   axios
     .get(
@@ -217,18 +217,18 @@ export function getSessionReport(
         `/session/report?session_id=${session_id}&session_detail_id=${session_detail_id}&parent=${parentName}&flag=${flag}`,
       {
         headers: { authorization: localStorage.getItem("TOKEN") },
-      }
+      },
     )
     .then((res) => {
-      setIsLoading(false);
       setData(res.data.body);
       setPagination(res.data.meta);
       setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 export function getSessionReportDetail(
@@ -236,24 +236,24 @@ export function getSessionReportDetail(
   setData,
   setQuestion,
   setSts,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/report/${id}`, {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      setIsLoading(false);
       let data = [];
       data.push(res.data.body);
       setQuestion(res.data.body.answer_result);
       setData(data);
       setSts({ type: "success" });
+      setIsLoading(false);
     })
     .catch((error) => {
-      setIsLoading(false);
       setSts({ type: "error", error });
       ErrorHandling(error);
+      setIsLoading(false);
     });
 }
 export function getActiveSession(setData, setSts, setIsLoading) {
@@ -278,7 +278,7 @@ export function getDetailSession(
   setData,
   setDetailsData,
   setSts,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .get(process.env.REACT_APP_NUSA_SARAT + `/session/fetch/${id}`, {
@@ -301,7 +301,7 @@ export function postDonations(
   navigate,
   session_detail_id,
   total,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .post(
@@ -314,7 +314,7 @@ export function postDonations(
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
-      }
+      },
     )
     .then(() => {
       setIsLoading(false);
@@ -324,7 +324,7 @@ export function postDonations(
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Infaq Berhasil"
+        "Tambah Infaq Berhasil",
       );
     })
     .catch((error) => {
@@ -338,7 +338,7 @@ export function postAnswers(
   navigate,
   question_id,
   fields,
-  setIsLoading
+  setIsLoading,
 ) {
   for (const i of fields) {
     axios
@@ -353,7 +353,7 @@ export function postAnswers(
           headers: {
             authorization: localStorage.getItem("TOKEN"),
           },
-        }
+        },
       )
       .then(() => {
         setIsLoading(false);
@@ -363,7 +363,7 @@ export function postAnswers(
           "Berhasil",
           "Tutup",
           "success",
-          "Tambah Pilihan Jawaban Berhasil"
+          "Tambah Pilihan Jawaban Berhasil",
         );
       })
       .catch((error) => {
@@ -379,7 +379,7 @@ export function postQuestion(
   navigate,
   session_detail_id,
   question,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .post(
@@ -392,7 +392,7 @@ export function postQuestion(
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
-      }
+      },
     )
     .then((res) => {
       setIsLoading(false);
@@ -402,7 +402,7 @@ export function postQuestion(
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Soal Berhasil"
+        "Tambah Soal Berhasil",
       );
     })
     .catch((error) => {
@@ -493,7 +493,7 @@ export function postSession(setSts, navigate, data, setIsLoading) {
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Sesi Berhasil"
+        "Tambah Sesi Berhasil",
       );
     })
     .catch((error) => {
@@ -517,7 +517,7 @@ export function postNews(setSts, navigate, formData, setIsLoading) {
         "Berhasil",
         "Tutup",
         "success",
-        "Tambah Berita Berhasil"
+        "Tambah Berita Berhasil",
       );
     })
     .catch((error) => {
@@ -535,7 +535,7 @@ export function updateSession(resume_id, setSts, navigate, data, setIsLoading) {
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
-      }
+      },
     )
     .then(() => {
       setIsLoading(false);
@@ -545,7 +545,7 @@ export function updateSession(resume_id, setSts, navigate, data, setIsLoading) {
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Sesi Berhasil"
+        "Edit Sesi Berhasil",
       );
     })
     .catch((error) => {
@@ -560,7 +560,7 @@ export function updateQuestion(
   navigate,
   session_detail_id,
   question,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .put(
@@ -570,7 +570,7 @@ export function updateQuestion(
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
-      }
+      },
     )
     .then(() => {
       setIsLoading(false);
@@ -580,7 +580,7 @@ export function updateQuestion(
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Pertanyaan Berhasil"
+        "Edit Pertanyaan Berhasil",
       );
     })
     .catch((error) => {
@@ -596,7 +596,7 @@ export function updateDetailQuestion(
   navigate,
   description,
   correct_answer,
-  setIsLoading
+  setIsLoading,
 ) {
   axios
     .put(
@@ -606,7 +606,7 @@ export function updateDetailQuestion(
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
-      }
+      },
     )
     .then(() => {
       setIsLoading(false);
@@ -616,7 +616,7 @@ export function updateDetailQuestion(
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Pilihan Jawaban Berhasil"
+        "Edit Pilihan Jawaban Berhasil",
       );
     })
     .catch((error) => {
@@ -640,7 +640,7 @@ export function updateNews(id, setSts, navigate, formData, setIsLoading) {
         "Berhasil",
         "Tutup",
         "success",
-        "Edit Berita Berhasil"
+        "Edit Berita Berhasil",
       );
     })
     .catch((error) => {

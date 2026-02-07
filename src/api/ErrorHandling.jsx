@@ -10,14 +10,14 @@ export function ErrorHandling(error) {
       "Sesi Berakhir, Silahkan Login Kembali",
       "Login",
       "error",
-      true
+      true,
     );
   } else {
     AlertMessage(
       "Info",
       "Data Tidak Ditemukan atau Input Data Tidak Lengkap",
       "Tutup",
-      "info"
+      "info",
     );
   }
 }

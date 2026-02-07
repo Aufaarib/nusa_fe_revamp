@@ -35,6 +35,8 @@ export default function ListResumeReport() {
   const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
+  console.log(data);
+
   let filteredItems = data;
   let filteredAcademicYear = data;
 
@@ -50,7 +52,7 @@ export default function ListResumeReport() {
       TAFilter,
       sessionFilter,
       filterText,
-      filterFlag
+      filterFlag,
     );
   };
 
@@ -68,7 +70,7 @@ export default function ListResumeReport() {
       setSts,
       setPagination,
       setIsLoading,
-      true
+      true,
     );
   }, []);
 
@@ -93,7 +95,7 @@ export default function ListResumeReport() {
                 data.id,
                 data.user.fullname,
                 data.parent_type,
-                data.flag === "ATTENDANCE" ? "Presensi" : "Pre-Test"
+                data.flag === "ATTENDANCE" ? "Presensi" : "Pre-Test",
               );
               // : navigateDetail(
               //     data.id,
@@ -151,8 +153,8 @@ export default function ListResumeReport() {
       name: <div>Nama Siswa</div>,
       cell: (data) => (
         <div className="flex flex-col">
-          {data.user.students.map((items, index) => (
-            <div>
+          {data.user?.students?.map((items, index) => (
+            <div key={index}>
               {items.student_name}
               {index + 1 !== data.user.students.length && ","}
             </div>
@@ -186,15 +188,17 @@ export default function ListResumeReport() {
       setDatadataDetailSession,
       setDataSession,
       setSts,
-      setIsLoading
+      setIsLoading,
     );
     fetchReport(val, sessionFilter, filterText, filterFlag);
   };
+
   const handleSessionFilter = (event) => {
     const val = parseInt(event.target.value);
     setSessionFilter(val);
     fetchReport(TAFilter, val, filterText, filterFlag);
   };
+
   const handleChangeFlag = (e) => {
     setIsLoading(true);
     setFilterFlag(e);
@@ -212,7 +216,7 @@ export default function ListResumeReport() {
   const handleSearchChange = (event) => {
     const selectedValue = event.target.value;
     const selectedOption = searchOptions.find(
-      (option) => option.value === selectedValue
+      (option) => option.value === selectedValue,
     );
     setValueOption(selectedOption || { value: "", label: "" });
   };
