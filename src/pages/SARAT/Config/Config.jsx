@@ -54,6 +54,11 @@ export default function Config() {
       width: "auto",
     },
     {
+      name: <div>Tanggal Pre-Test</div>,
+      cell: (data) => <div>{data.day_pre_test || "-"}</div>,
+      width: "auto",
+    },
+    {
       name: <div>Aksi</div>,
       cell: (data) => (
         <div className="flex gap-1 w-auto">
@@ -65,7 +70,8 @@ export default function Config() {
               navigateUbahConfig(
                 data.late_hour,
                 data.start_pre_test,
-                data.end_pre_test
+                data.end_pre_test,
+                data.day_pre_test, // ← add this
               )
             }
           >
@@ -79,12 +85,18 @@ export default function Config() {
     },
   ];
 
-  const navigateUbahConfig = (late_hour, start_pre_test, end_pre_test) => {
+  const navigateUbahConfig = (
+    late_hour,
+    start_pre_test,
+    end_pre_test,
+    day_pre_test,
+  ) => {
     navigate("/admin/ubah-config", {
       state: {
         late_hour: late_hour,
         start_pre_test: start_pre_test,
         end_pre_test: end_pre_test,
+        day_pre_test: day_pre_test, // ← add this
       },
     });
   };

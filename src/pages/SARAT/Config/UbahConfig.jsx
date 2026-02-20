@@ -1,25 +1,21 @@
+import { CircularProgress } from "@mui/material";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  updateConfig,
-  updateQuestion,
-  updateSession,
-} from "../../../api/Sarat";
+import { updateConfig } from "../../../api/Sarat";
 import { Header } from "../../../components";
 import { AlertMessage } from "../../../components/ModalPopUp";
 import TextInput from "../../../components/TextInput";
 import { useStateContext } from "../../../contexts/ContextProvider";
-import { CircularProgress } from "@mui/material";
-import { DropdownRadioInputBiological } from "../../../components/Dropdown";
 
 export default function UbahConfig() {
   const location = useLocation();
   const path = "/admin/config";
   const [late_hour, setlate_hour] = useState(location.state.late_hour);
   const [start_pre_test, setstart_pre_test] = useState(
-    location.state.start_pre_test
+    location.state.start_pre_test,
   );
   const [end_pre_test, setend_pre_test] = useState(location.state.end_pre_test);
+  const [day_pre_test, setday_pre_test] = useState(location.state.day_pre_test);
   const { isLoading, setIsLoading } = useStateContext();
   const navigate = useNavigate();
 
@@ -35,9 +31,15 @@ export default function UbahConfig() {
       late_hour: late_hour,
       start_pre_test: start_pre_test,
       end_pre_test: end_pre_test,
+      day_pre_test: day_pre_test, // ← add this
     };
 
-    if (late_hour === "" || start_pre_test === "" || end_pre_test === "") {
+    if (
+      late_hour === "" ||
+      start_pre_test === "" ||
+      end_pre_test === "" ||
+      day_pre_test === ""
+    ) {
       AlertMessage("Gagal", "Input Data Tidak Lengkap", "Coba Lagi", "warning");
       setIsLoading(false);
     } else {
@@ -78,6 +80,13 @@ export default function UbahConfig() {
             type="text"
             onChange={(e) => setend_pre_test(e.target.value)}
             value={end_pre_test}
+            required={true}
+          />
+          <TextInput
+            label="Tanggal Pre-Test"
+            type="date"
+            onChange={(e) => setday_pre_test(e.target.value)}
+            value={day_pre_test}
             required={true}
           />
           <br />
